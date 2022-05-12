@@ -1,3 +1,15 @@
+# v9.5.1 (Thu May 12 2022)
+
+#### 🐛 Bug Fix
+
+- cactus-898:: set prop type nooptionstext select [#750](https://github.com/repaygithub/cactus/pull/750) ([@maxrcollins](https://github.com/maxrcollins))
+
+#### Authors: 1
+
+- [@maxrcollins](https://github.com/maxrcollins)
+
+---
+
 # v9.5.0 (Thu Apr 21 2022)
 
 #### 🚀 Enhancement
