@@ -1,3 +1,15 @@
+# v1.1.0 (Thu May 12 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-900 :: Configurable Error Messages [#746](https://github.com/repaygithub/cactus/pull/746) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 1
+
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+
+---
+
 # v1.0.4 (Thu Apr 21 2022)
 
 #### 🏠 Internal
