@@ -1,3 +1,4 @@
+import { fieldSubscriptionItems } from 'final-form'
 import { useForm } from 'react-final-form'
 import generateKey from 'helpers/generateKey'
 import React from 'react'
@@ -13,9 +14,36 @@ const compareKeys = (left, right) => {
   return true
 }
 
+const DEFAULTS = { value: [], length: 0 }
+
+const processState = (fieldState, prevState, subKeys, keyFunc) => {
+  const nextState = {}
+  let changed = subKeys.reduce(
+    (hasChanged, key) => {
+      const val = (nextState[key] = fieldState[key] || DEFAULTS[key])
+      return hasChanged || prevState[key] !== val
+    },
+    false,
+  )
+  if (keyFunc) {
+    const prevKeys = prevState.keys as React.Key[]
+    const nextKeys = []
+    const keysChanged = (fieldState.value || []).reduce(
+      (hasChanged, val, index) => {
+        const key = keyFunc(val)
+        nextKeys.push(key)
+        return hasChanged || key !== prevKeys[index]
+      },
+      !prevKeys,
+    )
+    nextState.keys = keysChanged ? nextKeys : prevKeys
+    changed = changed || keysChanged
+  }
+  return changed ? nextState : prevState
+}
+
 const FieldArray = ({ name, component, subscription, ...rest }) => {
   const form = useForm()
-  const ref = React.useRef()
   const mutators = React.useMemo(
     () =>
       Object.keys(form.mutators).reduce((result, key) => {
@@ -24,30 +52,34 @@ const FieldArray = ({ name, component, subscription, ...rest }) => {
       }, {}),
     [form.mutators, name]
   )
-  const trigger = React.useReducer(x => !x, false)[1]
+
+  const register = (callback, sub, silent = false) =>
+    form.registerField(name, callback, sub, {
+      ...fieldConfig,
+      getValidator: () => box.validate,
+      silent,
+    })
+
+  const [fieldState, setState] = React.useState(() => {
+    const { keys: keyFunc, ...sub } = subscription
+    const subKeys = fieldSubscriptionItems.filter((k) => sub[k])
+    sub.value = sub.value || !!keyFunc
+    let state = undefined
+    const callback = (s) => {
+      state = s
+    }
+    register(callback, sub, true)()
+    return processState(state, {}, subKeys, keyFunc)
+  })
   React.useEffect(() => {
-    let keys = []
-    return form.registerField(
-      name,
-      state => {
-        ref.current = state.value
-        if (state.value && getKey && setKey) {
-          const newKeys = []
-          const changed = state.length !== keys.length || state.value.reduce(
-            (hasChanged, arrayVal, index) => {
-              const key = getKey(arrayVal) ?? setKey(arrayVal)
-              newKeys.push(key)
-              return hasChanged || key !== keys[index]
-            },
-            false,
-          )
-          keys = newKeys
-          if (changed) trigger()
-        }
-      },
-      { ...subscription, value: true, length: true }
-    )
-  }, [form, name, subscription, trigger])
+    const { keys: keyFunc, ...sub } = subscription
+    const subKeys = fieldSubscriptionItems.filter((k) => sub[k])
+    sub.value = sub.value || !!keyFunc
+    const callback = (s) => {
+      setState((prevState) => processState(s, prevState, subKeys, keyFunc))
+    }
+    return register(callback, sub)
+  }, [name, form])
 
   // I wouldn't use this interface normally, but I want it to be compatible for now.
   const length = ref.current?.length || 0
