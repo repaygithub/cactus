@@ -20,7 +20,7 @@ const processState = (fieldState, prevState, subKeys, keyFunc) => {
   const nextState = {}
   let changed = subKeys.reduce(
     (hasChanged, key) => {
-      const val = (nextState[key] = fieldState[key] || DEFAULTS[key])
+      const val = (nextState[key] = fieldState[key] ?? DEFAULTS[key])
       return hasChanged || prevState[key] !== val
     },
     false,
@@ -53,53 +53,38 @@ const FieldArray = ({ name, component, subscription, ...rest }) => {
     [form.mutators, name]
   )
 
-  const register = (callback, sub, silent = false) =>
-    form.registerField(name, callback, sub, {
+  const register = (callback) => {
+    // There's basically no reason to ever not subscribe to length.
+    const sub = { ...subscription, length: true }
+    const subKeys = fieldSubscriptionItems.filter((k) => sub[k])
+    sub.value = sub.value || !!keyFunc
+    const onStateChange = callback
+      ? (state) => callback(processState(state, {}, subKeys, keyFunc))
+      : (state) => setState((old) => processState(state, old, subKeys, keyFunc))
+    return form.registerField(name, onStateChange, sub, {
       ...fieldConfig,
       getValidator: () => box.validate,
-      silent,
+      silent: !!callback,
     })
+  }
 
   const [fieldState, setState] = React.useState(() => {
-    const { keys: keyFunc, ...sub } = subscription
-    const subKeys = fieldSubscriptionItems.filter((k) => sub[k])
-    sub.value = sub.value || !!keyFunc
     let state = undefined
-    const callback = (s) => {
-      state = s
-    }
-    register(callback, sub, true)()
-    return processState(state, {}, subKeys, keyFunc)
+    register((s) => (state = s))()
+    return state
   })
-  React.useEffect(() => {
-    const { keys: keyFunc, ...sub } = subscription
-    const subKeys = fieldSubscriptionItems.filter((k) => sub[k])
-    sub.value = sub.value || !!keyFunc
-    const callback = (s) => {
-      setState((prevState) => processState(s, prevState, subKeys, keyFunc))
-    }
-    return register(callback, sub)
-  }, [name, form])
+  React.useEffect(register, [name, form])
 
-  // I wouldn't use this interface normally, but I want it to be compatible for now.
-  const length = ref.current?.length || 0
-  const props = {
-    ...rest,
-    meta: {},
-    fields: {
-      name,
-      length,
-      value: ref.current,
-      map: fn => {
-        const results = []
-        for (let i = 0; i < length; i++) {
-          results.push(fn(`${name}[${i}]`, i))
-        }
-        return results
-      },
-      ...mutators,
-    },
+  const length = fieldState.length
+  mutators.map = (fn, thisArg) => {
+    if (thisArg !== undefined) fn = fn.bind(thisArg)
+    const results = []
+    for (let i = 0; i < length; i++) {
+      results.push(fn(`${name}[${i}]`, i))
+    }
+    return results
   }
+  const props = processMeta(rest, fieldState, mutators)
   return React.createElement(component, props)
 }
 
