@@ -3,15 +3,12 @@ import { useForm } from 'react-final-form'
 import generateKey from 'helpers/generateKey'
 import React from 'react'
 
-const getKey = obj => (obj?.key !== undefined ? obj.key : obj)
+const generateKey = (prefix: string) => Math.random().toString().replace(/^0/, prefix)
 
-const compareKeys = (left, right) => {
-  const length = left?.length || 0
-  if (length !== right?.length) return false
-  for (let i = 0; i < length; i++) {
-    if (getKey(left[i]) !== getKey(right[i])) return false
+const simpleKeyFunc = (obj: any) => {
+  if (obj && typeof obj === 'object') {
+    return obj.hasOwnProperty('key') ? obj.key : (obj.key = generateKey('array'))
   }
-  return true
 }
 
 const DEFAULTS = { value: [], length: 0 }
