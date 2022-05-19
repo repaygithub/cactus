@@ -1,7 +1,9 @@
-import { fieldSubscriptionItems } from 'final-form'
+import { fieldSubscriptionItems, FieldConfig } from 'final-form'
 import { useForm } from 'react-final-form'
 import generateKey from 'helpers/generateKey'
 import React from 'react'
+
+type FieldArrayConfig = FieldConfig<unknown[]>
 
 const generateKey = (prefix: string) => Math.random().toString().replace(/^0/, prefix)
 
@@ -12,6 +14,16 @@ const simpleKeyFunc = (obj: any) => {
 }
 
 const DEFAULTS = { value: [], length: 0 }
+
+const ARRAY_PROPS: (keyof FieldArrayConfig)[] = [
+  'afterSubmit',
+  'beforeSubmit',
+  'data',
+  'defaultValue',
+  'initialValue',
+  'isEqual',
+  'validateFields',
+]
 
 const processState = (fieldState, prevState, subKeys, keyFunc) => {
   const nextState = {}
@@ -39,17 +51,30 @@ const processState = (fieldState, prevState, subKeys, keyFunc) => {
   return changed ? nextState : prevState
 }
 
-const FieldArray = ({ name, component, subscription, ...rest }) => {
+const FieldArray = ({ name, component, render, subscription, keyFunc, validate, ...rest }) => {
+  if (typeof rest.children === 'function') {
+    render = popAttr(rest, 'children') as RenderFunc
+  } else if (!component && !render && rest['as']) {
+    component = popAttr(rest, 'as') as React.ElementType<any>
+  }
   const form = useForm()
-  const mutators = React.useMemo(
-    () =>
-      Object.keys(form.mutators).reduce((result, key) => {
-        result[key] = (...args) => form.mutators[key](name, ...args)
-        return result
-      }, {}),
-    [form.mutators, name]
-  )
 
+  const ref = React.useRef()
+  if (ref.current?.name !== name) {
+    const mutators = Object.keys(form.mutators).reduce((result, key) => {
+      const mutator = form.mutators[key]
+      result[key] = (...args) => mutator(name, ...args)
+      return result
+    }, {
+      change: (value?: unknown[]) => form.change(name, value),
+      focus: () => form.focus(name),
+      blur: () => form.blur(name),
+    }),
+    ref.current = { name, mutators }
+  }
+  ref.current.validate = validate
+
+  const fieldConfig = getFieldConfig<FieldArrayConfig>(ARRAY_PROPS, rest, component)
   const register = (callback) => {
     // There's basically no reason to ever not subscribe to length.
     const sub = { ...subscription, length: true }
@@ -58,11 +83,9 @@ const FieldArray = ({ name, component, subscription, ...rest }) => {
     const onStateChange = callback
       ? (state) => callback(processState(state, {}, subKeys, keyFunc))
       : (state) => setState((old) => processState(state, old, subKeys, keyFunc))
-    return form.registerField(name, onStateChange, sub, {
-      ...fieldConfig,
-      getValidator: () => box.validate,
-      silent: !!callback,
-    })
+    fieldConfig.silent = !!callback
+    fieldConfig.getValidator = () => ref.current.validate
+    return form.registerField(name, onStateChange, sub, fieldConfig)
   }
 
   const [fieldState, setState] = React.useState(() => {
@@ -72,17 +95,29 @@ const FieldArray = ({ name, component, subscription, ...rest }) => {
   })
   React.useEffect(register, [name, form])
 
+    [form.mutators, name]
+  )
+
   const length = fieldState.length
-  mutators.map = (fn, thisArg) => {
-    if (thisArg !== undefined) fn = fn.bind(thisArg)
-    const results = []
-    for (let i = 0; i < length; i++) {
-      results.push(fn(`${name}[${i}]`, i))
-    }
-    return results
+  const arrayProps = {
+    ...fieldState,
+    ...ref.current.mutators,
+    map: (fn, thisArg) => {
+      if (thisArg !== undefined) fn = fn.bind(thisArg)
+      const results = []
+      for (let i = 0; i < length; i++) {
+        results.push(fn(`${name}[${i}]`, i))
+      }
+      return results
+    },
   }
-  const props = processMeta(rest, fieldState, mutators)
-  return React.createElement(component, props)
+  const props = processProps(arrayProps, rest)
+  if (render) {
+    return render(props)
+  } else if (component) {
+    return React.createElement(component, props)
+  }
+  return null
 }
 
 export default FieldArray

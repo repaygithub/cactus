@@ -114,12 +114,6 @@ const defaultFieldComponent: ComponentMapper = (props) => {
   }
 }
 
-const popAttr = (obj: UnknownProps, attr: string) => {
-  const val = obj[attr]
-  delete obj[attr]
-  return val
-}
-
 const Field: RenderFunc<FieldProps> = ({
   name,
   render,
@@ -139,16 +133,9 @@ const Field: RenderFunc<FieldProps> = ({
       component = getFieldComponent(props)
     }
   }
-  const fieldConfig: FieldConfig = { component, subscription }
   // This removes `type` && `multiple` from props, but they're re-added by `useField`.
-  for (const key of FIELD_PROPS) {
-    if (key in props) {
-      fieldConfig[key] = popAttr(props, key) as any
-    } else if (component && (component as any)[key]) {
-      // @ts-ignore For setting component defaults, useful for `format`/`parse`/`validate`.
-      fieldConfig[key] = component[key]
-    }
-  }
+  const fieldConfig = getFieldConfig<FieldConfig>(FIELD_PROPS, props, component)
+  fieldConfig.subscription = subscription
   if (props.required && !fieldConfig.validate) {
     fieldConfig.validate = requiredMsg ? makeRequiredValidator(requiredMsg) : validateRequired
   }
