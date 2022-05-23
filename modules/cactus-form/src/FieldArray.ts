@@ -66,6 +66,36 @@ const processArrayError = (error: any, checkForPromise: boolean = false) => {
   }
 }
 
+// TODO No way to fully automate, would always need to be called in `onSubmit`
+const removeKeys = (values, formApi) => {
+  const cleanupFuncs = weakMap.get(formApi) || {}
+  return runCleanup(values, cleanupFuncs)
+}
+
+const simpleCleanup = (value) => {
+  if (value && typeof value === 'object' && value.hasOwnProperty('key')) {
+    const { key, ...copy } = value
+    return copy
+  }
+  return value
+}
+
+const runCleanup = (values, cleanupFuncs) => {
+  if (typeof cleanupFuncs === 'function') {
+    return cleanupFuncs(values)
+  } else if (!values || !cleanupFuncs) {
+    return values
+  } else if (Array.isArray(cleanupFuncs)) {
+    return values.map((val, i) => runCleanup(val, cleanupFuncs[i]))
+  } else {
+    const copy = {}
+    for (const key of Object.keys(values)) {
+      copy[key] = runCleanup(values[key], cleanupFuncs[key])
+    }
+    return copy
+  }
+}
+
 const FieldArray = ({ name, component, render, subscription, keyFunc, processMeta, validate, ...rest }) => {
   if (typeof rest.children === 'function') {
     render = popAttr(rest, 'children') as RenderFunc
@@ -112,7 +142,6 @@ const FieldArray = ({ name, component, render, subscription, keyFunc, processMet
 
   const length = fieldState.length
   const arrayProps = {
-    ...fieldState,
     ...ref.current.mutators,
     map: (fn, thisArg) => {
       if (thisArg !== undefined) fn = fn.bind(thisArg)
@@ -122,6 +151,8 @@ const FieldArray = ({ name, component, render, subscription, keyFunc, processMet
       }
       return results
     },
+    ...fieldState,
+    name,
   }
   const props = processMeta(rest, arrayProps)
   if (render) {
