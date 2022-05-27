@@ -1,5 +1,4 @@
 FROM node:lts
-COPY entrypoint.sh /entrypoint.sh
 RUN apt-get update && apt-get install -y \
   wget \
   unzip \
@@ -44,4 +43,5 @@ RUN apt-get update && apt-get install -y \
   lsb-release \
   xdg-utils \
   wget
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT ["yarn", "w", "@repay/cactus-web"]
+CMD ["test:visual-update"]
