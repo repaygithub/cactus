@@ -456,6 +456,7 @@ const Slider = ({
 const StyledSlider = styled.div<{ $offset: number }>`
   overflow: hidden;
   background-color: ${color('lightContrast')};
+  touch-action: none;
 
   .slider {
     display: flex;
