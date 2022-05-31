@@ -13,7 +13,7 @@ import { omitProps } from '../helpers/omit'
 import IconButton from '../IconButton/IconButton'
 import DropDown from './DropDown'
 import CalendarGrid, { CalendarGridLabels, CalendarValue, FocusProps, initGridState } from './Grid'
-import Slider, { SlideDirection, TransitionState } from './Slider'
+import Slider, { SlideDirection, SliderProps } from './Slider'
 
 export interface CalendarLabels extends CalendarGridLabels {
   calendarKeyboardDirections: React.ReactChild
@@ -59,7 +59,7 @@ interface InnerCalendarProps extends BaseProps, FocusProps {
 }
 export type CalendarProps = InnerCalendarProps & MarginProps
 
-interface CalendarState extends TransitionState {
+interface CalendarState extends SliderProps {
   value: CalendarValue
   month: number
   year: number
@@ -172,7 +172,7 @@ class CalendarBase extends React.Component<InnerCalendarProps, CalendarState> {
     document.removeEventListener('reset', this.onReset)
   }
 
-  private setMonthYear = (date: Date, e: React.SyntheticEvent, transState?: TransitionState) => {
+  private setMonthYear = (date: Date, e: React.SyntheticEvent, transState?: SliderProps) => {
     if (date.getMonth() !== this.state.month || date.getFullYear() !== this.state.year) {
       const dateState = { year: date.getFullYear(), month: date.getMonth() }
       this.setState({ ...dateState, ...transState })
@@ -220,36 +220,6 @@ class CalendarBase extends React.Component<InnerCalendarProps, CalendarState> {
     this.setMonthYear(next, e, {})
   }
 
-  private renderGrid = (date: Date, key: React.Key) => {
-    const {
-      initialFocus,
-      multiple = Array.isArray(this.state.value),
-      readOnly,
-      isValidDate,
-      labels = DEFAULT_LABELS,
-      locale,
-    } = this.props
-    return (
-      <CalendarGrid
-        key={key}
-        month={date.getMonth()}
-        year={date.getFullYear()}
-        locale={locale}
-        isValidDate={isValidDate}
-        selected={this.state.value}
-        initialFocus={this._lastFocus || initialFocus}
-        labels={labels}
-        aria-multiselectable={multiple}
-        aria-readonly={readOnly}
-        aria-describedby={this.getLabelId('calendarKeyboardDirections')}
-        onClick={this.setSelectedDate}
-        onKeyDown={this.setSelectedDate}
-        onFocusOverflow={this.setMonthYear}
-        onBlur={this.setLastFocus}
-      />
-    )
-  }
-
   render() {
     const {
       month,
@@ -259,7 +229,7 @@ class CalendarBase extends React.Component<InnerCalendarProps, CalendarState> {
       defaultValue,
       form,
       name,
-      multiple,
+      multiple = Array.isArray(this.state.value),
       disabled,
       readOnly,
       onChange,
@@ -270,8 +240,6 @@ class CalendarBase extends React.Component<InnerCalendarProps, CalendarState> {
       children,
       ...rest
     } = this.props
-    // Call this here because the `renderGrid` function isn't called immediately.
-    this.getLabelId('calendarKeyboardDirections')
     return (
       <div aria-label="calendar" {...rest} role="group" aria-disabled={disabled} ref={this.rootRef}>
         <Flex justifyContent="space-between" alignItems="center" padding={4}>
@@ -296,7 +264,24 @@ class CalendarBase extends React.Component<InnerCalendarProps, CalendarState> {
             <NavigationChevronRight />
           </IconButton>
         </Flex>
-        <Slider {...this.state} render={this.renderGrid} onChange={this.setMonthYear} />
+        <Slider {...this.state}>
+          <CalendarGrid
+            month={this.state.month}
+            year={this.state.year}
+            locale={locale}
+            isValidDate={isValidDate}
+            selected={this.state.value}
+            initialFocus={this._lastFocus || initialFocus}
+            labels={labels}
+            aria-multiselectable={multiple}
+            aria-readonly={readOnly}
+            aria-describedby={this.getLabelId('calendarKeyboardDirections')}
+            onClick={this.setSelectedDate}
+            onKeyDown={this.setSelectedDate}
+            onFocusOverflow={this.setMonthYear}
+            onBlur={this.setLastFocus}
+          />
+        </Slider>
         {children}
         {this.renderLabels(labels)}
       </div>
