@@ -207,6 +207,9 @@ const useItemCount = (navRef: React.RefObject<HTMLElement>, props: PaginationPro
           newItemCount -= 1
         }
       }
+      if (newItemCount < MIN_ITEMS) {
+        newItemCount = MIN_ITEMS
+      }
       setItemCount((old) => {
         if (old.value === newItemCount) {
           // If the last render was correct, we don't need to re-render.
