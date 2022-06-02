@@ -18,3 +18,53 @@ export const getFieldConfig = <C>(keys: (keyof C)[], props: UnknownProps, compon
   }
   return fieldConfig
 }
+
+const pathRegex = /[^\\]]?[^.[]*|\\[[^\\]]]/g
+
+var charCodeOfDot = ".".charCodeAt(0);
+var reEscapeChar = /\\(\\)?/g;
+var rePropName = RegExp( // Match anything that isn't a dot or bracket.
+"[^.[\\]]+" + "|" + // Or match property names within brackets.
+"\\[(?:" + // Match a non-string expression.
+"([^\"'][^[]*)" + "|" + // Or match strings (supports escaping characters).
+"([\"'])((?:(?!\\2)[^\\\\]|\\\\.)*?)\\2" + ")\\]" + "|" + // Or match "" as the space between consecutive dots or empty brackets.
+"(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))", "g");
+
+var stringToPath = function stringToPath(string) {
+  var result = [];
+
+  if (string.charCodeAt(0) === charCodeOfDot) {
+    result.push("");
+  }
+
+  string.replace(rePropName, function (match, expression, quote, subString) {
+    var key = match;
+
+    if (quote) {
+      key = subString.replace(reEscapeChar, "$1");
+    } else if (expression) {
+      key = expression.trim();
+    }
+
+    result.push(key);
+  });
+  return result;
+};
+
+var keysCache = {};
+
+var toPath = function toPath(key) {
+  if (key === null || key === undefined || !key.length) {
+    return [];
+  }
+
+  if (typeof key !== "string") {
+    throw new Error("toPath() expects a string");
+  }
+
+  if (keysCache[key] == null) {
+    keysCache[key] = stringToPath(key);
+  }
+
+  return keysCache[key];
+};
