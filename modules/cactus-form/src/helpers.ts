@@ -1,5 +1,3 @@
-
-
 export const popAttr = (obj: UnknownProps, attr: string) => {
   const val = obj[attr]
   delete obj[attr]
@@ -19,52 +17,59 @@ export const getFieldConfig = <C>(keys: (keyof C)[], props: UnknownProps, compon
   return fieldConfig
 }
 
-const pathRegex = /[^\\]]?[^.[]*|\\[[^\\]]]/g
+type ParseState = '*' | '[]' | '.['
+const WORD: ParseState = '*'
+const START: ParseState = '.['
+const BRACKET: ParseState = '[]'
 
-var charCodeOfDot = ".".charCodeAt(0);
-var reEscapeChar = /\\(\\)?/g;
-var rePropName = RegExp( // Match anything that isn't a dot or bracket.
-"[^.[\\]]+" + "|" + // Or match property names within brackets.
-"\\[(?:" + // Match a non-string expression.
-"([^\"'][^[]*)" + "|" + // Or match strings (supports escaping characters).
-"([\"'])((?:(?!\\2)[^\\\\]|\\\\.)*?)\\2" + ")\\]" + "|" + // Or match "" as the space between consecutive dots or empty brackets.
-"(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))", "g");
+const dotCode = START.charCodeAt(0)
+const openCode = BRACKET.charCodeAt(0)
+const closeCode = BRACKET.charCodeAt(1)
 
-var stringToPath = function stringToPath(string) {
-  var result = [];
-
-  if (string.charCodeAt(0) === charCodeOfDot) {
-    result.push("");
+// Unfortunately `final-form` doesn't export their `toPath` function;
+// this version doesn't support quotes/escape chars, but I've never seen those used.
+export const toPath = (str: string): string[] => {
+  if (str !== null && str !== undefined && typeof str !== 'string') {
+    throw new Error('toPath() expects a string')
   }
+  const path = []
+  const length = str?.length
+  if (!length) return path
 
-  string.replace(rePropName, function (match, expression, quote, subString) {
-    var key = match;
-
-    if (quote) {
-      key = subString.replace(reEscapeChar, "$1");
-    } else if (expression) {
-      key = expression.trim();
+  let index = 0
+  let wordStart = 0
+  let state = str.charCodeAt(0) === openCode ? START : WORD
+  while (index < length) {
+    const code = str.charCodeAt(index++)
+    if (state === START) {
+      wordStart = index
+      if (code === dotCode) {
+        state = WORD
+      } else if (code === openCode) {
+        state = BRACKET
+      } else {
+        throw new Error(`Expected '.' or '[' at index ${index - 1}`)
+      }
+    } else if (state === WORD) {
+      if (code === dotCode || code === openCode) {
+        path.push(str.substring(wordStart, --index))
+        state = START
+      } else if (code === closeCode) {
+        throw new Error(`Unexpected ']' at index ${index - 1}`)
+      }
+    } else if (state === BRACKET) {
+      if (code === closeCode) {
+        path.push(str.substring(wordStart, index - 1))
+        state = START
+      } else if (code === openCode) {
+        throw new Error(`Unexpected '[' at index ${index - 1}`)
+      }
     }
-
-    result.push(key);
-  });
-  return result;
-};
-
-var keysCache = {};
-
-var toPath = function toPath(key) {
-  if (key === null || key === undefined || !key.length) {
-    return [];
   }
-
-  if (typeof key !== "string") {
-    throw new Error("toPath() expects a string");
+  if (state === WORD) {
+    path.push(str.substring(wordStart))
+  } else if (state === BRACKET) {
+    throw new Error(`Unclosed '[' at starting at index ${wordStart - 1}`)
   }
-
-  if (keysCache[key] == null) {
-    keysCache[key] = stringToPath(key);
-  }
-
-  return keysCache[key];
-};
+  return path
+}
