@@ -17,59 +17,36 @@ export const getFieldConfig = <C>(keys: (keyof C)[], props: UnknownProps, compon
   return fieldConfig
 }
 
-type ParseState = '*' | '[]' | '.['
-const WORD: ParseState = '*'
-const START: ParseState = '.['
-const BRACKET: ParseState = '[]'
+// Regex is way too complicated; copied from `final-form` because they don't export `toPath`.
+const charCodeOfDot = '.'.charCodeAt(0)
+const reEscapeChar = /\\(\\)?/g
+const rePropName = RegExp( // Match anything that isn't a dot or bracket.
+"[^.[\\]]+" + "|" + // Or match property names within brackets.
+"\\[(?:" + // Match a non-string expression.
+"([^\"'][^[]*)" + "|" + // Or match strings (supports escaping characters).
+"([\"'])((?:(?!\\2)[^\\\\]|\\\\.)*?)\\2" + ")\\]" + "|" + // Or match "" as the space between consecutive dots or empty brackets.
+"(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))", "g")
 
-const dotCode = START.charCodeAt(0)
-const openCode = BRACKET.charCodeAt(0)
-const closeCode = BRACKET.charCodeAt(1)
-
-// Unfortunately `final-form` doesn't export their `toPath` function;
-// this version doesn't support quotes/escape chars, but I've never seen those used.
-export const toPath = (str: string): string[] => {
-  if (str !== null && str !== undefined && typeof str !== 'string') {
+export const toPath = (key: string): string[] => {
+  if (key !== null && key !== undefined && typeof key !== 'string') {
     throw new Error('toPath() expects a string')
   }
-  const path = []
-  const length = str?.length
-  if (!length) return path
 
-  let index = 0
-  let wordStart = 0
-  let state = str.charCodeAt(0) === openCode ? START : WORD
-  while (index < length) {
-    const code = str.charCodeAt(index++)
-    if (state === START) {
-      wordStart = index
-      if (code === dotCode) {
-        state = WORD
-      } else if (code === openCode) {
-        state = BRACKET
-      } else {
-        throw new Error(`Expected '.' or '[' at index ${index - 1}`)
-      }
-    } else if (state === WORD) {
-      if (code === dotCode || code === openCode) {
-        path.push(str.substring(wordStart, --index))
-        state = START
-      } else if (code === closeCode) {
-        throw new Error(`Unexpected ']' at index ${index - 1}`)
-      }
-    } else if (state === BRACKET) {
-      if (code === closeCode) {
-        path.push(str.substring(wordStart, index - 1))
-        state = START
-      } else if (code === openCode) {
-        throw new Error(`Unexpected '[' at index ${index - 1}`)
-      }
+  const result: string[] = []
+  if (key?.length) {
+    if (key.charCodeAt(0) === charCodeOfDot) {
+      result.push('')
     }
+
+    key.replace(rePropName, (match, expression, quote, subString) => {
+      if (quote) {
+        result.push(subString.replace(reEscapeChar, '$1'))
+      } else if (expression) {
+        result.push(expression.trim())
+      } else {
+        result.push(match)
+      }
+    })
   }
-  if (state === WORD) {
-    path.push(str.substring(wordStart))
-  } else if (state === BRACKET) {
-    throw new Error(`Unclosed '[' at starting at index ${wordStart - 1}`)
-  }
-  return path
+  return result
 }
