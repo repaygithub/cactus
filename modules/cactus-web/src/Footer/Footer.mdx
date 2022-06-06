@@ -3,7 +3,6 @@ name: Footer
 menu: Components
 ---
 
-import PropsTable from 'website-src/components/PropsTable'
 import Footer from './Footer'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
@@ -19,6 +18,29 @@ The Footer takes an optional `logo` prop, which can either be a string for an im
 - If using the <a href="../layout/">Layout</a> component, Footer should be the last child of the Layout.
 - Use the `variant` prop to change the color: `white`, `gray`, or `dark`.
 - The `alt` attribute on the logo will default to "Logo" when passing a src string. Passing the logo as a component instead will allow you to customize the `alt` attribute (e.g. for localization).
+
+### Flex Layout
+
+The basic footer layout puts the logo on the left and all contents in a single div on the right/center.
+You can customize that by turning the Footer into a normal flex container using `flexFlow` and other flex container props.
+For example, you could put the logo in the middle with buttons on either side:
+
+```jsx
+<Footer flexFlow justifyContent="space-between">
+  <Link to="privacy.html">Privacy Policy</Link>
+  <Footer.Logo as="img" src="footer-logo.png" />
+  <TextButton onClick={loginAsStaff}>Staff Login</TextButton>
+</Footer>
+```
+
+`flexFlow` can be used as a boolean or any valid value for the CSS `flex-flow` property;
+the default flex-direction is "column" on tiny screens and "row" on anything larger.
+
+#### Footer.Logo
+
+The Logo component is a simple styled-components wrapper with some default styles for an image;
+it can be used as a div, or it supports the polymorphic `as` prop to render another component directly.
+It is used "under the hood" when passing the Footer's `logo` prop.
 
 ### Try It Out
 
@@ -40,4 +62,13 @@ export const code = `
 ## Properties
 
 ### Footer
-<PropsTable of={Footer} staticProp="Footer" />
+<!-- Why the hell does PropsTable get the Logo props for the base Footer component? -->
+
+- `logo` - either a `src` string for an `<img>` tag, or a React element that renders a logo
+- `variant` - `'white' | 'gray' | 'dark'`
+- `flexFlow` - changes the footer's contents to a basic flex layout; `true` is equivalent to `['column', 'row']`
+- [styled-system](https://styled-system.com/api/) props for padding and flex containers
+
+### Footer.Logo
+
+- [styled-system](https://styled-system.com/api/) props for flex items, margins, position, and height/width
