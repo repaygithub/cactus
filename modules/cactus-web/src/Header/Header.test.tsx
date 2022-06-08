@@ -26,7 +26,7 @@ describe('component: Header', () => {
     const desc = getByText('I am a description')
 
     expect(title).toBeInTheDocument()
-    expect(title.tagName).toBe('H2')
+    expect(title.tagName).toBe('H1')
     expect(desc).toBeInTheDocument()
   })
 })
