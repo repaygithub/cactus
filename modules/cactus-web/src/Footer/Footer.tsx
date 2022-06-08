@@ -140,7 +140,8 @@ export const Footer = styledUnpoly(FooterBase as FooterComponent)`
       justify-content: space-between;
       text-align: left;
     `
-        : isIE &&
+        : !p.flexFlow &&
+          isIE &&
           `
       ::before {
         content: '';
