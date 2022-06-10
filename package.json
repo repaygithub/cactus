@@ -25,7 +25,6 @@
     "test:ci": "yarn lint && yarn ws:run test:ci",
     "test:local": "yarn lint && yarn ws:run test:local",
     "test:sonar": "yarn fwk test --coverage && yarn i18n test --coverage && yarn form test --coverage && yarn icons test --coverage && yarn theme test --coverage && yarn web test --coverage",
-    "scan:blackduck": "bash scripts/blackduck.sh cactus-fwk && bash scripts/blackduck.sh cactus-i18n && bash scripts/blackduck.sh cactus-form && bash scripts/blackduck.sh cactus-icons && bash scripts/blackduck.sh cactus-theme && bash scripts/blackduck.sh cactus-web",
     "build": "yarn fwk build && yarn theme build && yarn icons build && yarn web build && yarn i18n build && yarn form build",
     "predocs:publish": "yarn docs build",
     "docs:publish": "yarn predocs:publish && gh-pages -d ./website/public",
