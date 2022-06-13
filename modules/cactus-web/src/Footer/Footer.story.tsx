@@ -51,3 +51,15 @@ export const BasicUsage: Story<typeof Footer, { textContent: string }> = ({
     </Box>
   )
 }
+
+export const CustomFlex: Story<typeof Footer> = () => (
+  <Footer flexFlow={['column', 'row']} justifyContent="space-between">
+    <Box display="flex">
+      <div>Left</div>
+      <Footer.Logo position={['static', 'absolute']} top={3} left="300px" as="img" src={LOGO} />
+    </Box>
+    <div>Center</div>
+    <Box flexBasis={['50px', '200px']}>Right</Box>
+  </Footer>
+)
+CustomFlex.parameters = { controls: { disable: true } }
