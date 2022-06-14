@@ -15,16 +15,18 @@ import DropDown from './DropDown'
 import CalendarGrid, { CalendarGridLabels, CalendarValue, FocusProps, initGridState } from './Grid'
 import Slider, { SlideDirection, SliderProps } from './Slider'
 
-export interface CalendarLabels extends CalendarGridLabels {
-  calendarKeyboardDirections: React.ReactChild
-  prevMonth: React.ReactChild
-  nextMonth: React.ReactChild
-  showMonth: React.ReactChild
-  showYear: React.ReactChild
+interface CalendarNavLabels {
+  calendarKeyboardDirections?: React.ReactChild
+  prevMonth?: React.ReactChild
+  nextMonth?: React.ReactChild
+  showMonth?: React.ReactChild
+  showYear?: React.ReactChild
   months?: string[]
 }
 
-const DEFAULT_LABELS: CalendarLabels = {
+export interface CalendarLabels extends CalendarGridLabels, CalendarNavLabels {}
+
+const DEFAULT_LABELS: CalendarNavLabels = {
   calendarKeyboardDirections: 'Press space to choose the date',
   showMonth: 'Click to change month',
   showYear: 'Click to change year',
@@ -235,7 +237,7 @@ class CalendarBase extends React.Component<InnerCalendarProps, CalendarState> {
       onChange,
       onMonthChange,
       isValidDate,
-      labels = DEFAULT_LABELS,
+      labels = {},
       locale,
       children,
       ...rest
@@ -252,7 +254,7 @@ class CalendarBase extends React.Component<InnerCalendarProps, CalendarState> {
             <NavigationChevronLeft />
           </IconButton>
           <Flex>
-            {this.renderMonthDD(locale, labels.months)}
+            {this.renderMonthDD(locale, labels.months || DEFAULT_LABELS.months)}
             {this.renderYearDD()}
           </Flex>
           <IconButton
@@ -342,8 +344,8 @@ class CalendarBase extends React.Component<InnerCalendarProps, CalendarState> {
     return this._labelIDs[label] || (this._labelIDs[label] = generateId(label))
   }
 
-  renderLabels(labels: Partial<CalendarLabels>) {
-    const keys = Object.keys(this._labelIDs) as (keyof CalendarLabels)[]
+  renderLabels(labels: CalendarNavLabels) {
+    const keys = Object.keys(this._labelIDs) as (keyof CalendarNavLabels)[]
     return (
       <div hidden>
         {keys.map((key) => (

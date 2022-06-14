@@ -6,6 +6,7 @@ import { Fieldset, makeGroup } from '../Checkable/Group'
 import CheckBoxField, { CheckBoxFieldProps } from '../CheckBoxField/CheckBoxField'
 
 interface CheckBoxGroupProps extends Omit<ExtFieldProps, 'role'> {
+  children?: React.ReactNode
   checked?: Record<string, any> // `any` instead of `boolean` to work better with form libs.
   required?: boolean
 }

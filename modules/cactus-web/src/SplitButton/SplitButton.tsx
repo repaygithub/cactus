@@ -23,7 +23,7 @@ interface DropDownProps extends React.HTMLAttributes<HTMLElement> {
 interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement>, MarginProps {
   mainActionLabel: React.ReactNode
   onSelectMainAction: (event: React.MouseEvent<HTMLButtonElement>) => void
-  mainActionIcon?: React.FunctionComponent<IconProps>
+  mainActionIcon?: React.FC<IconProps>
   disabled?: boolean
   // Aria label for the dropdown trigger. Defaults to "Action List"
   'aria-label'?: string
@@ -33,7 +33,7 @@ interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement>, MarginP
 interface SplitButtonActionProps extends Omit<MenuItemProps, 'onSelect'> {
   // !important
   onSelect: () => any
-  icon?: React.FunctionComponent<IconProps>
+  icon?: React.FC<IconProps>
 }
 interface VariantInterface {
   variant?: SplitButtonVariant

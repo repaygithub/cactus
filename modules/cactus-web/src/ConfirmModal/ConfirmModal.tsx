@@ -49,7 +49,7 @@ const getIconWidthAndHeight = ({ iconSize }: IconProps): '56px' | '88px' | undef
 const getFlexDirection = ({ iconSize }: ConfirmModalProps): 'row' | 'column' =>
   iconSize === 'medium' ? 'row' : 'column'
 
-const ConfirmModalBase: React.FunctionComponent<ConfirmModalProps> = ({
+const ConfirmModalBase: React.FC<ConfirmModalProps> = ({
   cancelButtonText,
   children,
   confirmButtonText,
@@ -60,7 +60,7 @@ const ConfirmModalBase: React.FunctionComponent<ConfirmModalProps> = ({
   variant,
   title,
   ...props
-}): React.ReactElement => {
+}) => {
   return (
     <Modal variant={variant} onClose={onClose} flexFlow {...props}>
       <Flex alignItems="center" className="title-icon">

@@ -14,7 +14,11 @@ export interface SliderProps {
 
 const TIMEOUT = isIE ? 400 : 300
 
-const Slider: React.FC<SliderProps> = ({ transition, transitionKey, children }) => (
+const Slider: React.FC<React.PropsWithChildren<SliderProps>> = ({
+  transition,
+  transitionKey,
+  children,
+}) => (
   <TransitionGroup component={SlideWrapper}>
     <CSSTransition key={transitionKey} timeout={TIMEOUT} classNames={transition}>
       {children}

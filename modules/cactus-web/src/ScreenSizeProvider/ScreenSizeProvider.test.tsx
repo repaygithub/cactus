@@ -4,7 +4,7 @@ import * as React from 'react'
 import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import { ScreenSizeContext, ScreenSizeProvider, SIZES } from './ScreenSizeProvider'
 
-const Size: React.FC = (): React.ReactElement => {
+const Size: React.FC = () => {
   return (
     <ScreenSizeContext.Consumer>
       {(value): React.ReactElement => <span>{value.toString()}</span>}

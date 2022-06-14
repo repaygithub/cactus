@@ -35,6 +35,7 @@ interface ItemProps {
 }
 
 interface UserMenuProps {
+  children?: React.ReactNode
   id?: string
   isProfilePage?: boolean
   label: React.ReactNode

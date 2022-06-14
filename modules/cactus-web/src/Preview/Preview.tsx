@@ -46,6 +46,10 @@ export const Preview = React.forwardRef<HTMLDivElement, PreviewProps>(
     const phrases = { ...DEFAULT_PHRASES, ...passedPhrases }
 
     React.useEffect(() => {
+      // REACT18-COMPAT: This could theoretically cause issues when remounting,
+      // but I don't think it's likely give how focusing the image takes over
+      // the screen: any interaction likely to "hide" the component will also
+      // likely close the selected image.
       if (imageSelected) {
         closeButtonRef.current?.focus()
       }

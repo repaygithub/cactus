@@ -15,7 +15,7 @@ interface SelectFieldProps extends WidthProps, FieldProps, Omit<SelectProps, 'id
 
 type SelectFieldType = React.FC<SelectFieldProps> & { Option: typeof Select.Option }
 
-const SelectFieldBase: SelectFieldType = (props): React.ReactElement => {
+const SelectFieldBase: SelectFieldType = (props) => {
   const {
     id,
     name,

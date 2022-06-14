@@ -54,9 +54,7 @@ export const ScreenSizeContext = React.createContext<ScreenSize>(SIZES[DEFAULT_S
 
 export const useScreenSize = (): ScreenSize => React.useContext(ScreenSizeContext)
 
-export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}): React.ReactElement => {
+export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentSize, setSize] = React.useState<Size>(DEFAULT_SIZE)
   const theme: CactusTheme = React.useContext(ThemeContext)
 

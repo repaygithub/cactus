@@ -41,7 +41,7 @@ const iconMap: IconMap = {
 
 const Noop = (): null => null
 
-const StatusMessageBase: React.FC<StatusMessageProps> = (props): React.ReactElement => {
+const StatusMessageBase: React.FC<StatusMessageProps> = (props) => {
   const { status, className, children, ...rest } = omitMargins(props)
   const StatusIcon: React.ElementType<any> = iconMap[status as Status] || Noop
   return (

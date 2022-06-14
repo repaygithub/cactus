@@ -18,6 +18,7 @@ interface ListItemProps extends React.HTMLAttributes<HTMLLIElement> {
 }
 
 interface ItemHeaderProps extends Omit<TextProps, 'color'> {
+  children?: React.ReactNode
   icon?: keyof typeof icons
   as?: React.ElementType<any>
 }

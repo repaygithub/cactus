@@ -35,6 +35,7 @@ interface TabPanelProps extends BoxProps, Omit<React.HTMLAttributes<HTMLElement>
 }
 
 interface TabControllerProps {
+  children?: React.ReactNode
   id?: string
   initialTabId?: string
 }
