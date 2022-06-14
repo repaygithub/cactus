@@ -10,6 +10,7 @@ interface ErrorViewProps {
 }
 
 interface ErrorBoundaryProps {
+  children?: React.ReactNode
   onError: OnError
   errorView?: ErrorView
 }
@@ -26,19 +27,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
   public static propTypes = {
     onError: PropTypes.func.isRequired,
-    errorView: (
-      props: { [k: string]: any },
-      propName: string,
-      componentName: string
-    ): Error | null => {
-      const prop = props[propName]
-      if (prop !== undefined && typeof prop !== 'string' && typeof prop !== 'function') {
-        return new Error(
-          `The prop \`${propName}\` is marked as a component type in \`${componentName}\` but its type is \`${typeof prop}\`.`
-        )
-      }
-      return null
-    },
+    errorView: PropTypes.elementType,
   }
 
   public componentDidCatch(error: Error | null, info: ErrorInfo | null): void {
@@ -76,7 +65,7 @@ const withErrorBoundary = <BaseProps extends Record<string, any>>(
     throw new Error('You must pass the `onError` prop when using `withErrorBoundary`!')
   }
 
-  const Wrapped = (props: React.PropsWithChildren<BaseProps>): ReactElement => (
+  const Wrapped = (props: BaseProps): ReactElement => (
     <ErrorBoundary onError={onError} errorView={errorView}>
       <BaseComponent {...props} />
     </ErrorBoundary>
