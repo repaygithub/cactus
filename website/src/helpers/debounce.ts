@@ -2,7 +2,7 @@ function debounce<Func extends (...args: any[]) => any>(func: Func, wait: number
   let lastArgs: any, lastThis: any, result: any, timerId: number | undefined
   return function debounced(this: any, ...args: any[]): any {
     lastArgs = args
-    lastThis = this
+    lastThis = this // eslint-disable-line @typescript-eslint/no-this-alias
 
     if (timerId === undefined) {
       timerId = window.setTimeout(function (): void {

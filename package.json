@@ -25,14 +25,12 @@
     "test:ci": "yarn lint && yarn ws:run test:ci",
     "test:local": "yarn lint && yarn ws:run test:local",
     "test:sonar": "yarn fwk test --coverage && yarn i18n test --coverage && yarn form test --coverage && yarn icons test --coverage && yarn theme test --coverage && yarn web test --coverage",
-    "scan:blackduck": "bash scripts/blackduck.sh cactus-fwk && bash scripts/blackduck.sh cactus-i18n && bash scripts/blackduck.sh cactus-form && bash scripts/blackduck.sh cactus-icons && bash scripts/blackduck.sh cactus-theme && bash scripts/blackduck.sh cactus-web",
     "build": "yarn fwk build && yarn theme build && yarn icons build && yarn web build && yarn i18n build && yarn form build",
     "predocs:publish": "yarn docs build",
     "docs:publish": "yarn predocs:publish && gh-pages -d ./website/public",
     "cleanup": "yarn ws:run cleanup",
     "run-full": "yarn cleanup && yarn build && yarn test:ci",
-    "commit": "git-cz",
-    "postinstall": "patch-package && patch-package --patch-dir=node_modules/@repay/cactus-form/patches",
+    "postinstall": "patch-package --patch-dir=node_modules/@repay/cactus-form/patches",
     "test:build": "docker build -t cactus/tests:base actions/storyshots && docker build -t cactus/tests:local .",
     "test:docker": "docker run -v \"/$(pwd)/modules:/code/modules\" cactus/tests:local",
     "test:docker-update": "yarn test:docker test:visual-update"
@@ -56,9 +54,7 @@
     "@repay/eslint-config": "^5.0.4",
     "@typescript-eslint/eslint-plugin": "^5.12.1",
     "@typescript-eslint/parser": "^5.12.1",
-    "commitizen": "^4.2.4",
     "conventional-commits-parser": "^3.2.3",
-    "cz-conventional-changelog": "3.3.0",
     "eslint": "^8.11.0",
     "gh-pages": "^3.2.2",
     "jest": "^27.5.1",
@@ -67,11 +63,6 @@
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.6.0",
     "typescript": "~4.6.2"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   },
   "resComment": "higher versions of core-js cause the e2e tests in examples to hang forever",
   "resolutions": {
