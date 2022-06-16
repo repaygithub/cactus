@@ -3,6 +3,7 @@ import { Accordion, Flex, IconButton, Text } from '@repay/cactus-web'
 import React, { FunctionComponent } from 'react'
 
 interface FieldsAccordionProps {
+  children?: React.ReactNode
   index: number
   lastIndex: number
   header: string
