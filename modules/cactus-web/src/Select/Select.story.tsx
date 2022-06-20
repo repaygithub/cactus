@@ -13,9 +13,10 @@ const disabledOptions = [
   { label: "You can't select me", value: 0, disabled: true },
   { label: "Can't select me either", value: 1, disabled: true },
   { label: "I'm up for grabs", value: 2 },
-  { label: 'Pick me pick me', value: 3 },
+  { label: 'Pick me pick me', value: [3] },
   { label: 'Nope', value: 4, disabled: true },
-  { label: 'Yep', value: 5 },
+  { label: '', value: undefined },
+  { label: 'Yep', value: { complex: 5 } },
 ]
 
 export default {

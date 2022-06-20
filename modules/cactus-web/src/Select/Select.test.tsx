@@ -189,8 +189,26 @@ describe('component: Select', () => {
     })
 
     test('multi select', () => {
-      // Unlike the single select, having a "blank" value in multiselect
-      // doesn't prevent the "clear"; instead, pass [''] to select that option.
+      const { getByRole, rerender } = renderWithTheme(
+        <Select id="x" name="x" multiple value={['z', 'y']}>
+          <option value="x" />
+          <option value="y" />
+          <option value="z" />
+        </Select>
+      )
+      const trigger = getByRole('button')
+      expect(trigger).toHaveTextContent('zy')
+      rerender(
+        <Select id="x" name="x" multiple value="">
+          <option value="x" />
+          <option value="y" />
+          <option value="z" />
+        </Select>
+      )
+      expect(trigger).toHaveTextContent('Select an option')
+    })
+
+    test('multi select with empty string as value', () => {
       const { getByRole, rerender } = renderWithTheme(
         <Select id="x" name="x" multiple value={['z', 'y', '']}>
           <option value="">Blank</option>
@@ -209,7 +227,7 @@ describe('component: Select', () => {
           <option value="z" />
         </Select>
       )
-      expect(trigger).toHaveTextContent('Select an option')
+      expect(trigger).toHaveTextContent('Blank')
     })
   })
 
@@ -582,6 +600,44 @@ describe('component: Select', () => {
 
       fireEvent.mouseEnter(notActive)
       expect(getByRole('listbox').getAttribute('aria-activedescendant')).not.toEqual(notActive.id)
+    })
+  })
+
+  describe('nonstandard values', () => {
+    test('can select anything as a value', () => {
+      const values = jest.fn()
+      const options = [
+        { label: 'object', value: { one: 'object' } },
+        { label: 'array', value: ['two'] },
+        { label: 'undefined', value: undefined },
+        { label: 'date', value: new Date() },
+      ]
+      const { getByRole, getByText } = renderWithTheme(
+        <Select
+          id="test-id"
+          name="complex"
+          placeholder="Click me!"
+          options={options}
+          onChange={({ target }) => values(target.value)}
+        />
+      )
+      userEvent.click(getByText('Click me!'))
+      userEvent.click(getByText('object'))
+      expect(values).toHaveBeenLastCalledWith(options[0].value)
+
+      userEvent.click(getByRole('button', { name: 'object' }))
+      userEvent.click(getByText('array'))
+      expect(values).toHaveBeenLastCalledWith(options[1].value)
+
+      userEvent.click(getByRole('button', { name: 'array' }))
+      userEvent.click(getByText('undefined'))
+      expect(values).toHaveBeenLastCalledWith(options[2].value)
+
+      userEvent.click(getByRole('button', { name: 'undefined' }))
+      userEvent.click(getByText('date'))
+      expect(values).toHaveBeenLastCalledWith(options[3].value)
+
+      expect(values).toHaveBeenCalledTimes(4)
     })
   })
 

@@ -38,6 +38,8 @@ export function cloneAll(
   }, [] as React.ReactChild[])
 }
 
+const isElement = (obj: any): obj is React.ReactElement => !!obj?.props
+
 // A pure component is one whose output depends solely on props.
 export function isPurelyEqual(left: React.ReactNode, right: React.ReactNode): boolean {
   const leftArray = React.Children.toArray(left) as React.ReactChild[]
@@ -54,7 +56,7 @@ export function isPurelyEqual(left: React.ReactNode, right: React.ReactNode): bo
 function compareElements(left: React.ReactChild, right: React.ReactChild) {
   if (left === right) {
     return true
-  } else if (typeof left === 'object' && typeof right === 'object') {
+  } else if (isElement(left) && isElement(right)) {
     if (left.type !== right.type || left.key !== right.key) return false
     const { children: lnodes, ...lprops } = left.props
     const { children: rnodes, ...rprops } = right.props
