@@ -313,8 +313,8 @@ const generateGridStyles = (components: ComponentLayout[]): StyleList => {
     grid-template-columns: ${colValue};
   `)
   // Some CSS engines are too dumb to figure out height/width from the fixed position offsets.
-  fixed.width = `calc(100vw - ${fixed.left + fixed.right}px)`
-  fixed.height = `calc(100vh - ${fixed.top + fixed.bottom}px)`
+  fixed.width = `calc(100% - ${fixed.left + fixed.right}px)`
+  fixed.height = `calc(100% - ${fixed.top + fixed.bottom}px)`
   styles.push(fixedKeyOrder.reduce(reduceToPx, fixed))
   // The last line is at +1, and another +1 to offset negative line numbers starting at -1.
   const lastRow = rows.length + 2
