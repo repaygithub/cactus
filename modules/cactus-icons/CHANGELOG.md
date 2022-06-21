@@ -1,3 +1,15 @@
+# v3.1.3 (Tue Jun 21 2022)
+
+#### 🔩 Dependency Updates
+
+- CACTUS-851 :: Upgrade storybook dependencies [#763](https://github.com/repaygithub/cactus/pull/763) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 1
+
+- [@wilysword](https://github.com/wilysword)
+
+---
+
 # v3.1.2 (Thu Apr 21 2022)
 
 #### 🏠 Internal
