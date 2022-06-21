@@ -1,3 +1,31 @@
+# v9.6.0 (Tue Jun 21 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-925: add flex layout options to Footer component [#761](https://github.com/repaygithub/cactus/pull/761) ([@wilysword](https://github.com/wilysword))
+- CACTUS-927 :: Render H1 in Header.Title [#760](https://github.com/repaygithub/cactus/pull/760) ([@Dhalton](https://github.com/Dhalton))
+- CACTUS-780:: Pagination Max Width [#747](https://github.com/repaygithub/cactus/pull/747) ([@daniloPenaR](https://github.com/daniloPenaR) [@wilysword](https://github.com/wilysword))
+
+#### 🐛 Bug Fix
+
+- CACTUS-922 :: Fix footer hiding nav menu on mobile [#762](https://github.com/repaygithub/cactus/pull/762) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### 🏠 Internal
+
+- CACTUS-915: fix visual tests, rename Docker image tags [#754](https://github.com/repaygithub/cactus/pull/754) ([@wilysword](https://github.com/wilysword))
+
+#### 🔩 Dependency Updates
+
+- CACTUS-851 :: Upgrade storybook dependencies [#763](https://github.com/repaygithub/cactus/pull/763) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 3
+
+- [@daniloPenaR](https://github.com/daniloPenaR)
+- [@Dhalton](https://github.com/Dhalton)
+- [@wilysword](https://github.com/wilysword)
+
+---
+
 # v9.5.1 (Thu May 12 2022)
 
 #### 🐛 Bug Fix
