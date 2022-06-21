@@ -1,3 +1,15 @@
+# v1.1.1 (Tue Jun 21 2022)
+
+#### 🏠 Internal
+
+- CACTUS-915: fix visual tests, rename Docker image tags [#754](https://github.com/repaygithub/cactus/pull/754) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 1
+
+- [@wilysword](https://github.com/wilysword)
+
+---
+
 # v1.1.0 (Thu May 12 2022)
 
 #### 🚀 Enhancement
