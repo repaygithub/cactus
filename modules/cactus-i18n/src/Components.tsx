@@ -3,10 +3,9 @@ import PropTypes from 'prop-types'
 import React, {
   ComponentProps,
   JSXElementConstructor,
-  ReactElement,
   useContext,
   useEffect,
-  useState,
+  useReducer,
 } from 'react'
 
 import BaseI18nController from './BaseI18nController'
@@ -14,12 +13,18 @@ import { I18nContext, useI18nResource, useI18nText } from './hooks'
 import { I18nContextType } from './types'
 
 interface I18nProviderProps {
+  children?: React.ReactNode
   controller: BaseI18nController
   lang?: string
   section?: string
 }
 
-const flopFlip = (x: boolean) => !x
+const partialUpdate = (s: I18nContextType, a: Partial<I18nContextType>) => ({ ...s, ...a })
+const initContext = (controller: BaseI18nController) => ({
+  controller,
+  lang: controller.lang,
+  section: 'global',
+})
 
 const I18nProvider: React.FC<I18nProviderProps> = ({ section = 'global', ...props }) => {
   const controller = props.controller
@@ -30,20 +35,17 @@ const I18nProvider: React.FC<I18nProviderProps> = ({ section = 'global', ...prop
     controller.setLang(props.lang)
   }
   const lang = controller.lang
-  const [flipFlop, toggle] = useState(false)
-  const i18nContext: I18nContextType = { controller, lang, section }
-  const { current: stable } = React.useRef({ flipFlop, i18nContext })
+  const [i18nContext, dispatch] = useReducer(partialUpdate, controller, initContext)
   if (
-    flipFlop !== stable.flipFlop ||
-    controller !== stable.i18nContext.controller ||
-    lang !== stable.i18nContext.lang
+    lang !== i18nContext.lang ||
+    section !== i18nContext.section ||
+    controller !== i18nContext.controller
   ) {
-    stable.flipFlop = flipFlop
-    stable.i18nContext = i18nContext
+    dispatch({ lang, section, controller })
   }
   useEffect(() => {
     if (controller instanceof BaseI18nController) {
-      const triggerUpdate = () => toggle(flopFlip)
+      const triggerUpdate = () => dispatch({})
       controller.addListener(triggerUpdate)
       return (): void => controller.removeListener(triggerUpdate)
     }
@@ -53,7 +55,7 @@ const I18nProvider: React.FC<I18nProviderProps> = ({ section = 'global', ...prop
       controller._load({ section, lang })
     }
   }, [controller, section, lang])
-  return <I18nContext.Provider value={stable.i18nContext}>{props.children}</I18nContext.Provider>
+  return <I18nContext.Provider value={i18nContext}>{props.children}</I18nContext.Provider>
 }
 
 I18nProvider.propTypes = {
@@ -61,6 +63,7 @@ I18nProvider.propTypes = {
   // @ts-ignore
   controller: PropTypes.instanceOf(BaseI18nController),
   lang: PropTypes.string,
+  section: PropTypes.string,
 }
 
 interface DependencyLoadType {
@@ -69,6 +72,7 @@ interface DependencyLoadType {
 }
 
 interface I18nSectionProps {
+  children?: React.ReactNode
   name: string
   lang?: string
   dependencies?: (string | DependencyLoadType)[]
@@ -101,7 +105,7 @@ const I18nSection: React.FC<I18nSectionProps> = ({
   dependencies,
   children,
   ...extraProps
-}): ReactElement | null => {
+}) => {
   const context = useContext(I18nContext)
   const ctxRef = React.useRef<I18nContextType | null>(null)
   if (context === null) {
@@ -153,7 +157,7 @@ interface I18nTextProps {
   section?: string
 }
 
-const I18nText: React.FC<I18nTextProps> = (props): ReactElement => {
+const I18nText: React.FC<React.PropsWithChildren<I18nTextProps>> = (props) => {
   const text = useI18nText(props.get, props.args, props.section)
   return <React.Fragment>{text || props.children || props.get}</React.Fragment>
 }
@@ -173,7 +177,7 @@ type I18nElementProps<Elem extends TagNameOrReactComp> = {
 
 const I18nElement = function <Elem extends TagNameOrReactComp>(
   props: I18nElementProps<Elem>
-): ReactElement {
+): React.ReactElement {
   const { get, args = {}, section, as, ...rest } = props
   const { text, attrs } = useI18nResource(get, args, section)
   const elemProps = { ...rest, ...attrs }
@@ -184,7 +188,7 @@ I18nElement.propTypes = {
   get: PropTypes.string.isRequired,
   args: PropTypes.object,
   section: PropTypes.string,
-  as: PropTypes.node,
+  as: PropTypes.elementType,
 }
 
 interface I18nResourceProps extends I18nTextProps {
@@ -192,7 +196,7 @@ interface I18nResourceProps extends I18nTextProps {
   children?: (message: string, attributes?: { [k: string]: any } | null) => React.ReactNode
 }
 
-const I18nResource: React.FC<I18nResourceProps> = (props): ReactElement => {
+const I18nResource: React.FC<I18nResourceProps> = (props) => {
   const { text, attrs } = useI18nResource(props.get, props.args, props.section)
   let renderer = null
   if (typeof props.children === 'function') {
@@ -218,7 +222,7 @@ interface I18nFormattedProps extends I18nTextProps {
   formatter: (message: string) => React.ReactNode
 }
 
-const I18nFormatted: React.FC<I18nFormattedProps> = (props): ReactElement => {
+const I18nFormatted: React.FC<I18nFormattedProps> = (props) => {
   const text = useI18nText(props.get, props.args, props.section)
   return <React.Fragment>{text !== null ? props.formatter(text) : props.get}</React.Fragment>
 }

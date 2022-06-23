@@ -21,11 +21,7 @@ interface PrevNextLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement
   disabled: boolean
 }
 
-const PrevNextLinkBase: React.FC<PrevNextLinkProps> = ({
-  disabled,
-  onClick,
-  ...rest
-}): React.ReactElement => (
+const PrevNextLinkBase: React.FC<PrevNextLinkProps> = ({ disabled, onClick, ...rest }) => (
   <a
     role="link"
     aria-disabled={disabled ? 'true' : 'false'}
@@ -72,7 +68,7 @@ const PrevNextBase: React.FC<PrevNextProps> = ({
   prevText,
   nextText,
   ...rest
-}): React.ReactElement => (
+}) => (
   <div {...rest}>
     <PrevNextLink
       as={linkAs}

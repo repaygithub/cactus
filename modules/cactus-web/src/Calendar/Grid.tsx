@@ -278,12 +278,21 @@ const CalendarGridBase = ({
   const year = yearProp ?? state.year
   const month = monthProp ?? state.month
   const isSelected = useValue(makeIsSelected, selected, compareSelected)
+
+  // REACT18-COMPAT: when restoring state it will treat the initial render
+  // like an overflow if there's ever been one before, so we need to clear it.
+  // TODO Figure out a way to test if the offscreen API sets refs to null.
+  if (!gridRef.current && state.overflow) {
+    setOverflow(['', new Date(year, month, state.day)])
+  }
+
   // First effect: if we've just had an overflow event, refocus on the grid.
   React.useEffect(() => {
     if (gridRef.current && state.overflow) {
       queryDate(gridRef.current, state.overflow)?.focus()
     }
   }, [state.overflow])
+
   // Second effect: if the grid is not currently focused,
   // make sure there's exactly one gridcell with tabIndex == 0.
   React.useEffect(() => {
@@ -374,7 +383,6 @@ const CalendarGridBase = ({
   )
 }
 
-// TODO Figure out the right style for selected `.outside-date`
 const OUTLINE = { thin: '2px' }
 export const CalendarGrid = styled(CalendarGridBase)
   .withConfig(omitProps<CalendarGridProps>(margin))

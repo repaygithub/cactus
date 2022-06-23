@@ -16,6 +16,7 @@
     "build": "yarn prebuild && gatsby build --prefix-paths && yarn postbuild",
     "postbuild": "node tools/build-storybooks",
     "test": "tsc -p tsconfig.json --noEmit --skipLibCheck",
+    "test:types": "yarn test",
     "test:ci": "yarn test",
     "test:local": "yarn test"
   },

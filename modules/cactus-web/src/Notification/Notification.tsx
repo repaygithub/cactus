@@ -14,6 +14,7 @@ export interface NotificationPositionProps {
 }
 
 interface NotificationProps extends NotificationPositionProps {
+  children?: React.ReactNode
   open: boolean
 }
 

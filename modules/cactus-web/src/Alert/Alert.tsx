@@ -84,9 +84,8 @@ const AlertBase = (props: AlertProps): React.ReactElement => {
 
   useEffect(() => {
     if (closeTimeout && typeof onClose === 'function') {
-      setTimeout(() => {
-        onClose()
-      }, closeTimeout)
+      const timeoutId = setTimeout(onClose, closeTimeout)
+      return () => clearTimeout(timeoutId)
     }
   }, [closeTimeout, onClose])
 

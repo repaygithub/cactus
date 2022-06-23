@@ -17,9 +17,7 @@ export type HeaderType = FC<HeaderProps> & {
   Description: typeof HeaderDescription
 }
 
-export const HeaderItem: FC<
-  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
-> = (props) => <div {...props} />
+export const HeaderItem: FC<HTMLAttributes<HTMLDivElement>> = (props) => <div {...props} />
 
 export const HeaderTitle: FC<React.ComponentProps<typeof Text>> = ({ children, ...props }) => (
   <Text as="h1" textStyle="h2" {...props}>
@@ -27,7 +25,9 @@ export const HeaderTitle: FC<React.ComponentProps<typeof Text>> = ({ children, .
   </Text>
 )
 
-export const HeaderBreadcrumbRow: FC = ({ children }) => <>{children}</>
+export const HeaderBreadcrumbRow: FC<{ children?: React.ReactNode }> = ({ children }) => (
+  <>{children}</>
+)
 
 export const HeaderDescription: FC<HTMLAttributes<HTMLDivElement>> = ({ children, ...rest }) => (
   <StyledDescription {...rest}>{children}</StyledDescription>

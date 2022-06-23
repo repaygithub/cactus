@@ -2,7 +2,7 @@ import { RouteComponentProps } from '@reach/router'
 import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 import { Flex, SelectField, Text } from '@repay/cactus-web'
 import { Property } from 'csstype'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 
 import Link from '../components/Link'
 
@@ -46,15 +46,14 @@ const initialState = {
 const FlexExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [state, setState] = useState(initialState)
 
-  const changeProps = useCallback(
-    ({ target: { name, value } }): void => {
-      if (name === 'items') {
-        value = parseInt(value.replace(/\D/g, ''), 10)
-      }
-      setState({ ...state, [name]: value })
-    },
-    [state]
-  )
+  const changeProps = ({
+    target: { name, value },
+  }: React.ChangeEvent<{ name?: any; value: any }>) => {
+    if (name === 'items') {
+      value = parseInt(value.replace(/\D/g, ''), 10)
+    }
+    setState({ ...state, [name]: value })
+  }
 
   return (
     <div style={{ height: '100%' }}>

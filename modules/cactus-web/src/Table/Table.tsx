@@ -30,9 +30,7 @@ interface TableContextProps {
   dividers?: boolean
 }
 
-interface TableProps
-  extends MarginProps,
-    React.DetailedHTMLProps<React.TableHTMLAttributes<HTMLTableElement>, HTMLTableElement> {
+interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableElement> {
   fullWidth?: boolean
   cardBreakpoint?: Size
   variant?: TableVariant
@@ -40,11 +38,7 @@ interface TableProps
   dividers?: boolean
 }
 
-interface TableHeaderProps
-  extends React.DetailedHTMLProps<
-    React.TableHTMLAttributes<HTMLTableSectionElement>,
-    HTMLTableSectionElement
-  > {
+interface TableHeaderProps extends React.TableHTMLAttributes<HTMLTableSectionElement> {
   variant?: TableVariant
   dividers?: boolean
 }
@@ -52,11 +46,8 @@ interface TableHeaderProps
 export interface TableCellProps
   extends WidthProps,
     Omit<
-      React.DetailedHTMLProps<
-        React.TdHTMLAttributes<HTMLTableDataCellElement> &
-          React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
-        HTMLTableDataCellElement & HTMLTableHeaderCellElement
-      >,
+      React.TdHTMLAttributes<HTMLTableDataCellElement> &
+        React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
       'width'
     > {
   variant?: TableVariant
@@ -64,15 +55,9 @@ export interface TableCellProps
   as?: CellType
 }
 
-type TableRowProps = React.DetailedHTMLProps<
-  React.TableHTMLAttributes<HTMLTableRowElement>,
-  HTMLTableRowElement
->
+type TableRowProps = React.TableHTMLAttributes<HTMLTableRowElement>
 
-type TableBodyProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLTableSectionElement>,
-  HTMLTableSectionElement
->
+type TableBodyProps = React.HTMLAttributes<HTMLTableSectionElement>
 
 const DEFAULT_CONTEXT: TableContextProps = {
   inHeader: false,

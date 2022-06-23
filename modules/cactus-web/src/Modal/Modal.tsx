@@ -170,7 +170,7 @@ const CloseButton = styledWithClass(IconButton, 'modal-close-btn').withConfig(
     position: absolute;
     ${buttonPosition}
   }
-` as Styled<CloseButtonProps & { onClick: ModalProps['onClose'] }>
+` as Styled<CloseButtonProps & React.HTMLAttributes<HTMLButtonElement>>
 
 CloseButton.displayName = 'Modal.CloseButton'
 CloseButton.propTypes = { label: PropTypes.string.isRequired }

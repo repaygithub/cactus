@@ -1,7 +1,7 @@
 import { RouteComponentProps } from '@reach/router'
 import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
 import { Box, Flex, Grid, SelectField, Text } from '@repay/cactus-web'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 
 import Link from '../components/Link'
 
@@ -18,12 +18,11 @@ const initialState = {
 const GridExample: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [state, setState] = useState(initialState)
 
-  const changeState = useCallback(
-    ({ target: { name, value } }): void => {
-      setState({ ...state, [name]: value as ColumnNum })
-    },
-    [state]
-  )
+  const changeState = ({
+    target: { name, value },
+  }: React.ChangeEvent<{ name?: any; value: any }>) => {
+    setState({ ...state, [name]: value as ColumnNum })
+  }
   return (
     <Flex flexDirection="column" height="100%">
       <Link to="/">

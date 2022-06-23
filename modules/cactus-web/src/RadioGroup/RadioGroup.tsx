@@ -6,6 +6,7 @@ import { Fieldset, makeGroup } from '../Checkable/Group'
 import RadioButtonField, { RadioButtonFieldProps } from '../RadioButtonField/RadioButtonField'
 
 interface RadioGroupProps extends Omit<ExtFieldProps, 'role'> {
+  children?: React.ReactNode
   value?: string | number
   defaultValue?: string | number
   required?: boolean

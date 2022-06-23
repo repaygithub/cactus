@@ -32,12 +32,11 @@ const IconbuttonExample: React.FC<RouteComponentProps> = (): React.ReactElement 
     minHeight: '100vh',
   }
 
-  const changeVariant = useCallback(
-    ({ target: { name, value } }): void => {
-      setState({ ...state, [name]: value })
-    },
-    [state]
-  )
+  const changeVariant = ({
+    target: { name, value },
+  }: React.ChangeEvent<{ name?: any; value: any }>) => {
+    setState({ ...state, [name]: value })
+  }
   const onToggleChange = useCallback(({ target }: React.ChangeEvent<HTMLInputElement>) => {
     setState((s) => ({ ...s, [target.name]: target.checked }))
   }, [])

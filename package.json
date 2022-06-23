@@ -22,6 +22,7 @@
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
     "fmt": "yarn lint --fix",
     "test": "yarn test:local",
+    "test:types": "yarn ws:run test:types",
     "test:ci": "yarn lint && yarn ws:run test:ci",
     "test:local": "yarn lint && yarn ws:run test:local",
     "test:sonar": "yarn fwk test --coverage && yarn i18n test --coverage && yarn form test --coverage && yarn icons test --coverage && yarn theme test --coverage && yarn web test --coverage",

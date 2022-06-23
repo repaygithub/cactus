@@ -41,14 +41,16 @@ export interface PaginationOptions {
   pageCount?: number
 }
 
-export interface DataColumnProps extends Omit<TableCellProps, 'as' | 'title'> {
+type BaseColumnProps = Omit<TableCellProps, 'as' | 'children' | 'title'>
+
+export interface DataColumnProps extends BaseColumnProps {
   id: string
   title: React.ReactChild
   sortable?: boolean
   as?: React.ComponentType<any>
 }
 
-export interface ColumnProps extends Omit<TableCellProps, 'as' | 'title'> {
+export interface ColumnProps extends BaseColumnProps {
   children: ColumnFn
   title?: React.ReactChild
 }

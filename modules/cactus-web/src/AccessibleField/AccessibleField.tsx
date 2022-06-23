@@ -140,14 +140,12 @@ function AccessibleFieldBase(props: InnerProps) {
   const [forceTooltipVisible, setTooltipVisible] = React.useState<boolean>(false)
 
   const [maxWidth, setMaxWidth] = React.useState<string | undefined>(undefined)
-  React.useLayoutEffect((): void => {
+  React.useLayoutEffect(() => {
     if (ref.current instanceof HTMLElement) {
       const containerWidth = `${ref.current.getBoundingClientRect().width - 32}px`
-      if (containerWidth !== maxWidth) {
-        setMaxWidth(containerWidth)
-      }
+      setMaxWidth(containerWidth)
     }
-  }, [maxWidth, setMaxWidth])
+  }, [])
 
   const handleFieldBlur = (e: React.FocusEvent<HTMLDivElement>) => {
     onBlur?.(e)

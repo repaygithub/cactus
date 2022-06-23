@@ -25,7 +25,7 @@ const stylePropNames: string[] = layout.propNames.concat(padding.propNames)
 
 type RenderFn = (t: TogglePopup, expanded: boolean) => React.ReactElement | null
 
-interface PanelProps extends StyleProps, React.HTMLAttributes<HTMLElement> {
+interface PanelProps extends StyleProps, Omit<React.HTMLAttributes<HTMLElement>, 'children'> {
   icon: React.ReactElement
   orderHint?: OrderHint
   popupType?: PopupType
@@ -66,7 +66,6 @@ const Panel = React.forwardRef<HTMLDivElement, PanelProps>(
     })
     const buttonRef = React.useRef<HTMLButtonElement>(null)
 
-    const render = typeof children === 'function' ? (children as RenderFn) : null
     const styleProps = pick(props, stylePropNames) as StyleProps
     // Mostly expecting the label props, but I'm not going to attempt a comprehensive whitelist.
     const ariaProps: React.AriaAttributes = {}
@@ -80,6 +79,8 @@ const Panel = React.forwardRef<HTMLDivElement, PanelProps>(
       }
     }
 
+    const childNode =
+      typeof children === 'function' ? (children as RenderFn)(toggle, expanded) : children
     return (
       <ActionBar.PanelWrapper {...wrapperProps} ref={ref}>
         <ActionBar.Button {...ariaProps} {...buttonProps} ref={buttonRef}>
@@ -91,7 +92,7 @@ const Panel = React.forwardRef<HTMLDivElement, PanelProps>(
           position={positionPopup}
           anchorRef={buttonRef}
         >
-          {render ? render(toggle, expanded) : children}
+          {childNode}
         </ActionBar.PanelPopup>
       </ActionBar.PanelWrapper>
     )

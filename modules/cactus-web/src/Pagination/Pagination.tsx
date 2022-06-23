@@ -104,7 +104,7 @@ function dots(key: string): ReactElement {
   )
 }
 
-const PageLinkBase: React.FC<PageLinkProps> = (props: PageLinkProps): ReactElement => {
+const PageLinkBase: React.FC<PageLinkProps> = (props) => {
   const { page, disabled, children, onClick, ...rest } = props
   const linkProps: React.AnchorHTMLAttributes<HTMLAnchorElement> = rest
   if (disabled) {

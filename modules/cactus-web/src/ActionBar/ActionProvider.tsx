@@ -81,7 +81,7 @@ export function useActionBarItems(): React.ReactElement[] {
   return actionList.map((a) => a.element)
 }
 
-const ActionProvider: React.FC = ({ children }) => {
+const ActionProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   const [actions, setActions] = React.useState<ActionMap>({})
   const addAction: AddAction = (key, element, orderHint) => {
     if (element.key === null) {

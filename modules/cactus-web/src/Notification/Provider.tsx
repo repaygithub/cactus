@@ -131,7 +131,7 @@ const NotificationRenderer = ({ store }: { store: NotificationStore }) => {
   return notifications.length ? <>{notifications}</> : null
 }
 
-export const NotificationProvider: React.FC = ({ children }) => {
+export const NotificationProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   const ref = React.useRef<NotificationStore>()
   const store = ref.current || (ref.current = new NotificationStore())
   return (

@@ -171,9 +171,9 @@ export function useStateWithCallback<S>(
   return [state, setStateWithCallback]
 }
 
-const toggle = (x: boolean) => !x
+const inc = (x: number) => x + 1
 
-export const useRenderTrigger = (): (() => void) => React.useReducer(toggle, false)[1]
+export const useRenderTrigger = (): (() => void) => React.useReducer(inc, 0)[1]
 
 type SemiControlProps<T extends React.ElementType> = {
   input: T
