@@ -28,6 +28,7 @@ interface TableContextProps {
   cellIndex: number
   variant: TableVariant
   dividers?: boolean
+  stickyRightColumn?: boolean
 }
 
 interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableElement> {
@@ -36,6 +37,7 @@ interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableEle
   variant?: TableVariant
   as?: React.ElementType
   dividers?: boolean
+  stickyRightColumn?: boolean
 }
 
 interface TableHeaderProps extends React.TableHTMLAttributes<HTMLTableSectionElement> {
@@ -370,6 +372,8 @@ const table = css<TableProps>`
     }
     :last-child {
       border-right: ${(p): string => border(p.theme, 'lightContrast')};
+      position: ${(p) => (p.stickyRightColumn ? 'sticky' : '')};
+      right: ${(p) => (p.stickyRightColumn ? 0 : '')};
     }
   }
   tr:nth-of-type(even) {
