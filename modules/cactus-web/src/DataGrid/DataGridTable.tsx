@@ -12,6 +12,7 @@ export interface DataGridTableProps {
   children: React.ReactNode
   data: { [key: string]: any }[]
   dividers?: boolean
+  stickyRightColumn?: boolean
 }
 
 const isDataColumn = (col: any): col is DataColumnObject => {

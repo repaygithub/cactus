@@ -7,6 +7,9 @@ import { JustifyContent } from './types'
 interface Datum {
   name: string
   created: string
+  updated: string
+  items: number
+  author: string
   active: boolean
 }
 
@@ -14,56 +17,89 @@ const INITIAL_DATA = [
   {
     name: 'Config 1',
     created: '4/13/2020',
+    updated: '6/29/2022',
+    items: 0,
+    author: 'unknown',
     active: true,
   },
   {
     name: 'Config 2',
     created: '5/25/2019',
+    updated: '6/29/2022',
+    items: 3,
+    author: 'unknown',
     active: true,
   },
   {
     name: 'Config 3',
     created: '8/16/2019',
+    updated: '6/29/2022',
+    items: 2,
+    author: 'unknown',
     active: false,
   },
   {
     name: 'Config 4',
     created: '2/20/2019',
+    updated: '6/29/2022',
+    items: 3,
+    author: 'unknown',
     active: true,
   },
   {
     name: 'Config 5',
     created: '5/16/2019',
+    updated: '6/29/2022',
+    items: 3,
+    author: 'unknown',
     active: false,
   },
   {
     name: 'Config 6',
     created: '10/31/2019',
+    updated: '6/29/2022',
+    items: 3,
+    author: 'unknown',
     active: true,
   },
   {
     name: 'Config 7',
     created: '11/23/2019',
+    updated: '6/29/2022',
+    items: 3,
+    author: 'unknown',
     active: true,
   },
   {
     name: 'Config 8',
     created: '3/20/2020',
+    updated: '6/29/2022',
+    items: 3,
+    author: 'unknown',
     active: false,
   },
   {
     name: 'Config 9',
     created: '6/13/2020',
+    updated: '6/29/2022',
+    items: 2,
+    author: 'unknown',
     active: false,
   },
   {
     name: 'Config 10',
     created: '7/1/2020',
+    updated: '6/29/2022',
+    items: 3,
+    author: 'unknown',
     active: true,
   },
   {
     name: 'Config 11',
     created: '3/3/2020',
+    updated: '6/29/2022',
+    items: 3,
+    author: 'Danilo',
     active: true,
   },
 ]
@@ -95,6 +131,8 @@ interface Args {
   disableNext: boolean
   sortableCols: boolean
   topSection: boolean
+  stickyRightColumn: boolean
+  fullWidth: boolean
   justifyTop: JustifyContent
   spacingTop: string
   pageSizeSelectLabel: string
@@ -135,6 +173,7 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
   nextPageLabel,
   lastPageLabel,
   margin,
+  stickyRightColumn,
 }) => {
   const size = useContext(ScreenSizeContext)
   const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
@@ -262,9 +301,12 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
           )}
         </DataGrid.TopSection>
       )}
-      <DataGrid.Table data={usableData} dividers={dividers}>
+      <DataGrid.Table data={usableData} dividers={dividers} stickyRightColumn={stickyRightColumn}>
         <DataGrid.DataColumn id="name" title="Name" />
         <DataGrid.DataColumn id="created" title="Created" sortable={sortableCols} />
+        <DataGrid.DataColumn id="updated" title="Updated" sortable={sortableCols} />
+        <DataGrid.DataColumn id="items" title="Items" sortable={sortableCols} />
+        <DataGrid.DataColumn id="author" title="Author" sortable={sortableCols} />
         <DataGrid.DataColumn
           id="active"
           title="Active"
@@ -352,6 +394,8 @@ BasicUsage.argTypes = {
   nextText: { name: 'PrevNext: nextText', ...STRING },
   disableNext: { name: 'PrevNext: disableNext', control: 'boolean' },
   sortableCols: { name: 'include sortable columns' },
+  stickyRightColumn: { name: 'Sticky right column' },
+  fullWidth: { name: 'Full Width' },
   topSection: { name: 'show top section' },
   justifyTop: {
     name: 'top section: justifyContent',
@@ -384,6 +428,8 @@ BasicUsage.args = {
   spacingTop: '4',
   justifyBottom: 'flex-end',
   spacingBottom: '4',
+  stickyRightColumn: false,
+  fullWidth: true,
 }
 
 export const LotsAndLotsOfRows = DataGridContainer.bind(null)
