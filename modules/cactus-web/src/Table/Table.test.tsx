@@ -74,4 +74,35 @@ describe('component: Table', () => {
     expect(tableWrapper).toHaveStyle('margin-left: 40px')
     expect(tableWrapper).toHaveStyle('margin-right: 40px')
   })
+
+  test('Sticky column right', () => {
+    const { getAllByTestId } = renderWithTheme(
+      <Table stickyRightColumn>
+        <Table.Header>
+          <Table.Cell>Header Cell</Table.Cell>
+          <Table.Cell>Header Cell</Table.Cell>
+          <Table.Cell>Header Cell</Table.Cell>
+          <Table.Cell data-testid="sticky">Sticky cell 1</Table.Cell>
+        </Table.Header>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell>Data cell</Table.Cell>
+            <Table.Cell>Data cell</Table.Cell>
+            <Table.Cell>Data cell</Table.Cell>
+            <Table.Cell data-testid="sticky">Sticky cell 2</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>Data cell</Table.Cell>
+            <Table.Cell>Data cell</Table.Cell>
+            <Table.Cell>Data cell</Table.Cell>
+            <Table.Cell data-testid="sticky">Sticky cell 3</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
+    )
+
+    getAllByTestId('sticky').forEach((element) => {
+      expect(element).toHaveStyle('position: sticky')
+    })
+  })
 })
