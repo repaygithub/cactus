@@ -1,6 +1,5 @@
 import { ActionsAdd, NavigationChevronDown } from '@repay/cactus-icons'
 import { BorderSize, CactusTheme, ColorStyle, TextStyle } from '@repay/cactus-theme'
-import isEqual from 'lodash/isEqual'
 import PropTypes from 'prop-types'
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import styled, { css, FlattenSimpleInterpolation, ThemeContext, withTheme } from 'styled-components'
@@ -25,7 +24,11 @@ import { boxShadow, fontSize, isResponsiveTouchDevice, radius, textStyle } from 
 import Tag from '../Tag/Tag'
 import TextButton from '../TextButton/TextButton'
 
-type OptionValue = string | number
+// Since we support `undefined` as a value, we need a sentinel to represent absence;
+// make it an array so it will work seamlessly with any `multiple` code.
+const NO_SELECTION: OptionValue[] = []
+
+type OptionValue = unknown
 export type SelectValueType = OptionValue | OptionValue[] | null
 
 interface WithValue {
@@ -50,11 +53,8 @@ interface ExtendedOptionType extends WithValue {
   disabled: boolean
   id: string
   ariaLabel?: string
-  altText?: string
-}
-
-interface InternalOptionProps extends React.LiHTMLAttributes<HTMLLIElement> {
-  option: ExtendedOptionType
+  altText: string
+  ref?: React.RefCallback<HTMLElement>
 }
 
 type Target = CactusEventTarget<SelectValueType>
@@ -66,7 +66,7 @@ export interface SelectProps
       React.HTMLAttributes<HTMLButtonElement>,
       'onChange' | 'onBlur' | 'onFocus' | 'placeholder'
     > {
-  options?: (OptionType | OptionValue)[]
+  options?: (OptionType | string | number | undefined | null)[]
   id: string
   name: string
   value?: SelectValueType
@@ -93,21 +93,9 @@ export interface SelectProps
 
 type SelectPropsWithTheme = SelectProps & { theme: CactusTheme }
 
-function isElement(el?: any): el is HTMLElement {
-  return el && el.nodeType === 1
-}
-
-function doesChildOverflow(parentRect: ClientRect, childRect: ClientRect): boolean {
-  return childRect.left + childRect.width > parentRect.left + parentRect.width
-}
-
-function willTruncateBlockShow(
-  parentRect: ClientRect,
-  childRect: ClientRect,
-  truncateRect: ClientRect
-): boolean {
-  return parentRect.left + parentRect.width >= childRect.left + truncateRect.width
-}
+const compareValues = (left: WithValue, right: WithValue) => left.value === right.value
+const isArrayEqual = (left: any[], right: any[], cmp = Object.is) =>
+  left === right || (left.length === right.length && left.every((v, i) => cmp(v, right[i])))
 
 const ValueSwitch = (props: {
   selected: ExtendedOptionType[]
@@ -115,77 +103,76 @@ const ValueSwitch = (props: {
   extraLabel: string
   multiple?: boolean
   onTagClick: React.MouseEventHandler<HTMLElement>
-}): React.ReactElement => {
+}): React.ReactElement | null => {
   const { selected, onTagClick } = props
   const numSelected = selected.length
   const spanRef = useRef<HTMLSpanElement | null>(null)
   const moreRef = useRef<HTMLSpanElement | null>(null)
-  const [numToRender, setNum] = useState(numSelected)
-  const [prevValue, setPrevValue] = useState<string>('')
-  const valueString = selected.reduce((m, o): string => m + getLabel(o), '')
-  const shouldRenderAll = prevValue !== valueString
-  /**
-   * finds the maximum number of values it can display
-   */
+  const [numToRender, setNum] = useState(0)
+  const selectionRef = useRef<ExtendedOptionType[]>([])
+  const selectionHasChanged = !isArrayEqual(selectionRef.current, selected, compareValues)
+  const shouldRenderAll = selectionHasChanged && props.multiple && numSelected > 1
+  // We need to wait for the refs to run before we can render the altText.
+  const shouldRestart = selected.some((opt) => !!opt.ref)
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useLayoutEffect((): void => {
-    if (spanRef.current !== null && moreRef.current !== null && shouldRenderAll) {
-      setPrevValue(valueString)
-      const parentRect = spanRef.current.getBoundingClientRect()
-      const numberChildren = spanRef.current.childNodes.length
-      let index =
-        numToRender < numberChildren && isElement(spanRef.current.childNodes[numToRender])
-          ? numToRender
-          : 0
-      let child: any = spanRef.current.childNodes[index] as HTMLElement
-      let childRect = child.getBoundingClientRect()
-      const direction = doesChildOverflow(parentRect, childRect) ? -1 : 1
-      const moreRect = moreRef.current.getBoundingClientRect()
-      while (index >= 0 && index < numberChildren) {
-        child = spanRef.current.childNodes[index]
-        if (isElement(child)) {
-          childRect = child.getBoundingClientRect()
-          if (direction === -1) {
-            if (willTruncateBlockShow(parentRect, childRect, moreRect)) {
-              setNum(index)
-              return
-            }
-          } else if (doesChildOverflow(parentRect, childRect)) {
-            if (willTruncateBlockShow(parentRect, childRect, moreRect)) {
-              setNum(index)
-            } else {
-              setNum(index - 1)
-            }
-            return
-          }
-        }
-        index += direction
-      }
-      setNum(numberChildren)
+    if (shouldRestart) {
+      selectionRef.current = []
+      return setNum((x) => Math.min(-1, x - 1))
     }
-  }, [numToRender, shouldRenderAll, valueString])
+    selectionRef.current = selected
+    if (spanRef.current !== null && moreRef.current !== null && shouldRenderAll) {
+      // finds the maximum number of values it can display
+      const parentRect = spanRef.current.getBoundingClientRect()
+      const moreRect = moreRef.current.getBoundingClientRect()
+      let maxRight = parentRect.right
+      let child = moreRef.current.previousElementSibling
+      let count = numSelected
+      while (child) {
+        const childRect = child.getBoundingClientRect()
+        if (childRect.right <= maxRight) {
+          break
+        } else if (count-- === numSelected) {
+          // The first element can go right to the parent's edge,
+          // after that we have to leave room for the extra label.
+          maxRight -= moreRect.width
+        }
+        child = child.previousElementSibling
+      }
+      setNum(Math.max(count, 1))
+    }
+  })
 
-  if (numSelected === 0) {
+  if (shouldRenderAll && numToRender > 0) {
+    // Set an impossible value so the effect will definitely trigger a render.
+    setNum(0)
+    return null
+  } else if (shouldRestart) {
+    return null
+  } else if (numSelected === 0) {
     return <Placeholder>{props.placeholder}</Placeholder>
   } else if (props.multiple) {
     if (numSelected > 1) {
+      // Using the biggest possible number in the extra label will make the
+      // `numToRender` algorithm a bit more conservative, less chance of overflow.
+      const numHidden = shouldRenderAll ? numSelected : numSelected - numToRender
+      const toRender = shouldRenderAll ? selected : selected.slice(0, numToRender)
       return (
         <ValueSpan ref={spanRef}>
-          {selected.slice(0, shouldRenderAll ? undefined : numToRender).map(
-            (opt): React.ReactElement => (
-              <Tag
-                id={`value-tag::${opt.id}`}
-                closeOption="no-button"
-                key={opt.id}
-                onCloseIconClick={onTagClick}
-              >
-                {opt.altText || opt.value}
-              </Tag>
-            )
+          {toRender.map((opt) => (
+            <Tag
+              id={`value-tag::${opt.id}`}
+              closeOption="no-button"
+              key={opt.id}
+              onCloseIconClick={onTagClick}
+            >
+              {opt.altText}
+            </Tag>
+          ))}
+          {numHidden > 0 && (
+            <Tag ref={moreRef}>{props.extraLabel.replace(/\{\}/, String(numHidden))}</Tag>
           )}
-          <Tag ref={moreRef} hidden={numToRender >= numSelected || shouldRenderAll}>
-            {props.extraLabel.replace(/\{\}/, String(numSelected - numToRender))}
-          </Tag>
         </ValueSpan>
       )
     } else {
@@ -193,13 +180,13 @@ const ValueSwitch = (props: {
       return (
         <ValueSpan>
           <Tag id={`value-tag::${value.id}`} closeOption="no-button" onCloseIconClick={onTagClick}>
-            {value.altText || value.value}
+            {value.altText}
           </Tag>
         </ValueSpan>
       )
     }
   } else {
-    return <ValueSpan>{selected[0].altText || selected[0].value}</ValueSpan>
+    return <ValueSpan>{selected[0].altText}</ValueSpan>
   }
 }
 
@@ -366,7 +353,7 @@ const NoMatch = styled.li`
   word-wrap: break-word;
 `
 
-const StyledOption = styled.li`
+const InternalOption = styled.li`
   cursor: pointer;
   display: list-item;
   border: none;
@@ -405,27 +392,8 @@ const StyledOption = styled.li`
 
 export const SelectOption: React.FC<OptionProps> = ({ children }) => <>{children}</>
 
-const InternalOption: React.FC<InternalOptionProps> = ({ option, ...props }) => {
-  const ref = React.useRef<HTMLLIElement>(null)
-  React.useEffect(() => {
-    if (option.altText === undefined && ref.current) {
-      option.altText = ref.current.textContent || ''
-    }
-  }, [option])
-  return (
-    <StyledOption
-      ref={ref}
-      role="option"
-      data-value={option.value}
-      id={option.id}
-      aria-label={option.ariaLabel}
-      {...props}
-    />
-  )
-}
-
-const getLabel = ({ label, altText, value }: ExtendedOptionType): string =>
-  typeof label === 'string' ? label : altText || value.toString()
+const getLabel = ({ label, altText }: ExtendedOptionType): string =>
+  typeof label === 'string' ? label : altText
 
 interface ListWrapperProps {
   isOpen: boolean
@@ -534,9 +502,9 @@ function getSelectedIndex(options: WithValue[], value: OptionValue): number {
   return 0
 }
 
-function getSelectedCallback(selection: SelectValueType) {
-  return Array.isArray(selection)
-    ? (opt: WithValue) => selection.includes(opt.value)
+function getSelectedCallback(multiple: boolean | undefined, selection: SelectValueType) {
+  return multiple
+    ? (opt: WithValue) => (selection as OptionValue[]).includes(opt.value)
     : (opt: WithValue) => opt.value === selection
 }
 
@@ -915,9 +883,13 @@ class List extends React.Component<ListProps, ListState> {
               return (
                 <InternalOption
                   key={optId}
-                  option={opt}
+                  id={optId}
+                  ref={opt.ref}
+                  role="option"
+                  data-value={toString(opt.value)}
                   className={activeDescendant === optId ? 'highlighted-option' : undefined}
                   data-role={isCreateNewOption ? 'create' : 'option'}
+                  aria-label={opt.ariaLabel}
                   aria-selected={ariaSelected}
                   aria-disabled={opt.disabled}
                   onMouseEnter={!opt.disabled ? this.handleOptionMouseEnter : undefined}
@@ -965,10 +937,6 @@ class List extends React.Component<ListProps, ListState> {
   }
 }
 
-function getOptionId(selectId: string, value: OptionValue): string {
-  return `${selectId}-${value}`.replace(/\s/g, '-')
-}
-
 interface SelectState {
   isOpen: boolean
   value: SelectValueType
@@ -979,46 +947,93 @@ interface SelectState {
   options: OptionState
 }
 
+const toString = (value: OptionValue): string | undefined => {
+  if (value !== null && value !== undefined) {
+    if (typeof value === 'function') {
+      return `${value.name || 'function'}()`
+    } else if (typeof value !== 'object') {
+      return String(value)
+    }
+  }
+  return undefined
+}
+
+type OptMap = Map<OptionValue, ExtendedOptionType>
+
+const isOptionObject = (opt: any): opt is OptionType =>
+  !!opt && typeof opt === 'object' && 'label' in opt && 'value' in opt
+
 class OptionState {
   public key: any
   public extOptions: ExtendedOptionType[] = []
-  private optMap: Map<OptionValue, ExtendedOptionType> = new Map()
+  private optMap: OptMap = new Map()
   private idPrefix: string
+
+  public getExtOpt: (value: OptionValue) => ExtendedOptionType | undefined
+  public hasExtOpt: (value: OptionValue) => boolean
 
   constructor(key: any, idPrefix: string) {
     this.idPrefix = idPrefix
     this.key = key
+    this.getExtOpt = Map.prototype.get.bind(this.optMap)
+    this.hasExtOpt = Map.prototype.has.bind(this.optMap)
   }
 
-  getExtOpt(value: OptionValue): ExtendedOptionType | undefined {
-    return this.optMap.get(value)
+  private getOptionId(value: OptionValue) {
+    const valueSlug = toString(value)?.replace(/\s/g, '-')
+    if (valueSlug) {
+      return `${this.idPrefix}-${valueSlug}`
+    }
+    // Use a different format to minimize the possiblility of collisions.
+    return `option-${this.idPrefix}-${this.optMap.size}`
   }
 
   addOption(
-    stateValue: SelectValueType,
     optValue: OptionValue | OptionType,
+    prevOpts?: OptMap,
     optLabel?: React.ReactNode,
     isDisabled = false,
     id?: string,
     altText?: string,
     ariaLabel?: string
   ): boolean {
-    if (typeof optValue === 'object') {
+    if (isOptionObject(optValue)) {
       optLabel = optValue.label
       isDisabled = !!optValue.disabled
       optValue = optValue.value
-    } else if (optLabel === undefined) {
-      optLabel = optValue
+    }
+    if (optLabel === undefined || optLabel === null) {
+      optLabel = toString(optValue) || ''
     }
     if (!this.optMap.has(optValue)) {
-      const strLabel = typeof optLabel === 'number' ? optLabel.toString() : optLabel
-      const extOpt = {
+      const prevOpt = prevOpts?.get(optValue)
+      if (altText === undefined) {
+        const strLabel = toString(optLabel)
+        if (ariaLabel) {
+          altText = ariaLabel
+        } else if (strLabel !== undefined) {
+          altText = strLabel
+        } else if (prevOpt && isPurelyEqual(prevOpt.label, optLabel)) {
+          // Pull the previously used version of `textContent`.
+          altText = prevOpt.altText
+        }
+      }
+      const extOpt: ExtendedOptionType = {
         value: optValue,
         label: optLabel,
         disabled: isDisabled,
-        altText: !altText && typeof strLabel === 'string' ? strLabel : altText,
-        id: id || getOptionId(this.idPrefix, optValue),
+        altText: altText || '',
+        id: id || prevOpt?.id || this.getOptionId(optValue),
         ariaLabel,
+      }
+      if (altText === undefined && optLabel) {
+        // Label is an element, pass this to `InternalOption` to pull the label's text.
+        extOpt.ref = (elem: HTMLElement | null) => {
+          if (elem) {
+            extOpt.altText = elem.textContent || ''
+            delete extOpt.ref
+          }
+        }
       }
       this.extOptions.push(extOpt)
       this.optMap.set(optValue, extOpt)
@@ -1027,63 +1042,89 @@ class OptionState {
     return false
   }
 
-  getNextState(props: SelectProps, stateValue: SelectValueType): OptionState {
+  getNextState(props: SelectProps): OptionState {
     const propsKey = props.options?.length ? props.options : null
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     let optState: OptionState = this
     if (props.children) {
       if (props.children !== this.key) {
         optState = new OptionState(props.children, props.id)
-        optState.buildOptsFromChildren(stateValue, this.optMap)
+        optState.buildOptsFromChildren(this.optMap)
       }
     } else if (propsKey !== this.key) {
       optState = new OptionState(propsKey, props.id)
       if (propsKey && props.options) {
         for (const o of props.options) {
-          optState.addOption(stateValue, o)
+          optState.addOption(o, this.optMap)
         }
       }
     }
     return optState
   }
 
-  private buildOptsFromChildren(
-    stateValue: SelectValueType,
-    prevOpts: Map<OptionValue, ExtendedOptionType>,
-    children: React.ReactNode = this.key
-  ) {
+  addUnknownOptions({ multiple, value }: SelectProps) {
+    const newOptions: OptionValue[] = []
+    if (multiple && Array.isArray(value) && !this.hasExtOpt(value)) {
+      for (const opt of value) {
+        if (this.addOption(opt)) {
+          newOptions.push(opt)
+        }
+      }
+    } else if (this.addOption(value)) {
+      newOptions.push(value)
+    }
+    return newOptions
+  }
+
+  private buildOptsFromChildren(prevOpts: OptMap, children: React.ReactNode = this.key) {
     const childArray = React.Children.toArray(children) as React.ReactChild[]
     if (!childArray?.length) return
 
     for (const child of childArray) {
       if (typeof child === 'string' || typeof child === 'number') {
-        this.addOption(stateValue, child)
+        this.addOption(child, prevOpts)
       } else if (child?.type === React.Fragment) {
-        this.buildOptsFromChildren(stateValue, prevOpts, child.props.children)
+        this.buildOptsFromChildren(prevOpts, child.props.children)
       } else if (child?.props) {
-        const value = child.props.value
-        if (typeof value === 'string' || typeof value === 'number') {
-          const {
-            altText: altProp,
-            children: label,
-            id,
-            'aria-label': ariaLabel,
-            disabled,
-          } = child.props
-          let altText: string | undefined = altProp || ariaLabel
-          // If label is a component, try to minimize how often we have to pull from textContent;
-          // this is to avoid the delay from `useEffect`, rather than performance reasons.
-          if (altText === undefined && typeof label === 'object') {
-            const prevOpt = prevOpts.get(value)
-            if (prevOpt?.altText !== undefined && isPurelyEqual(prevOpt?.label, label)) {
-              altText = prevOpt.altText
-            }
-          }
-          this.addOption(stateValue, value, label, disabled, id, altText, ariaLabel)
-        }
+        const {
+          id,
+          value,
+          altText,
+          disabled,
+          children: label,
+          'aria-label': ariaLabel,
+        } = child.props
+        this.addOption(value, prevOpts, label, disabled, id, altText, ariaLabel)
       }
     }
   }
+}
+
+const isClearFlag = (value: OptionValue) => value === undefined || value === null || value === ''
+
+const getValidValue = (
+  multiple: boolean | undefined,
+  isValidOption: (v: OptionValue) => boolean,
+  oldValue: SelectValueType,
+  newValue: SelectValueType
+) => {
+  if (multiple) {
+    const valueArray = isValidOption(newValue)
+      ? [newValue]
+      : Array.isArray(newValue)
+      ? newValue.filter(isValidOption)
+      : NO_SELECTION
+    if (!Array.isArray(oldValue) || !isArrayEqual(oldValue, valueArray)) {
+      return valueArray
+    }
+  } else if (isValidOption(newValue)) {
+    return newValue
+  } else if (Array.isArray(newValue) && newValue.length && isValidOption(newValue[0])) {
+    return newValue[0]
+  } else {
+    return NO_SELECTION
+  }
+  return oldValue
 }
 
 class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
@@ -1091,7 +1132,7 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
 
   public state: SelectState = {
     isOpen: false,
-    value: this.props.value || null,
+    value: NO_SELECTION,
     searchValue: '',
     activeDescendant: '',
     currentTriggerWidth: 0,
@@ -1136,46 +1177,40 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
     state: Readonly<SelectState>
   ): Partial<SelectState> | null {
     const newState: Partial<SelectState> = {}
-    // First we see if this is acting as a controlled or uncontrolled input.
-    if (props.value !== undefined && !isEqual(props.value, state.value)) {
-      newState.value = props.value
-      if (props.value === '' && props.multiple) {
-        // If it's already an empty array, we don't need to clear it.
-        if (Array.isArray(state.value) && state.value.length === 0) {
-          delete newState.value
-        } else {
-          newState.value = []
-        }
-      }
-    }
-    // Next update the options list. State might not be the best place for this,
+    // First update the options list. State might not be the best place for this,
     // but `extraOptions` depends on it so it's easiest to put it here anyway.
-    const value = newState.value !== undefined ? newState.value : state.value
-    const optState = state.options.getNextState(props, value)
+    const optState = state.options.getNextState(props)
     if (optState !== state.options) {
       newState.options = optState
     }
     const extraOptions = state.extraOptions
     for (const opt of extraOptions) {
-      optState.addOption(value, opt)
+      optState.addOption(opt)
     }
-    // Finally, add any "unknown" options to the `extraOptions` list.
-    if (props.comboBox && props.canCreateOption && value) {
-      const newOptions: OptionValue[] = []
-      if (Array.isArray(value)) {
-        for (const opt of value) {
-          if (optState.addOption(value, opt)) {
-            newOptions.push(opt)
+    const stateVal = state.value
+    if (props.hasOwnProperty('value')) {
+      const value = props.value
+
+      // In controlled mode, certain values work to clear the selection.
+      if (isClearFlag(value) && !optState.hasExtOpt(value)) {
+        newState.value = NO_SELECTION
+      } else {
+        // If the user is allowed to add values, no reason the dev can't.
+        if (props.comboBox && props.canCreateOption) {
+          const newOptions = optState.addUnknownOptions(props)
+          if (newOptions.length) {
+            newState.extraOptions = extraOptions.concat(newOptions)
           }
         }
-      } else if (optState.addOption(value, value)) {
-        newOptions.push(value)
-      }
 
-      if (newOptions.length) {
-        newState.extraOptions = extraOptions.concat(newOptions)
+        // Get the new value from the prop, but only if it's valid.
+        newState.value = getValidValue(props.multiple, optState.hasExtOpt, stateVal, value)
       }
+    } else {
+      // If `multiple` changes in uncontrolled mode, make sure `value` is the right type.
+      newState.value = getValidValue(props.multiple, optState.hasExtOpt, stateVal, stateVal)
     }
+    if (newState.value === stateVal) delete newState.value
     return Object.keys(newState).length ? newState : null
   }
 
@@ -1324,7 +1359,7 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
           event.preventDefault()
 
           if (active === null) {
-            const getSelected = getSelectedCallback(this.state.value)
+            const getSelected = getSelectedCallback(this.props.multiple, this.state.value)
             this.setState({
               activeDescendant: List.initActiveDescendant(getSelected, options),
             })
@@ -1366,8 +1401,8 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
   }
 
   private createOption = (event: React.SyntheticEvent, value: OptionValue): void => {
-    if (this.state.options.addOption(this.state.value, value)) {
-      const extraOptions = this.state.extraOptions.concat(value)
+    if (this.state.options.addOption(value)) {
+      const extraOptions = [...this.state.extraOptions, value]
       this.setState({ extraOptions })
     }
     this.raiseChange(event, { value }, true)
@@ -1391,18 +1426,14 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
     let value: SelectValueType = this.state.value
     const isMultiple = this.props.multiple
     if (isMultiple) {
-      if (value === null) {
-        value = []
-      } else {
-        value = ([] as OptionValue[]).concat(value)
-      }
-      if (value.includes(option.value)) {
+      const valueArray = value as OptionValue[]
+      if (valueArray.includes(option.value)) {
         if (onlyAdd) {
           return
         }
-        value = value.filter((v): boolean => v !== option.value)
+        value = valueArray.filter((v): boolean => v !== option.value)
       } else {
-        value.push(option.value)
+        value = [...valueArray, option.value]
       }
     } else {
       if (value === option.value) {
@@ -1466,16 +1497,14 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
   }
 
   private getSelectedOptionsInOrder = (): ExtendedOptionType[] => {
-    const value = this.state.value
-    if (Array.isArray(value)) {
-      return value
-        .map((val) => this.state.options.getExtOpt(val))
-        .filter((opt) => opt !== undefined) as ExtendedOptionType[]
-    } else if (value !== null) {
-      const option = this.state.options.getExtOpt(value)
-      if (option) {
-        return [option]
-      }
+    const { value, options } = this.state
+    if (this.props.multiple) {
+      return (value as OptionValue[])
+        .map(options.getExtOpt)
+        .filter((x): x is ExtendedOptionType => !!x)
+    } else {
+      const option = options.getExtOpt(value)
+      if (option) return [option]
     }
     return []
   }
@@ -1569,7 +1598,7 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
             matchNotFoundText={matchNotFoundText}
             comboBoxSearchLabel={this.props.comboBoxSearchLabel || 'Search for an option'}
             options={options}
-            getSelected={getSelectedCallback(this.state.value)}
+            getSelected={getSelectedCallback(multiple, this.state.value)}
             multiple={multiple}
             searchValue={searchValue}
             activeDescendant={activeDescendant}
@@ -1609,25 +1638,20 @@ export { Select }
 
 Select.propTypes = {
   // @ts-ignore
-  options: PropTypes.oneOfType([
-    PropTypes.arrayOf(
+  options: PropTypes.arrayOf(
+    PropTypes.oneOfType([
       PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+        label: PropTypes.node,
+        value: PropTypes.any,
         disabled: PropTypes.bool,
-      })
-    ),
-    PropTypes.arrayOf(PropTypes.string.isRequired),
-    PropTypes.arrayOf(PropTypes.number.isRequired),
-  ]),
+      }),
+      PropTypes.string,
+      PropTypes.number,
+    ])
+  ),
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  // @ts-ignore
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-  ]),
+  value: PropTypes.any,
   placeholder: PropTypes.node,
   className: PropTypes.string,
   disabled: PropTypes.bool,
