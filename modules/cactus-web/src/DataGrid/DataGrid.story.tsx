@@ -395,7 +395,7 @@ BasicUsage.argTypes = {
   nextText: { name: 'PrevNext: nextText', ...STRING },
   disableNext: { name: 'PrevNext: disableNext', control: 'boolean' },
   sortableCols: { name: 'include sortable columns' },
-  sticky: { name: 'Sticky column' },
+  sticky: { name: 'Sticky column', options: ['none', 'right'] },
   fullWidth: { name: 'Full Width' },
   topSection: { name: 'show top section' },
   justifyTop: {
