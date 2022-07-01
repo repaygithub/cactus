@@ -77,7 +77,7 @@ describe('component: Table', () => {
 
   test('Sticky column right', () => {
     const { getAllByTestId } = renderWithTheme(
-      <Table stickyRightColumn>
+      <Table sticky="right">
         <Table.Header>
           <Table.Cell>Header Cell</Table.Cell>
           <Table.Cell>Header Cell</Table.Cell>

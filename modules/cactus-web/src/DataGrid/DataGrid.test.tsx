@@ -80,7 +80,7 @@ interface ContainerProps extends MarginProps {
   providePageCount?: boolean
   showResultsCount?: boolean
   fullWidth?: boolean
-  stickyRightColumn?: boolean
+  sticky?: 'none' | 'right'
 }
 
 const DataGridContainer = (props: ContainerProps): React.ReactElement => {
@@ -89,7 +89,7 @@ const DataGridContainer = (props: ContainerProps): React.ReactElement => {
     providePageCount = true,
     showResultsCount = true,
     fullWidth,
-    stickyRightColumn,
+    sticky,
     ...rest
   } = props
   const size = useContext(ScreenSizeContext)
@@ -210,7 +210,7 @@ const DataGridContainer = (props: ContainerProps): React.ReactElement => {
         {showResultsCount && !isCardView && <span>{getResultsCountText()}</span>}
         {providePageSizeOptions && <DataGrid.PageSizeSelect pageSizeOptions={[4, 6, 12]} />}
       </DataGrid.TopSection>
-      <DataGrid.Table data={paginateData()} stickyRightColumn={stickyRightColumn}>
+      <DataGrid.Table data={paginateData()} sticky={sticky}>
         <DataGrid.DataColumn id="name" title="Name" />
         <DataGrid.DataColumn id="created" title="Created" sortable={true} />
         <DataGrid.DataColumn id="active" title="Active" as={BoolComponent} sortable={true} />
@@ -319,7 +319,7 @@ describe('component: DataGrid', () => {
     expect(dataGrid).toHaveStyle('margin-right: 40px')
   })
   test('Should support setting position of right column as sticky', () => {
-    const { getAllByTestId, rerender } = renderWithTheme(<DataGridContainer stickyRightColumn />)
+    const { getAllByTestId, rerender } = renderWithTheme(<DataGridContainer sticky="right" />)
     getAllByTestId('last-col').forEach((element) => {
       expect(element).toHaveStyle('position: sticky')
     })

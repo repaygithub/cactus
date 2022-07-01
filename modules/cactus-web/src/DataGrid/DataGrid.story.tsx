@@ -2,6 +2,7 @@ import React, { ReactElement, useContext, useState } from 'react'
 
 import { DataGrid, ScreenSizeContext, SIZES, SplitButton } from '../'
 import { HIDE_CONTROL, SPACE, Story, STRING } from '../helpers/storybook'
+import { stickyColAlignment } from '../Table/Table'
 import { JustifyContent } from './types'
 
 interface Datum {
@@ -131,7 +132,7 @@ interface Args {
   disableNext: boolean
   sortableCols: boolean
   topSection: boolean
-  stickyRightColumn: boolean
+  sticky: stickyColAlignment
   fullWidth: boolean
   justifyTop: JustifyContent
   spacingTop: string
@@ -173,7 +174,7 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
   nextPageLabel,
   lastPageLabel,
   margin,
-  stickyRightColumn,
+  sticky,
 }) => {
   const size = useContext(ScreenSizeContext)
   const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
@@ -301,7 +302,7 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
           )}
         </DataGrid.TopSection>
       )}
-      <DataGrid.Table data={usableData} dividers={dividers} stickyRightColumn={stickyRightColumn}>
+      <DataGrid.Table data={usableData} dividers={dividers} sticky={sticky}>
         <DataGrid.DataColumn id="name" title="Name" />
         <DataGrid.DataColumn id="created" title="Created" sortable={sortableCols} />
         <DataGrid.DataColumn id="updated" title="Updated" sortable={sortableCols} />
@@ -394,7 +395,7 @@ BasicUsage.argTypes = {
   nextText: { name: 'PrevNext: nextText', ...STRING },
   disableNext: { name: 'PrevNext: disableNext', control: 'boolean' },
   sortableCols: { name: 'include sortable columns' },
-  stickyRightColumn: { name: 'Sticky right column' },
+  sticky: { name: 'Sticky column' },
   fullWidth: { name: 'Full Width' },
   topSection: { name: 'show top section' },
   justifyTop: {
@@ -428,7 +429,7 @@ BasicUsage.args = {
   spacingTop: '4',
   justifyBottom: 'flex-end',
   spacingBottom: '4',
-  stickyRightColumn: false,
+  sticky: 'none',
   fullWidth: true,
 }
 

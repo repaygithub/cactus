@@ -20,6 +20,7 @@ type CellAlignment = 'center' | 'right' | 'left'
 type CellType = 'th' | 'td'
 type BorderCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 export type TableVariant = 'table' | 'card' | 'mini'
+export type stickyColAlignment = 'right' | 'none'
 
 interface TableContextProps {
   cellType?: CellType
@@ -28,7 +29,7 @@ interface TableContextProps {
   cellIndex: number
   variant: TableVariant
   dividers?: boolean
-  stickyRightColumn?: boolean
+  sitcky?: stickyColAlignment
 }
 
 interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableElement> {
@@ -37,7 +38,7 @@ interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableEle
   variant?: TableVariant
   as?: React.ElementType
   dividers?: boolean
-  stickyRightColumn?: boolean
+  sticky?: stickyColAlignment
 }
 
 interface TableHeaderProps extends React.TableHTMLAttributes<HTMLTableSectionElement> {
@@ -84,7 +85,7 @@ interface heightInfoProps {
 }
 
 export const Table = React.forwardRef<HTMLTableElement, TableProps>(
-  ({ children, cardBreakpoint, ...props }, ref): React.ReactElement => {
+  ({ children, cardBreakpoint, sticky = 'none', ...props }, ref): React.ReactElement => {
     const size = useContext(ScreenSizeContext)
     const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [] }
     const tableRef = React.useRef<HTMLTableElement>(null)
@@ -135,12 +136,12 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
     return (
       <TableContext.Provider value={context}>
         {props.as ? (
-          <StyledTable {...props} ref={mergedRef}>
+          <StyledTable {...props} sticky={sticky} ref={mergedRef}>
             {children}
           </StyledTable>
         ) : (
           <Wrapper {...marginProps} fullWidth={props.fullWidth}>
-            <StyledTable {...props} ref={mergedRef}>
+            <StyledTable {...props} sticky={sticky} ref={mergedRef}>
               {children}
             </StyledTable>
           </Wrapper>
@@ -372,8 +373,7 @@ const table = css<TableProps>`
     }
     :last-child {
       border-right: ${(p): string => border(p.theme, 'lightContrast')};
-      position: ${(p) => (p.stickyRightColumn ? 'sticky' : '')};
-      right: ${(p) => (p.stickyRightColumn ? 0 : '')};
+      ${(p) => (p.sticky === 'right' ? 'position: sticky; right: 0;' : '')};
     }
   }
   tr:nth-of-type(even) {

@@ -4,7 +4,7 @@ import React, { ReactElement, useContext } from 'react'
 import styled from 'styled-components'
 
 import { border, radius } from '../helpers/theme'
-import Table from '../Table/Table'
+import Table, { stickyColAlignment } from '../Table/Table'
 import { DataGridContext } from './helpers'
 import { ColumnObject, DataColumnObject, SortOption } from './types'
 
@@ -12,7 +12,7 @@ export interface DataGridTableProps {
   children: React.ReactNode
   data: { [key: string]: any }[]
   dividers?: boolean
-  stickyRightColumn?: boolean
+  sticky?: stickyColAlignment
 }
 
 const isDataColumn = (col: any): col is DataColumnObject => {

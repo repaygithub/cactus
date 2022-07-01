@@ -77,7 +77,7 @@ Layout.argTypes = {
   hasHeader: { name: 'has thead' },
   hasBody: { name: 'has tbody' },
   margin: SPACE,
-  stickyRightColumn: { name: 'Enable sticky last column' },
+  sticky: { name: 'Sticky column position', options: ['right', 'none'] },
 }
 Layout.args = {
   captionText: '',
@@ -87,7 +87,7 @@ Layout.args = {
   columnCount: 4,
   rowCount: 3,
   hasBody: true,
-  stickyRightColumn: false,
+  sticky: 'none',
 }
 
 export const StylesOnly: TableStory = ({
