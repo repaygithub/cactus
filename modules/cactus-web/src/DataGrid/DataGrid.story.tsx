@@ -2,7 +2,7 @@ import React, { ReactElement, useContext, useState } from 'react'
 
 import { DataGrid, ScreenSizeContext, SIZES, SplitButton } from '../'
 import { HIDE_CONTROL, SPACE, Story, STRING } from '../helpers/storybook'
-import { stickyColAlignment } from '../Table/Table'
+import { StickyColAlignment } from '../Table/Table'
 import { JustifyContent } from './types'
 
 interface Datum {
@@ -132,7 +132,7 @@ interface Args {
   disableNext: boolean
   sortableCols: boolean
   topSection: boolean
-  sticky: stickyColAlignment
+  sticky: StickyColAlignment
   fullWidth: boolean
   justifyTop: JustifyContent
   spacingTop: string
