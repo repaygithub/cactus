@@ -20,7 +20,7 @@ type CellAlignment = 'center' | 'right' | 'left'
 type CellType = 'th' | 'td'
 type BorderCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 export type TableVariant = 'table' | 'card' | 'mini'
-export type stickyColAlignment = 'right' | 'none'
+export type StickyColAlignment = 'right' | 'none'
 
 interface TableContextProps {
   cellType?: CellType
@@ -29,7 +29,6 @@ interface TableContextProps {
   cellIndex: number
   variant: TableVariant
   dividers?: boolean
-  sticky?: stickyColAlignment
 }
 
 interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableElement> {
@@ -38,13 +37,13 @@ interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableEle
   variant?: TableVariant
   as?: React.ElementType
   dividers?: boolean
-  sticky?: stickyColAlignment
+  sticky?: StickyColAlignment
 }
 
 interface TableHeaderProps extends React.TableHTMLAttributes<HTMLTableSectionElement> {
   variant?: TableVariant
   dividers?: boolean
-  sticky?: stickyColAlignment
+  sticky?: StickyColAlignment
 }
 
 export interface TableCellProps
@@ -68,7 +67,6 @@ const DEFAULT_CONTEXT: TableContextProps = {
   cellIndex: 0,
   variant: 'table',
   dividers: false,
-  sticky: 'none',
 }
 
 const TableContext = createContext<TableContextProps>(DEFAULT_CONTEXT)
@@ -134,7 +132,6 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
     if (props.dividers) {
       context.dividers = props.dividers
     }
-    context.sticky = sticky
     props.variant = context.variant
     return (
       <TableContext.Provider value={context}>
@@ -193,13 +190,7 @@ export const TableHeader = React.forwardRef<HTMLTableSectionElement, TableHeader
     const context = useContext<TableContextProps>(TableContext)
     return (
       <TableContext.Provider value={{ ...context, inHeader: true, cellType: 'th', cellIndex: 0 }}>
-        <StyledHeader
-          {...props}
-          variant={context.variant}
-          ref={ref}
-          dividers={context.dividers}
-          sticky={context.sticky}
-        >
+        <StyledHeader {...props} variant={context.variant} ref={ref} dividers={context.dividers}>
           <tr>{children}</tr>
         </StyledHeader>
       </TableContext.Provider>
@@ -346,9 +337,6 @@ const StyledHeader = styled.thead<TableHeaderProps>`
     text-transform: uppercase;
     border: ${(p): string => border(p.theme, 'base')};
     border-right: ${(p): string => (p.dividers ? border(p.theme, 'mediumContrast') : '')};
-    :last-child {
-      ${(p) => (p.sticky === 'right' ? boxShadow(p.theme, 1) : '')};
-    }
     ${(p): ColorStyle => p.theme.colorStyles.base};
   }
   ${headerVariants}
@@ -386,16 +374,13 @@ const table = css<TableProps>`
     :last-child {
       border-right: ${(p): string => border(p.theme, 'lightContrast')};
       ${(p) =>
-        p.sticky === 'right' ? `position: sticky; right: 0; ${boxShadow(p.theme, 1)}` : ''};
+        p.sticky === 'right' ? `position: sticky; right: 0; ${boxShadow(p.theme, 0)}` : ''};
     }
   }
   tr:nth-of-type(even) {
     td,
     th {
       background-color: ${(p): string => p.theme.colors.lightContrast};
-      :last-child {
-        ${(p) => (p.sticky === 'right' ? boxShadow(p.theme, 1) : '')};
-      }
     }
     td:not(:last-child) {
       border-right: ${(p): string => (p.dividers ? border(p.theme, 'white') : '')};
