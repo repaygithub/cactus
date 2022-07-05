@@ -1,3 +1,15 @@
+/*
+ * Pre-submit handlers are intended to modify values before they are submitted;
+ * unfortunately `final-form` doesn't have a real "pre-submit" hook, so we add
+ * the `preSubmit` method to be called at the start of the `onSubmit` handler:
+ *
+ * const onSubmit = (values, api) => {
+ *   values = api.preSubmit(values)
+ *   return doSomething(values)
+ * }
+ *
+ * This creates a deep copy, so if submit fails the rendered form is unchanged.
+ */
 import { FormApi } from 'final-form'
 import { Decorator, useForm } from 'react-final-form'
 import { toPath } from './helpers'
@@ -6,11 +18,17 @@ import { useEffect, useRef } from 'react'
 type PreSubmitHandler = (value: any) => any
 type Form = FormApi & { preSubmit?: PreSubmitHandler }
 
-const isInt = RegExp.prototype.test.bind(/^\d+$/)
 const ident = (x: any) => x
+const reduceHandlers = (val, handler) => handler(val)
 const HANDLER_KEY = ' PRE$UBM1T' // Hopefully no one would ever use this in a form...
 const handlerMap = new WeakMap<Form, Record<string, any>>()
 
+/*
+ * Adds the `preSubmit` method to the form API object.
+ *
+ * Doesn't really need to be called explicitly nor passed to `decorators`,
+ * since `addPreSubmitHandler` and `usePreSubmit` both ensure this is called.
+ */
 export const addFormPreSubmit: Decorator = (form: Form) => {
   if (!form.preSubmit) {
     handlerMap.set(form, {})
@@ -22,10 +40,8 @@ export const addFormPreSubmit: Decorator = (form: Form) => {
 const runPreSubmit = (values, handlers) => {
   if (!handlers) {
     return values
-  } else if (typeof handlers === 'function') {
-    return handlers(values)
   } else if (handlers[HANDLER_KEY]) {
-    values = handlers[HANDLER_KEY](values)
+    values = handlers[HANDLER_KEY].reduce(reduceHandlers, values)
   }
   if (Array.isArray(values)) {
     return values.map((val, i) => runPreSubmit(val, handlers[i]))
@@ -39,6 +55,11 @@ const runPreSubmit = (values, handlers) => {
   return values
 }
 
+/*
+ * Adds a pre-submit handler to the given form for the named field.
+ *
+ * Returns an unsubscriber function.
+ */
 export const addPreSubmitHandler = (
   form: Form,
   name: string,
@@ -47,43 +68,30 @@ export const addPreSubmitHandler = (
   addFormPreSubmit(form)
   const path = toPath(name)
   let container = handlerMap.get(form)
-  let oldHandler: PreSubmitHandler | undefined | null = null
-  const handlerWrapper = (values) => handler(oldHandler ? oldHandler(values) : values)
-  if (path.length) {
-    const lastIndex = path.length - 1
-    for (let i = 0; i < lastIndex; i++) {
-      const key = path[i]
-      const next = container[key]
-      if (!next || typeof next === 'function') {
-        container[key] = isInt(path[i + 1]) ? [] : {}
-        container[key][HANDLER_KEY] = next
-      }
-      container = container[key]
-    }
-    const leaf = container[path[lastIndex]]
-    if (!leaf || typeof leaf === 'function') {
-      const lastKey = path[lastIndex]
-      oldHandler = leaf
-      container[lastKey] = handlerWrapper
-      return () => {
-        if (container[lastKey] === handlerWrapper) {
-          container[lastKey] = oldHandler
-        } else if (container[lastKey].?[HANDLER_KEY] === handlerWrapper) {
-          container[lastKey][HANDLER_KEY] = oldHandler
-        }
-      }
-    }
-    container = leaf
+  for (const key of path) {
+    container = container[key] || (container[key] = {})
   }
-  oldHandler = container[HANDLER_KEY]
-  container[HANDLER_KEY] = handlerWrapper
+  const handlers = container[HANDLER_KEY] || (container[HANDLER_KEY] = [])
+  const handlerIndex = handlers.length
+  handlers.push(handler)
   return () => {
-    if (container[HANDLER_KEY] === handlerWrapper) {
-      container[HANDLER_KEY] = oldHandler
+    handlers[handlerIndex] = ident
+    for (let i = handlers.length - 1; i >= 0; i--) {
+      if (handlers[i] !== ident) {
+        handlers.splice(i + 1)
+        break
+      }
     }
   }
 }
 
+/*
+ * Adds a pre-submit handler for the named field to the current form.
+ *
+ * Automatically removes the handler when the component is unmounted;
+ * be careful if async form submission (or anything else) hides part of
+ * the form, because handlers for unrendered fields will not be called.
+ */
 const usePreSubmit = (name: string, handler?: PreSubmitHandler | null): void => {
   const form = useForm('usePreSubmit') as Form
   const ref = useRef<PreSubmitHandler>(ident)
@@ -92,13 +100,7 @@ const usePreSubmit = (name: string, handler?: PreSubmitHandler | null): void => 
   useEffect(() => {
     if (hasHandler) {
       const indirectHandler = (values) => ref.current(values)
-      const cleanup = addPreSubmitHandler(form, name, indirectHandler)
-      return () => {
-        // Try to remove the handler, but if we can't find it
-        // set it to `ident` so at least it won't have any side effects.
-        cleanup()
-        ref.current = ident
-      }
+      return addPreSubmitHandler(form, name, indirectHandler)
     }
   }, [hasHandler, name, form])
 }
