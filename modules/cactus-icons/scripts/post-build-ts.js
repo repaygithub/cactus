@@ -20,6 +20,7 @@ async function main() {
     "import * as icons from './icons'",
     "export * from './icons'",
     "export * from './types'",
+    "export { default as CactusIcon } from './CactusIcon'",
     "export { default as iconSizes } from './iconSizes'",
     'export default icons',
   ]

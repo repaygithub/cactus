@@ -165,6 +165,7 @@ Array [
   "BatchstatusOpen",
   "BatchstatusReconciled",
   "BatchstatusSettle",
+  "CactusIcon",
   "DescriptiveApps",
   "DescriptiveAssistant",
   "DescriptiveAt",

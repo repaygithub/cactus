@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react'
 
 import icons, { IconProps } from '../i'
 
-type IconName = Exclude<keyof typeof icons, 'iconSizes'>
-const iconNames = Object.keys(icons).filter((x) => x !== 'iconSizes') as IconName[]
+type IconName = keyof typeof icons
+const iconNames = Object.keys(icons) as IconName[]
 
 type SizeArg = { iconSize: string }
 type Icon = (props: IconProps) => ReactElement
