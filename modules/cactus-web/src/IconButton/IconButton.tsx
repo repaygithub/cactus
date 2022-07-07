@@ -6,19 +6,20 @@ import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components
 import { margin, MarginProps } from 'styled-system'
 
 import { isIE } from '../helpers/constants'
-import { omitMargins } from '../helpers/omit'
+import { getOmittableProps } from '../helpers/omit'
 import { borderSize } from '../helpers/theme'
 
 export type IconButtonVariants = 'standard' | 'action' | 'danger' | 'warning' | 'success' | 'dark'
 export type IconButtonSizes = 'tiny' | 'small' | 'medium' | 'large'
 
-interface IconButtonProps
-  extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
-    MarginProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  label?: string
+}
+
+interface IconStyleProps extends MarginProps {
   iconSize?: IconButtonSizes
   variant?: IconButtonVariants
   disabled?: boolean
-  label?: string
   display?: 'flex' | 'inline-flex'
   inverse?: boolean
 }
@@ -138,7 +139,7 @@ const focusOutlineSpacing = {
 }
 
 const variantOrDisabled = (
-  props: IconButtonProps
+  props: IconStyleProps
 ): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
   const map = props.inverse ? inverseVariantMap : variantMap
   if (props.disabled) {
@@ -148,20 +149,21 @@ const variantOrDisabled = (
   }
 }
 
-const IconButtonBase = React.forwardRef<HTMLButtonElement, IconButtonProps>(
+const IconButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref): React.ReactElement => {
-    const { label, children, inverse, iconSize, display, ...buttonProps } = props
-    const withoutMargins = omitMargins(buttonProps)
-
+    const { label, children, ...buttonProps } = props
     return (
-      <button aria-label={label} ref={ref} {...withoutMargins}>
+      <button aria-label={label} ref={ref} {...buttonProps}>
         {children}
       </button>
     )
   }
 )
 
-export const IconButton = styled(IconButtonBase)<IconButtonProps>`
+const styleProps = getOmittableProps(margin, 'display', 'inverse', 'variant', 'iconSize')
+export const IconButton = styled(IconButtonBase).withConfig({
+  shouldForwardProp: (p) => !styleProps.has(p),
+})<IconStyleProps>`
   display: ${(p): string => p.display || 'inline-flex'};
   box-sizing: border-box;
   align-items: center;
@@ -212,7 +214,7 @@ IconButton.propTypes = {
   iconSize: PropTypes.oneOf(['tiny', 'small', 'medium', 'large']),
   variant: PropTypes.oneOf(['standard', 'action', 'danger', 'warning', 'success', 'dark']),
   disabled: PropTypes.bool,
-  label: (props: IconButtonProps, propName: string, componentName: string): Error | null => {
+  label: (props: ButtonProps, propName: string, componentName: string): Error | null => {
     if (!props.label && !props['aria-label'] && !props['aria-labelledby']) {
       return new Error(
         `One of props 'label' or 'aria-labelledby' was not specified in ${componentName}.`
@@ -233,8 +235,6 @@ IconButton.defaultProps = {
   variant: 'standard',
   iconSize: 'medium',
   display: 'inline-flex',
-  disabled: false,
-  inverse: false,
   type: 'button',
 }
 

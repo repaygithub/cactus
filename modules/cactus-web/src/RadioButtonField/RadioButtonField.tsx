@@ -48,9 +48,4 @@ RadioButtonField.propTypes = {
   id: PropTypes.string,
 }
 
-RadioButtonField.defaultProps = {
-  labelProps: {},
-  disabled: false,
-}
-
 export default RadioButtonField

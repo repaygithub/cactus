@@ -94,8 +94,4 @@ RadioButton.propTypes = {
   disabled: PropTypes.bool,
 }
 
-RadioButton.defaultProps = {
-  disabled: false,
-}
-
 export default RadioButton

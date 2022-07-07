@@ -5,6 +5,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
+import { getOmittableProps } from '../helpers/omit'
 import { IconButton } from '../IconButton/IconButton'
 
 const closeTypes = ['no-button', 'button'] as const
@@ -36,7 +37,10 @@ const TagBase = React.forwardRef<HTMLSpanElement, TagProps>(
   }
 )
 
-export const Tag = styled(TagBase)`
+const styleProps = getOmittableProps(margin)
+export const Tag = styled(TagBase).withConfig({
+  shouldForwardProp: (p) => !styleProps.has(p),
+})<MarginProps>`
   ${colorStyle('standard')};
   box-sizing: border-box;
   ${textStyle('small')};

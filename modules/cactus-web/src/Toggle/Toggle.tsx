@@ -127,10 +127,6 @@ Toggle.propTypes = {
   disabled: PropTypes.bool,
 }
 
-Toggle.defaultProps = {
-  disabled: false,
-}
-
 // Enable use of `Toggle` as a styled-components CSS class.
 Toggle.toString = Wrapper.toString
 Toggle.displayName = 'Toggle'

@@ -12,6 +12,7 @@ import {
   TypographyProps,
 } from 'styled-system'
 
+import { getOmittableProps } from '../helpers/omit'
 import { omitStyles } from '../helpers/styled'
 
 // These are covered by `textStyle` instead.
@@ -22,7 +23,10 @@ export interface TextProps extends SpaceProps, ColorProps, ColorStyleProps, Font
   textStyle?: keyof TextStyleCollection
 }
 
-export const Text = styled('span')<TextProps>`
+const styleProps = getOmittableProps(space, color, colorStyle, font, 'textStyle')
+export const Text = styled('span').withConfig({
+  shouldForwardProp: (p) => !styleProps.has(p),
+})<TextProps>`
   &:not(p) {
     margin: 0;
   }

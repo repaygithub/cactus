@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import styled, { StyledComponentBase } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
+import { getOmittableProps } from '../helpers/omit'
+
 const GUTTER_WIDTH = 16
 
 type ColumnNum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
@@ -88,7 +90,10 @@ interface GridComponent extends StyledComponentBase<'div', CactusTheme, GridProp
   Item: typeof Item
 }
 
-export const Grid = styled.div<GridProps>`
+const styleProps = getOmittableProps(margin, 'justify')
+export const Grid = styled.div.withConfig({
+  shouldForwardProp: (p) => !styleProps.has(p),
+})<GridProps>`
   box-sizing: border-box;
   width: 100%;
 

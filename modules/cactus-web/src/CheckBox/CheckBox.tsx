@@ -83,8 +83,4 @@ CheckBox.propTypes = {
   disabled: PropTypes.bool,
 }
 
-CheckBox.defaultProps = {
-  disabled: false,
-}
-
 export default CheckBox

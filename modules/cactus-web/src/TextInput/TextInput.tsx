@@ -89,9 +89,4 @@ TextInput.propTypes = {
   textStyle: PropTypes.oneOf(textStyles),
 }
 
-TextInput.defaultProps = {
-  disabled: false,
-  status: null,
-}
-
 export default TextInput

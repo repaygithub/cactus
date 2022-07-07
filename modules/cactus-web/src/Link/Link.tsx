@@ -3,24 +3,28 @@ import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { omitMargins } from '../helpers/omit'
+import { getOmittableProps } from '../helpers/omit'
 
-export interface LinkProps
-  extends MarginProps,
-    Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
+interface AnchorProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
   to: string
+}
+
+interface LinkStyleProps extends MarginProps {
   variant?: 'standard' | 'dark'
 }
 
-const LinkBase = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
-  const { to, ...rest } = omitMargins(props)
+export interface LinkProps extends AnchorProps, LinkStyleProps {}
+
+const LinkBase = React.forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) => {
+  const { to, ...rest } = props
 
   return <a ref={ref} href={to} {...rest} />
 })
 
+const styleProps = getOmittableProps(margin, 'variant')
 export const Link = styled(LinkBase).withConfig({
-  shouldForwardProp: (prop) => prop !== 'variant',
-})`
+  shouldForwardProp: (p) => !styleProps.has(p),
+})<LinkStyleProps>`
   font-style: italic;
   outline: none;
 
@@ -49,10 +53,6 @@ export const Link = styled(LinkBase).withConfig({
 Link.propTypes = {
   to: PropTypes.string.isRequired,
   variant: PropTypes.oneOf(['standard', 'dark']),
-}
-
-Link.defaultProps = {
-  variant: 'standard',
 }
 
 export default Link

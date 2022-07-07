@@ -2,6 +2,7 @@ import { ColorStyle } from '@repay/cactus-theme'
 import styled, { css, DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
+import { getOmittableProps } from '../helpers/omit'
 import { boxShadow, fontSize } from '../helpers/theme'
 
 export type AvatarStep = 'notDone' | 'inProcess' | 'done'
@@ -33,7 +34,10 @@ const variant = (
   return stepColorMap[stepType]
 }
 
-export const StepAvatar = styled.div<StepAvatarProps>`
+const styleProps = getOmittableProps(margin, 'status')
+export const StepAvatar = styled.div.withConfig({
+  shouldForwardProp: (p) => !styleProps.has(p),
+})<StepAvatarProps>`
   box-sizing: border-box;
   border-radius: 50%;
   width: 48px;

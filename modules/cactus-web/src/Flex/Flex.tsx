@@ -4,6 +4,7 @@ import { flexbox, FlexboxProps } from 'styled-system'
 
 import { Box, BoxProps } from '../Box/Box'
 import { isIE } from '../helpers/constants'
+import { getOmittableProps } from '../helpers/omit'
 
 interface FlexBoxProps extends BoxProps, Omit<FlexboxProps, 'justifySelf'> {}
 
@@ -19,7 +20,10 @@ export const justifyOptions = [
 ] as const
 export type JustifyContent = typeof justifyOptions[number]
 
-export const Flex = styled(Box)<FlexBoxProps>`
+const styleProps = getOmittableProps(flexbox)
+export const Flex = styled(Box).withConfig({
+  shouldForwardProp: (p) => !styleProps.has(p),
+})<FlexBoxProps>`
   display: flex;
   ${flexbox}
 

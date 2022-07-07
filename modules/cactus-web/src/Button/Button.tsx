@@ -5,6 +5,7 @@ import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { AsProps, GenericComponent } from '../helpers/asProps'
+import { getOmittableProps } from '../helpers/omit'
 import { radius, textStyle } from '../helpers/theme'
 import Spinner from '../Spinner/Spinner'
 
@@ -187,8 +188,9 @@ function ButtonFunc<E, C extends GenericComponent = 'button'>(
   )
 }
 
+const styleProps = getOmittableProps(margin)
 const StyledButton = styled.button.withConfig({
-  shouldForwardProp: (p) => !margin.propNames?.includes(p),
+  shouldForwardProp: (p) => !styleProps.has(p),
 })<{ $inverse?: boolean; $variant?: ButtonVariants }>`
   position: relative;
   padding: 2px 30px;
@@ -255,8 +257,6 @@ ButtonFR.propTypes = {
 
 ButtonFR.defaultProps = {
   variant: 'standard',
-  disabled: false,
-  inverse: false,
   type: 'button',
   loadingText: 'loading',
 }

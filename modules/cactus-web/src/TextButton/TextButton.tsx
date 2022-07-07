@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
+import { getOmittableProps } from '../helpers/omit'
 import { border, radius, textStyle } from '../helpers/theme'
 
 export type TextButtonVariants = 'standard' | 'action' | 'danger' | 'dark'
@@ -79,7 +80,10 @@ export const focusStyle = css`
   }
 `
 
-export const TextButton = styled.button<TextButtonProps>`
+const styleProps = getOmittableProps(margin, 'variant', 'inverse')
+export const TextButton = styled.button.withConfig({
+  shouldForwardProp: (p) => !styleProps.has(p),
+})<TextButtonProps>`
   ${(p) => textStyle(p.theme, 'body')};
   position: relative;
   border: none;
@@ -120,8 +124,6 @@ TextButton.propTypes = {
 
 TextButton.defaultProps = {
   variant: 'standard',
-  disabled: false,
-  inverse: false,
   type: 'button',
 }
 
