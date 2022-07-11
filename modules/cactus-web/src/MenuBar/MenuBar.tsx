@@ -6,10 +6,18 @@ import {
   NavigationChevronUp,
   NavigationHamburger,
 } from '@repay/cactus-icons'
-import { CactusTheme } from '@repay/cactus-theme'
+import {
+  border,
+  color,
+  colorStyle,
+  insetBorder,
+  radius,
+  shadow,
+  textStyle,
+} from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import ActionBar from '../ActionBar/ActionBar'
 import { useAction } from '../ActionBar/ActionProvider'
@@ -17,7 +25,6 @@ import { isIE } from '../helpers/constants'
 import { FocusSetter, useFocusControl } from '../helpers/focus'
 import { useMergedRefs } from '../helpers/react'
 import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers/scroll'
-import { border, boxShadow, insetBorder, radius, textStyle } from '../helpers/theme'
 import { useLayout } from '../Layout/Layout'
 import { Sidebar as LayoutSidebar } from '../Layout/Sidebar'
 import { MenuItemFunc, MenuItemType, MenuListItem } from '../MenuItem/MenuItem'
@@ -45,65 +52,52 @@ interface MenuBarProps {
   variant?: MenuBarVariants
 }
 
-type Variant = 'mobile' | 'sidebar' | 'top'
+type SizeVariant = 'mobile' | 'sidebar' | 'top'
 
 export type MenuBarVariants = 'light' | 'dark'
 
-type VariantMap = { [K in MenuBarVariants]: FlattenInterpolation<ThemeProps<CactusTheme>> }
+type VariantMap = { [K in MenuBarVariants]: ReturnType<typeof css> }
 
 const variantMap: VariantMap = {
   light: css`
-    ${(p) => insetBorder(p.theme, 'lightContrast', 'bottom', { thin: 2, thick: 3 })};
+    ${colorStyle('standard')}
+    ${insetBorder('lightContrast', 'bottom', { thin: '2px', thick: '3px' })};
 
     [role='menubar'] > li > [role='menuitem'] {
-      color: ${(p) => p.theme.colors.darkestContrast};
-      background-color: ${(p): string => p.theme.colors.white};
-
       &:hover,
       &[aria-expanded='true'] {
-        border-bottom-color: ${(p) => p.theme.colors.callToAction};
-        color: ${(p) => p.theme.colors.callToAction};
+        border-bottom-color: ${color('callToAction')};
+        color: ${color('callToAction')};
       }
 
       &:focus {
-        ${(p) => insetBorder(p.theme, 'callToAction')};
+        ${insetBorder('callToAction')};
       }
     }
   `,
   dark: css`
-    background-color: ${(p): string => p.theme.colors.base};
+    ${colorStyle('base')}
 
     > ${ScrollButton}, [role='menubar'] > li > [role='menuitem'] {
-      padding: 23px 7px 21px 7px;
-      border: ${(p) => border(p.theme, 'base')};
-      border-bottom: ${(p) => border(p.theme, 'base', { thin: 3, thick: 4 })};
-      color: ${(p) => p.theme.colors.white};
+      color: ${color('white')};
+      border: ${border('base')};
+      border-bottom: ${border('base', { thin: '3px', thick: '4px' })};
 
       &:hover:not([aria-disabled]),
       &[aria-expanded='true'] {
-        border-color: ${(p) => p.theme.colors.white};
+        border-color: ${color('white')};
       }
 
       &:focus {
-        padding-bottom: 23px;
-        border: ${(p) => border(p.theme, 'white')};
+        border: ${border('white')};
       }
-    }
-    ${ScrollButton} {
-      padding: 0;
     }
   `,
 }
 
-const variantSelector = (
-  props: MenuBarProps
-): FlattenInterpolation<ThemeProps<CactusTheme>> | undefined => {
-  if (props.variant !== undefined) {
-    return variantMap[props.variant]
-  }
-}
+const variantSelector = ({ variant = 'light' }: MenuBarProps) => variantMap[variant]
 
-const useVariant = (): Variant => {
+const useSizeVariant = (): SizeVariant => {
   const size = React.useContext(ScreenSizeContext)
   if (size < SIZES.small) {
     return 'mobile'
@@ -122,7 +116,7 @@ MenuBarItemFR.displayName = 'MenuBarItem'
 
 const MenuBarList = React.forwardRef<HTMLSpanElement, ListProps>(
   ({ title, children, ...props }, ref) => {
-    const variant = useVariant()
+    const variant = useSizeVariant()
     const isTopbar = variant === 'top'
     const { wrapperProps, buttonProps, popupProps } = useSubmenu(props.id, isTopbar)
 
@@ -235,48 +229,45 @@ const useFocusHandler = (setFocus: FocusSetter) =>
     [setFocus]
   )
 
-const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(
-  ({ children, variant = 'light', ...props }, ref) => {
-    const orientation = 'horizontal'
-    const [menuRef, scroll] = useScroll<HTMLUListElement>(orientation, true, getWrappedScrollInfo)
-    const [setFocus, rootRef] = useFocusControl(getOwnedMenuItems)
-    const menuKeyHandler = useMenuKeyHandler(setFocus, true)
-    const mergedRef = useMergedRefs(menuRef, rootRef)
+const Topbar = React.forwardRef<HTMLElement, MenuBarProps>(({ children, ...props }, ref) => {
+  const orientation = 'horizontal'
+  const [menuRef, scroll] = useScroll<HTMLUListElement>(orientation, true, getWrappedScrollInfo)
+  const [setFocus, rootRef] = useFocusControl(getOwnedMenuItems)
+  const menuKeyHandler = useMenuKeyHandler(setFocus, true)
+  const mergedRef = useMergedRefs(menuRef, rootRef)
 
-    const onMenuFocus = useFocusHandler(setFocus)
+  const onMenuFocus = useFocusHandler(setFocus)
 
-    const layoutClass = useLayout('menubar', { grid: 'header' }, 10)
+  const layoutClass = useLayout('menubar', { grid: 'header' }, 10)
 
-    return (
-      <Nav
-        {...props}
-        className={layoutClass}
-        variant={variant}
-        ref={ref}
-        tabIndex={-1}
-        onClick={navClickHandler}
-        onKeyDown={menuKeyHandler}
+  return (
+    <Nav
+      {...props}
+      className={layoutClass}
+      ref={ref}
+      tabIndex={-1}
+      onClick={navClickHandler}
+      onKeyDown={menuKeyHandler}
+    >
+      <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickBack}>
+        <NavigationChevronLeft />
+      </ScrollButton>
+      <MenuList
+        role="menubar"
+        aria-orientation={orientation}
+        ref={mergedRef}
+        tabIndex={0}
+        onFocus={onMenuFocus}
+        onBlur={onMenuBlur}
       >
-        <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickBack}>
-          <NavigationChevronLeft />
-        </ScrollButton>
-        <MenuList
-          role="menubar"
-          aria-orientation={orientation}
-          ref={mergedRef}
-          tabIndex={0}
-          onFocus={onMenuFocus}
-          onBlur={onMenuBlur}
-        >
-          {children}
-        </MenuList>
-        <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickFore}>
-          <NavigationChevronRight />
-        </ScrollButton>
-      </Nav>
-    )
-  }
-)
+        {children}
+      </MenuList>
+      <ScrollButton hidden={!scroll.showScroll} onClick={scroll.clickFore}>
+        <NavigationChevronRight />
+      </ScrollButton>
+    </Nav>
+  )
+})
 
 const Sidebar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
   const nav = <NavPanel key="cactus-web-menubar" {...props} ref={ref} />
@@ -316,7 +307,7 @@ const NavPanel = React.forwardRef<HTMLElement, MenuBarProps>(({ children, id, ..
 })
 
 const MenuBar = React.forwardRef<HTMLElement, MenuBarProps>((props, ref) => {
-  const variant = useVariant()
+  const variant = useSizeVariant()
   const NavComponent = variant === 'top' ? Topbar : Sidebar
   return <NavComponent {...props} ref={ref} />
 })
@@ -356,8 +347,8 @@ const Nav = styled.nav<MenuBarProps>`
   [role='menubar'] > li > [role='menuitem'] {
     white-space: nowrap;
     padding: 24px 16px;
-    border-bottom: ${(p) => border(p.theme, 'lightContrast', { thin: 2, thick: 3 })};
-    ${(p) => textStyle(p.theme, 'body')};
+    border-bottom: ${border('lightContrast', { thin: '2px', thick: '3px' })};
+    ${textStyle('body')};
     font-weight: 600;
     text-transform: uppercase;
   }
@@ -365,7 +356,7 @@ const Nav = styled.nav<MenuBarProps>`
     &:hover,
     &[aria-expanded='true'] {
       z-index: 100;
-      ${(p) => boxShadow(p.theme, 2)}
+      ${shadow(2)}
     }
   }
   ${variantSelector}
@@ -397,15 +388,15 @@ const InlineMenu = styled.ul<{ $margin: number }>`
     display: none;
   }
   &.nest-even {
-    background-color: ${(p) => p.theme.colors.white};
+    background-color: ${color('white')};
   }
   &.nest-odd {
-    background-color: ${(p) => p.theme.colors.lightContrast};
+    background-color: ${color('lightContrast')};
   }
 `
 
 const MenuWrapper = styled.div`
-  ${(p) => p.theme.colorStyles.standard};
+  ${colorStyle('standard')};
   display: flex;
   &[aria-hidden='true'] {
     display: none;
@@ -414,9 +405,9 @@ const MenuWrapper = styled.div`
   top: 100%;
   left: 0;
   outline: none;
-  border: ${(p) => border(p.theme, 'lightContrast')};
+  border: ${border('lightContrast')};
   border-radius: ${radius(8)};
-  ${(p) => boxShadow(p.theme, 1)};
+  ${shadow(1)};
   white-space: normal;
   flex-flow: column nowrap;
   align-items: stretch;
@@ -433,17 +424,17 @@ const MenuWrapper = styled.div`
       transform: rotateZ(-90deg);
     }
     &[aria-expanded='true'] {
-      background-color: ${(p) => p.theme.colors.lightContrast};
+      background-color: ${color('lightContrast')};
       ${NavigationArrowDown} {
         transform: rotateZ(90deg);
       }
     }
     &:hover {
-      color: ${(p) => p.theme.colors.callToAction};
+      color: ${color('callToAction')};
     }
     &:focus {
-      background-color: ${(p) => p.theme.colors.lightContrast};
-      color: ${(p) => p.theme.colors.callToAction};
+      background-color: ${color('lightContrast')};
+      color: ${color('callToAction')};
     }
   }
 `
@@ -461,6 +452,5 @@ const MenuList = styled.ul<{ $showScroll?: boolean }>`
   flex-wrap: nowrap;
   align-items: stretch;
   overflow: hidden;
-  color: ${(p) => p.theme.colors.darkestContrast};
-  ${(p) => textStyle(p.theme, 'small')};
+  ${textStyle('small')};
 `
