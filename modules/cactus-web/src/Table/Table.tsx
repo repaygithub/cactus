@@ -20,6 +20,7 @@ type CellAlignment = 'center' | 'right' | 'left'
 type CellType = 'th' | 'td'
 type BorderCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 export type TableVariant = 'table' | 'card' | 'mini'
+export type StickyColAlignment = 'right' | 'none'
 
 interface TableContextProps {
   cellType?: CellType
@@ -36,11 +37,13 @@ interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableEle
   variant?: TableVariant
   as?: React.ElementType
   dividers?: boolean
+  sticky?: StickyColAlignment
 }
 
 interface TableHeaderProps extends React.TableHTMLAttributes<HTMLTableSectionElement> {
   variant?: TableVariant
   dividers?: boolean
+  sticky?: StickyColAlignment
 }
 
 export interface TableCellProps
@@ -82,7 +85,7 @@ interface heightInfoProps {
 }
 
 export const Table = React.forwardRef<HTMLTableElement, TableProps>(
-  ({ children, cardBreakpoint, ...props }, ref): React.ReactElement => {
+  ({ children, cardBreakpoint, sticky = 'none', ...props }, ref): React.ReactElement => {
     const size = useContext(ScreenSizeContext)
     const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [] }
     const tableRef = React.useRef<HTMLTableElement>(null)
@@ -133,12 +136,12 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
     return (
       <TableContext.Provider value={context}>
         {props.as ? (
-          <StyledTable {...props} ref={mergedRef}>
+          <StyledTable {...props} sticky={sticky} ref={mergedRef}>
             {children}
           </StyledTable>
         ) : (
           <Wrapper {...marginProps} fullWidth={props.fullWidth}>
-            <StyledTable {...props} ref={mergedRef}>
+            <StyledTable {...props} sticky={sticky} ref={mergedRef}>
               {children}
             </StyledTable>
           </Wrapper>
@@ -370,6 +373,8 @@ const table = css<TableProps>`
     }
     :last-child {
       border-right: ${(p): string => border(p.theme, 'lightContrast')};
+      ${(p) =>
+        p.sticky === 'right' ? `position: sticky; right: 0; ${boxShadow(p.theme, 0)}` : ''};
     }
   }
   tr:nth-of-type(even) {

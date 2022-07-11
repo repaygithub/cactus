@@ -41,6 +41,17 @@ There are two ways of controlling card carousel mode: using the `variant` prop, 
 
 If a `Table.Header` is used, card mode will also render the headers in each cell/row so the user doesn't have to remember which header lines up with which cell.
 
+### Sticky Column 
+For the default styling, there is the possibility to set the right most column right to be sticky. This column stays in place as the user scrolls through the table. For enabling this feature, the `Table` component allows a `sticky` prop that currently accepts `none` or `right` values.
+
+```jsx
+<ScreenSizeProvider>
+  <Table sticky="right">
+    ...
+  </Table>
+</ScreenSizeProvider>
+```
+
 ### Try it out
 
 export const code = `
