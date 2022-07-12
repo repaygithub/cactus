@@ -72,6 +72,7 @@
     "@repay/cactus-theme": "^3.2.3",
     "@repay/scripts": "^3.0.4",
     "@storybook/addon-controls": "6.3.8",
+    "@storybook/addon-ie11": "^0.0.6",
     "@storybook/react": "6.3.8",
     "@storybook/theming": "6.3.8",
     "@svgr/core": "^5.4.0",

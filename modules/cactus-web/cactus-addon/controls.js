@@ -82,8 +82,6 @@ const mapArgs = (story, { args, argTypes }) => {
   return story({ args: newArgs })
 }
 
-module.exports = {
-  argsEnhancers: [addDefaults],
-  argTypesEnhancers: [fixControlArgTypes],
-  decorators: [mapArgs],
-}
+export const argsEnhancers = [addDefaults]
+export const argTypesEnhancers = [fixControlArgTypes]
+export const decorators = [mapArgs]
