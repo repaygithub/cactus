@@ -58,6 +58,11 @@ export type MenuBarVariants = 'light' | 'dark'
 
 type VariantMap = { [K in MenuBarVariants]: ReturnType<typeof css> }
 
+const thicknessMap = {
+  thin: '0px',
+  thick: '1px',
+}
+
 const variantMap: VariantMap = {
   light: css`
     ${colorStyle('standard')}
@@ -80,14 +85,18 @@ const variantMap: VariantMap = {
 
     > ${ScrollButton}, [role='menubar'] > li > [role='menuitem'] {
       color: ${color('white')};
-      border-bottom: ${border('transparent', { thin: '1px', thick: '2px' })};
-      ${insetBorder('transparent', undefined, { thin: '1px', thick: '2px' })};
+      border-bottom: ${border('transparent', { thin: '2px', thick: '3px' })};
 
       &:hover:not([aria-disabled]),
       &[aria-expanded='true'],
       &:focus {
-        ${insetBorder('white', undefined, { thin: '1px', thick: '2px' })};
+        box-shadow: inset 1px 1px 0 ${(p) => thicknessMap[p.theme.border]} ${color('white')},
+          inset -1px -1px 0 ${(p) => thicknessMap[p.theme.border]} ${color('white')};
         border-bottom-color: ${color('white')};
+      }
+      &:focus {
+        border-bottom: 0;
+        padding-bottom: ${(p) => (p.theme.border === 'thin' ? '26px' : '27px')};
       }
     }
   `,
