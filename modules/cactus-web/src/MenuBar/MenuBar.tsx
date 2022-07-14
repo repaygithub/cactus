@@ -59,8 +59,14 @@ export type MenuBarVariants = 'light' | 'dark'
 type VariantMap = { [K in MenuBarVariants]: ReturnType<typeof css> }
 
 const thicknessMap = {
-  thin: '0px',
-  thick: '1px',
+  thin: {
+    border: '0px',
+    focusPadding: '26px',
+  },
+  thick: {
+    border: '1px',
+    focusPadding: '27px',
+  },
 }
 
 const variantMap: VariantMap = {
@@ -90,9 +96,13 @@ const variantMap: VariantMap = {
       &:hover:not([aria-disabled]),
       &[aria-expanded='true'],
       &:focus {
-        box-shadow: inset 1px 1px 0 ${(p) => thicknessMap[p.theme.border]} ${color('white')},
-          inset -1px -1px 0 ${(p) => thicknessMap[p.theme.border]} ${color('white')};
+        box-shadow: inset 1px 1px 0 ${(p) => thicknessMap[p.theme.border].border} ${color('white')},
+          inset -1px -1px 0 ${(p) => thicknessMap[p.theme.border].border} ${color('white')};
         border-bottom-color: ${color('white')};
+      }
+      &:focus {
+        border-bottom: 0;
+        padding-bottom: ${(p) => thicknessMap[p.theme.border].focusPadding};
       }
     }
   `,
