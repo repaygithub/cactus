@@ -77,7 +77,6 @@ const variantMap: VariantMap = {
   `,
   dark: css`
     ${colorStyle('base')}
-    border-color: transparent;
 
     > ${ScrollButton}, [role='menubar'] > li > [role='menuitem'] {
       border-color: transparent;
@@ -86,7 +85,7 @@ const variantMap: VariantMap = {
       &:hover:not([aria-disabled]),
       &[aria-expanded='true'] {
         ${insetBorder('white', undefined, { thin: '1px', thick: '2px' })};
-        border-color: ${color('white')};
+        border-bottom: ${border('white', { thin: '1px', thick: '2px' })};
       }
 
       &:focus {
