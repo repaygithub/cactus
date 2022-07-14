@@ -79,18 +79,15 @@ const variantMap: VariantMap = {
     ${colorStyle('base')}
 
     > ${ScrollButton}, [role='menubar'] > li > [role='menuitem'] {
-      border-color: transparent;
       color: ${color('white')};
+      border-bottom: ${border('transparent', { thin: '1px', thick: '2px' })};
+      ${insetBorder('transparent', undefined, { thin: '1px', thick: '2px' })};
 
       &:hover:not([aria-disabled]),
-      &[aria-expanded='true'] {
-        ${insetBorder('white', undefined, { thin: '1px', thick: '2px' })};
-        border-bottom: ${border('white', { thin: '1px', thick: '2px' })};
-      }
-
+      &[aria-expanded='true'],
       &:focus {
         ${insetBorder('white', undefined, { thin: '1px', thick: '2px' })};
-        border: none;
+        border-bottom-color: ${color('white')};
       }
     }
   `,
