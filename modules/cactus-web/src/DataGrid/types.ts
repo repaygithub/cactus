@@ -1,7 +1,6 @@
 import { Size } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { TableCellProps, TableVariant } from '../Table/Table'
 
-export type ColumnFn = (rowData: { [key: string]: any }) => React.ReactNode
 export type JustifyContent =
   | 'unset'
   | 'flex-start'
@@ -17,17 +16,44 @@ export interface TransientProps {
   $variant?: TableVariant
 }
 
-export interface DataColumnObject {
-  title: React.ReactChild
-  sortable: boolean
-  asComponent?: React.ComponentType<any>
-  cellProps?: { [K: string]: any }
+export interface CellInfo {
+  id?: string
+  value?: any
+  colIndex: number
+  rowIndex: number
 }
 
-export interface ColumnObject {
-  columnFn: ColumnFn
-  title?: React.ReactChild
-  cellProps?: { [K: string]: any }
+export type Datum = Record<string, any>
+type RenderFunc = (row: Datum, cellInfo: CellInfo) => React.ReactElement | null
+
+export interface Column {
+  key: string
+  order: number
+  sortable: boolean
+  id: string | undefined
+  title: React.ReactChild | undefined
+  headerProps: TableCellProps | undefined
+  cellProps: TableCellProps
+  Component?: React.ComponentType<CellInfo & { row: Datum }>
+  render?: RenderFunc
+}
+
+interface AddAction {
+  type: 'add'
+  column: Column
+}
+
+interface RemoveAction {
+  type: 'remove'
+  key: string
+}
+
+export type ColumnAction = AddAction | RemoveAction
+export type ColumnDispatch = React.Dispatch<ColumnAction>
+
+export interface ColumnState {
+  columns: Column[]
+  sortableColumns: Column[]
 }
 
 export interface SortOption {
@@ -41,24 +67,19 @@ export interface PaginationOptions {
   pageCount?: number
 }
 
-type BaseColumnProps = Omit<TableCellProps, 'as' | 'children' | 'title'>
-
-export interface DataColumnProps extends BaseColumnProps {
-  id: string
-  title: React.ReactChild
+export interface ColumnProps extends Omit<TableCellProps, 'as' | 'children' | 'title'> {
+  id?: string
+  order?: number
   sortable?: boolean
+  title?: React.ReactChild
+  headerProps?: TableCellProps
+  render?: RenderFunc
+  children?: RenderFunc
   as?: React.ComponentType<any>
 }
 
-export interface ColumnProps extends BaseColumnProps {
-  children: ColumnFn
-  title?: React.ReactChild
-}
-
-export interface DataGridContextType {
-  addDataColumn: (dataColumn: DataColumnProps) => void
-  addColumn: (key: string, column: ColumnProps) => void
-  columns: Map<string, DataColumnObject | ColumnObject>
+export interface DataGridContextType extends ColumnState {
+  columnDispatch: ColumnDispatch
   sortOptions: SortOption[]
   onSort: (newSortOptions: SortOption[]) => void
   paginationOptions: PaginationOptions | undefined
