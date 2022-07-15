@@ -1,3 +1,29 @@
+# v9.7.0 (Fri Jul 15 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-942 :: Update Cactus Table component to allow for sticky right Column [#766](https://github.com/repaygithub/cactus/pull/766) ([@daniloPenaR](https://github.com/daniloPenaR))
+- CACTUS-941: allow any value type in the `Select` component [#765](https://github.com/repaygithub/cactus/pull/765) ([@wilysword](https://github.com/wilysword))
+- CACTUS-926 React 18 Compatibility Updates [#764](https://github.com/repaygithub/cactus/pull/764) ([@wilysword](https://github.com/wilysword))
+
+#### 🐛 Bug Fix
+
+- fix(cactus-web): fix height on MenuBar dark variant [#771](https://github.com/repaygithub/cactus/pull/771) ([@maxrcollins](https://github.com/maxrcollins))
+- CACTUS-961: fix padding on MenuBar dark variant [#770](https://github.com/repaygithub/cactus/pull/770) ([@wilysword](https://github.com/wilysword))
+
+#### 🏠 Internal
+
+- CACTUS-955 :: Storybook IE11 Issue [#769](https://github.com/repaygithub/cactus/pull/769) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 4
+
+- [@daniloPenaR](https://github.com/daniloPenaR)
+- [@maxrcollins](https://github.com/maxrcollins)
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v9.6.0 (Tue Jun 21 2022)
 
 #### 🚀 Enhancement
