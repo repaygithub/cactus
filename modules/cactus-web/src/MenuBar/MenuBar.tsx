@@ -8,6 +8,7 @@ import {
 } from '@repay/cactus-icons'
 import {
   border,
+  borderSize,
   color,
   colorStyle,
   insetBorder,
@@ -80,17 +81,20 @@ const variantMap: VariantMap = {
 
     > ${ScrollButton}, [role='menubar'] > li > [role='menuitem'] {
       color: ${color('white')};
-      border: ${border('base')};
-      border-bottom: ${border('base', { thin: '3px', thick: '4px' })};
 
       &:hover:not([aria-disabled]),
       &[aria-expanded='true'] {
+        ${insetBorder('white', 'bottom', { thin: '2px', thick: '2px' })};
         border-color: ${color('white')};
       }
-
       &:focus {
-        border: ${border('white')};
+        border-color: ${color('white')};
       }
+    }
+
+    [role='menubar'] > li > [role='menuitem'] {
+      border: ${border('transparent')};
+      padding: ${borderSize({ thin: '23px 15px 25px', thick: '22px 14px 25px' })};
     }
   `,
 }
@@ -344,6 +348,11 @@ const Nav = styled.nav<MenuBarProps>`
   position: relative;
   outline: none;
   z-index: 100;
+
+  > ${ScrollButton} {
+    border: ${border('transparent')};
+  }
+
   [role='menubar'] > li > [role='menuitem'] {
     white-space: nowrap;
     padding: 24px 16px;
