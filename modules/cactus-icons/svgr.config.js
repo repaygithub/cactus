@@ -7,13 +7,13 @@ const exportedTemplate = ({ template }, opts, { jsx, componentName }) => {
   const { name } = componentName
   const code = `
 import React from 'react'
-import CactusIcon from './CactusIcon'
+import AbstractIcon from './AbstractIcon'
 import { SVGProps } from './types'
 
 const Icon = React.forwardRef<SVGSVGElement, SVGProps>((props, svgRef) => (
   JSX
 ))
-const ${name} = CactusIcon.withComponent(Icon)
+const ${name} = AbstractIcon.withComponent(Icon)
 ${name}.displayName = '${name}'
 
 export default ${name}
