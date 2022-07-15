@@ -64,10 +64,6 @@ const variantMap: VariantMap = {
     ${colorStyle('standard')}
     ${insetBorder('lightContrast', 'bottom', { thin: '2px', thick: '3px' })};
 
-    > ${ScrollButton} {
-      border: ${border('transparent', { thin: '1px', thick: '2px' })};
-    }
-
     [role='menubar'] > li > [role='menuitem'] {
       &:hover,
       &[aria-expanded='true'] {
@@ -85,7 +81,6 @@ const variantMap: VariantMap = {
 
     > ${ScrollButton}, [role='menubar'] > li > [role='menuitem'] {
       color: ${color('white')};
-      border: ${border('transparent', { thin: '1px', thick: '2px' })};
 
       &:hover:not([aria-disabled]),
       &[aria-expanded='true'] {
@@ -98,7 +93,8 @@ const variantMap: VariantMap = {
     }
 
     [role='menubar'] > li > [role='menuitem'] {
-      padding: calc(24px - ${borderSize()}) calc(16px - ${borderSize()}) 25px;
+      border: ${border('transparent')};
+      padding: ${borderSize({ thin: '23px 15px 25px', thick: '22px 14px 25px' })};
     }
   `,
 }
@@ -352,6 +348,11 @@ const Nav = styled.nav<MenuBarProps>`
   position: relative;
   outline: none;
   z-index: 100;
+
+  > ${ScrollButton} {
+    border: ${border('transparent')};
+  }
+
   [role='menubar'] > li > [role='menuitem'] {
     white-space: nowrap;
     padding: 24px 16px;
