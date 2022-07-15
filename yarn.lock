@@ -5126,7 +5126,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.17.5
     "@repay/babel-preset": 1.1.4
-    "@repay/cactus-web": ^9.6.0
+    "@repay/cactus-web": ^9.7.0
     "@repay/scripts": ^3.0.4
     "@testing-library/jest-dom": ^5.16.2
     "@testing-library/react": ^12.1.4
@@ -5205,7 +5205,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@repay/cactus-icons@^3.0.0, @repay/cactus-icons@^3.1.3, @repay/cactus-icons@workspace:modules/cactus-icons":
+"@repay/cactus-icons@^3.0.0, @repay/cactus-icons@^3.1.4, @repay/cactus-icons@workspace:modules/cactus-icons":
   version: 0.0.0-use.local
   resolution: "@repay/cactus-icons@workspace:modules/cactus-icons"
   dependencies:
@@ -5258,7 +5258,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@repay/cactus-web@^9.0.0, @repay/cactus-web@^9.6.0, @repay/cactus-web@workspace:modules/cactus-web":
+"@repay/cactus-web@^9.0.0, @repay/cactus-web@^9.7.0, @repay/cactus-web@workspace:modules/cactus-web":
   version: 0.0.0-use.local
   resolution: "@repay/cactus-web@workspace:modules/cactus-web"
   dependencies:
@@ -5271,7 +5271,7 @@ __metadata:
     "@reach/utils": ^0.16.0
     "@reach/visually-hidden": ^0.16.0
     "@repay/babel-preset": ^1.1.4
-    "@repay/cactus-icons": ^3.1.3
+    "@repay/cactus-icons": ^3.1.4
     "@repay/cactus-theme": ^3.2.3
     "@repay/scripts": ^3.0.4
     "@storybook/addon-controls": 6.3.8
