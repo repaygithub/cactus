@@ -1,3 +1,15 @@
+# v2.0.7 (Fri Jul 15 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-926 React 18 Compatibility Updates [#764](https://github.com/repaygithub/cactus/pull/764) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 1
+
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v2.0.6 (Thu Apr 21 2022)
 
 #### 🏠 Internal
