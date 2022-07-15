@@ -1,3 +1,20 @@
+# v3.1.4 (Fri Jul 15 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-926 React 18 Compatibility Updates [#764](https://github.com/repaygithub/cactus/pull/764) ([@wilysword](https://github.com/wilysword))
+
+#### 🏠 Internal
+
+- CACTUS-955 :: Storybook IE11 Issue [#769](https://github.com/repaygithub/cactus/pull/769) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 2
+
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v3.1.3 (Tue Jun 21 2022)
 
 #### 🔩 Dependency Updates
