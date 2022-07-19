@@ -25,6 +25,8 @@ interface StyledContainerBaseProps {
   borderBox?: boolean
 }
 
+if (window.WeakSet === undefined) window.WeakSet = window.Set
+
 const StyledContainerBase: React.FC<StyledContainerBaseProps> = ({
   className,
   children,
