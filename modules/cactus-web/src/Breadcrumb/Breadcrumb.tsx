@@ -92,7 +92,7 @@ const BreadcrumbBase = (props: BreadcrumbProps): React.ReactElement => {
         mainNavContainer.current?.parentElement?.getBoundingClientRect().width || 0
       )
       const pivotWidth = Math.ceil(pivotBreadcrumb.current?.getBoundingClientRect().width || 0)
-      const ellipsVersion = pivotWidth >= parentWidth || (isTiny && childrenCount > 2)
+      const ellipsVersion = pivotWidth > parentWidth || (isTiny && childrenCount > 2)
       setEllipsisVersion(ellipsVersion)
     }
     checkEllipsisVersion()
