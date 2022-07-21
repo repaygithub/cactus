@@ -1,27 +1,9 @@
 import { CactusTheme } from '@repay/cactus-theme'
+import { Property } from 'csstype'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { StyledComponent, ThemedStyledFunction } from 'styled-components'
-import {
-  compose,
-  flexbox,
-  FlexboxProps,
-  height,
-  HeightProps,
-  maxHeight,
-  MaxHeightProps,
-  maxWidth,
-  MaxWidthProps,
-  minHeight,
-  MinHeightProps,
-  minWidth,
-  MinWidthProps,
-  ResponsiveValue,
-  styleFn,
-  system,
-  width,
-  WidthProps,
-} from 'styled-system'
+import * as SS from 'styled-system'
 
 // This file exists, in part, because styled-components types are a PAIN.
 export type Styled<P> = StyledComponent<React.FC<P>, CactusTheme>
@@ -55,24 +37,24 @@ export const styledProp = PropTypes.oneOfType([cssVal, PropTypes.arrayOf(cssVal)
 
 export const classes = (...args: (string | undefined)[]): string => args.filter(Boolean).join(' ')
 
-export const pickStyles = (styles: styleFn, ...keys: string[]): styleFn => {
-  const picked: styleFn[] = []
+export const pickStyles = (styles: SS.styleFn, ...keys: string[]): SS.styleFn => {
+  const picked: SS.styleFn[] = []
   for (const key of keys) {
     const maybeFn = (styles as any)[key]
     if (maybeFn) picked.push(maybeFn)
   }
-  return compose(...picked)
+  return SS.compose(...picked)
 }
 
-export const omitStyles = (styles: styleFn, ...keys: string[]): styleFn => {
-  const picked: styleFn[] = []
+export const omitStyles = (styles: SS.styleFn, ...keys: string[]): SS.styleFn => {
+  const picked: SS.styleFn[] = []
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   for (const key of Object.keys(styles.config!)) {
     if (!keys.includes(key)) {
       picked.push((styles as any)[key])
     }
   }
-  return compose(...picked)
+  return SS.compose(...picked)
 }
 
 // Not exhaustive, but all possible values include at least one of these words.
@@ -82,7 +64,7 @@ const isFlexKey = RegExp.prototype.test.bind(/row|column|reverse|wrap/)
 // is equivalent to `<C display="flex" flexDirection="row" flexWrap="wrap">`.
 // Depending on where it's used, the `display` part could be redundant;
 // keep that in mind if you need a different `display` value (e.g. 'inline-flex').
-export const flexFlow = system({
+export const flexFlow = SS.system({
   flexFlow: (value: any) => {
     if (typeof value === 'boolean') {
       return value ? { display: 'flex' } : undefined
@@ -110,19 +92,150 @@ const itemKeys = [
   'order',
 ] as const
 
-export interface FlexProps extends Pick<FlexboxProps, typeof flexKeys[number]> {
-  flexFlow?: ResponsiveValue<boolean | string>
+export interface FlexProps extends Pick<SS.FlexboxProps, typeof flexKeys[number]> {
+  flexFlow?: SS.ResponsiveValue<boolean | Property.FlexFlow>
 }
-export type FlexItemProps = Pick<FlexboxProps, typeof itemKeys[number]>
-;(flexbox as any).flexFlow = flexFlow
-export const flexContainer = pickStyles(flexbox, 'flexFlow', ...flexKeys)
-export const flexItem = pickStyles(flexbox, ...itemKeys)
+export type FlexItemProps = Pick<SS.FlexboxProps, typeof itemKeys[number]>
+;(SS.flexbox as any).flexFlow = flexFlow
+export const flexContainer = pickStyles(SS.flexbox, 'flexFlow', ...flexKeys)
+export const flexItem = pickStyles(SS.flexbox, ...itemKeys)
 
-export type AllWidthProps = WidthProps & MinWidthProps & MaxWidthProps
-export const allWidth = compose(width, minWidth, maxWidth)
+export type AllWidthProps = SS.WidthProps & SS.MinWidthProps & SS.MaxWidthProps
+export const allWidth = SS.compose(SS.width, SS.minWidth, SS.maxWidth)
 
-export type AllHeightProps = HeightProps & MinHeightProps & MaxHeightProps
-export const allHeight = compose(height, minHeight, maxHeight)
+export type AllHeightProps = SS.HeightProps & SS.MinHeightProps & SS.MaxHeightProps
+export const allHeight = SS.compose(SS.height, SS.minHeight, SS.maxHeight)
 
 export type SizingProps = AllWidthProps & AllHeightProps
-export const sizing = compose(width, minWidth, maxWidth, height, minHeight, maxHeight)
+export const sizing = SS.compose(
+  SS.width,
+  SS.minWidth,
+  SS.maxWidth,
+  SS.height,
+  SS.minHeight,
+  SS.maxHeight
+)
+
+/******* Text Styling *******/
+
+interface TextDecorationProps {
+  textDecoration?: SS.ResponsiveValue<Property.TextDecoration>
+  textDecorationColor?: SS.ResponsiveValue<Property.TextDecorationColor>
+  textDecorationLine?: SS.ResponsiveValue<Property.TextDecorationLine>
+  textDecorationSkipInk?: SS.ResponsiveValue<Property.TextDecorationSkipInk>
+  textDecorationStyle?: SS.ResponsiveValue<Property.TextDecorationStyle>
+  textDecorationThickness?: SS.ResponsiveValue<Property.TextDecorationThickness<string | number>>
+  textUnderlineOffset?: SS.ResponsiveValue<Property.TextUnderlineOffset<string | number>>
+  textUnderlinePosition?: SS.ResponsiveValue<Property.TextUnderlinePosition>
+}
+
+const textDecoration = SS.system({
+  textDecoration: true,
+  textDecorationColor: { property: 'textDecorationColor', scale: 'colors' },
+  textDecorationLine: true,
+  textDecorationSkipInk: true,
+  textDecorationStyle: true,
+  textDecorationThickness: { property: 'textDecorationThickness', scale: 'space' },
+  textUnderlineOffset: { property: 'textUnderlineOffset', scale: 'space' },
+  textUnderlinePosition: true,
+})
+
+interface TextDirectionProps {
+  textOrientation?: SS.ResponsiveValue<Property.TextOrientation>
+  writingMode?: SS.ResponsiveValue<Property.WritingMode>
+}
+
+const textDirection = SS.system({
+  textOrientation: true,
+  writingMode: true,
+})
+
+interface TextDisplayProps {
+  fontStretch?: SS.ResponsiveValue<Property.FontStretch>
+  fontVariant?: SS.ResponsiveValue<Property.FontVariant>
+  fontVariantCaps?: SS.ResponsiveValue<Property.FontVariantCaps>
+  fontVariantLigatures?: SS.ResponsiveValue<Property.FontVariantLigatures>
+  fontVariantNumeric?: SS.ResponsiveValue<Property.FontVariantNumeric>
+  textIndent?: SS.ResponsiveValue<Property.TextIndent<string | number>>
+  textTransform?: SS.ResponsiveValue<Property.TextTransform>
+}
+
+const textDisplay = SS.system({
+  fontStretch: true,
+  fontVariant: true,
+  fontVariantCaps: true,
+  fontVariantLigatures: true,
+  fontVariantNumeric: true,
+  textIndent: {
+    property: 'textIndent',
+    scale: 'space',
+    // Unlike most other space props, it makes sense to allow negative numbers.
+    transform: (value, scale) => {
+      if (scale) {
+        if (typeof value === 'number' && value < 0) {
+          const scaleVal = scale[-value]
+          if (typeof scaleVal === 'number') {
+            return -scaleVal
+          } else if (scaleVal) {
+            return `-${scaleVal}`
+          }
+        }
+        return scale[value] ?? value
+      }
+      return value
+    },
+  },
+  textTransform: true,
+})
+
+interface TextOverflowProps extends SS.OverflowProps {
+  hyphens?: SS.ResponsiveValue<Property.Hyphens>
+  overflowWrap?: SS.ResponsiveValue<Property.OverflowWrap>
+  textOverflow?: SS.ResponsiveValue<Property.TextOverflow>
+  whiteSpace?: SS.ResponsiveValue<Property.WhiteSpace>
+  wordBreak?: SS.ResponsiveValue<Property.WordBreak>
+}
+
+const textOverflow = SS.compose(
+  SS.overflow,
+  SS.overflowX,
+  SS.overflowY,
+  SS.system({
+    hyphens: true,
+    overflowWrap: { properties: ['overflowWrap', 'wordWrap'] },
+    textOverflow: true,
+    whiteSpace: true,
+    wordBreak: true,
+  })
+)
+
+interface UserSelectProps {
+  userSelect?: SS.ResponsiveValue<Property.UserSelect>
+}
+// This one doesn't really fit anywhere else...
+const userSelect = SS.system({ userSelect: true })
+
+// Other text-related props I'm not including:
+// `textJustify`: lack of browser support
+// `fontVariantAlternates`: lack of browser support
+// `fontVariantPosition`: lack of browser support
+// `fontVariantAlternates`: lack of browser support
+// `fontVariationSettings`: common use cases covered by other properties
+// `textShadow`: requires custom transform to utilize themed shadows, wait for use case to add
+
+export const allText = SS.compose(
+  SS.color,
+  SS.typography,
+  textDecoration,
+  textDirection,
+  textDisplay,
+  textOverflow,
+  userSelect
+)
+export type AllTextProps = SS.ColorProps &
+  SS.TypographyProps &
+  TextDecorationProps &
+  TextDirectionProps &
+  TextDisplayProps &
+  TextOverflowProps &
+  UserSelectProps

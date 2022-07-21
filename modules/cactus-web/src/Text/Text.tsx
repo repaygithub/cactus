@@ -1,29 +1,19 @@
 import { textStyle, TextStyleCollection } from '@repay/cactus-theme'
 import styled from 'styled-components'
-import {
-  color,
-  ColorProps,
-  colorStyle,
-  ColorStyleProps,
-  compose,
-  space,
-  SpaceProps,
-  typography,
-  TypographyProps,
-} from 'styled-system'
+import { colorStyle, ColorStyleProps, compose, space, SpaceProps } from 'styled-system'
 
 import { getOmittableProps } from '../helpers/omit'
-import { omitStyles } from '../helpers/styled'
+import { allText, AllTextProps, flexItem, FlexItemProps, omitStyles } from '../helpers/styled'
 
 // These are covered by `textStyle` instead.
-type FontProps = Omit<TypographyProps, 'fontSize' | 'lineHeight'>
-const font = omitStyles(typography, 'fontSize', 'lineHeight')
+type FontProps = Omit<AllTextProps, 'fontSize' | 'lineHeight'>
+const font = omitStyles(allText, 'fontSize', 'lineHeight')
 
-export interface TextProps extends SpaceProps, ColorProps, ColorStyleProps, FontProps {
+export interface TextProps extends SpaceProps, ColorStyleProps, FontProps, FlexItemProps {
   textStyle?: keyof TextStyleCollection
 }
 
-const styleProps = getOmittableProps(space, color, colorStyle, font, 'textStyle')
+const styleProps = getOmittableProps(space, colorStyle, font, flexItem, 'textStyle')
 export const Text = styled('span').withConfig({
   shouldForwardProp: (p) => !styleProps.has(p),
 })<TextProps>`
@@ -31,7 +21,7 @@ export const Text = styled('span').withConfig({
     margin: 0;
   }
   &&& {
-    ${compose(space, color, colorStyle, font)}
+    ${compose(space, colorStyle, font, flexItem)}
     ${(p) => p.textStyle && textStyle(p, p.textStyle)}
   }
 `
