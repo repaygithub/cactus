@@ -124,7 +124,11 @@ export const BrandBar: BrandBarType = ({ logo, children, className, ...props }) 
   return (
     <StyledBrandBar {...props} className={classes(className, layoutClass)} $isTiny={isTiny}>
       <Flex justifyContent={justify} flexWrap="nowrap">
-        <LogoWrapper>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</LogoWrapper>
+        {logo && (
+          <LogoWrapper>
+            {typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}
+          </LogoWrapper>
+        )}
         {!isTiny && leftChildren}
       </Flex>
       {isTiny ? (
