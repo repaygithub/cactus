@@ -11,6 +11,7 @@ import {
   WidthProps,
 } from 'styled-system'
 
+import { getOmittableProps } from '../helpers/omit'
 import { flexItem, FlexItemProps } from '../helpers/styled'
 
 interface CardProps extends SpaceProps, WidthProps, MaxWidthProps, FlexItemProps {
@@ -28,7 +29,10 @@ const getBoxShadow = (props: CardProps & { theme: CactusTheme }) => {
     : `border: ${border(props, 'lightContrast')};`
 }
 
-export const Card = styled.div<CardProps>`
+const styleProps = getOmittableProps(flexItem, maxWidth, marginPadding, width, 'useBoxShadow')
+export const Card = styled.div.withConfig({
+  shouldForwardProp: (p) => !styleProps.has(p),
+})<CardProps>`
   box-sizing: border-box;
   ${colorStyle('standard')};
   border-radius: ${radius(8)};

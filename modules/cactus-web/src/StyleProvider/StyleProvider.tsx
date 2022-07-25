@@ -218,8 +218,4 @@ StyleProvider.propTypes = {
   }),
 }
 
-StyleProvider.defaultProps = {
-  global: false,
-}
-
 export default StyleProvider

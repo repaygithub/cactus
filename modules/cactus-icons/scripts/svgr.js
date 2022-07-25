@@ -4,6 +4,7 @@ const path = require('path')
 const fs = require('fs').promises
 const { prettierConfig, ...configFile } = require('../svgr.config')
 const prettier = require('prettier')
+const convertKebabToPascal = require('./helpers/kebabToPascal')
 
 async function main() {
   // Find all svgs under the svgs folder
@@ -35,7 +36,8 @@ async function main() {
       .toLowerCase()
 
     // Generate React components for each svg
-    const tsxCode = await svgr(svgCode, configFile)
+    const state = { componentName: convertKebabToPascal(tsxFileName) }
+    const tsxCode = await svgr(svgCode, configFile, state)
     const code = prettier.format(tsxCode, prettierConfig)
     // Write the components to files in the ts directory
     await fs.writeFile(path.join(__dirname, '..', `ts/${tsxFileName}.tsx`), code, 'utf-8')

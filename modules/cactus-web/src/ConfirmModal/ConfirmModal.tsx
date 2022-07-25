@@ -147,7 +147,6 @@ ConfirmModal.propTypes = {
 ConfirmModal.defaultProps = {
   cancelButtonText: 'Cancel',
   confirmButtonText: 'Confirm',
-  iconName: undefined,
   iconSize: 'medium',
   title: 'Modal Title',
 }

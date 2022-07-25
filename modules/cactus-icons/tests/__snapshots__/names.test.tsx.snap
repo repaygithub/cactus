@@ -2,6 +2,9 @@
 
 exports[`Icon names should match the snapshot of icon names 1`] = `
 Array [
+  "AbstractIcon.d.ts",
+  "AbstractIcon.js",
+  "AbstractIcon.js.map",
   "actions-add.d.ts",
   "actions-add.js",
   "actions-add.js.map",

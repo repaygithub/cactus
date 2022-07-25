@@ -88,10 +88,4 @@ TextArea.propTypes = {
   resize: PropTypes.bool,
 }
 
-TextArea.defaultProps = {
-  disabled: false,
-  status: null,
-  resize: false,
-}
-
 export default TextArea

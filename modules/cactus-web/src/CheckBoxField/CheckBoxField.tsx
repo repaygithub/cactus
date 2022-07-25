@@ -48,9 +48,4 @@ CheckBoxField.propTypes = {
   disabled: PropTypes.bool,
 }
 
-CheckBoxField.defaultProps = {
-  labelProps: {},
-  disabled: false,
-}
-
 export default CheckBoxField

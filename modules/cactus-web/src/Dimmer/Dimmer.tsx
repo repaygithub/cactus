@@ -11,9 +11,6 @@ class DimmerBase extends React.Component<DimmerProps> {
   public static propTypes = {
     active: PropTypes.bool.isRequired,
   }
-  public static defaultProps = {
-    active: false,
-  }
   componentDidUpdate(prevProps: DimmerProps): void {
     if (prevProps.active === false && this.props.active === true && document.activeElement) {
       try {

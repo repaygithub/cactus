@@ -3,52 +3,33 @@ const prettierConfig = JSON.parse(
 )
 prettierConfig.parser = 'typescript'
 
-const exportedTemplate = ({ template }, opts, { componentName, jsx }) => {
+const exportedTemplate = ({ template }, opts, { jsx, componentName }) => {
+  const { name } = componentName
   const code = `
-import PropTypes from 'prop-types'
-import * as React from 'react'
-import styled from 'styled-components'
-import { color, compose, space, verticalAlign } from 'styled-system'
-import iconSizes from './iconSizes'
-import { IconProps } from './types'
+import React from 'react'
+import AbstractIcon from './AbstractIcon'
+import { SVGProps } from './types'
 
-const Base = ({ iconSize, verticalAlign, opacity, color, ...props }: IconProps) => {
-  return (
-    JSX
-  )
-}
+const Icon = React.forwardRef<SVGSVGElement, SVGProps>((props, svgRef) => (
+  JSX
+))
+const ${name} = AbstractIcon.withComponent(Icon)
+${name}.displayName = '${name}'
 
-const COMPONENT_NAME = styled(Base)(
-  compose(
-    space,
-    color,
-    verticalAlign,
-    iconSizes
-  )
-)
-
-COMPONENT_NAME.propTypes = {
-  // @ts-ignore
-  iconSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
-}
-
-COMPONENT_NAME.defaultProps = {
-  verticalAlign: 'middle',
-}
-
-export default COMPONENT_NAME
-  `
+export default ${name}
+`
   const typeScriptTpl = template.smart(code, {
     plugins: ['typescript'],
     preserveComments: true,
     placeholderPattern: /^[_A-Z]{2,}$/,
   })
 
-  return typeScriptTpl({ JSX: jsx, COMPONENT_NAME: componentName })
+  return typeScriptTpl({ JSX: jsx })
 }
 
 module.exports = {
   icon: true,
+  ref: true,
   ext: 'tsx',
   template: exportedTemplate,
   svgProps: {

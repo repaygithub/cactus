@@ -23,6 +23,7 @@ import {
 } from 'styled-system'
 
 import { flexItem, FlexItemProps } from '../helpers/flexItem'
+import { getOmittableProps } from '../helpers/omit'
 import { radius, textStyle } from '../helpers/theme'
 
 interface CustomBR {
@@ -99,20 +100,24 @@ const decideBorderRadius = (props: ThemedStyledProps<BoxProps, DefaultTheme>) =>
   return borderRadiusStyles
 }
 
-export const Box = styled('div')<BoxProps>`
+const styleFn = compose(
+  position,
+  display,
+  layout,
+  space,
+  colorStyle,
+  color,
+  typography,
+  border,
+  overflow,
+  flexItem
+)
+const styleProps = getOmittableProps(styleFn, 'textStyle')
+export const Box = styled('div').withConfig({
+  shouldForwardProp: (p) => !styleProps.has(p),
+})<BoxProps>`
   box-sizing: border-box;
-  ${compose(
-    position,
-    display,
-    layout,
-    space,
-    colorStyle,
-    color,
-    typography,
-    border,
-    overflow,
-    flexItem
-  )}
+  ${styleFn}
   ${(p) => p.textStyle && textStyle(p.theme, p.textStyle)}
   ${decideBorderRadius}
 `
