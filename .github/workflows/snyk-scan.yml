@@ -1,13 +1,10 @@
 name: Snyk Scan
 on:
-  pull_request:
+  push:
     branches:
       - master
-    types:
-      - closed
 jobs:
-  scan-if-merged:
-    if: github.event.pull_request.merged == true
+  scan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
