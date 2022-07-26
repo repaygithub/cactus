@@ -1,4 +1,5 @@
 import { CactusTheme } from '@repay/cactus-theme'
+import { noop } from 'lodash'
 import React from 'react'
 import { ThemeContext } from 'styled-components'
 
@@ -30,12 +31,8 @@ export class ScreenSize {
   }
 }
 
-type QueryType = {
-  [K in Size]: {
-    matches: boolean
-    removeListener: (x: () => void) => void
-  }
-}
+type MediaMatch = Pick<MediaQueryList, 'matches' | 'addListener' | 'removeListener'>
+type QueryType = { [K in Size]: MediaMatch }
 
 type SizeCache = ScreenSize[] & { [K in Size]: ScreenSize }
 
@@ -54,42 +51,45 @@ export const ScreenSizeContext = React.createContext<ScreenSize>(SIZES[DEFAULT_S
 
 export const useScreenSize = (): ScreenSize => React.useContext(ScreenSizeContext)
 
-export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentSize, setSize] = React.useState<Size>(DEFAULT_SIZE)
-  const theme: CactusTheme = React.useContext(ThemeContext)
+const createQueries = (theme: CactusTheme): QueryType => ({
+  tiny: { matches: true, addListener: noop, removeListener: noop },
+  small: window.matchMedia(theme.mediaQueries.small.replace(/^@media /, '')),
+  medium: window.matchMedia(theme.mediaQueries.medium.replace(/^@media /, '')),
+  large: window.matchMedia(theme.mediaQueries.large.replace(/^@media /, '')),
+  extraLarge: window.matchMedia(theme.mediaQueries.extraLarge.replace(/^@media /, '')),
+})
 
-  React.useEffect((): (() => void) => {
-    const removeListener = (): void => {
-      return
+const getMatchedSize = (queries: QueryType): Size => {
+  for (const size of ORDERED_SIZES) {
+    if (queries[size].matches) {
+      return size
     }
-    const queries: QueryType = {
-      tiny: { matches: true, removeListener },
-      small: { matches: true, removeListener },
-      medium: { matches: true, removeListener },
-      large: { matches: true, removeListener },
-      extraLarge: { matches: false, removeListener },
-    }
-    const listener = (): void => {
-      for (const size of ORDERED_SIZES) {
-        if (queries[size].matches) {
-          setSize(size)
-          break
-        }
-      }
-    }
-    for (const mq of Object.keys(theme.mediaQueries) as MediaQuery[]) {
-      const media = window.matchMedia(theme.mediaQueries[mq].replace(/^@media /, ''))
-      queries[mq] = media
-      media.addListener(listener)
+  }
+  return DEFAULT_SIZE
+}
+
+export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  let queries: undefined | QueryType = undefined
+  const theme: CactusTheme = React.useContext(ThemeContext)
+  const [currentSize, setSize] = React.useState<Size>(() => {
+    queries = createQueries(theme)
+    return getMatchedSize(queries)
+  })
+
+  React.useEffect(() => {
+    const q: QueryType = queries || createQueries(theme)
+    const listener = () => setSize(getMatchedSize(q))
+    for (const key of Object.keys(q)) {
+      q[key as Size].addListener(listener)
     }
     listener()
 
     return (): void => {
-      for (const mq of Object.keys(queries)) {
-        queries[mq as Size].removeListener(listener)
+      for (const key of Object.keys(q)) {
+        q[key as Size].removeListener(listener)
       }
     }
-  }, [setSize, theme])
+  }, [theme]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <ScreenSizeContext.Provider value={SIZES[currentSize]}>{children}</ScreenSizeContext.Provider>

@@ -1,3 +1,4 @@
+import { noop } from 'lodash'
 import { createContext } from 'react'
 import { DefaultTheme, ThemedStyledProps } from 'styled-components'
 
@@ -34,17 +35,13 @@ export const getMediaQuery = (
 }
 
 export const DataGridContext = createContext<DataGridContextType>({
-  addDataColumn: (): void => {
-    return
-  },
-  addColumn: (): void => {
-    return
-  },
-  columns: new Map(),
+  columns: [],
+  sortableColumns: [],
+  columnDispatch: noop,
   sortOptions: [],
-  onSort: () => undefined,
+  onSort: noop,
   paginationOptions: undefined,
-  onPageChange: () => undefined,
+  onPageChange: noop,
   fullWidth: false,
   cardBreakpoint: 'tiny',
   isCardView: false,

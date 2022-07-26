@@ -1,40 +1,75 @@
-import { NavigationChevronDown } from '@repay/cactus-icons'
+import { IconProps, NavigationChevronDown, NavigationChevronUp } from '@repay/cactus-icons'
 import PropTypes from 'prop-types'
-import React, { ReactElement, useContext } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import { border, radius } from '../helpers/theme'
 import Table, { StickyColAlignment } from '../Table/Table'
 import { DataGridContext } from './helpers'
-import { ColumnObject, DataColumnObject, SortOption } from './types'
+import { CellInfo, Column, DataGridContextType, Datum } from './types'
 
 export interface DataGridTableProps {
   children: React.ReactNode
-  data: { [key: string]: any }[]
+  data: Datum[]
   dividers?: boolean
   sticky?: StickyColAlignment
 }
 
-const isDataColumn = (col: any): col is DataColumnObject => {
-  return col && col.hasOwnProperty('sortable')
-}
-const isColumn = (col: any): col is ColumnObject => {
-  return col && col.hasOwnProperty('columnFn')
-}
+const renderHeader = ({ columns, sortOptions, onSort, isCardView }: DataGridContextType) => (
+  <Table.Header>
+    {columns.map((column) => {
+      const { key, id, title = '' } = column
+      const props = { ...column.cellProps, ...column.headerProps, key, children: title }
+      if (column.sortable && id && sortOptions) {
+        const sortOpt = sortOptions.find((opt) => opt.id === id)
+        let sortDesc = false
+        let Icon: React.ComponentType<IconProps> | undefined = undefined
+        if (sortOpt) {
+          sortDesc = !sortOpt.sortAscending
+          Icon = sortDesc ? NavigationChevronDown : NavigationChevronUp
+          props['aria-sort'] = sortDesc ? 'descending' : 'ascending'
+        }
+        if (!isCardView) {
+          const onSortClick = () => onSort([{ id, sortAscending: sortDesc }])
+          props.children = (
+            <HeaderButton type="button" onClick={onSortClick}>
+              <div>{title}</div>
+              {Icon && <Icon aria-hidden marginLeft={3} />}
+            </HeaderButton>
+          )
+        }
+      }
+      return <Table.Cell {...props} />
+    })}
+  </Table.Header>
+)
+
+const renderBody = (columns: Column[], data: Datum[]) => (
+  <Table.Body>
+    {data.map((row, rowIndex) => (
+      <Table.Row key={rowIndex}>
+        {columns.map((column, colIndex) => {
+          const { Component, render, key, id } = column
+          const value = id === undefined ? undefined : row[id]
+          const cellProps = { ...column.cellProps, key, children: value }
+          const cellInfo: CellInfo = { value, id, rowIndex, colIndex }
+          if (render) {
+            cellProps.children = render(row, cellInfo)
+          } else if (Component) {
+            cellProps.children = <Component {...cellInfo} row={row} />
+          }
+          return <Table.Cell {...cellProps} />
+        })}
+      </Table.Row>
+    ))}
+  </Table.Body>
+)
 
 const DataGridTable: React.FC<DataGridTableProps> = (props) => {
   const { children, data, ...rest } = props
 
-  const { columns, isCardView, cardBreakpoint, fullWidth, sortOptions, onSort, variant } =
-    useContext(DataGridContext)
-
-  const handleSort = (id: string, exists: boolean) => {
-    if (sortOptions) {
-      const { sortAscending: currentSortAscending } = sortOptions[0] || {}
-      const newOptions = [{ id, sortAscending: exists ? !currentSortAscending : false }]
-      onSort(newOptions)
-    }
-  }
+  const context = useContext(DataGridContext)
+  const { cardBreakpoint, fullWidth, variant } = context
 
   return (
     <>
@@ -46,91 +81,12 @@ const DataGridTable: React.FC<DataGridTableProps> = (props) => {
         variant={variant}
         {...rest}
       >
-        <Table.Header>
-          {[...columns.keys()].map((key) => {
-            const column = columns.get(key)
-            if (isDataColumn(column)) {
-              let sortOpt: SortOption | undefined = undefined
-              if (column.sortable && sortOptions !== undefined) {
-                sortOpt = sortOptions.find((opt: SortOption): boolean => opt.id === key)
-              }
-              const flipChevron = sortOpt !== undefined && sortOpt.sortAscending === true
-              return (
-                <Table.Cell
-                  className={`table-cell ${flipChevron ? 'flip-chevron' : ''}`}
-                  key={key}
-                  aria-sort={
-                    column.sortable
-                      ? sortOpt
-                        ? sortOpt.sortAscending
-                          ? 'ascending'
-                          : 'descending'
-                        : 'none'
-                      : undefined
-                  }
-                  {...column.cellProps}
-                >
-                  {column.sortable && sortOptions !== undefined && !isCardView ? (
-                    <HeaderButton
-                      onClick={(): void => handleSort(key, sortOpt !== undefined)}
-                      type="button"
-                    >
-                      <TextWrapper>{column.title}</TextWrapper>
-                      <IconWrapper aria-hidden>
-                        {sortOpt !== undefined && <NavigationChevronDown />}
-                      </IconWrapper>
-                    </HeaderButton>
-                  ) : (
-                    column.title
-                  )}
-                </Table.Cell>
-              )
-            } else if (isColumn(column)) {
-              return (
-                <Table.Cell key={`col-${key}`} {...column.cellProps}>
-                  {column.title || ''}
-                </Table.Cell>
-              )
-            }
-          })}
-        </Table.Header>
-        <Table.Body>
-          {data.map(
-            (datum, datumIndex): ReactElement => (
-              <Table.Row key={`row-${datumIndex}`}>
-                {[...columns.keys()].map((key, keyIndex) => {
-                  const column = columns.get(key)
-                  if (isDataColumn(column)) {
-                    const AsComponent = column.asComponent
-                    return (
-                      <Table.Cell key={`cell-${datumIndex}-${keyIndex}`} {...column.cellProps}>
-                        {AsComponent ? <AsComponent value={datum[key]} /> : datum[key]}
-                      </Table.Cell>
-                    )
-                  } else if (isColumn(column)) {
-                    return (
-                      <Table.Cell key={`cell-${datumIndex}-${keyIndex}`} {...column.cellProps}>
-                        {column && column.columnFn(datum)}
-                      </Table.Cell>
-                    )
-                  }
-                })}
-              </Table.Row>
-            )
-          )}
-        </Table.Body>
+        {renderHeader(context)}
+        {renderBody(context.columns, data)}
       </Table>
     </>
   )
 }
-
-const IconWrapper = styled.div`
-  flex-shrink: 1;
-`
-
-const TextWrapper = styled.div`
-  flex-grow: 1;
-`
 
 const HeaderButton = styled.button`
   display: flex;

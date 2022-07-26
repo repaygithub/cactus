@@ -1,19 +1,22 @@
+import { mediaGTE, space, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { ReactElement, useContext, useEffect, useMemo, useState } from 'react'
+import React, { ReactElement, useContext } from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { cloneAll } from '../helpers/react'
-import { textStyle } from '../helpers/theme'
 import MenuButton from '../MenuButton/MenuButton'
-import { ScreenSizeContext } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { DataGridContext, getMediaQuery } from './helpers'
-import { DataColumnObject, JustifyContent, TransientProps } from './types'
+import { JustifyContent, TransientProps } from './types'
 
 export interface TopSectionProps {
   sortLabels?: SortLabels
   justifyContent?: JustifyContent
   spacing?: string | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
   children?: React.ReactNode
+}
+
+interface ExtTransientProps extends TransientProps {
+  $justifyContent: JustifyContent
+  $itemMargin: string
 }
 
 interface SortLabels {
@@ -24,25 +27,10 @@ interface SortLabels {
 }
 
 const TopSection = (props: TopSectionProps): ReactElement | null => {
-  const [hasChildren, setHasChildren] = useState<boolean>(false)
   const { sortLabels = {}, children, justifyContent = 'space-between', spacing = 4 } = props
-  const { columns, sortOptions, onSort, isCardView, cardBreakpoint, variant } =
+  const { sortableColumns, sortOptions, onSort, isCardView, cardBreakpoint, variant } =
     useContext(DataGridContext)
-  const screenSize = useContext(ScreenSizeContext)
-  const { space } = useTheme()
-  const sortableColumns = useMemo(() => {
-    const sortableCols: Map<string, DataColumnObject> = new Map()
-    for (const k of columns.keys()) {
-      let col = columns.get(k)
-      if (col !== undefined && col.hasOwnProperty('sortable')) {
-        col = col as DataColumnObject
-        if (col.sortable) {
-          sortableCols.set(k, col)
-        }
-      }
-    }
-    return sortableCols
-  }, [columns])
+  const theme = useTheme()
 
   const handleSortColChange = (id: string) => {
     if (sortOptions) {
@@ -60,36 +48,24 @@ const TopSection = (props: TopSectionProps): ReactElement | null => {
     }
   }
 
-  useEffect(() => {
-    setHasChildren(false)
-    React.Children.forEach(children, (child) => {
-      if (child && child !== null) {
-        setHasChildren(true)
-      }
-    })
-  }, [children])
-
-  const margin = typeof spacing === 'number' ? `${space[spacing]}px` : spacing
-  const isTinyScreen = screenSize.toString() === 'tiny'
+  const margin = typeof spacing === 'number' ? space(theme, spacing) : spacing
 
   return (
     <StyledTopSection
-      className={`top-section ${
-        (hasChildren || (isCardView && sortableColumns.size > 0)) && 'has-content'
-      }`}
+      className="top-section"
       $isCardView={isCardView}
       $cardBreakpoint={cardBreakpoint}
       $justifyContent={justifyContent}
+      $itemMargin={margin}
       $variant={variant}
     >
-      {isCardView && sortableColumns.size > 0 && (
+      {isCardView && sortableColumns.length > 0 && (
         <div className="sort-buttons">
           <MenuButton variant="unfilled" label={sortLabels.sortBy || 'Sort by'} mr={4}>
-            {[...sortableColumns.keys()].map((key): ReactElement => {
-              const col = sortableColumns.get(key) as DataColumnObject
+            {sortableColumns.map(({ key, title }): ReactElement => {
               return (
                 <MenuButton.Item key={key} onSelect={() => handleSortColChange(key)}>
-                  {col.title}
+                  {title}
                 </MenuButton.Item>
               )
             })}
@@ -104,51 +80,47 @@ const TopSection = (props: TopSectionProps): ReactElement | null => {
           </MenuButton>
         </div>
       )}
-      {cloneAll(
-        children,
-        {
-          style: isTinyScreen ? { marginTop: margin } : { marginLeft: margin },
-        },
-        (element: React.ReactElement, cloneProps: any, index): React.ReactElement => {
-          if (!isTinyScreen && !isCardView && index === 0) {
-            return element
-          }
-          return React.cloneElement(element, cloneProps)
-        }
-      )}
+      {children}
     </StyledTopSection>
   )
 }
 
-const StyledTopSection = styled.div<TransientProps & { $justifyContent: JustifyContent }>`
+const StyledTopSection = styled.div<ExtTransientProps>`
   // Card view styles
   display: flex;
   flex-direction: column;
   align-items: center;
-  ${(p) => textStyle(p.theme, p.$variant === 'mini' ? 'small' : 'body')}}
+  ${(p) => textStyle(p, p.$variant === 'mini' ? 'small' : 'body')}}
 
-  &.has-content {
-    margin-bottom: ${(p) =>
-      p.$variant === 'mini' ? `${p.theme.space[3]}px` : `${p.theme.space[7]}px`};
+  margin-bottom: ${(p) => (p.$variant === 'mini' ? space(p, 3) : space(p, 7))};
+
+  &:empty {
+    display: none;
+  }
+
+  & > *:not(:first-child) {
+    margin-top: ${(p) => p.$itemMargin};
+    ${mediaGTE('small')} {
+      margin-top: 0;
+      margin-left: ${(p) => p.$itemMargin};
+    }
   }
 
   // Non-card view styles
   ${getMediaQuery} {
     flex-direction: row;
     align-items: flex-start;
-    ${(p) => `justify-content: ${p.$justifyContent};`}
+    justify-content: ${(p) => p.$justifyContent};
   }
 
   // Card view styles when screen is larger than tiny
   ${(p) =>
     p.$isCardView &&
-    `${p.theme.mediaQueries.small} {
+    `${mediaGTE(p, 'small')} {
       flex-direction: row;
       justify-content: ${p.$justifyContent};
+      margin-bottom: 16px;
 
-      &.has-content {
-        margin-bottom: 16px;
-      }
       .sort-buttons {
         margin-bottom: 0px;
       }
