@@ -9,5 +9,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - name: Install Packages
+      run: yarn install --immutable
+    
     - name: Publish the docs
       run: yarn docs:publish
