@@ -1,3 +1,21 @@
+# v9.8.0 (Wed Jul 27 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-964 DataGrid Columns [#776](https://github.com/repaygithub/cactus/pull/776) ([@wilysword](https://github.com/wilysword))
+
+#### 🐛 Bug Fix
+
+- CACTUS-929 :: Fix BrandBar when no `logo` [#778](https://github.com/repaygithub/cactus/pull/778) ([@daniloPenaR](https://github.com/daniloPenaR))
+- CACTUS-931 Fix prop forwarding [#768](https://github.com/repaygithub/cactus/pull/768) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 2
+
+- [@daniloPenaR](https://github.com/daniloPenaR)
+- [@wilysword](https://github.com/wilysword)
+
+---
+
 # v9.7.0 (Fri Jul 15 2022)
 
 #### 🚀 Enhancement
