@@ -1,3 +1,15 @@
+# v3.1.5 (Wed Jul 27 2022)
+
+#### 🐛 Bug Fix
+
+- CACTUS-931 Fix prop forwarding [#768](https://github.com/repaygithub/cactus/pull/768) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 1
+
+- [@wilysword](https://github.com/wilysword)
+
+---
+
 # v3.1.4 (Fri Jul 15 2022)
 
 #### 🚀 Enhancement
