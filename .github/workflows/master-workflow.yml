@@ -17,6 +17,11 @@ jobs:
     - name: Build Packages
       run: yarn build
 
+    - name: Cleanup gatsby cache
+      env:
+        NODE_OPTIONS: "--max_old_space_size=4096"
+      run: yarn docs cleanup
+
     - name: Publish the docs
       env:
         NODE_OPTIONS: "--max_old_space_size=4096"
