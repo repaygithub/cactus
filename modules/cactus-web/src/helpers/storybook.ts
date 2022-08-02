@@ -50,7 +50,7 @@ const mapSpace = (str: string | undefined): Length | Length[] | undefined => {
   if (!parts.length) return undefined
   else if (parts.length > 1) return parts.map(mapSpace) as Length[]
   str = parts[0]
-  return /^[0-7]$/.test(str) ? parseInt(str) : str
+  return /^-?[0-7]$/.test(str) ? parseInt(str) : str
 }
 export const SPACE: ArgType = { ...STRING, map: mapSpace }
 

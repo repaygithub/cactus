@@ -2,7 +2,7 @@ import cactusTheme from '@repay/cactus-theme'
 import React from 'react'
 
 import { Text } from '../'
-import { HIDE_STYLED, SPACE, Story } from '../helpers/storybook'
+import { HIDE_STYLED, SPACE, Story, STRING } from '../helpers/storybook'
 
 const COLOR_STYLES = Object.keys(cactusTheme.colorStyles)
 
@@ -20,6 +20,10 @@ export default {
     colors: { options: COLOR_STYLES },
     margin: SPACE,
     padding: SPACE,
+    textDecoration: STRING,
+    fontVariant: STRING,
+    textIndent: SPACE,
+    textTransform: STRING,
     ...HIDE_STYLED,
   },
   args: {

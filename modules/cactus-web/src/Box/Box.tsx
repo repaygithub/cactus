@@ -3,8 +3,6 @@ import styled, { DefaultTheme, ThemedStyledProps } from 'styled-components'
 import {
   border,
   BorderProps,
-  color,
-  ColorProps,
   colorStyle,
   ColorStyleProps,
   compose,
@@ -12,18 +10,14 @@ import {
   DisplayProps,
   layout,
   LayoutProps,
-  overflow,
-  OverflowProps,
   position,
   PositionProps,
   space,
   SpaceProps,
-  typography,
-  TypographyProps,
 } from 'styled-system'
 
-import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import { getOmittableProps } from '../helpers/omit'
+import { allText, AllTextProps, flexItem, FlexItemProps } from '../helpers/styled'
 import { radius, textStyle } from '../helpers/theme'
 
 interface CustomBR {
@@ -52,12 +46,10 @@ export interface BoxProps
   extends PositionProps,
     LayoutProps,
     SpaceProps,
-    ColorProps,
     ColorStyleProps,
     DisplayProps,
-    TypographyProps,
+    AllTextProps,
     CustomBorderProps,
-    OverflowProps,
     FlexItemProps {
   textStyle?: keyof TextStyleCollection
 }
@@ -100,18 +92,7 @@ const decideBorderRadius = (props: ThemedStyledProps<BoxProps, DefaultTheme>) =>
   return borderRadiusStyles
 }
 
-const styleFn = compose(
-  position,
-  display,
-  layout,
-  space,
-  colorStyle,
-  color,
-  typography,
-  border,
-  overflow,
-  flexItem
-)
+const styleFn = compose(position, display, layout, space, colorStyle, allText, border, flexItem)
 const styleProps = getOmittableProps(styleFn, 'textStyle')
 export const Box = styled('div').withConfig({
   shouldForwardProp: (p) => !styleProps.has(p),
