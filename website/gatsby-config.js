@@ -2,8 +2,6 @@ const path = require('path')
 const modulesHelper = require('./tools/modules-helper')
 const { default: cactusTheme } = require('@repay/cactus-theme')
 
-const pastWebVersions = ['1.1.2', '2.1.0', '3.3.2', '4.4.1', '5.2.0', '6.5.0', '7.1.0', '8.1.0']
-
 module.exports = {
   siteMetadata: {
     title: 'Cactus Design System',
@@ -39,15 +37,6 @@ module.exports = {
         ignore: ['**/*.ts', '**/*.tsx', '**/*.json', '**/*.snap'],
       },
     },
-    ...pastWebVersions.map((version) => ({
-      resolve: 'gatsby-source-git',
-      options: {
-        name: `cactus-web/v${version.split('.')[0]}`,
-        remote: 'https://github.com/repaygithub/cactus.git',
-        branch: `@repay/cactus-web@${version}`,
-        patterns: ['modules/cactus-web/src/**/*.mdx'],
-      },
-    })),
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     {
