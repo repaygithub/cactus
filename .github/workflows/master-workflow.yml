@@ -11,9 +11,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Git Config
+      run: |
+        git config user.name "Pipeline Bot"
+        git config user.email "<>"
+
     - name: Install Packages
       run: yarn install --immutable
-      
+
     - name: Build Packages
       run: yarn build
 
