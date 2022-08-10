@@ -8873,10 +8873,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ansi-regex@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "ansi-regex@npm:3.0.1"
-  checksum: 09daf180c5f59af9850c7ac1bd7fda85ba596cc8cbeb210826e90755f06c818af86d9fa1e6e8322fab2c3b9e9b03f56c537b42241139f824dd75066a1e7257cc
+"ansi-regex@npm:^2.0.0":
+  version: 2.1.1
+  resolution: "ansi-regex@npm:2.1.1"
+  checksum: 190abd03e4ff86794f338a31795d262c1dfe8c91f7e01d04f13f646f1dcb16c5800818f886047876f1272f065570ab86b24b99089f8b68a0e11ff19aed4ca8f1
+  languageName: node
+  linkType: hard
+
+"ansi-regex@npm:^4.1.0":
+  version: 4.1.1
+  resolution: "ansi-regex@npm:4.1.1"
+  checksum: b1a6ee44cb6ecdabaa770b2ed500542714d4395d71c7e5c25baa631f680fb2ad322eb9ba697548d498a6fd366949fc8b5bfcf48d49a32803611f648005b01888
+  languageName: node
+  linkType: hard
+
+"ansi-regex@npm:^5.0.0, ansi-regex@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "ansi-regex@npm:5.0.1"
+  checksum: 2aa4bb54caf2d622f1afdad09441695af2a83aa3fe8b8afa581d205e57ed4261c183c4d3877cee25794443fde5876417d859c108078ab788d6af7e4fe52eb66b
   languageName: node
   linkType: hard
 
@@ -23966,7 +23980,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"parse-url@npm:^6.0.1":
+"parse-url@npm:^6.0.0":
   version: 6.0.5
   resolution: "parse-url@npm:6.0.5"
   dependencies:
@@ -27718,6 +27732,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"shell-quote@npm:1.7.2":
+  version: 1.7.2
+  resolution: "shell-quote@npm:1.7.2"
+  checksum: efad426fb25d8a54d06363f1f45774aa9e195f62f14fa696d542b44bfe418ab41206448b63af18d726c62e099e66d9a3f4f44858b9ea2ce4b794b41b802672d1
+  languageName: node
+  linkType: hard
+
 "shell-quote@npm:^1.7.3":
   version: 1.7.3
   resolution: "shell-quote@npm:1.7.3"
@@ -30031,10 +30052,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"trim@npm:^0.0.3":
-  version: 0.0.3
-  resolution: "trim@npm:0.0.3"
-  checksum: 9a059ba56d5e22c9e571798a7c63640cb25478c495d8a9d001f6352927207c6bd224018751a0c5145fbedc943ee2ebab1d7cc2e8ccba3121a51a7d3428dd879c
+"trim@npm:0.0.1":
+  version: 0.0.1
+  resolution: "trim@npm:0.0.1"
+  checksum: 2b4646dff99a222e8e1526edd4e3a43bbd925af0b8e837c340455d250157e7deefaa4da49bb891ab841e5c27b1afc5e9e32d4b57afb875d2dfcabf4e319b8f7f
   languageName: node
   linkType: hard
 
