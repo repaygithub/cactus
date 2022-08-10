@@ -41,6 +41,10 @@ export default {
     borderBottomLeftRadius: HIDE_CONTROL,
     borderBottomRightRadius: HIDE_CONTROL,
     textStyle: { options: textStyles },
+    textDecoration: STRING,
+    fontVariant: STRING,
+    textIndent: SPACE,
+    textTransform: STRING,
   },
   args: {
     padding: '4',

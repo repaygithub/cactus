@@ -1,0 +1,61 @@
+{
+  "processors": [
+    ["stylelint-processor-styled-components", {
+    }]
+  ],
+  "overrides": [
+    {
+      "files": ["**/*.{tsx,jsx}"],
+      "customSyntax": "postcss-scss",
+      "extends": [
+        "stylelint-config-standard-scss",
+        "stylelint-config-styled-components"
+      ],  
+      "plugins": [
+        "stylelint-no-unsupported-browser-features"
+      ],
+      "rules": {
+        "plugin/no-unsupported-browser-features": [true, {
+          "browsers": ["IE 11"],
+          "ignorePartialSupport": true,
+          "severity": "warning"
+        }],
+        "color-no-invalid-hex": true,
+        "property-no-unknown": [true, {
+          "ignoreProperties": ["/dummyValue/"]
+        }],
+        "selector-type-no-unknown": [true, { 
+          "ignoreTypes": ["/-styled-mixin/", "/^\\$\\w+/"] 
+        }],
+        "no-empty-source": null,
+        "no-duplicate-selectors": null,
+        "declaration-block-semicolon-newline-after": null,
+        "declaration-colon-newline-after": null,
+        "property-case": null,
+        "keyframes-name-pattern": null,
+
+
+        "scss/double-slash-comment-empty-line-before": null,
+        "selector-list-comma-newline-after": null,
+        "block-closing-brace-space-before": null,
+        "no-descending-specificity": null,
+        "selector-type-case": ["lower", { 
+          "ignoreTypes": ["/dummyValue/"]
+        }],
+        "value-keyword-case": ["lower", {
+          "ignoreKeywords": ["/dummyValue/"]
+        }],
+        "scss/operator-no-unspaced": null,
+        "alpha-value-notation": null,
+        "block-opening-brace-space-after": null,
+        "declaration-block-no-duplicate-properties": true,
+        "rule-empty-line-before": null,
+        "declaration-empty-line-before": null,
+        "string-quotes": null,
+        "length-zero-no-unit": [true, {
+          "severity": "warning"
+        }]
+      }
+    }
+  ]
+}

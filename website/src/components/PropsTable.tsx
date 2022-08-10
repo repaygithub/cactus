@@ -162,7 +162,7 @@ const PropsTable: React.FC<PropsTableProps> = ({
   const data = useDocgen()
   // Not sure why some pull from `dist` instead of `src`.
   if (!fileName) {
-    fileName = component?.__filemeta?.filename.replace(/dist(.*)js/, 'src$1tsx')
+    fileName = component.__filemeta?.filename.replace(/dist(.*)js/, 'src$1tsx')
   } else if (!fileName.includes('src')) {
     fileName = '../modules/cactus-web/src/' + fileName
   }
@@ -209,7 +209,7 @@ const PropsTable: React.FC<PropsTableProps> = ({
       styledSystemProps,
       styledComponentProps: probablyStyledComponentProps,
     }
-  }, [component?.displayName, docItem, staticProp])
+  }, [component.displayName, docItem, staticProp])
 
   if (ownProps === undefined) {
     return null
