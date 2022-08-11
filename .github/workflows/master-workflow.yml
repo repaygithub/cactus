@@ -22,6 +22,11 @@ jobs:
     - name: Build Packages
       run: yarn build
 
+    - name: Build Documentation Site
+      run: yarn docs build
+      env:
+        NODE_OPTIONS: "--max_old_space_size=4096"
+
     - name: Deploy with gh-pages
       run: |
         git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
