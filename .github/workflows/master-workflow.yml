@@ -25,7 +25,7 @@ jobs:
     - name: Deploy with gh-pages
       run: |
         git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        npx gh-pages -d build -u "github-actions-bot <support+actions@github.com>"
+        yarn gh-pages -d ./website/public -u "danilopenar dpena@repay.com"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NODE_OPTIONS: "--max_old_space_size=4096"
