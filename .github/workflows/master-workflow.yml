@@ -22,9 +22,13 @@ jobs:
     - name: Build Packages
       run: yarn build
 
-    - name: Publish the docs
+    - name: Build Documentation Site
+      run: yarn docs build
       env:
         NODE_OPTIONS: "--max_old_space_size=4096"
-      run: yarn docs:publish
-      with: 
+
+    - name: Publish Docs
+      uses: peaceiris/actions-gh-pages@v3
+      with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./website/public
