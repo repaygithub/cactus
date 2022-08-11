@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import React, { useContext, useState } from 'react'
 import { MarginProps } from 'styled-system'
 
@@ -260,7 +260,7 @@ describe('component: DataGrid', () => {
     const { getByLabelText, getByText } = renderWithTheme(<DataGridContainer />)
 
     const sixItemsButton = getByLabelText('View 6 rows per page')
-    fireEvent.click(sixItemsButton)
+    userEvent.click(sixItemsButton)
     expect(getByText('Showing 1 to 6 of 11')).toBeInTheDocument()
   })
 
@@ -268,7 +268,7 @@ describe('component: DataGrid', () => {
     const { getByText } = renderWithTheme(<DataGridContainer />)
 
     const createdHeader = getByText('Created').parentElement as HTMLElement
-    fireEvent.click(createdHeader)
+    userEvent.click(createdHeader)
     expect(createdHeader.parentElement).toHaveAttribute('aria-sort', 'ascending')
   })
 
@@ -283,7 +283,7 @@ describe('component: DataGrid', () => {
     const { getByText, getByLabelText } = renderWithTheme(<DataGridContainer />)
 
     const page2Button = getByLabelText('Go to page 2')
-    fireEvent.click(page2Button)
+    userEvent.click(page2Button)
     // First result on page 2
     expect(getByText('Config 5')).toBeInTheDocument()
     // Last result on page 2
@@ -294,7 +294,7 @@ describe('component: DataGrid', () => {
     const { getByText } = renderWithTheme(<DataGridContainer providePageCount={false} />)
 
     const nextPageButton = getByText('Next')
-    fireEvent.click(nextPageButton)
+    userEvent.click(nextPageButton)
     // First result on page 2
     expect(getByText('Config 5')).toBeInTheDocument()
     // Last result on page 2
@@ -318,6 +318,7 @@ describe('component: DataGrid', () => {
     expect(dataGrid).toHaveStyle('margin-left: 40px')
     expect(dataGrid).toHaveStyle('margin-right: 40px')
   })
+
   test('Should support setting position of right column as sticky', () => {
     const { getAllByTestId, rerender } = renderWithTheme(<DataGridContainer sticky="right" />)
     getAllByTestId('last-col').forEach((element) => {
@@ -327,5 +328,166 @@ describe('component: DataGrid', () => {
     getAllByTestId('last-col').forEach((element) => {
       expect(element).not.toHaveStyle('position: sticky')
     })
+  })
+
+  test('should allow uncontrolled pagisort', () => {
+    const onSort = jest.fn()
+    const onPageRoot = jest.fn()
+    const onPageLeaf = jest.fn()
+    const onPagisort = jest.fn()
+    const data: Record<string, any>[] = Array(2).fill({ hi: 'there', hello: '!' })
+    const { getByLabelText, getByRole } = renderWithTheme(
+      <DataGrid onSort={onSort} onPageChange={onPageRoot} onPagisort={onPagisort}>
+        <DataGrid.PageSizeSelect initialPageSize={2} pageSizeOptions={[2, 5]} />
+        <DataGrid.Table data={data}>
+          <DataGrid.Column id="hi" title="Hi" sortable />
+          <DataGrid.Column id="hello" title="Hello" />
+        </DataGrid.Table>
+        <DataGrid.Pagination itemCount={3} onPageChange={onPageLeaf} />
+      </DataGrid>
+    )
+    // Sort descending
+    userEvent.click(getByRole('button', { name: 'Hi' }))
+    expect(onSort).toHaveBeenCalledTimes(1)
+    expect(onSort).toHaveBeenLastCalledWith([{ id: 'hi', sortAscending: false }])
+    expect(onPagisort).toHaveBeenCalledTimes(1)
+    expect(onPagisort).toHaveBeenLastCalledWith({
+      currentPage: 1,
+      pageSize: 2,
+      itemCount: 3,
+      itemOffset: 0,
+      pageCount: 2,
+      sort: [{ id: 'hi', sortAscending: false }],
+    })
+    expect(onPageRoot).toHaveBeenCalledTimes(0)
+    expect(onPageLeaf).toHaveBeenCalledTimes(0)
+    // Page change
+    userEvent.click(getByLabelText('Go to page 2'))
+    expect(onSort).toHaveBeenCalledTimes(1)
+    expect(onPagisort).toHaveBeenCalledTimes(2)
+    expect(onPagisort).toHaveBeenLastCalledWith({
+      currentPage: 2,
+      pageSize: 2,
+      itemCount: 3,
+      itemOffset: 2,
+      pageCount: 2,
+      sort: [{ id: 'hi', sortAscending: false }],
+    })
+    expect(onPageRoot).toHaveBeenCalledTimes(1)
+    expect(onPageRoot).toHaveBeenLastCalledWith({
+      currentPage: 2,
+      pageSize: 2,
+      itemCount: 3,
+      itemOffset: 2,
+      pageCount: 2,
+    })
+    expect(onPageLeaf).toHaveBeenCalledTimes(1)
+    expect(onPageLeaf).toHaveBeenLastCalledWith(2)
+    // Sort ascending
+    userEvent.click(getByRole('button', { name: 'Hi' }))
+    expect(onSort).toHaveBeenCalledTimes(2)
+    expect(onSort).toHaveBeenLastCalledWith([{ id: 'hi', sortAscending: true }])
+    expect(onPagisort).toHaveBeenCalledTimes(3)
+    expect(onPagisort).toHaveBeenLastCalledWith({
+      currentPage: 2,
+      pageSize: 2,
+      itemCount: 3,
+      itemOffset: 2,
+      pageCount: 2,
+      sort: [{ id: 'hi', sortAscending: true }],
+    })
+    expect(onPageRoot).toHaveBeenCalledTimes(1)
+    expect(onPageLeaf).toHaveBeenCalledTimes(1)
+    // Page size change
+    userEvent.click(getByLabelText('View 5 rows per page'))
+    expect(onSort).toHaveBeenCalledTimes(2)
+    expect(onPagisort).toHaveBeenCalledTimes(4)
+    // Note that itemOffset & currentPage changed, as they were no longer valid.
+    expect(onPagisort).toHaveBeenLastCalledWith({
+      currentPage: 1,
+      pageSize: 5,
+      itemCount: 3,
+      itemOffset: 0,
+      pageCount: 1,
+      sort: [{ id: 'hi', sortAscending: true }],
+    })
+    expect(onPageRoot).toHaveBeenCalledTimes(2)
+    expect(onPageRoot).toHaveBeenLastCalledWith({
+      currentPage: 1,
+      pageSize: 5,
+      itemCount: 3,
+      itemOffset: 0,
+      pageCount: 1,
+    })
+    expect(onPageLeaf).toHaveBeenCalledTimes(1)
+  })
+
+  test('should allow controlled pagisort at root', () => {
+    const data: Record<string, any>[] = Array(2).fill({ hi: 'there', hello: '!' })
+    const { container, getByLabelText, rerender } = renderWithTheme(
+      <DataGrid
+        sortOptions={[{ id: 'hi', sortAscending: true }]}
+        paginationOptions={{ currentPage: 2, pageSize: 2, pageCount: 3 }}
+      >
+        <DataGrid.PageSizeSelect pageSizeOptions={[2, 5]} />
+        <DataGrid.Table data={data}>
+          <DataGrid.Column id="hi" title="Hi" sortable />
+          <DataGrid.Column id="hello" title="Hello" />
+        </DataGrid.Table>
+        <DataGrid.Pagination />
+      </DataGrid>
+    )
+    const sortHeader = container.querySelector('[aria-sort]')
+    expect(sortHeader).toHaveTextContent('Hi')
+    expect(sortHeader).toHaveAttribute('aria-sort', 'ascending')
+    expect(getByLabelText('View 2 rows per page')).toHaveAttribute('aria-selected', 'true')
+    expect(getByLabelText('Current page, 2')).toHaveAttribute('aria-current', 'page')
+
+    // For now `currentPage` is required, should be removed later...
+    rerender(
+      <DataGrid
+        sortOptions={[{ id: 'hi', sortAscending: false }]}
+        paginationOptions={{ pageSize: 5, itemCount: 12, itemOffset: 10, currentPage: NaN }}
+      >
+        <DataGrid.PageSizeSelect pageSizeOptions={[2, 5]} />
+        <DataGrid.Table data={data}>
+          <DataGrid.Column id="hi" title="Hi" sortable />
+          <DataGrid.Column id="hello" title="Hello" />
+        </DataGrid.Table>
+        <DataGrid.Pagination />
+      </DataGrid>
+    )
+    expect(sortHeader).toHaveAttribute('aria-sort', 'descending')
+    expect(getByLabelText('View 5 rows per page')).toHaveAttribute('aria-selected', 'true')
+    expect(getByLabelText('Current page, 3')).toHaveAttribute('aria-current', 'page')
+  })
+
+  test('should allow controlled pagisort at leaf', () => {
+    const data: Record<string, any>[] = Array(2).fill({ hi: 'there', hello: '!' })
+    const { getByLabelText, rerender } = renderWithTheme(
+      <DataGrid>
+        <DataGrid.PageSizeSelect pageSize={2} pageSizeOptions={[2, 5]} />
+        <DataGrid.Table data={data}>
+          <DataGrid.Column id="hi" title="Hi" sortable />
+          <DataGrid.Column id="hello" title="Hello" />
+        </DataGrid.Table>
+        <DataGrid.Pagination currentPage={2} pageCount={3} />
+      </DataGrid>
+    )
+    expect(getByLabelText('View 2 rows per page')).toHaveAttribute('aria-selected', 'true')
+    expect(getByLabelText('Current page, 2')).toHaveAttribute('aria-current', 'page')
+
+    rerender(
+      <DataGrid>
+        <DataGrid.PageSizeSelect pageSize={5} pageSizeOptions={[2, 5]} />
+        <DataGrid.Table data={data}>
+          <DataGrid.Column id="hi" title="Hi" sortable />
+          <DataGrid.Column id="hello" title="Hello" />
+        </DataGrid.Table>
+        <DataGrid.Pagination itemCount={12} itemOffset={10} />
+      </DataGrid>
+    )
+    expect(getByLabelText('View 5 rows per page')).toHaveAttribute('aria-selected', 'true')
+    expect(getByLabelText('Current page, 3')).toHaveAttribute('aria-current', 'page')
   })
 })

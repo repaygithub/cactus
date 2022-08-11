@@ -1,4 +1,5 @@
 import './helpers/polyfills'
+export * from './hooks'
 
 export { AccessibleField, useAccessibleField } from './AccessibleField/AccessibleField'
 export { default as Accordion } from './Accordion/Accordion'

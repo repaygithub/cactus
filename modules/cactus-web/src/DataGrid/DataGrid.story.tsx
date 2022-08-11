@@ -179,42 +179,38 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
   const size = useContext(ScreenSizeContext)
   const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
 
-  const [data, setData] = useState<{ [key: string]: any }[]>(initialData)
-  const [sortOptions, setSortOptions] = useState<{ id: string; sortAscending: boolean }[]>([])
+  const [data, setData] = useState<Datum[]>(initialData)
   const [paginationOptions, setPaginationOptions] = useState<{
     currentPage: number
     pageSize: number
-    pageCount?: number
-  }>({ currentPage: 1, pageCount: 3, pageSize: 4 })
+    itemOffset?: number
+  }>({ currentPage: 1, pageSize: 4 })
 
-  const clone = (rowData: { [key: string]: any }): void => {
-    setData((currentData): { [key: string]: any }[] => [
-      ...currentData,
-      { ...rowData, name: `${rowData.name} Copy` },
-    ])
-  }
+  const clone = (index: number) =>
+    setData((currentData): Datum[] => {
+      const rowData = currentData[index]
+      return [...currentData, { ...rowData, name: `${rowData.name} Copy` }]
+    })
 
-  const deleteRow = (rowData: { [key: string]: any }): void => {
-    const deleteIndex = data.findIndex((datum): boolean => datum.name === rowData.name)
-    setData((currentData): { [key: string]: any }[] => {
+  const deleteRow = (deleteIndex: number) =>
+    setData((currentData) => {
       const newData = [...currentData]
       newData.splice(deleteIndex, 1)
       return newData
     })
-  }
 
   const onSort = (newSortOptions: { id: string; sortAscending: boolean }[]): void => {
     const sortId = newSortOptions[0].id
     const sortAscending = newSortOptions[0].sortAscending
-    const dataCopy = JSON.parse(JSON.stringify(data))
+    const dataCopy = [...data]
     if (sortId === 'created') {
       if (sortAscending) {
         dataCopy.sort((a: Datum, b: Datum): number => {
-          return (new Date(a.created) as any) - (new Date(b.created) as any)
+          return Date.parse(a.created) - Date.parse(b.created)
         })
       } else {
         dataCopy.sort((a: Datum, b: Datum): number => {
-          return (new Date(b.created) as any) - (new Date(a.created) as any)
+          return Date.parse(b.created) - Date.parse(a.created)
         })
       }
     } else if (sortId === 'active') {
@@ -229,63 +225,31 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
       }
     }
     setData(dataCopy)
-    setSortOptions(newSortOptions)
   }
 
-  const paginateData = (): { [key: string]: any }[] => {
-    const index1 = (paginationOptions.currentPage - 1) * paginationOptions.pageSize
-    const index2 = index1 + paginationOptions.pageSize
-    return data.slice(index1, index2)
-  }
+  const itemCount = data.length
+  const { itemOffset = 0, pageSize } = paginationOptions
+  const firstItem = itemOffset + 1
 
-  const onPageChange = (newPaginationOptions: {
-    currentPage: number
-    pageSize: number
-    pageCount?: number
-  }): void => {
-    if (newPaginationOptions.pageSize !== paginationOptions.pageSize) {
-      newPaginationOptions.pageCount = Math.ceil(data.length / newPaginationOptions.pageSize)
-    }
-    setPaginationOptions(newPaginationOptions)
+  const paginateData = (): Datum[] => {
+    return data.slice(itemOffset, itemOffset + pageSize)
   }
 
   const getResultsCountText = (): string => {
-    if (paginationOptions.pageCount) {
-      return `Showing ${(paginationOptions.currentPage - 1) * paginationOptions.pageSize + 1} to ${
-        paginationOptions.currentPage * paginationOptions.pageSize
-      } of ${data.length}`
+    const lastItem = Math.min(itemOffset + pageSize, itemCount)
+    if (providePageCount) {
+      return `Showing ${firstItem} to ${lastItem} of ${itemCount}`
     } else {
-      return `Showing ${(paginationOptions.currentPage - 1) * paginationOptions.pageSize + 1} to ${
-        paginationOptions.currentPage * paginationOptions.pageSize
-      }`
+      return `Showing ${firstItem} to ${lastItem}`
     }
-  }
-
-  const getPaginationOptions = (): {
-    currentPage: number
-    pageSize: number
-    pageCount?: number
-  } => {
-    const paginationOptsCopy = JSON.parse(JSON.stringify(paginationOptions))
-    if (!providePageSizeSelect) {
-      paginationOptsCopy.pageSizeOptions = undefined
-    }
-
-    if (!providePageCount) {
-      paginationOptsCopy.pageCount = undefined
-    }
-
-    return paginationOptsCopy
   }
 
   const usableData = includePaginationAndSort ? paginateData() : data
 
   return (
     <DataGrid
-      sortOptions={includePaginationAndSort ? sortOptions : undefined}
       onSort={onSort}
-      paginationOptions={includePaginationAndSort ? getPaginationOptions() : undefined}
-      onPageChange={onPageChange}
+      onPageChange={setPaginationOptions}
       fullWidth={fullWidth}
       cardBreakpoint={cardBreakpoint}
       variant={variant}
@@ -296,6 +260,7 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
           {showResultsCount && !isCardView && <span>{getResultsCountText()}</span>}
           {includePaginationAndSort && providePageSizeSelect && (
             <DataGrid.PageSizeSelect
+              pageSize={pageSize}
               pageSizeOptions={[4, 6, 12]}
               pageSizeSelectLabel={pageSizeSelectLabel}
             />
@@ -316,21 +281,17 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
           width={activeColumnWidth}
         />
         <DataGrid.Column width={actionColumnWidth}>
-          {(rowData): ReactElement => (
+          {(_, { rowIndex }) => (
             <SplitButton
               onSelectMainAction={(): void => {
                 return
               }}
               mainActionLabel="Edit"
             >
-              <SplitButton.Action
-                onSelect={(): void => {
-                  clone(rowData)
-                }}
-              >
+              <SplitButton.Action onSelect={() => clone(rowIndex + itemOffset)}>
                 Clone
               </SplitButton.Action>
-              <SplitButton.Action onSelect={(): void => deleteRow(rowData)}>
+              <SplitButton.Action onSelect={() => deleteRow(rowIndex + itemOffset)}>
                 Delete
               </SplitButton.Action>
             </SplitButton>
@@ -344,6 +305,8 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
         {includePaginationAndSort ? (
           providePageCount ? (
             <DataGrid.Pagination
+              itemCount={itemCount}
+              itemOffset={itemOffset}
               label={paginationLabel}
               currentPageLabel={currentPageLabel}
               prevPageLabel={prevPageLabel}
@@ -352,9 +315,10 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
             />
           ) : (
             <DataGrid.PrevNext
+              itemOffset={itemOffset}
               prevText={prevText}
               nextText={nextText}
-              disableNext={usableData.length < getPaginationOptions().pageSize || disableNext}
+              disableNext={usableData.length < pageSize || disableNext}
             />
           )
         ) : null}

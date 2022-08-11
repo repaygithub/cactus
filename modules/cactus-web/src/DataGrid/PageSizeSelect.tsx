@@ -9,6 +9,8 @@ import { border, fontSize } from '../helpers/theme'
 import { DataGridContext } from './helpers'
 
 export interface PageSizeSelectProps extends MarginProps {
+  pageSize?: number
+  initialPageSize?: number
   makePageSizeLabel?: (pageSize: number) => string
   pageSizeSelectLabel?: React.ReactChild
   pageSizeOptions: number[]
@@ -17,38 +19,39 @@ export interface PageSizeSelectProps extends MarginProps {
 const defaultPageSizeLabel = (pageSize: number): string => `View ${pageSize} rows per page`
 
 const PageSizeSelect = (props: PageSizeSelectProps): ReactElement => {
+  const { pageState, updatePageState } = useContext(DataGridContext)
   const {
     pageSizeSelectLabel,
     pageSizeOptions,
     makePageSizeLabel = defaultPageSizeLabel,
+    initialPageSize = 1,
+    pageSize: currentPageSize = pageState.pageSize || initialPageSize,
     ...rest
   } = props
-  const { paginationOptions, onPageChange } = useContext(DataGridContext)
+  React.useEffect(() => {
+    updatePageState({ pageSize: currentPageSize })
+  }, [currentPageSize]) // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <StyledPageSizeSelect {...rest}>
       <span>{pageSizeSelectLabel || 'View'}</span>
       <ol className="page-options-list">
-        {pageSizeOptions &&
-          paginationOptions &&
-          pageSizeOptions.map((pageSize): ReactElement => {
-            const isCurrentPageSize = paginationOptions.pageSize === pageSize
-            return (
-              <li className="page-option" key={`page-size-option-${pageSize}`}>
-                <a
-                  role="link"
-                  aria-selected={isCurrentPageSize ? 'true' : 'false'}
-                  onClick={(): void => {
-                    onPageChange({ ...paginationOptions, pageSize: pageSize })
-                  }}
-                  onKeyDown={keyDownAsClick}
-                  tabIndex={isCurrentPageSize ? undefined : 0}
-                  aria-label={makePageSizeLabel(pageSize)}
-                >
-                  {pageSize}
-                </a>
-              </li>
-            )
-          })}
+        {pageSizeOptions?.map((pageSize): ReactElement => {
+          const isCurrentPageSize = currentPageSize === pageSize
+          return (
+            <li className="page-option" key={`page-size-option-${pageSize}`}>
+              <a
+                role="link"
+                aria-selected={isCurrentPageSize ? 'true' : 'false'}
+                onClick={() => updatePageState({ pageSize }, true)}
+                onKeyDown={keyDownAsClick}
+                tabIndex={isCurrentPageSize ? undefined : 0}
+                aria-label={makePageSizeLabel(pageSize)}
+              >
+                {pageSize}
+              </a>
+            </li>
+          )
+        })}
       </ol>
     </StyledPageSizeSelect>
   )

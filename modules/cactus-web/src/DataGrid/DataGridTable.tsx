@@ -20,7 +20,7 @@ const renderHeader = ({ columns, sortOptions, onSort, isCardView }: DataGridCont
     {columns.map((column) => {
       const { key, id, title = '' } = column
       const props = { ...column.cellProps, ...column.headerProps, key, children: title }
-      if (column.sortable && id && sortOptions) {
+      if (column.sortable && id) {
         const sortOpt = sortOptions.find((opt) => opt.id === id)
         let sortDesc = false
         let Icon: React.ComponentType<IconProps> | undefined = undefined

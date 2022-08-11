@@ -33,17 +33,14 @@ const TopSection = (props: TopSectionProps): ReactElement | null => {
   const theme = useTheme()
 
   const handleSortColChange = (id: string) => {
-    if (sortOptions) {
-      const { sortAscending: currentSortAscending } = sortOptions[0] || {}
-      const newOptions = [
-        { id, sortAscending: currentSortAscending !== undefined ? currentSortAscending : false },
-      ]
-      onSort(newOptions)
-    }
+    // TODO We should have a way (per column) to specify default sort direction.
+    const { sortAscending: currentSortAscending = false } = sortOptions[0] || {}
+    const newOptions = [{ id, sortAscending: currentSortAscending }]
+    onSort(newOptions)
   }
 
   const handleSortDirChange = (sortAscending: boolean) => {
-    if (sortOptions) {
+    if (sortOptions.length) {
       onSort([{ ...sortOptions[0], sortAscending }])
     }
   }

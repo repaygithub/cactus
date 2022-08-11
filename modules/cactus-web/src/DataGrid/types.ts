@@ -61,10 +61,25 @@ export interface SortOption {
   sortAscending: boolean
 }
 
-export interface PaginationOptions {
+export const pageStateKeys = [
+  'currentPage',
+  'pageCount',
+  'pageSize',
+  'itemCount',
+  'itemOffset',
+] as const
+
+export type PageState = { [K in typeof pageStateKeys[number]]?: number }
+
+// Backwards compat; if we ever make a breaking change, use `PageState` everywhere.
+export interface PaginationOptions extends PageState {
   currentPage: number
   pageSize: number
-  pageCount?: number
+}
+export type PageStateAction = React.SetStateAction<PageState>
+
+export interface Pagisort extends PaginationOptions {
+  sort?: SortOption[]
 }
 
 export interface ColumnProps extends Omit<TableCellProps, 'as' | 'children' | 'title'> {
@@ -82,8 +97,8 @@ export interface DataGridContextType extends ColumnState {
   columnDispatch: ColumnDispatch
   sortOptions: SortOption[]
   onSort: (newSortOptions: SortOption[]) => void
-  paginationOptions: PaginationOptions | undefined
-  onPageChange: (newPageOptions: PaginationOptions) => void
+  pageState: PaginationOptions
+  updatePageState: (action: PageStateAction, raiseEvent?: boolean) => void
   fullWidth: boolean
   cardBreakpoint: Size
   isCardView: boolean
