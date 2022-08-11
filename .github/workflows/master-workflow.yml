@@ -22,13 +22,10 @@ jobs:
     - name: Build Packages
       run: yarn build
 
-    - name: Build Documentation Site
-      run: yarn docs build
+    - name: Deploy with gh-pages
+      run: |
+        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        npx gh-pages -d build -u "github-actions-bot <support+actions@github.com>"
       env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NODE_OPTIONS: "--max_old_space_size=4096"
-
-    - name: Publish Docs
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./website/public
