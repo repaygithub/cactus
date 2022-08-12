@@ -9,8 +9,8 @@ jobs:
   publish_docs:
     runs-on: ubuntu-latest
     permissions:
-      actions: read/write
-      pages: read/write
+      actions: write
+      pages: write
     steps:
     - uses: actions/checkout@v2
 
