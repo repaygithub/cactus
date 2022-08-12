@@ -2,7 +2,9 @@ name: Master Pipeline
 on:
   push:
     branches:
-      - master
+      - '**'
+    tags-ignore:
+      - '**'
 jobs:
   publish_docs:
     runs-on: ubuntu-latest
@@ -11,9 +13,19 @@ jobs:
 
     - name: Install Packages
       run: yarn install --immutable
-      
+
     - name: Build Packages
       run: yarn build
 
-    - name: Publish the docs
-      run: yarn docs:publish
+    - name: Build Documentation Site
+      run: yarn docs build
+      env:
+        NODE_OPTIONS: "--max_old_space_size=4096"
+
+    - name: Deploy with gh-pages
+      run: |
+        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        yarn gh-pages -d ./website/public -u "danilopenar <dpena@repay.com>"
+      env:
+        GITHUB_TOKEN: ${{ secrets.USER_ACCESS }}
+        NODE_OPTIONS: "--max_old_space_size=4096"
