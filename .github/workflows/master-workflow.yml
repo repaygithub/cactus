@@ -8,9 +8,6 @@ on:
 jobs:
   publish_docs:
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
-      pages: write
     steps:
     - uses: actions/checkout@v2
 
@@ -35,5 +32,5 @@ jobs:
         git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         yarn gh-pages -d ./website/public -u "danilopenar <dpena@repay.com>"
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.USER_ACCESS }}
         NODE_OPTIONS: "--max_old_space_size=4096"
