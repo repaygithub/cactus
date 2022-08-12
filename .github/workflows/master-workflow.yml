@@ -28,6 +28,9 @@ jobs:
         NODE_OPTIONS: "--max_old_space_size=4096"
 
     - name: Deploy with gh-pages
+      permissions:
+        actions: read/write
+        pages: read/write
       run: |
         git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         yarn gh-pages -d ./website/public -u "danilopenar <dpena@repay.com>"
