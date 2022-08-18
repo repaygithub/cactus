@@ -1,4 +1,4 @@
-FROM node:lts
+FROM node:16-bullseye-slim
 RUN apt-get update && apt-get install -y \
   wget \
   unzip \
@@ -38,10 +38,9 @@ RUN apt-get update && apt-get install -y \
   libxtst6 \
   ca-certificates \
   fonts-liberation \
-  libappindicator1 \
   libnss3 \
   lsb-release \
   xdg-utils \
-  wget
+  procps
 ENTRYPOINT ["yarn", "w", "@repay/cactus-web"]
 CMD ["test:visual-update"]
