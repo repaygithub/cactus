@@ -5275,7 +5275,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.17.5
     "@repay/babel-preset": 1.1.4
-    "@repay/cactus-web": ^9.8.0
+    "@repay/cactus-web": ^9.9.0
     "@repay/scripts": ^3.0.4
     "@testing-library/jest-dom": ^5.16.2
     "@testing-library/react": ^12.1.4
@@ -5405,7 +5405,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@repay/cactus-web@^9.0.0, @repay/cactus-web@^9.8.0, @repay/cactus-web@workspace:modules/cactus-web":
+"@repay/cactus-web@^9.0.0, @repay/cactus-web@^9.9.0, @repay/cactus-web@workspace:modules/cactus-web":
   version: 0.0.0-use.local
   resolution: "@repay/cactus-web@workspace:modules/cactus-web"
   dependencies:
