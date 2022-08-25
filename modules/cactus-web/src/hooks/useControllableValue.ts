@@ -56,10 +56,14 @@ interface UseControllableValue {
 }
 
 // Uses generic types externally, but concrete types internally to validate logic.
-type Props = { value?: number }
+type StateType = string
+type ActionType = void
+type Props = { value?: StateType }
+type KeyType = Keyof<Props, StateType>
+type StateHookArgs = [Reducer<StateType, ActionType>, StateType]
 
 // If the `props` object passed is mutable, the given key will be deleted after extraction.
-const extractByKey = (props: Props, key: 'value', lastState: number) => {
+const extractByKey = (props: Props, key: KeyType, lastState: StateType) => {
   const value = props[key] ?? lastState
   try {
     delete props[key]
@@ -69,12 +73,12 @@ const extractByKey = (props: Props, key: 'value', lastState: number) => {
 
 const useControllableValue = (
   props: Props,
-  key: 'value' | Normalizer<Props, number>,
-  ...args: [Reducer<number, void>, string, (s: string) => number]
-): [number, SyncDispatch<number, void>] => {
+  key: KeyType | Normalizer<Props, StateType>,
+  ...args: StateHookArgs
+): [StateType, SyncDispatch<StateType, ActionType>] => {
   const ref = useRefState(...args)
   const preRenderState = ref.current
-  const value: number =
+  const value: StateType =
     typeof key === 'function'
       ? key(props, preRenderState)
       : extractByKey(props, key, preRenderState)

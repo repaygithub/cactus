@@ -33,18 +33,21 @@ interface UseRefState {
 }
 
 // Uses generic types externally, but concrete types internally to validate logic.
-type Func<A> = (arg: A) => string
+type StateType = string
+type ActionType = SetStateAction<StateType>
+type InitArgType = 'init'
+type InitializerFunc = (initArg: InitArgType) => StateType
 
-type StateHookArgs = [Initializer<string>]
-type ReducerHookArgs = [Reducer<string, number>, 'key', Func<'key'>?]
+type StateHookArgs = [Initializer<StateType>]
+type ReducerHookArgs = [Reducer<StateType, ActionType>, InitArgType, InitializerFunc?]
 
 type HookArgs = StateHookArgs | ReducerHookArgs
-type InnerState = { ref: RefState<string, unknown> }
+type InnerState = { ref: RefState<StateType, ActionType> }
 
 const reduceRef = (state: InnerState): InnerState => ({ ...state })
 
 const initializeRef = (args: HookArgs): InnerState => {
-  let current: string
+  let current: StateType
   if (isReducer(args)) {
     current = args[1]
     if (typeof args[2] === 'function') {
@@ -56,7 +59,7 @@ const initializeRef = (args: HookArgs): InnerState => {
     current = args[0]
   }
   // TS appeasement; define the real thing in the hook body.
-  const setState: Func<unknown> = false as any
+  const setState: SyncDispatch<StateType, ActionType> = false as any
   return { ref: { current, setState } }
 }
 
@@ -65,14 +68,14 @@ const isReducer = (args: HookArgs): args is ReducerHookArgs =>
   args.length > 1 || (typeof args[0] === 'function' && args[0].length > 0)
 
 // This is basically what the real `useState` does behind the scenes.
-const genericReducer = (state: string, action: string | Func<string>) =>
+const genericReducer = (state: StateType, action: ActionType) =>
   typeof action === 'function' ? action(state) : action
 
-const useRefState = (...args: HookArgs): InnerState['ref'] => {
+const useRefState = (...args: HookArgs): RefState<StateType, ActionType> => {
   const [{ ref }, triggerRender] = useReducer(reduceRef, args, initializeRef)
   if (!ref.setState) {
-    const reducer: Reducer<string, any> = isReducer(args) ? args[0] : genericReducer
-    ref.setState = (action) => {
+    const reducer: Reducer<StateType, ActionType> = isReducer(args) ? args[0] : genericReducer
+    ref.setState = (action: ActionType): StateType => {
       const nextState = reducer(ref.current, action)
       if (nextState !== ref.current) {
         ref.current = nextState
