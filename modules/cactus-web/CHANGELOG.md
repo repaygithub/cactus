@@ -1,3 +1,15 @@
+# v9.9.0 (Thu Aug 25 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-963: add variety of text-related styling props [#780](https://github.com/repaygithub/cactus/pull/780) ([@wilysword](https://github.com/wilysword))
+
+#### Authors: 1
+
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v9.8.0 (Wed Jul 27 2022)
 
 #### 🚀 Enhancement
