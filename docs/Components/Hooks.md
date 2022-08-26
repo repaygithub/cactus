@@ -5,6 +5,68 @@ order: -99
 
 # Hooks
 
+## useRefState
+
+This is functionally similar to React's built-in `useState`/`useReducer` hook;
+however its return value is more similar to the `useRef` hook in that it's a stable
+object which always has the current state. It has two call signature overloads:
+one that takes the same args as `useState`, and one that takes the same args as `useReducer`.
+The ref returned by the function also has an attached `setState` function, which
+behaves the same as the state setter/dispatch function returned by the React hooks,
+with one difference: it sets `ref.current` synchronously before triggering a re-render,
+and returns the new state.
+
+```jsx
+function Component(props) {
+  const ref = useRefState(42)
+  React.useEffect(() => {
+    const newState = ref.setState(13)
+    // You can also just set the value directly
+    // if you don't want to trigger a re-render.
+    ref.current = newState + 7
+  }, [])
+  return <span {...props}>{ref.current}</span>
+}
+```
+
+## useControllableValue
+
+Use this hook to manage state for a value that can either be controlled by props
+or left as internal state, i.e. like an `<input>` element's `value` prop.
+The return value is the same as `useState`: an array containing the current value
+(either that passed in props, or the internal state value) and a dispatcher.
+If it pulls a value from props, it will update the internal state to match
+during the effect phase of the render cycle.
+
+It takes several arguments:
+- First is always an object containing component props.
+- Second can be one of two things:
+  - A prop name: the state will be pulled from props, unless it's undefined in which case the internal state is used.
+  - An extractor function that takes two args: the props, and the internal state; and returns the new state.
+- Finally, it takes the args for `useState` or `useReducer`: either an initial value, or a reducer + initial arg + initializer function.
+
+```typescript
+type UseControllableValue = <Props, State, Action>(
+  props: Props,
+  key: keyof Props | ((p: Props, s: State) => State),
+  ...args: Parameters<typeof useState> | Parameters<typeof useReducer>
+): [State, Dispatch<State, Action>]
+```
+
+It uses `useRefState` under the hood, so the dispatcher is synchronous and
+returns the new state, in case you need it to raise an event.
+
+```jsx
+function SimpleInput({ onChange, ...props }) {
+  const [value, setValue] = useControllableValue(props, 'value', props.defaultValue)
+  const handleChange = (event) => {
+    const newValue = setValue(event.target.value)
+    onChange(newValue)
+  }
+  return <input {...props} value={value} onChange={handleChange} />
+}
+```
+
 ## useScrollTrap
 
 In the case you have a popup, modal, or drop-down with it's own scrolling context, you often want to prevent scrolling from propagating up to the main page: it can be disconcerting when you're scrolling in a drop-down and suddenly the entire page is moving. `useScrollTrap` takes in a ref to a scrollable HTML element (an element styled with `overflow: auto` or `overflow: scroll`) and ensures scrolling doesn't "escape".
