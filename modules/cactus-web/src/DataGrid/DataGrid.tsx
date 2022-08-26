@@ -54,9 +54,8 @@ export const DataGrid = (props: DataGridProps): ReactElement => {
     newSortOptions = setSort(newSortOptions)
     onSortProp?.(newSortOptions)
     if (onPagisort) {
-      const pagisort: Pagisort = { ...setPageState(identity), sort: newSortOptions }
-      calcPageState(pagisort)
-      onPagisort(pagisort)
+      const pagisort = { ...setPageState(identity), sort: newSortOptions }
+      onPagisort(calcPageState(pagisort))
     }
   }
 

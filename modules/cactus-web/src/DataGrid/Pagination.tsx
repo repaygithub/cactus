@@ -17,27 +17,27 @@ export interface ExtendedPaginationProps
 
 export interface ExtendedPrevNextProps extends PrevNextProps, PageStateProps {}
 
-export const calcPageState = (p: PageState): PaginationOptions => {
+export const calcPageState = <S extends PageState>(pageState: S): S => {
   // TS appeasement: comparison operators work perfectly fine with undefined.
-  const r = p as Required<PageState>
-  if (r.pageSize > 0) {
-    if (r.itemCount >= 0) {
-      r.pageCount = Math.ceil(r.itemCount / r.pageSize)
+  const p = pageState as Required<PageState>
+  if (p.pageSize > 0) {
+    if (p.itemCount >= 0) {
+      p.pageCount = Math.ceil(p.itemCount / p.pageSize)
     }
-    if (r.currentPage > 0) {
-      if (r.currentPage > r.pageCount) {
-        r.currentPage = r.pageCount
+    if (p.currentPage > 0) {
+      if (p.currentPage > p.pageCount) {
+        p.currentPage = Math.max(1, p.pageCount)
       }
-      r.itemOffset = (r.currentPage - 1) * r.pageSize
-    } else if (r.itemOffset >= 0) {
-      r.currentPage = Math.floor(r.itemOffset / r.pageSize) + 1
-      if (r.currentPage > r.pageCount) {
-        r.currentPage = r.pageCount
-        r.itemOffset = (r.currentPage - 1) * r.pageSize
+      p.itemOffset = (p.currentPage - 1) * p.pageSize
+    } else if (p.itemOffset >= 0) {
+      p.currentPage = Math.floor(p.itemOffset / p.pageSize) + 1
+      if (p.currentPage > p.pageCount) {
+        p.currentPage = Math.max(1, p.pageCount)
+        p.itemOffset = (p.currentPage - 1) * p.pageSize
       }
     }
   }
-  return r
+  return pageState
 }
 
 const assignIfUndefined = (dest: unknown, src: unknown) => dest ?? src
@@ -49,31 +49,31 @@ const interleave = (state: PageState, updates: PageState) => {
   return calcPageState(assignWith(combinedState, state, assignIfUndefined))
 }
 
-export const pageStateReducer = (state: PaginationOptions, action: PageStateAction) => {
+type PageStateReducer = React.Reducer<PaginationOptions, PageStateAction>
+export const pageStateReducer: PageStateReducer = (state, action) => {
   const updates = typeof action === 'function' ? action(state) : action
-  if (updates !== state) {
-    const nextState = interleave(state, updates)
-    return isEqual(state, nextState) ? state : nextState
-  }
-  return state
+  const nextState = interleave(state, updates) as PaginationOptions
+  return isEqual(state, nextState) ? state : nextState
 }
 
 const usePageState = (props: PageStateProps) => {
   const { pageState, updatePageState } = React.useContext(DataGridContext)
+  const pagePropValues = []
   const controlledProps: PageState = {}
   for (const key of pageStateKeys) {
+    pagePropValues.push(props[key])
     if (props[key] !== undefined) controlledProps[key] = props[key]
     delete props[key] // Remove from props so the rest can be safely forwarded.
   }
+  React.useEffect(() => {
+    updatePageState(controlledProps)
+  }, pagePropValues) // eslint-disable-line react-hooks/exhaustive-deps
+
   const combinedState = interleave(pageState, controlledProps)
   if (!combinedState.currentPage) {
     controlledProps.currentPage = combinedState.currentPage = props.initialPage || 1
   }
   delete props.initialPage
-
-  React.useEffect(() => {
-    updatePageState(controlledProps)
-  })
   return [combinedState, updatePageState] as const
 }
 
@@ -82,7 +82,7 @@ export const DataGridPagination: React.FC<ExtendedPaginationProps> = ({
   ...props
 }) => {
   const [pageState, updatePageState] = usePageState(props)
-  if (!pageState.pageCount) return null
+  if (!pageState.currentPage || !pageState.pageCount) return null
   return (
     <Pagination
       {...props}
@@ -112,7 +112,8 @@ export const DataGridPrevNext: React.FC<ExtendedPrevNextProps> = ({ onNavigate, 
     <PrevNext
       disablePrev={pageState.currentPage === 1}
       onNavigate={(direction: 'prev' | 'next'): void => {
-        updatePageState(direction === 'prev' ? decrementPage : incrementPage, true)
+        const changePage = direction === 'prev' ? decrementPage : incrementPage
+        updatePageState(changePage, true)
         onNavigate?.(direction)
       }}
       {...props}
