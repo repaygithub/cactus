@@ -47,7 +47,7 @@ jobs:
         yarn gh-pages -d ./website/public -u "danilopenar <dpena@repay.com>"
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        GITHUB_TOKEN: ${{ SSH_GITHUB_TOKEN }} 
+        GITHUB_TOKEN: $SSH_GITHUB_TOKEN
         NODE_OPTIONS: "--max_old_space_size=4096"
 
     - name: Cleanup
