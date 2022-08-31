@@ -40,7 +40,9 @@ jobs:
         NODE_OPTIONS: "--max_old_space_size=4096"
 
     - name: Deploy with gh-pages
-      run: yarn gh-pages -d ./website/public -u "danilopenar <dpena@repay.com>"
+      run: |
+        git remote set-url origin https://git:${SSH_AUTH_SOCK}@github.com/${SSH_AUTH_SOCK}.git
+        yarn gh-pages -d ./website/public -u "danilopenar <dpena@repay.com>"
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         NODE_OPTIONS: "--max_old_space_size=4096"
