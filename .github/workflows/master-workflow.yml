@@ -11,6 +11,23 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Decrypt secrets
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: |
+        openssl aes-256-cbc -in .github/workflows/secrets/id_rsa.enc -out .github/workflows/secrets/id_rsa -pass pass:$SSH_PRIVATE_KEY -d -md sha1
+
+    - name: Setup SSH agent
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+        chmod 0600 .github/workflows/secrets/id_rsa
+        ssh-add .github/workflows/secrets/id_rsa
+
     - name: Install Packages
       run: yarn install --immutable
 
@@ -23,9 +40,15 @@ jobs:
         NODE_OPTIONS: "--max_old_space_size=4096"
 
     - name: Deploy with gh-pages
-      run: |
-        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        yarn gh-pages -d ./website/public -u "danilopenar <dpena@repay.com>"
+      run: yarn gh-pages -d ./website/public -u "danilopenar <dpena@repay.com>"
       env:
-        GITHUB_TOKEN: ${{ secrets.USER_ACCESS }}
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         NODE_OPTIONS: "--max_old_space_size=4096"
+
+    - name: Cleanup
+      if: always()
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        ssh-add -D
+        rm -Rf *
