@@ -27,6 +27,8 @@ jobs:
         ssh-agent -a $SSH_AUTH_SOCK > /dev/null
         chmod 0600 .github/workflows/secrets/id_rsa
         ssh-add .github/workflows/secrets/id_rsa
+        export SSH_GITHUB_TOKEN=$(cat tmp/ssh_agent.sock)
+        export -p
 
     - name: Install Packages
       run: yarn install --immutable
@@ -41,10 +43,11 @@ jobs:
 
     - name: Deploy with gh-pages
       run: |
-        git remote set-url origin https://git:${SSH_AUTH_SOCK}@github.com/${SSH_AUTH_SOCK}.git
+        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         yarn gh-pages -d ./website/public -u "danilopenar <dpena@repay.com>"
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        GITHUB_TOKEN: ${{ SSH_GITHUB_TOKEN }} 
         NODE_OPTIONS: "--max_old_space_size=4096"
 
     - name: Cleanup
