@@ -41,7 +41,7 @@ jobs:
 
     - name: Deploy with gh-pages
       run: |
-        git remote set-url origin https://github.com/repayci/${GITHUB_REPOSITORY}.git
+        git remote set-url origin https://github.com/repaygithub/${GITHUB_REPOSITORY}.git
         yarn gh-pages -d ./website/public -u "repayci <repayci@repay.com>"
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
