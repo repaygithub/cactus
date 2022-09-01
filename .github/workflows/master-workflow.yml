@@ -15,7 +15,7 @@ jobs:
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-        openssl aes-256-cbc -in .github/workflows/secrets/id_rsa.enc -out .github/workflows/secrets/id_rsa -pass pass:$SSH_PRIVATE_KEY -d -md sha1
+        openssl aes-256-cbc -in .github/workflows/secrets/cactus_auth.enc -out .github/workflows/secrets/cactus_auth -pass pass:$SSH_PRIVATE_KEY -d -md sha1
 
     - name: Setup SSH agent
       env:
@@ -25,8 +25,8 @@ jobs:
         ssh-keyscan github.com >> ~/.ssh/known_hosts
 
         ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-        chmod 0600 .github/workflows/secrets/id_rsa
-        ssh-add .github/workflows/secrets/id_rsa
+        chmod 0600 .github/workflows/secrets/cactus_auth
+        ssh-add .github/workflows/secrets/cactus_auth
 
     - name: Install Packages
       run: yarn install --immutable
@@ -41,8 +41,8 @@ jobs:
 
     - name: Deploy with gh-pages
       run: |
-        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        yarn gh-pages -d ./website/public -u "danilopenar <dpena@repay.com>"
+        git remote set-url origin https://git:repayci@github.com/${GITHUB_REPOSITORY}.git
+        yarn gh-pages -d ./website/public -u "repayci <repayci@repay.com>"
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         NODE_OPTIONS: "--max_old_space_size=4096"
