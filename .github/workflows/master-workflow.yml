@@ -41,7 +41,7 @@ jobs:
 
     - name: Deploy with gh-pages
       run: |
-        git remote set-url origin https://git@github.com/${GITHUB_REPOSITORY}.git
+        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         yarn gh-pages -d ./website/public -u "danilopenar <dpena@repay.com>"
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
