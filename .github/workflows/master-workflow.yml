@@ -28,6 +28,11 @@ jobs:
         chmod 0600 .github/workflows/secrets/cactus_auth
         ssh-add .github/workflows/secrets/cactus_auth
 
+    - name: Git Authentication
+      env: 
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: git remote set-url origin git@github.com:repaygithub/cactus.git
+
     - name: Install Packages
       run: yarn install --immutable
 
@@ -40,12 +45,10 @@ jobs:
         NODE_OPTIONS: "--max_old_space_size=4096"
 
     - name: Deploy with gh-pages
-      run: |
-        git remote set-url origin https://github.com/${GITHUB_REPOSITORY}.git
-        yarn gh-pages -d ./website/public -u "repayci <repayci@repay.com>"
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         NODE_OPTIONS: "--max_old_space_size=4096"
+      run: yarn gh-pages -d ./website/public -u "repayci <repayci@repay.com>"
 
     - name: Cleanup
       if: always()
