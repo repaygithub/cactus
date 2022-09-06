@@ -10,6 +10,7 @@ import styled, {
 } from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
+import { isIE } from '../helpers/constants'
 import { extractMargins } from '../helpers/omit'
 import { useMergedRefs } from '../helpers/react'
 import { border, boxShadow, media, radius, textStyle } from '../helpers/theme'
@@ -124,6 +125,26 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
         }
       }
     })
+
+    // Can be removed if we switch popups back to portals.
+    React.useEffect(() => {
+      if (sticky === 'right' && !isIE && tableRef.current) {
+        const observer = new MutationObserver((mutations) => {
+          for (const mut of mutations) {
+            if (mut.type === 'attributes' && mut.attributeName === 'aria-expanded') {
+              const target = mut.target as HTMLElement
+              const cell = target.closest('td, th') as HTMLElement
+              if (cell) {
+                cell.style.zIndex = target.getAttribute('aria-expanded') === 'true' ? '1' : ''
+              }
+            }
+          }
+        })
+        observer.observe(tableRef.current, { attributeFilter: ['aria-expanded'], subtree: true })
+        return () => observer.disconnect()
+      }
+    }, [sticky])
+
     if (props.variant) {
       context.variant = props.variant
     } else if (cardBreakpoint && size <= SIZES[cardBreakpoint]) {
