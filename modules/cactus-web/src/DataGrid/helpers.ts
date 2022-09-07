@@ -2,7 +2,7 @@ import { noop } from 'lodash'
 import { createContext } from 'react'
 import { DefaultTheme, ThemedStyledProps } from 'styled-components'
 
-import { DataGridContextType, TransientProps } from './types'
+import { DataGridContextType, PaginationOptions, TransientProps } from './types'
 
 export const getMediaQuery = (
   props: ThemedStyledProps<TransientProps, DefaultTheme>
@@ -34,14 +34,16 @@ export const getMediaQuery = (
   }
 }
 
+export const initialPageState: PaginationOptions = { currentPage: 0, pageSize: 0 }
+
 export const DataGridContext = createContext<DataGridContextType>({
   columns: [],
   sortableColumns: [],
   columnDispatch: noop,
   sortOptions: [],
   onSort: noop,
-  paginationOptions: undefined,
-  onPageChange: noop,
+  pageState: initialPageState,
+  updatePageState: noop,
   fullWidth: false,
   cardBreakpoint: 'tiny',
   isCardView: false,

@@ -53,11 +53,11 @@ interface CellInfo {
 
 ## Best practices
 
-- It is the responsibility of the developer to save changes to `sortOptions` & `paginationOptions` and pass the updated values back
-  through the props; the `DataGrid` component does not manage those values internally.
+- The `sortOptions` & `paginationOptions` props can be used either controlled or uncontrolled. If using them uncontrolled, the `onPagisort` handler can be used to update the data source whenever a change is made to either pagination _or_ sorting.
+- `paginationOptions` can be passed as a single object to the `<DataGrid>` element, or as individual props to the relevant sub-components: `pageSize` to `PageSizeSelect`, `currentPage` & `pageCount` to `Pagination`, etc.; if not using `PageSizeSelect`, `pageSize` can also be passed to `Pagination` or `PrevNext`.
 - Use the `sortLabels` prop on `TopSection` to pass internationalized labels for the sorting dropdowns used in the card view.
 - Just like the `Table`, the `DataGrid` should be rendered as a descendant of `ScreenSizeProvider` to take advantage of the card carousel feature.
-- If you would like to use the `DataGrid.Pagination` component, you must include `pageCount` in `paginationOptions`. If no `pageCount` is provided, you should use `DataGrid.PrevNext` instead.
+- If you would like to use the `DataGrid.Pagination` component, you must include `pageCount` OR `itemCount` & `pageSize` in `paginationOptions`. If no page count is known, you should use `DataGrid.PrevNext` instead.
 - Similar to the `Table` component, the `DataGrid` exposes the `cardBreakpoint` prop, where you can define at what breakpoint you would like to switch to card
   view. It defaults to `tiny` but you can select from any of our breakpoints: `tiny`, `small`, `medium`, `large` and `extraLarge`.
 - Alternatively, you can pass `variant` to directly control whether it renders as cards or a table.
@@ -69,21 +69,13 @@ interface CellInfo {
 ```
 const YesNo = ({ value }) => <div>{value ? 'YES' : 'NO'}</div>
 
+const initialPageSize = 4
 const DataGridContainer = ({ data: INITIAL_DATA }) => {
-  const [state, setState] = React.useState({
-    data: INITIAL_DATA,
-    sortOptions: [{ id: 'created', sortAscending: false }],
-    paginationOptions: { currentPage: 1, pageCount: 3, pageSize: 4 },
-  })
-  const paginateData = () => {
-    const index1 = (state.paginationOptions.currentPage - 1) * state.paginationOptions.pageSize
-    const index2 = index1 + state.paginationOptions.pageSize
-    return state.data.slice(index1, index2)
-  }
-  const onSort = (newSortOptions) => {
+  const [data, setData] = React.useState(() => INITIAL_DATA.slice(0, initialPageSize))
+  const onPagisort = ({ itemOffset, pageSize: newPageSize, sort: newSortOptions }) => {
     const sortId = newSortOptions[0].id
     const sortAscending = newSortOptions[0].sortAscending
-    const dataCopy = state.data.slice()
+    const dataCopy = [...INITIAL_DATA]
     if (sortId === 'created') {
       if (sortAscending) {
         dataCopy.sort((a, b) => {
@@ -105,38 +97,20 @@ const DataGridContainer = ({ data: INITIAL_DATA }) => {
         })
       }
     }
-    setState((state) => ({
-      ...state,
-      data: dataCopy,
-      sortOptions: newSortOptions,
-    }))
-  }
-  const onPageChange = (newPaginationOptions) => {
-    if (newPaginationOptions.pageSize !== state.paginationOptions.pageSize) {
-      newPaginationOptions.pageCount = Math.ceil(state.data.length / newPaginationOptions.pageSize)
-    }
-    setState((state) => ({
-      ...state,
-      paginationOptions: newPaginationOptions,
-    }))
+    setData(dataCopy.slice(itemOffset, itemOffset + newPageSize))
   }
   return (
-    <DataGrid
-      paginationOptions={state.paginationOptions}
-      sortOptions={state.sortOptions}
-      onSort={onSort}
-      onPageChange={onPageChange}
-      cardBreakpoint="tiny"
-    >
+    <DataGrid onPagisort={onPagisort} cardBreakpoint="tiny">
       <DataGrid.TopSection justifyContent="flex-end" spacing={4}>
         <DataGrid.PageSizeSelect
-          pageSizeOptions={[4, 6, 12]}
+           initialPageSize={initialPageSize}
+           pageSizeOptions={[4, 6, 12]}
         />
       </DataGrid.TopSection>
-      <DataGrid.Table data={paginateData()}>
-        <DataGrid.DataColumn id="name" title="Name" />
-        <DataGrid.DataColumn id="created" title="Created" sortable />
-        <DataGrid.DataColumn id="active" title="Active" sortable as={YesNo} />
+      <DataGrid.Table data={data}>
+        <DataGrid.Column id="name" title="Name" />
+        <DataGrid.Column id="created" title="Created" sortable />
+        <DataGrid.Column id="active" title="Active" sortable as={YesNo} />
         <DataGrid.Column>
           {(rowData) => (
             <SplitButton onSelectMainAction={() => {}} mainActionLabel="Edit">
@@ -147,7 +121,7 @@ const DataGridContainer = ({ data: INITIAL_DATA }) => {
         </DataGrid.Column>
       </DataGrid.Table>
       <DataGrid.BottomSection justifyContent="flex-end">
-        <DataGrid.Pagination />
+        <DataGrid.Pagination itemCount={INITIAL_DATA.length} />
       </DataGrid.BottomSection>
     </DataGrid>
   )

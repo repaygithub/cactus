@@ -1,24 +1,26 @@
-import { noop } from 'lodash'
+import { identity } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { ReactElement, useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import Pagination, { PaginationProps } from '../Pagination/Pagination'
-import PrevNext, { PrevNextProps } from '../PrevNext/PrevNext'
+import { useControllableValue } from '../hooks'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { TableVariant } from '../Table/Table'
 import BottomSection from './BottomSection'
 import DataGridColumn, { useColumns } from './DataGridColumn'
 import DataGridTable from './DataGridTable'
-import { DataGridContext, getMediaQuery } from './helpers'
+import { DataGridContext, getMediaQuery, initialPageState } from './helpers'
 import PageSizeSelect from './PageSizeSelect'
+import { calcPageState, DataGridPagination, DataGridPrevNext, pageStateReducer } from './Pagination'
 import TopSection from './TopSection'
-import { PaginationOptions, SortOption, TransientProps } from './types'
+import { PageStateAction, PaginationOptions, Pagisort, SortOption, TransientProps } from './types'
 
 interface DataGridProps extends MarginProps {
   paginationOptions?: PaginationOptions
   sortOptions?: SortOption[]
+  initialSort?: SortOption[]
+  onPagisort?: (newPagisort: Pagisort) => void
   onPageChange?: (newPageOptions: PaginationOptions) => void
   onSort?: (newSortOptions: SortOption[]) => void
   children: React.ReactNode
@@ -30,15 +32,44 @@ interface DataGridProps extends MarginProps {
 export const DataGrid = (props: DataGridProps): ReactElement => {
   const {
     children,
+    onPagisort,
+    initialSort = [],
+    onSort: onSortProp,
+    onPageChange,
     fullWidth = false,
-    sortOptions,
-    onSort = noop,
-    paginationOptions,
-    onPageChange = noop,
     cardBreakpoint = 'tiny',
     variant,
     ...rest
   } = props
+
+  const [sortOptions, setSort] = useControllableValue(rest, 'sortOptions', initialSort)
+  const [pageState, setPageState] = useControllableValue(
+    rest,
+    'paginationOptions',
+    pageStateReducer,
+    initialPageState
+  )
+
+  const onSort = (newSortOptions: SortOption[]) => {
+    newSortOptions = setSort(newSortOptions)
+    onSortProp?.(newSortOptions)
+    if (onPagisort) {
+      const pagisort = { ...setPageState(identity), sort: newSortOptions }
+      onPagisort(calcPageState(pagisort))
+    }
+  }
+
+  const updatePageState = (action: PageStateAction, raiseEvent = false) => {
+    const newPageOptions = setPageState(action)
+    if (raiseEvent && newPageOptions !== pageState) {
+      onPageChange?.(newPageOptions)
+      if (onPagisort) {
+        const pagisort: Pagisort = { ...newPageOptions, sort: setSort(identity) }
+        onPagisort(pagisort)
+      }
+    }
+  }
+
   const [columnState, columnDispatch] = useColumns()
   const [topSectionRendered, setTopSectionRendered] = useState<boolean>(false)
 
@@ -68,10 +99,10 @@ export const DataGrid = (props: DataGridProps): ReactElement => {
         value={{
           ...columnState,
           columnDispatch,
-          sortOptions: sortOptions || [],
+          sortOptions: sortOptions,
           onSort,
-          paginationOptions,
-          onPageChange,
+          pageState,
+          updatePageState,
           fullWidth,
           cardBreakpoint,
           isCardView,
@@ -97,46 +128,13 @@ const StyledDataGrid = styled.div<DataGridProps & TransientProps>`
   }
 `
 
-export const DataGridPagination: React.FC<
-  Omit<PaginationProps, 'currentPage' | 'onPageChange' | 'pageCount'>
-> = (props) => {
-  const { paginationOptions, onPageChange } = useContext(DataGridContext)
-  return paginationOptions && paginationOptions.pageCount ? (
-    <Pagination
-      currentPage={paginationOptions.currentPage}
-      pageCount={paginationOptions.pageCount}
-      onPageChange={(page: number): void => {
-        onPageChange({ ...paginationOptions, currentPage: page })
-      }}
-      {...props}
-    />
-  ) : null
-}
-
-export const DataGridPrevNext: React.FC<PrevNextProps> = (props) => {
-  const { paginationOptions, onPageChange } = useContext(DataGridContext)
-  return paginationOptions ? (
-    <PrevNext
-      disablePrev={paginationOptions.currentPage === 1}
-      onNavigate={(direction: 'prev' | 'next'): void => {
-        onPageChange({
-          ...paginationOptions,
-          currentPage:
-            direction === 'prev'
-              ? paginationOptions.currentPage - 1
-              : paginationOptions.currentPage + 1,
-        })
-      }}
-      {...props}
-    />
-  ) : null
-}
-
 DataGrid.propTypes = {
   paginationOptions: PropTypes.shape({
-    currentPage: PropTypes.number.isRequired,
-    pageSize: PropTypes.number.isRequired,
+    currentPage: PropTypes.number,
+    pageSize: PropTypes.number,
     pageCount: PropTypes.number,
+    itemCount: PropTypes.number,
+    itemOffset: PropTypes.number,
   }),
   sortOptions: PropTypes.arrayOf(
     PropTypes.shape({ id: PropTypes.string.isRequired, sortAscending: PropTypes.bool.isRequired })
@@ -147,9 +145,6 @@ DataGrid.propTypes = {
   fullWidth: PropTypes.bool,
   cardBreakpoint: PropTypes.oneOf<Size>(['tiny', 'small', 'medium', 'large', 'extraLarge']),
 }
-
-DataGridPrevNext.displayName = 'PrevNext'
-DataGridPagination.displayName = 'Pagination'
 
 type DataGridType = React.ComponentType<DataGridProps> & {
   Table: typeof DataGridTable
