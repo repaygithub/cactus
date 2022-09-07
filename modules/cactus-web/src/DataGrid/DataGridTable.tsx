@@ -89,7 +89,7 @@ const DataGridTable: React.FC<DataGridTableProps> = (props) => {
 }
 
 const HeaderButton = styled.button`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   background: none;
   border: none;
