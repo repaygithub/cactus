@@ -124,6 +124,7 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
         }
       }
     })
+
     if (props.variant) {
       context.variant = props.variant
     } else if (cardBreakpoint && size <= SIZES[cardBreakpoint]) {
@@ -373,6 +374,9 @@ const table = css<TableProps>`
     }
     :last-child {
       border-right: ${(p): string => border(p.theme, 'lightContrast')};
+      :focus-within {
+        z-index: 1;
+      }
       ${(p) =>
         p.sticky === 'right' ? `position: sticky; right: 0; ${boxShadow(p.theme, 0)}` : ''};
     }

@@ -76,13 +76,27 @@ function positionOnScroll(position: PositionCallback, ref: RefOrId, anchorRef?: 
   return () => window.removeEventListener('scroll', listener, true)
 }
 
+const isScrollable = RegExp.prototype.test.bind(/(auto|hidden|scroll)/)
+
+const getScrollParent = (popup: HTMLElement): Element | null => {
+  for (let e: HTMLElement | null = popup; (e = e.parentElement); ) {
+    const style = getComputedStyle(e)
+    if (isScrollable(style.overflow + style.overflowX + style.overflowY)) {
+      return e
+    }
+  }
+  return null
+}
+
 export const positionDropDown: PositionCallback = (dd, button) => {
   if (!button) return
   const ddRect = dd.getBoundingClientRect()
   const { left, right, top, bottom } = button.getBoundingClientRect()
   const view = getViewport() as Element
-  const maxRight = view.clientWidth
-  const maxBottom = view.clientHeight
+  const scrollParent = getScrollParent(dd) || view
+  const scrollBox = scrollParent.getBoundingClientRect()
+  const maxRight = Math.min(scrollBox.right, view.clientWidth)
+  const maxBottom = Math.min(scrollBox.bottom, view.clientHeight)
 
   const minWidth = Math.min(maxRight, Math.round(right - left))
   const maxWidth = Math.min(maxRight, minWidth + Math.min(minWidth, 400))
@@ -99,7 +113,7 @@ export const positionDropDown: PositionCallback = (dd, button) => {
   const expectedRight = left + expectedWidth
   if (expectedRight > maxRight) {
     dd.style.left = ''
-    dd.style.right = `${Math.min(maxRight - right, 0)}px`
+    dd.style.right = `${Math.min(view.clientWidth - right, 0)}px`
   } else {
     dd.style.right = ''
     dd.style.left = `${left}px`
@@ -110,7 +124,7 @@ export const positionDropDown: PositionCallback = (dd, button) => {
   dd.style.maxHeight = `${Math.max(availableBelow, top) - MARGIN}px`
   if (expectedBottom > maxBottom && availableBelow < top) {
     dd.style.top = ''
-    dd.style.bottom = `${maxBottom + MARGIN - top}px`
+    dd.style.bottom = `${view.clientHeight + MARGIN - top}px`
   } else {
     dd.style.bottom = ''
     dd.style.top = `${bottom + MARGIN}px`
