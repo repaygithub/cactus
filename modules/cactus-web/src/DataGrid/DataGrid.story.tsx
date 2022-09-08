@@ -119,6 +119,7 @@ const BoolComponent = ({ value }: { value: boolean }): ReactElement => {
 }
 
 interface Args {
+  align: 'center' | 'right' | 'left'
   initialData: Datum[]
   includePaginationAndSort?: boolean
   activeColumnWidth: string
@@ -147,6 +148,7 @@ interface Args {
 }
 
 const DataGridContainer: Story<typeof DataGrid, Args> = ({
+  align,
   initialData,
   includePaginationAndSort = true,
   cardBreakpoint,
@@ -268,17 +270,18 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
         </DataGrid.TopSection>
       )}
       <DataGrid.Table data={usableData} dividers={dividers} sticky={sticky}>
-        <DataGrid.DataColumn id="name" title="Name" />
-        <DataGrid.DataColumn id="created" title="Created" sortable={sortableCols} />
-        <DataGrid.DataColumn id="updated" title="Updated" sortable={sortableCols} />
-        <DataGrid.DataColumn id="items" title="Items" sortable={sortableCols} />
-        <DataGrid.DataColumn id="author" title="Author" sortable={sortableCols} />
+        <DataGrid.DataColumn id="name" title="Name" align={align} />
+        <DataGrid.DataColumn id="created" title="Created" sortable={sortableCols} align={align} />
+        <DataGrid.DataColumn id="updated" title="Updated" sortable={sortableCols} align={align} />
+        <DataGrid.DataColumn id="items" title="Items" sortable={sortableCols} align={align} />
+        <DataGrid.DataColumn id="author" title="Author" sortable={sortableCols} align={align} />
         <DataGrid.DataColumn
           id="active"
           title="Active"
           as={BoolComponent}
           sortable={sortableCols}
           width={activeColumnWidth}
+          align={align}
         />
         <DataGrid.Column width={actionColumnWidth}>
           {(_, { rowIndex }) => (
@@ -352,6 +355,7 @@ export default {
 
 export const BasicUsage = DataGridContainer.bind(null)
 BasicUsage.argTypes = {
+  align: { options: ['left', 'center', 'right'] },
   showResultsCount: { name: 'show result count' },
   providePageSizeSelect: { name: 'show page size select' },
   providePageCount: { name: 'show page count' },
