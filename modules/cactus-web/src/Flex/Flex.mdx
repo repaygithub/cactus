@@ -14,8 +14,8 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 ### Try it out
 
 export const code = `<Flex ph={1} justifyContent="space-between">
-  <Button variant="standard">Cancel</Button>
-  <Button variant="action">Action</Button>
+  <Flex.Item as={Button} variant="standard">Cancel</Flex.Item>
+  <Flex.Item as={Button} variant="action">Action</Flex.Item>
 </Flex>`
 
 <LiveProvider code={code} scope={{ Flex, Button }}>
@@ -26,34 +26,43 @@ export const code = `<Flex ph={1} justifyContent="space-between">
 
 ## Best practices
 
-Use the theme based parameters when possible to avoid discrepencies between the design-system and the layout.
+Use the theme-based parameters when possible to avoid discrepencies between the design-system and the layout.
 
 The `flexDirection=reverse` property should only be used for user experience purposes to affect the tab order. An example would be that the submit button is on the right and we want the user to tab there first instead of the Cancel button which is on the left.
 
 ## Basic usage
 
-The `Flex` component is a generic component which is an extension of the <a href="../box/">Box</a> component which adds flex based styling.
+The `Flex` component is an extension of the <a href="../box/">Box</a> component which adds flex-based styling.
+It has all the props from `Box`, plus all flex container _and_ flex item props.
+It also has a subcomponent, `Flex.Item`, with just the flex item props.
 
-```jsx
-import React from 'react'
-import { Flex, Button } from '@repay/cactus-web'
+### IE Compatibility
 
-/**
- *  center a button in it's container using margin = 0 auto
- *  and setting padding top and bottom to the 3rd
- *  space with the `ph` prop
- */
-export default () => (
-  <Flex ph={3} justifyContent="space-between">
-    <Button variant="standard">Cancel</Button>
-    <Button variant="action">Action</Button>
-  </Flex>
-)
-```
+IE doesn't have the greatest flex support. We have a couple built-in workarounds,
+but even then if you need IE support be careful and test thoroughly.
+- `justifyContent="space-evenly"` is not supported, but is faked by adding empty `::before` & `::after` pseudo-elements and using `space-between`. Don't try to combine this with an element that already has such pseudo-elements.
+- `gap` (or `rowGap` & `colGap`) is not supported at all, but that's worked around by setting the margins on all direct children to `calc([gap] / 2)`.
+  - This will override any margins set directly on the children, so be careful of that.
+  - It also leaves some extra space around the edges of the container. The extra space can be "removed" by setting a negative margin on the Flex container, but this is not done automatically because it throws off width calculations and interferes with explicitly set margins, which are more common on containers than flex items.
+  - **To help with some custom fixes, there's a boolean Flex.supportsGap property that can be checked.**
 
 ## Properties
 
-Has the same styled props as <a href="../box/">Box</a>, plus the [styled-system flexbox](https://styled-system.com/api/#flexbox) props.
+All Box props, plus:
+- alignItems
+- alignContent
+- justifyContent
+- flexWrap
+- flexDirection
+- gap (or rowGap & colGap)
+- all flex item props (see below)
 
-Note that, although `justifyContent="stretch"` is supported by this component, `stretch` is not supported in Internet Explorer, so make
-sure you know whether or not you need to support IE before using that value.
+### Flex.Item
+
+- flex
+- flexShrink
+- flexGrow
+- flexBasis
+- alignSelf
+- order
+- polymorphic `as` prop from styled-components

@@ -11,6 +11,7 @@ describe('component: Flex', () => {
         alignItems="center"
         flexWrap="nowrap"
         flexDirection="column"
+        gap={4}
         data-testid="flexContainer"
       >
         <Flex alignSelf="flex-end" />
@@ -24,6 +25,7 @@ describe('component: Flex', () => {
     expect(styles.alignItems).toBe('center')
     expect(styles.flexWrap).toBe('nowrap')
     expect(styles.flexDirection).toBe('column')
+    expect(styles.gap).toBe('16px')
   })
 
   test('should accept basic built-in props', () => {

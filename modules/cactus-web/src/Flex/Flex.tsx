@@ -1,12 +1,17 @@
-import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
-import { flexbox, FlexboxProps } from 'styled-system'
+import { CactusTheme } from '@repay/cactus-theme'
+import styled, { StyledComponentBase } from 'styled-components'
+import { compose } from 'styled-system'
 
 import { Box, BoxProps } from '../Box/Box'
-import { isIE } from '../helpers/constants'
 import { getOmittableProps } from '../helpers/omit'
+import { flexContainer, flexItem, FlexItemProps, FlexProps, gapWorkaround } from '../helpers/styled'
 
-interface FlexBoxProps extends BoxProps, Omit<FlexboxProps, 'justifySelf'> {}
+interface FlexBoxProps extends BoxProps, FlexProps, FlexItemProps {}
+
+interface FlexComponent extends StyledComponentBase<'div', CactusTheme, FlexBoxProps> {
+  Item: StyledComponentBase<'div', CactusTheme, FlexItemProps>
+  supportsGap: boolean
+}
 
 export const justifyOptions = [
   'unset',
@@ -20,42 +25,21 @@ export const justifyOptions = [
 ] as const
 export type JustifyContent = typeof justifyOptions[number]
 
-const styleProps = getOmittableProps(flexbox)
-export const Flex = styled(Box).withConfig({
+const styleProps = getOmittableProps(flexContainer, flexItem)
+export const Flex: FlexComponent = styled(Box).withConfig({
   shouldForwardProp: (p) => !styleProps.has(p),
 })<FlexBoxProps>`
   display: flex;
-  ${flexbox}
+  flex-wrap: wrap;
+  ${gapWorkaround}
+  ${compose(flexContainer, flexItem)}
+` as any
+Flex.supportsGap = !gapWorkaround
 
-  ${(p) => {
-    if (isIE && p.justifyContent === 'space-evenly') {
-      return css`
-        justify-content: space-between;
-        &:before,
-        &:after {
-          content: '';
-          display: block;
-        }
-      `
-    }
-  }}
-`
-
-Flex.defaultProps = {
-  flexWrap: 'wrap',
-}
-
-function styledProp<T>(...allowed: T[]) {
-  const propType = PropTypes.oneOf<T>(allowed).isRequired
-  return PropTypes.oneOfType([propType, PropTypes.arrayOf(propType)])
-}
-
-Flex.propTypes = {
-  justifyContent: PropTypes.oneOf(justifyOptions),
-  alignItems: styledProp('unset', 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'),
-  alignSelf: styledProp('unset', 'flex-start', 'flex-end', 'center', 'baseline', 'stretch'),
-  flexWrap: styledProp('unset', 'inherit', 'wrap', 'nowrap', 'wrap-reverse'),
-  flexDirection: styledProp('unset', 'inherit', 'row', 'row-reverse', 'column', 'column-reverse'),
-}
+const itemStyleProps = getOmittableProps(flexItem)
+Flex.Item = styled.div.withConfig({
+  shouldForwardProp: (p) => !itemStyleProps.has(p),
+})<FlexItemProps>(flexItem)
+Flex.Item.displayName = 'Flex.Item'
 
 export default Flex

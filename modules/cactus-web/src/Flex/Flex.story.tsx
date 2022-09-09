@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Flex } from '../'
-import { Story } from '../helpers/storybook'
+import { HIDE_CONTROL, SPACE, Story } from '../helpers/storybook'
 
 const justifyOptions = [
   'unset',
@@ -29,6 +29,11 @@ export default {
     flexDirection: { options: directionOptions },
     height: { control: 'text' },
     alignSelf: { options: alignOptions },
+    gap: SPACE,
+    as: HIDE_CONTROL,
+    ref: HIDE_CONTROL,
+    theme: HIDE_CONTROL,
+    forwardedAs: HIDE_CONTROL,
   },
   args: {
     justifyContent: 'flex-end',
