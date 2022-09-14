@@ -97,11 +97,10 @@ export const DataGridPagination: React.FC<ExtendedPaginationProps> = ({
 }
 DataGridPagination.displayName = 'DataGrid.Pagination'
 
-DataGridPagination.propTypes = {}
-pageStateKeys.forEach((key) => {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  DataGridPagination.propTypes![key] = PropTypes.number
-})
+DataGridPagination.propTypes = pageStateKeys.reduce((pt, key) => {
+  pt[key] = PropTypes.number
+  return pt
+}, {} as Record<keyof PageState, typeof PropTypes.number>)
 
 const incrementPage: PageStateAction = ({ currentPage = 0 }) => ({ currentPage: currentPage + 1 })
 const decrementPage: PageStateAction = ({ currentPage = 2 }) => ({ currentPage: currentPage - 1 })
