@@ -60,12 +60,29 @@ export type Shape = 'square' | 'intermediate' | 'round'
 
 export type Font = 'Helvetica Neue' | 'Helvetica' | 'Arial'
 
-export interface BreakpointsObject {
-  small: string
-  medium: string
-  large: string
-  extraLarge: string
+const screenSizes = ['tiny', 'small', 'medium', 'large', 'extraLarge'] as const
+export type ScreenSize = typeof screenSizes[number]
+
+function getCurrentSize(this: MediaQueries) {
+  let result: ScreenSize = 'tiny'
+  for (const size of screenSizes) {
+    if (!this[size].matches) break
+    result = size
+  }
+  return result
 }
+
+function getMatchingSizes(this: MediaQueries) {
+  const result: ScreenSize[] = []
+  for (const size of screenSizes) {
+    if (this[size].matches) result.push(size)
+  }
+  return result
+}
+
+type MediaQueries = { [K in ScreenSizes]: MediaQueryList }
+
+export type BreakpointsObject = { [K in Exclude<ScreenSizes, 'tiny'>]: string }
 
 interface GeneratedColors {
   /** Core colors */
@@ -107,13 +124,10 @@ interface ThemeColors extends GeneratedColors {
 }
 
 export interface CactusTheme {
+  getCurrentSize: () => ScreenSize
+  getMatchingSizes: () => ScreenSize[]
   breakpoints: string[]
-  mediaQueries: {
-    small: string
-    medium: string
-    large: string
-    extraLarge: string
-  }
+  mediaQueries: MediaQueries
   colors: ThemeColors
   space: number[]
   fontSizes: FontSizeObject
@@ -465,12 +479,12 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     large: '1200px',
     extraLarge: '1440px',
   }
-
   const mediaQueries = {
-    small: `@media screen and (min-width: ${breakpoints.small})`,
-    medium: `@media screen and (min-width: ${breakpoints.medium})`,
-    large: `@media screen and (min-width: ${breakpoints.large})`,
-    extraLarge: `@media screen and (min-width: ${breakpoints.extraLarge})`,
+    tiny: matchMedia('screen'),
+    small: matchMedia(`screen and (min-width: ${breakpoints.small})`),
+    medium: matchMedia(`screen and (min-width: ${breakpoints.medium})`),
+    large: matchMedia(`@media screen and (min-width: ${breakpoints.large})`),
+    extraLarge: matchMedia(`@media screen and (min-width: ${breakpoints.extraLarge})`),
   }
 
   return {
@@ -589,8 +603,15 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     boxShadows,
     textStyles: makeTextStyles(fontSizes),
     mobileTextStyles: makeTextStyles(mobileFontSizes),
-    breakpoints: Object.values(breakpoints),
+    breakpoints: [
+      breakpoints.small,
+      breakpoints.medium,
+      breakpoints.large,
+      breakpoints.extraLarge,
+    ],
     mediaQueries,
+    getCurrentSize: getCurrentSize.bind(mediaQueries),
+    getMatchingSizes: getMatchingSizes.bind(mediaQueries),
   }
 }
 

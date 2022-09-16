@@ -10,13 +10,14 @@ const bpMap: { [K in Breakpoint]: number } = {
 }
 
 /** Returns a min-width media query of the type used by `styled-system`. */
-const _mediaGTE = (p: ThemeProps, $breakpoint: Breakpoint) => p.theme.mediaQueries[$breakpoint]
+const _mediaGTE = (p: ThemeProps, $breakpoint: Breakpoint) =>
+  `@media ${p.theme.mediaQueries[$breakpoint].media}`
 export const mediaGTE = memo(_mediaGTE, 'small', 'medium')
 
 /** Returns a media query that's the inverse of the equivalent `mediaGTE(X)` query. */
 const _mediaLT = (p: ThemeProps, $breakpoint: Breakpoint) =>
   // Assumes query starts with `@media screen and (min-width:`
-  `@media not ${p.theme.mediaQueries[$breakpoint].slice(7)}`
+  `@media not ${p.theme.mediaQueries[$breakpoint].media}`
 export const mediaLT = memo(_mediaLT, 'small', 'medium')
 
 /** Returns the given breakpoint value; accepts either an index, or a screen size name. */
