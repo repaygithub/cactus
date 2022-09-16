@@ -9,6 +9,28 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Decrypt secrets
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: |
+        openssl aes-256-cbc -in .github/workflows/secrets/cactus_auth.enc -out .github/workflows/secrets/cactus_auth -pass pass:$SSH_PRIVATE_KEY -d -md sha1
+
+    - name: Setup SSH agent
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+        chmod 0600 .github/workflows/secrets/cactus_auth
+        ssh-add .github/workflows/secrets/cactus_auth
+
+    - name: Git Authentication
+      env: 
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: git remote set-url origin git@github.com:repaygithub/cactus.git
+
     - name: Install Packages
       run: yarn install --immutable
 
@@ -21,9 +43,15 @@ jobs:
         NODE_OPTIONS: "--max_old_space_size=4096"
 
     - name: Deploy with gh-pages
-      run: |
-        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        yarn gh-pages -d ./website/public -u "danilopenar <dpena@repay.com>"
+      run: yarn gh-pages -d ./website/public -u "repayci <repayci@repay.com>"
       env:
-        GITHUB_TOKEN: ${{ secrets.USER_ACCESS }}
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         NODE_OPTIONS: "--max_old_space_size=4096"
+
+    - name: Cleanup
+      if: always()
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        ssh-add -D
+        rm -Rf *
