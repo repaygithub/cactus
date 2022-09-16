@@ -28,6 +28,7 @@ import {
   flexItem,
   FlexItemProps,
   FlexProps,
+  gapWorkaround,
   sizing,
   SizingProps,
   styledUnpoly,
@@ -169,6 +170,7 @@ export const Footer = styledUnpoly(FooterBase as FooterComponent)`
     ${colorStyle('darkContrast', 'lightCallToAction')};
   }
 
+  ${gapWorkaround}
   &&& {
     ${compose(flexContainer, padding)}
   }

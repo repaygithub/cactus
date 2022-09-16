@@ -284,11 +284,11 @@ const UIConfig: React.FunctionComponent<RouteComponentProps> = () => {
                     error={touched.establishedDate && errors.establishedDate}
                   />
 
-                  <Flex width="100%" justifyContent="center">
-                    <Button type="reset" variant="standard" my={3} mr={3}>
+                  <Flex width="100%" justifyContent="space-evenly" marginTop={4} gap={4}>
+                    <Button type="reset" variant="standard">
                       Reset
                     </Button>
-                    <Button type="submit" variant="action" my={3} ml={3}>
+                    <Button type="submit" variant="action">
                       Submit
                     </Button>
                   </Flex>

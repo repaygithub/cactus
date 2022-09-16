@@ -29,6 +29,7 @@ import {
   flexItem,
   FlexItemProps,
   FlexProps,
+  gapWorkaround,
   pickStyles,
   Styled,
   styledProp,
@@ -144,6 +145,7 @@ const ModalPopUp = styledWithClass(DialogContent, 'cactus-modal').withConfig(
     padding: ${space(7)} 88px;
   }
 
+  ${gapWorkaround}
   // Because of how styled-components groups styles, we have to increase
   // the specificity in order to override the styles in the media queries.
   && {

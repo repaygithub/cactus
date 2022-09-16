@@ -1,9 +1,12 @@
 import { CactusTheme } from '@repay/cactus-theme'
 import { Property } from 'csstype'
+import { omit, pick } from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { StyledComponent, ThemedStyledFunction } from 'styled-components'
 import * as SS from 'styled-system'
+
+import { isIE } from './constants'
 
 // This file exists, in part, because styled-components types are a PAIN.
 export type Styled<P> = StyledComponent<React.FC<P>, CactusTheme>
@@ -38,33 +41,101 @@ export const styledProp = PropTypes.oneOfType([cssVal, PropTypes.arrayOf(cssVal)
 export const classes = (...args: (string | undefined)[]): string => args.filter(Boolean).join(' ')
 
 export const pickStyles = (styles: SS.styleFn, ...keys: string[]): SS.styleFn => {
-  const picked: SS.styleFn[] = []
-  for (const key of keys) {
-    const maybeFn = (styles as any)[key]
-    if (maybeFn) picked.push(maybeFn)
-  }
-  return SS.compose(...picked)
+  if (!styles.config) return styles
+  return SS.createParser(pick(styles.config, keys))
 }
 
 export const omitStyles = (styles: SS.styleFn, ...keys: string[]): SS.styleFn => {
-  const picked: SS.styleFn[] = []
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  for (const key of Object.keys(styles.config!)) {
-    if (!keys.includes(key)) {
-      picked.push((styles as any)[key])
-    }
-  }
-  return SS.compose(...picked)
+  if (!styles.config) return styles
+  return SS.createParser(omit(styles.config, keys))
 }
+
+// Keeping this separate from `flexContainer` styles because it applies
+// to the element's children, not the element itself.
+export const gapWorkaround: SS.styleFn | undefined = (function () {
+  if (typeof CSS !== 'undefined' && CSS.supports?.('gap', '1px')) return
+  const calcGap = (value: any, scale: SS.Scale | undefined) => {
+    try {
+      value = scale?.[value] ?? value
+    } catch {}
+    if (typeof value === 'number') {
+      return value / 2
+    } else if (typeof value === 'string' && !isNaN(parseFloat(value))) {
+      return `calc(${value.trim()} / 2)`
+    }
+    return value
+  }
+
+  const makeGapParser = (...props: string[]) => {
+    const parser: SS.ConfigFunction = (value, scale) => {
+      const styles: any = {}
+      const gap = calcGap(value, scale)
+      for (const prop of props) {
+        styles[prop] = gap
+      }
+      return { '&&&& > *': styles }
+    }
+    parser.scale = 'space'
+    return parser
+  }
+
+  return SS.system({
+    gap: makeGapParser('margin'),
+    rowGap: makeGapParser('marginTop', 'marginBottom'),
+    colGap: makeGapParser('marginLeft', 'marginRight'),
+  })
+})()
+
+// IE doesn't support `space-evenly`, but you can fake it using pseudo-elements.
+const spaceEvenlyFix: SS.Config | undefined = (function () {
+  if (!isIE) return
+  const justifyContent = (value: any) => {
+    if (!value) return
+    const placeholderBlock = { content: "''", display: 'none', flex: '0 0 0' }
+    const styles = {
+      justifyContent: value,
+      '&::before': placeholderBlock,
+      '&::after': placeholderBlock,
+    }
+    if (value === 'space-evenly') {
+      placeholderBlock.display = 'block'
+      styles.justifyContent = 'space-between'
+    }
+    return styles
+  }
+  return { justifyContent }
+})()
+
+const flexKeys = [
+  'alignItems',
+  'alignContent',
+  'justifyContent',
+  'flexWrap',
+  'flexDirection',
+] as const
+const itemKeys = ['flex', 'flexGrow', 'flexShrink', 'flexBasis', 'alignSelf', 'order'] as const
+
+export interface FlexProps extends Pick<SS.FlexboxProps, typeof flexKeys[number]> {
+  flexFlow?: SS.ResponsiveValue<boolean | Property.FlexFlow>
+  gap?: SS.ResponsiveValue<Property.Gap<string | number>>
+  rowGap?: SS.ResponsiveValue<Property.RowGap<string | number>>
+  colGap?: SS.ResponsiveValue<Property.ColumnGap<string | number>>
+}
+export type FlexItemProps = Pick<SS.FlexboxProps, typeof itemKeys[number]>
 
 // Not exhaustive, but all possible values include at least one of these words.
 const isFlexKey = RegExp.prototype.test.bind(/row|column|reverse|wrap/)
 
-// Gives a shortcut to common flex props, e.g. `<C flexFlow="row wrap">`
-// is equivalent to `<C display="flex" flexDirection="row" flexWrap="wrap">`.
-// Depending on where it's used, the `display` part could be redundant;
-// keep that in mind if you need a different `display` value (e.g. 'inline-flex').
-export const flexFlow = SS.system({
+export const flexContainer = SS.system({
+  ...pick(SS.flexbox.config, flexKeys),
+  ...spaceEvenlyFix,
+  gap: { property: 'gap', scale: 'space' },
+  rowGap: { property: 'rowGap', scale: 'space' },
+  colGap: { property: 'columnGap', scale: 'space' },
+  // Gives a shortcut to common flex props, e.g. `<C flexFlow="row wrap">`
+  // is equivalent to `<C display="flex" flexDirection="row" flexWrap="wrap">`.
+  // Depending on where it's used, the `display` part could be redundant;
+  // keep that in mind if you need a different `display` value (e.g. 'inline-flex').
   flexFlow: (value: any) => {
     if (typeof value === 'boolean') {
       return value ? { display: 'flex' } : undefined
@@ -73,31 +144,6 @@ export const flexFlow = SS.system({
     }
   },
 })
-
-const flexKeys = [
-  'alignItems',
-  'alignContent',
-  'justifyItems',
-  'justifyContent',
-  'flexWrap',
-  'flexDirection',
-] as const
-const itemKeys = [
-  'flex',
-  'flexGrow',
-  'flexShrink',
-  'flexBasis',
-  'justifySelf',
-  'alignSelf',
-  'order',
-] as const
-
-export interface FlexProps extends Pick<SS.FlexboxProps, typeof flexKeys[number]> {
-  flexFlow?: SS.ResponsiveValue<boolean | Property.FlexFlow>
-}
-export type FlexItemProps = Pick<SS.FlexboxProps, typeof itemKeys[number]>
-;(SS.flexbox as any).flexFlow = flexFlow
-export const flexContainer = pickStyles(SS.flexbox, 'flexFlow', ...flexKeys)
 export const flexItem = pickStyles(SS.flexbox, ...itemKeys)
 
 export type AllWidthProps = SS.WidthProps & SS.MinWidthProps & SS.MaxWidthProps
