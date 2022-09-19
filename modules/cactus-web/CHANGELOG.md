@@ -1,3 +1,29 @@
+# v9.10.0 (Mon Sep 19 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-998: support Flex gap property; add `Flex.Item` [#795](https://github.com/repaygithub/cactus/pull/795) ([@wilysword](https://github.com/wilysword))
+- CACTUS-969: add more ways of pagination to DataGrid [#790](https://github.com/repaygithub/cactus/pull/790) ([@wilysword](https://github.com/wilysword))
+
+#### 🐛 Bug Fix
+
+- CACTUS pagination propType fix [#796](https://github.com/repaygithub/cactus/pull/796) ([@maxrcollins](https://github.com/maxrcollins))
+- CACTUS-1016: fix popup overlap with sticky positioning [#793](https://github.com/repaygithub/cactus/pull/793) ([@wilysword](https://github.com/wilysword))
+- CACTUS-1022: apply cell alignment to sortable columns [#794](https://github.com/repaygithub/cactus/pull/794) ([@wilysword](https://github.com/wilysword))
+
+#### 🏠 Internal
+
+- CACTUS-1009 Snyk fixes [#797](https://github.com/repaygithub/cactus/pull/797) ([@wilysword](https://github.com/wilysword))
+- CACTUS-1017 :: Update docs publishing to use a deploy-key [#792](https://github.com/repaygithub/cactus/pull/792) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### Authors: 3
+
+- [@daniloPenaR](https://github.com/daniloPenaR)
+- [@maxrcollins](https://github.com/maxrcollins)
+- [@wilysword](https://github.com/wilysword)
+
+---
+
 # v9.9.0 (Thu Aug 25 2022)
 
 #### 🚀 Enhancement
