@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
   gconf-service \
   libasound2 \
   libatk1.0-0 \
-  libc6 \
   libcairo2 \
   libcups2 \
   libdbus-1-3 \
@@ -41,6 +40,8 @@ RUN apt-get update && apt-get install -y \
   libnss3 \
   lsb-release \
   xdg-utils \
-  procps
+  procps \
+# These are existing packages with security updates.
+  libc6 zlib1g libpcre2-8-0
 ENTRYPOINT ["yarn", "w", "@repay/cactus-web"]
 CMD ["test:visual-update"]

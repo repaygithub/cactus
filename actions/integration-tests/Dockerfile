@@ -6,7 +6,9 @@ COPY entrypoint.sh /entrypoint.sh
 RUN apt-get update && apt-get install -y \
   wget \
   unzip \
-  procps
+  procps \
+# These are existing packages with security updates.
+  libc6 zlib1g libpcre2-8-0
 RUN wget https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip && \
   unzip BrowserStackLocal-linux-x64.zip && \
   rm BrowserStackLocal-linux-x64.zip && \
