@@ -5,6 +5,52 @@ import { margin, MarginProps } from 'styled-system'
 
 import { getOmittableProps } from '../helpers/omit'
 
+// TODO For the `col` props, include a full `column` variant so people don't have to remember the distinction.
+const gridStyles = system(
+  isIE ? {
+    rows: { property: '-ms-grid-rows' },
+    cols: { property: '-ms-grid-columns' },
+  } : {
+    rows: { property: 'grid-template-rows' },
+    cols: { property: 'grid-template-columns' },
+  }
+)
+
+const rowTransform = (value) => typeof value === 'number' ? `repeat(${value} min-content)` : value
+const colTransform = (value) => typeof value === 'number' ? `repeat(${value} 1fr)` : value
+
+const ieStartEndComposite = (value) => {
+  // So complicated...
+}
+
+// NOTE React's auto number-to-px conversion WILL work on these, so I'll
+// need to make sure to convert them to strings.
+const gridItemStyles = system(
+  // TODO IE supports start and span, normal browsers support start and end
+  // (note that end can include the "span" keyword").
+  isIE ? {
+    // TODO Not sure what these are, maybe align-self & justify-self?
+    '??': { property: '-ms-grid-column-align' },
+    '??': { property: '-ms-grid-row-align' },
+    rowStart: { property: '-ms-grid-row' },
+    rowSpan: { property: '-ms-grid-row-span' },
+  } : {
+    row: { property: 'grid-row' },
+    rowStart: { property: 'grid-row-start' },
+    rowEnd: { property: 'grid-row-end' },
+    col: { property: 'grid-column' },
+    colStart: { property: 'grid-column-start' },
+    colEnd: { property: 'grid-column-end' },
+    gridArea: { property: 'grid-area' },
+  }
+)
+
+const Grid = styled.div`
+  flex-wrap: wrap;
+  display: -ms-grid;
+  display: grid;
+`
+
 const GUTTER_WIDTH = 16
 
 type ColumnNum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
