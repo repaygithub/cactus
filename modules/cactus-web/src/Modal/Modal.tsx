@@ -25,10 +25,10 @@ import {
 import Dimmer from '../Dimmer/Dimmer'
 import { omitProps } from '../helpers/omit'
 import {
-  flexContainer,
+  flexContainerOption,
   flexItem,
   FlexItemProps,
-  FlexProps,
+  FlexOptionProps,
   gapWorkaround,
   pickStyles,
   Styled,
@@ -42,7 +42,7 @@ export const modalType = ['action', 'danger', 'warning', 'success'] as const
 export type ModalType = typeof modalType[number]
 
 type SizeProps = 'height' | 'minHeight' | 'maxHeight' | 'width' | 'minWidth' | 'maxWidth'
-type StyleProps = SpaceProps & FlexProps & FlexItemProps & Pick<LayoutProps, SizeProps>
+type StyleProps = SpaceProps & FlexOptionProps & FlexItemProps & Pick<LayoutProps, SizeProps>
 type DivProps = React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>
 
 interface ModalPopupProps extends StyleProps, TextAlignProps {
@@ -106,7 +106,7 @@ const convertPercentToFixed = (suffix: string, ...styleFns: typeof width[]) => {
 // Even vertical margins/padding are percentages of parent's width, per CSS spec.
 const widths = convertPercentToFixed('vw', width, minWidth, maxWidth, margin, padding)
 const heights = convertPercentToFixed('vh', height, minHeight, maxHeight)
-const modalStyles = compose(flexItem, flexContainer, textAlign)
+const modalStyles = compose(flexItem, flexContainerOption, textAlign)
 
 const variantColors: { [K in ModalType]: CactusColor } = {
   action: 'callToAction',

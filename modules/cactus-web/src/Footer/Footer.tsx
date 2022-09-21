@@ -24,10 +24,10 @@ import { isIE } from '../helpers/constants'
 import omit, { omitProps } from '../helpers/omit'
 import {
   classes,
-  flexContainer,
+  flexContainerOption,
   flexItem,
   FlexItemProps,
-  FlexProps,
+  FlexOptionProps,
   gapWorkaround,
   sizing,
   SizingProps,
@@ -37,7 +37,7 @@ import {
 import { useLayout } from '../Layout/Layout'
 
 type FooterVariant = 'white' | 'gray' | 'dark'
-interface FooterProps extends React.HTMLAttributes<HTMLDivElement>, FlexProps, PaddingProps {
+interface FooterProps extends React.HTMLAttributes<HTMLDivElement>, FlexOptionProps, PaddingProps {
   logo?: string | React.ReactElement
   variant?: FooterVariant
 }
@@ -50,7 +50,7 @@ type LogoProps = FlexItemProps & MarginProps & PositionProps & SizingProps
 
 const stylePropNames = [
   'variant',
-  ...(flexContainer.propNames as string[]),
+  ...(flexContainerOption.propNames as string[]),
   ...(padding.propNames as string[]),
 ]
 
@@ -172,7 +172,7 @@ export const Footer = styledUnpoly(FooterBase as FooterComponent)`
 
   ${gapWorkaround}
   &&& {
-    ${compose(flexContainer, padding)}
+    ${compose(flexContainerOption, padding)}
   }
 `
 
