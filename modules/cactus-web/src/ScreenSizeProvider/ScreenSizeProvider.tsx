@@ -3,9 +3,10 @@ import { noop } from 'lodash'
 import React from 'react'
 import { ThemeContext } from 'styled-components'
 
-type MediaQuery = keyof Required<CactusTheme>['mediaQueries']
+// This should really be in cactus-theme...
+export const screenSizes = ['tiny', 'small', 'medium', 'large', 'extraLarge'] as const
 
-export type Size = 'tiny' | MediaQuery
+export type Size = typeof screenSizes[number]
 
 const ORDER: { [K in Size]: number } = {
   tiny: 0,
@@ -36,9 +37,9 @@ type QueryType = { [K in Size]: MediaMatch }
 
 type SizeCache = ScreenSize[] & { [K in Size]: ScreenSize }
 
-export const SIZES = Object.keys(ORDER).reduce((sizes: any, s): void => {
-  const size = new ScreenSize(s as Size)
-  sizes[ORDER[s as Size]] = size
+export const SIZES = screenSizes.reduce((sizes: any, s): void => {
+  const size = new ScreenSize(s)
+  sizes[ORDER[s]] = size
   sizes[s] = size
   return sizes
 }, []) as SizeCache
