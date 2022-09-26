@@ -207,9 +207,9 @@ const gridItemStyles = (function () {
 
 const pseudoFlexStyles = (function (): SS.styleFn {
   // TODO The old code used `grid-column: span [number]`, I'm going to see if doing `grid-column-end` instead still works.
-  const parser: SS.styleFn = (props: GridItemProps) => {
+  const parser: SS.styleFn = (props: GridItemProps & { theme: CactusTheme }) => {
     const spans = screenSizes.map((size) => props[size] && `span ${props[size]}`)
-    return gridItemStyles({ colEnd: spans })
+    return gridItemStyles({ colEnd: spans, theme: props.theme })
   }
   parser.propNames = [...screenSizes]
   return parser
@@ -254,6 +254,9 @@ export const Grid: GridComponent = (function () {
     autoFlow: { property: 'gridAutoFlow' },
     autoRows: { property: 'gridAutoRows' },
     autoCols: { property: 'gridAutoColumns' },
+    grid: true,
+    gridTemplate: true,
+    gridTemplateAreas: true,
   }
   gridStyleConfig.justify = gridStyleConfig.justifyItems
   gridStyleConfig.columns = gridStyleConfig.cols
@@ -318,7 +321,7 @@ export const Grid: GridComponent = (function () {
 
   const pseudoFlexColumns = repeat(PSEUDO_FLEX_COLS, 'minmax(1px, 1fr)')
   const systemStyles = SS.system(gridStyleConfig)
-  const gridStyles = (props: GridBoxProps) => {
+  const gridStyles = (props: GridBoxProps & { theme: CactusTheme }) => {
     const styles = justifyStyles(props)
     styles.width = '100%'
     styles.display = css.grid
@@ -328,13 +331,16 @@ export const Grid: GridComponent = (function () {
     const { gridAreas } = props
     if (gridAreas) {
       for (const className of Object.keys(gridAreas)) {
-        styles[`.${className}`] = gridItemStyles({ gridArea: gridAreas[className] })
+        styles[`.${className}`] = gridItemStyles({
+          gridArea: gridAreas[className],
+          theme: props.theme,
+        })
       }
     }
     return styles
   }
 
-  const styleProps = getOmittableProps(systemStyles)
+  const styleProps = getOmittableProps(systemStyles, 'gridAreas')
   return gridTag.withConfig({
     displayName: 'Grid',
     shouldForwardProp: (p: any) => !styleProps.has(p),
