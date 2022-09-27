@@ -46,6 +46,7 @@ type PseudoFlexProps = { [K in ScreenSize]?: ColumnNum }
 // - `gridArea`: spec allows blank column start, but not in IE.
 // - can't use named grid areas (except using CSS class version)
 // - can't use `span` keyword in both start AND end grid lines.
+// - if combining with Box to get extra styling props, don't do <Box as={Grid.Item}> if you need to use props that are also on Flex items, e.g. alignSelf.
 // We're not supporting these props because they're too complicated,
 // or their syntax is just plain not compatible with React props:
 // - `grid`
@@ -161,7 +162,11 @@ const gridItemStyles = (function () {
           if (typeof end === 'number') {
             const start =
               spanProp === css.gridRowEnd ? props.rowStart : props.colStart || props.columnStart
-            span = end - parseInt(start || 1)
+            if (typeof start === 'string' && spanRegex.test(start)) {
+              span = start.replace(spanRegex, '').trim()
+            } else {
+              span = end - parseInt(start || 1)
+            }
           }
           return { [spanProp]: String(span) }
         }
@@ -291,7 +296,7 @@ export const Grid: GridComponent = (function () {
                 column = 0
               }
               item.style[css.gridRowStart] = String(row)
-              item.style[css.gridRowEnd] = String(column + 1)
+              item.style[css.gridColumnStart] = String(column + 1)
               column += span
             }
             ref.current.style[css.gridTemplateRows] = repeat(row, 'min-content')
@@ -310,7 +315,9 @@ export const Grid: GridComponent = (function () {
       justify: applyJustifyToChildren,
       justifyItems: applyJustifyToChildren,
       alignItems: (value: unknown) => {
-        if (value) return { '& > *': { [css.alignSelf]: value } }
+        // Note the key is slightly different to prevent overwriting
+        // if both `alignItems` & `justifyItems` are passed.
+        if (value) return { '&>*': { [css.alignSelf]: value } }
       },
     })
   } else {

@@ -106,31 +106,16 @@ const GridItem: React.FC<{ index: number }> = ({ index }) => {
   } catch {}
   const props = last.current
   return (
-    <Box as={Grid.Item} padding={5} {...props}>
+    <Box as={Grid.Item} padding={5} minHeight="150px" {...props}>
       <Box
         as="textarea"
-        minHeight="100px"
+        minHeight="100%"
+        minWidth="100%"
         value={state}
         onChange={(e: any) => setState(e.target.value)}
       />
     </Box>
   )
-}
-
-// This is pretty weird, an unclosed paren can apparently break the entire stylesheet.
-const mayHaveParens = ['rows', 'cols', 'autoRows', 'autoColumns'] as const
-
-const addParens = (str: any) => {
-  if (typeof str === 'string') {
-    let counter = 0
-    for (let i = 0; i < str.length; i++) {
-      if (str[i] === '(') counter++
-      else if (str[i] === ')') counter = Math.max(0, counter - 1)
-    }
-    while (counter-- > 0) str += ')'
-    return str
-  }
-  return str
 }
 
 export const ActualGrid: Story<typeof Grid, { itemCount: number }> = (args) => {
@@ -167,3 +152,17 @@ ActualGrid.argTypes = {
   itemCount: { control: 'number' },
 }
 ActualGrid.parameters = { controls: { disable: false, include: Object.keys(ActualGrid.argTypes) } }
+
+// This is pretty weird, an unclosed paren can apparently break the entire stylesheet.
+const mayHaveParens = ['rows', 'cols', 'autoRows', 'autoColumns'] as const
+const addParens = (str: any) => {
+  if (typeof str === 'string') {
+    let counter = 0
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] === '(') counter++
+      else if (str[i] === ')') counter = Math.max(0, counter - 1)
+    }
+    while (counter-- > 0) str += ')'
+  }
+  return str
+}
