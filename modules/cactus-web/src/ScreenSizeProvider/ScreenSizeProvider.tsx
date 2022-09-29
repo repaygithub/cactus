@@ -51,13 +51,14 @@ export const ScreenSizeContext = React.createContext<ScreenSize>(SIZES[DEFAULT_S
 
 export const useScreenSize = (): ScreenSize => React.useContext(ScreenSizeContext)
 
-const createQueries = (theme: CactusTheme): QueryType => ({
-  tiny: { matches: true, addListener: noop, removeListener: noop },
-  small: window.matchMedia(theme.mediaQueries.small.replace(/^@media /, '')),
-  medium: window.matchMedia(theme.mediaQueries.medium.replace(/^@media /, '')),
-  large: window.matchMedia(theme.mediaQueries.large.replace(/^@media /, '')),
-  extraLarge: window.matchMedia(theme.mediaQueries.extraLarge.replace(/^@media /, '')),
-})
+const createQueries = (theme: CactusTheme): QueryType => theme.mediaQueries
+  //({
+  //  tiny: { matches: true, addListener: noop, removeListener: noop },
+  //  small: window.matchMedia(theme.mediaQueries.small.replace(/^@media /, '')),
+  //  medium: window.matchMedia(theme.mediaQueries.medium.replace(/^@media /, '')),
+  //  large: window.matchMedia(theme.mediaQueries.large.replace(/^@media /, '')),
+  //  extraLarge: window.matchMedia(theme.mediaQueries.extraLarge.replace(/^@media /, '')),
+  //})
 
 const getMatchedSize = (queries: QueryType): Size => {
   for (const size of ORDERED_SIZES) {
@@ -76,6 +77,11 @@ export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     return getMatchedSize(queries)
   })
 
+  const ref = React.useRef({ currentSize, theme }).current
+  if (ref.currentSize !== currentSize) {
+    ref.theme = { ...theme }
+  }
+
   React.useEffect(() => {
     const q: QueryType = queries || createQueries(theme)
     const listener = () => setSize(getMatchedSize(q))
@@ -92,7 +98,9 @@ export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   }, [theme]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
+    <ThemeContext.Provider value={ref.theme}>
     <ScreenSizeContext.Provider value={SIZES[currentSize]}>{children}</ScreenSizeContext.Provider>
+  </ThemeContext.Provider>
   )
 }
 

@@ -60,7 +60,7 @@ export type Shape = 'square' | 'intermediate' | 'round'
 
 export type Font = 'Helvetica Neue' | 'Helvetica' | 'Arial'
 
-const screenSizes = ['tiny', 'small', 'medium', 'large', 'extraLarge'] as const
+export const screenSizes = ['tiny', 'small', 'medium', 'large', 'extraLarge'] as const
 export type ScreenSize = typeof screenSizes[number]
 
 function getCurrentSize(this: MediaQueries) {
@@ -80,9 +80,9 @@ function getMatchingSizes(this: MediaQueries) {
   return result
 }
 
-type MediaQueries = { [K in ScreenSizes]: MediaQueryList }
+type MediaQueries = { [K in ScreenSize]: MediaQueryList }
 
-export type BreakpointsObject = { [K in Exclude<ScreenSizes, 'tiny'>]: string }
+export type BreakpointsObject = { [K in Exclude<ScreenSize, 'tiny'>]: string }
 
 interface GeneratedColors {
   /** Core colors */
@@ -483,8 +483,8 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     tiny: matchMedia('screen'),
     small: matchMedia(`screen and (min-width: ${breakpoints.small})`),
     medium: matchMedia(`screen and (min-width: ${breakpoints.medium})`),
-    large: matchMedia(`@media screen and (min-width: ${breakpoints.large})`),
-    extraLarge: matchMedia(`@media screen and (min-width: ${breakpoints.extraLarge})`),
+    large: matchMedia(`screen and (min-width: ${breakpoints.large})`),
+    extraLarge: matchMedia(`screen and (min-width: ${breakpoints.extraLarge})`),
   }
 
   return {

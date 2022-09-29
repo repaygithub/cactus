@@ -109,3 +109,22 @@ CustomBorderRadiusDefinitions.args = {
     round: '20px',
   },
 }
+
+import TestBed, {
+  Control,
+  WithCustomParserAndHook,
+  WithCustomParserAndTheme,
+  WithDefaultParserAndHook,
+  WithDefaultParserAndTheme,
+} from '../style-testing'
+
+//<WithCustomParserAndTheme marginLeft={2} marginRight={[1, 2, 3]} marginTop={{tiny: 3, medium: 2, extraLarge: 1 }} />
+//<WithDefaultParserAndTheme marginLeft={2} marginRight={[1, 2, 3]} marginTop={{tiny: 3, medium: 2, extraLarge: 1 }} />
+//<WithCustomParserAndHook marginLeft={2} marginRight={[1, 2, 3]} marginTop={{tiny: 3, medium: 2, extraLarge: 1 }} />
+//<WithDefaultParserAndHook marginLeft={2} marginRight={[1, 2, 3]} marginTop={{tiny: 3, medium: 2, extraLarge: 1 }} />
+export const StyleTesting = () => (
+  <>
+    <Box backgroundColor="black" width="50px" height="50px" />
+    <TestBed Component={Control} marginLeft={2} marginRight={[1, 2, 3]} marginTop={{tiny: 3, medium: 2, extraLarge: 1 }} />
+  </>
+)
