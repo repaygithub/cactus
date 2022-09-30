@@ -42,12 +42,14 @@ type MBStory = Story<{
   variant?: 'light' | 'dark'
 }>
 
-export const BasicUsage: MBStory = ({ breadth, totalDepth, onClick }) => {
+export const BasicUsage: MBStory = ({ breadth, totalDepth }) => {
+  const [currentActive, setCurrentActive] = React.useState(-1)
   const makeList = (
     depth: number,
     props: any,
     ix: number,
-    Component: React.ComponentType<any> = MenuBar.List
+    Component: React.ComponentType<any> = MenuBar.List,
+    parentIX?: number
   ) => {
     const items = []
     for (let i = 0; i < breadth; i++) {
@@ -56,17 +58,25 @@ export const BasicUsage: MBStory = ({ breadth, totalDepth, onClick }) => {
       const useList = useStatic ? i % 3 === 0 : (Math.random() * depth) / 1.5 > 0.5
       const title = useStatic ? LABELS[i] : getLabel()
       if (useList) {
-        items.push(makeList(depth - 1, { title }, i))
+        items.push(makeList(depth - 1, { title }, i, undefined, parentIX ?? i))
       } else {
         items.push(
-          <MenuBar.Item key={i} onClick={onClick(`x: ${i}, y: ${totalDepth - depth}`)}>
+          <MenuBar.Item
+            key={i}
+            aria-current={i === currentActive}
+            onClick={() => {
+              const menuItemIndex = parentIX ?? i
+              setCurrentActive((current) => (current === menuItemIndex ? -1 : menuItemIndex))
+              console.log(`x: ${i}, y: ${totalDepth - depth}`)
+            }}
+          >
             {title}
           </MenuBar.Item>
         )
       }
     }
     return (
-      <Component key={ix} {...props}>
+      <Component key={ix} aria-current={ix === currentActive} {...props}>
         {items}
       </Component>
     )
@@ -76,12 +86,14 @@ export const BasicUsage: MBStory = ({ breadth, totalDepth, onClick }) => {
 }
 BasicUsage.args = { breadth: 8, totalDepth: 2 }
 
-export const MenuBarDark: MBStory = ({ breadth, totalDepth, variant, onClick }) => {
+export const MenuBarDark: MBStory = ({ breadth, totalDepth, variant }) => {
+  const [currentActive, setCurrentActive] = React.useState(-1)
   const makeList = (
     depth: number,
     props: any,
     ix: number,
-    Component: React.ComponentType<any> = MenuBar.List
+    Component: React.ComponentType<any> = MenuBar.List,
+    parentIX?: number
   ) => {
     const items = []
     for (let i = 0; i < breadth; i++) {
@@ -90,17 +102,25 @@ export const MenuBarDark: MBStory = ({ breadth, totalDepth, variant, onClick }) 
       const useList = useStatic ? i % 3 === 0 : (Math.random() * depth) / 1.5 > 0.5
       const title = useStatic ? LABELS[i] : getLabel()
       if (useList) {
-        items.push(makeList(depth - 1, { title }, i))
+        items.push(makeList(depth - 1, { title }, i, undefined, parentIX ?? i))
       } else {
         items.push(
-          <MenuBar.Item key={i} onClick={onClick(`x: ${i}, y: ${totalDepth - depth}`)}>
+          <MenuBar.Item
+            key={i}
+            aria-current={i === currentActive}
+            onClick={() => {
+              const menuItemIndex = parentIX ?? i
+              setCurrentActive((current) => (current === menuItemIndex ? -1 : menuItemIndex))
+              console.log(`x: ${i}, y: ${totalDepth - depth}`)
+            }}
+          >
             {title}
           </MenuBar.Item>
         )
       }
     }
     return (
-      <Component key={ix} variant={variant} {...props}>
+      <Component key={ix} aria-current={ix === currentActive} variant={variant} {...props}>
         {items}
       </Component>
     )
