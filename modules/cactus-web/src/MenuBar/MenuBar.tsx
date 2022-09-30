@@ -70,7 +70,9 @@ const variantMap: VariantMap = {
         border-bottom-color: ${color('callToAction')};
         color: ${color('callToAction')};
       }
-
+      &[aria-current='true'] {
+        background-color: ${color('lightContrast')};
+      }
       &:focus {
         ${insetBorder('callToAction')};
       }
@@ -86,6 +88,9 @@ const variantMap: VariantMap = {
       &[aria-expanded='true'] {
         ${insetBorder('white', 'bottom', { thin: '2px', thick: '2px' })};
         border-color: ${color('white')};
+      }
+      &[aria-current='true'] {
+        background-color: ${color('mediumContrast')};
       }
       &:focus {
         border-color: ${color('white')};
