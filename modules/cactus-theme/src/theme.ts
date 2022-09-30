@@ -603,12 +603,7 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     boxShadows,
     textStyles: makeTextStyles(fontSizes),
     mobileTextStyles: makeTextStyles(mobileFontSizes),
-    breakpoints: [
-      breakpoints.small,
-      breakpoints.medium,
-      breakpoints.large,
-      breakpoints.extraLarge,
-    ],
+    breakpoints: [breakpoints.small, breakpoints.medium, breakpoints.large, breakpoints.extraLarge],
     mediaQueries,
     getCurrentSize: getCurrentSize.bind(mediaQueries),
     getMatchingSizes: getMatchingSizes.bind(mediaQueries),

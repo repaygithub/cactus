@@ -112,19 +112,29 @@ CustomBorderRadiusDefinitions.args = {
 
 import TestBed, {
   Control,
+  TestBed2,
   WithCustomParserAndHook,
   WithCustomParserAndTheme,
   WithDefaultParserAndHook,
   WithDefaultParserAndTheme,
 } from '../style-testing'
 
-//<WithCustomParserAndTheme marginLeft={2} marginRight={[1, 2, 3]} marginTop={{tiny: 3, medium: 2, extraLarge: 1 }} />
-//<WithDefaultParserAndTheme marginLeft={2} marginRight={[1, 2, 3]} marginTop={{tiny: 3, medium: 2, extraLarge: 1 }} />
-//<WithCustomParserAndHook marginLeft={2} marginRight={[1, 2, 3]} marginTop={{tiny: 3, medium: 2, extraLarge: 1 }} />
-//<WithDefaultParserAndHook marginLeft={2} marginRight={[1, 2, 3]} marginTop={{tiny: 3, medium: 2, extraLarge: 1 }} />
-export const StyleTesting = () => (
-  <>
-    <Box backgroundColor="black" width="50px" height="50px" />
-    <TestBed Component={Control} marginLeft={2} marginRight={[1, 2, 3]} marginTop={{tiny: 3, medium: 2, extraLarge: 1 }} />
-  </>
+const STYLES = {
+  marginLeft: 2,
+  marginRight: [1, 2, 3],
+  marginTop: { tiny: 1, small: 2, medium: 3 },
+  marginBottom: 5,
+}
+export const TestControl = () => <TestBed2 Component={Control} {...STYLES} />
+export const TestCustomParserAndHook = () => (
+  <TestBed2 Component={WithCustomParserAndHook} {...STYLES} />
+)
+export const TestCustomParserAndTheme = () => (
+  <TestBed2 Component={WithCustomParserAndTheme} {...STYLES} />
+)
+export const TestDefaultParserAndHook = () => (
+  <TestBed2 Component={WithDefaultParserAndHook} {...STYLES} />
+)
+export const TestDefaultParserAndTheme = () => (
+  <TestBed2 Component={WithDefaultParserAndTheme} {...STYLES} />
 )

@@ -1,23 +1,42 @@
 import { screenSizes } from '@repay/cactus-theme'
 import { omit } from 'lodash'
+import React from 'react'
 import styled from 'styled-components'
 import { margin } from 'styled-system'
-import React from 'react'
-import { useScreenSize, SIZES } from './ScreenSizeProvider/ScreenSizeProvider'
+
+import { SIZES, useScreenSize } from './ScreenSizeProvider/ScreenSizeProvider'
 
 const inc = (s) => s + 1
+const sum = (s, n) => s + n
 
-export default function TestBed({ Component, repeat=1000, ...rest }) {
+export default function TestBed({ Component, repeat = 1000, ...rest }) {
   const [current, setNext] = React.useState(0)
   const ref = React.useRef(Date.now())
   React.useEffect(() => {
     if (current < repeat) {
       setTimeout(() => setNext(inc), 0)
     } else {
-      console.log('TOTAL TIME', Component.displayName, ':', (Date.now() - ref.current) / 1000)
+      const t = times.get(Component)
+      t.push(Date.now() - ref.current)
+      const total = t.reduce(sum, 0) / t.length
+      console.log('TOTAL TIME', Component.displayName, ':', total / 1000)
     }
   })
   return React.createElement(Component, rest, current)
+}
+
+export const TestBed2 = ({ Component, level = 2, ...rest }) => {
+  if (level > 0) {
+    rest.level = level - 1
+    rest.Component = Component
+    const children = []
+    for (let i = 0; i < 50; i++) {
+      rest.key = i
+      children.push(React.createElement(TestBed2, rest))
+    }
+    return <>{children}</>
+  }
+  return React.createElement(Component, rest, level)
 }
 
 export const Control = styled.div(margin)
@@ -30,12 +49,7 @@ const queries = [
   '@media screen and (min-width: 1440px)',
 ]
 
-const sizes = [
-  SIZES.small,
-  SIZES.medium,
-  SIZES.large,
-  SIZES.extraLarge,
-]
+const sizes = [SIZES.small, SIZES.medium, SIZES.large, SIZES.extraLarge]
 
 const useDefaultParserAndHook = (props) => {
   const parsedStyles = margin(props)
@@ -83,10 +97,13 @@ const useCustomParserAndHook = (props) => {
       // Returns an array of matching sizes, e.g if current screen size
       // is medium, returns `['tiny', 'small', 'medium']` (ascending order).
       if (!sizeKeys) {
-        sizeKeys = sizes.reduce((keys, size) => {
-          if (size <= currentSize) keys.push(size.size)
-          return keys
-        }, ['tiny'])
+        sizeKeys = sizes.reduce(
+          (keys, size) => {
+            if (size <= currentSize) keys.push(size.size)
+            return keys
+          },
+          ['tiny']
+        )
         sizeKeys.reverse()
       }
 
@@ -186,61 +203,16 @@ export const WithCustomParserAndTheme = styled.div.attrs(useCustomParserAndTheme
   background: green;
 `
 
-// This makes two assumptions about the style processors:
+// Custom parser makes two assumptions about the style processors:
 // 1. Must return simple style object, i.e. all the keys must be CSS properties;
 //    can't return something like `{ '& > *': { margin: 5 } }` to set child styles.
 // 2. Must return all styles for a given input; can't rely on screen size cascading.
 // (I'm actually not even sure if it's possible to violate #2, but maybe in theory...)
 // As far as I know, all the built-in `styled-system` processors meet these assumptions.
-//export const makeStyleParser = (...parsers: SS.styleFn[]): AttrFunc => {
-//  const config: Record<string, SS.ConfigFunction> = {}
-//  for (const parser of parsers) {
-//    Object.assign(config, parser.config)
-//  }
-//
-//  return (props: any) => {
-//    const { style: styleProp, theme } = props
-//    let style = styleProp
-//    let sizeKeys: string[] = false as any
-//    for (const key in props) {
-//      const processor = config[key]
-//      if (!processor) continue
-//      const scale: SS.Scale | undefined = theme[processor.scale] || processor.defaults
-//      const rawStyle = props[key]
-//
-//      const merge = (value) => {
-//        if (value !== null && value !== undefined) {
-//          const processed = processor(value, scale, props)
-//          if (processed) {
-//            if (style === styleProp) {
-//              style = Object.assign({}, style, processed)
-//            } else {
-//              Object.assign(style, processed)
-//            }
-//            return true
-//          }
-//        }
-//      }
-//      if (typeof rawStyle === 'object' && rawStyle !== null) {
-//        // Returns an array of matching sizes, e.g if current screen size
-//        // is medium, returns `['tiny', 'small', 'medium']` (ascending order).
-//        // If you get this data using a hook, move up to the declaration,
-//        // instead of having this lazy initialize.
-//        if (!sizeKeys) sizeKeys = getMatchingScreenSizes(theme)
-//
-//        if (Array.isArray(rawStyle)) {
-//          for (let i = Math.min(sizeKeys.length, rawStyle.length) - 1; i >= 0; i--) {
-//            if (merge(rawStyle[i])) break
-//          }
-//        } else {
-//          for (const key of keys) {
-//            if (merge(rawStyle[key])) break
-//          }
-//        }
-//      } else {
-//        merge(rawStyle)
-//      }
-//    }
-//    return style ? { style } : undefined
-//  }
-//}
+
+const times = new Map()
+times.set(Control, [])
+times.set(WithCustomParserAndHook, [])
+times.set(WithCustomParserAndTheme, [])
+times.set(WithDefaultParserAndHook, [])
+times.set(WithDefaultParserAndTheme, [])

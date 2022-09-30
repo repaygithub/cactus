@@ -52,13 +52,13 @@ export const ScreenSizeContext = React.createContext<ScreenSize>(SIZES[DEFAULT_S
 export const useScreenSize = (): ScreenSize => React.useContext(ScreenSizeContext)
 
 const createQueries = (theme: CactusTheme): QueryType => theme.mediaQueries
-  //({
-  //  tiny: { matches: true, addListener: noop, removeListener: noop },
-  //  small: window.matchMedia(theme.mediaQueries.small.replace(/^@media /, '')),
-  //  medium: window.matchMedia(theme.mediaQueries.medium.replace(/^@media /, '')),
-  //  large: window.matchMedia(theme.mediaQueries.large.replace(/^@media /, '')),
-  //  extraLarge: window.matchMedia(theme.mediaQueries.extraLarge.replace(/^@media /, '')),
-  //})
+//({
+//  tiny: { matches: true, addListener: noop, removeListener: noop },
+//  small: window.matchMedia(theme.mediaQueries.small.replace(/^@media /, '')),
+//  medium: window.matchMedia(theme.mediaQueries.medium.replace(/^@media /, '')),
+//  large: window.matchMedia(theme.mediaQueries.large.replace(/^@media /, '')),
+//  extraLarge: window.matchMedia(theme.mediaQueries.extraLarge.replace(/^@media /, '')),
+//})
 
 const getMatchedSize = (queries: QueryType): Size => {
   for (const size of ORDERED_SIZES) {
@@ -77,10 +77,16 @@ export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     return getMatchedSize(queries)
   })
 
-  const ref = React.useRef({ currentSize, theme }).current
+  const ref = React.useRef({ currentSize, theme, time: Date.now() }).current
   if (ref.currentSize !== currentSize) {
+    console.log('SIZE CHANGED', currentSize)
+    ref.currentSize = currentSize
     ref.theme = { ...theme }
+    ref.time = Date.now()
   }
+  React.useEffect(() => {
+    console.log('SIZE CHANGE RE-RENDER', (Date.now() - ref.time) / 1000)
+  }, [currentSize])
 
   React.useEffect(() => {
     const q: QueryType = queries || createQueries(theme)
@@ -99,8 +105,8 @@ export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   return (
     <ThemeContext.Provider value={ref.theme}>
-    <ScreenSizeContext.Provider value={SIZES[currentSize]}>{children}</ScreenSizeContext.Provider>
-  </ThemeContext.Provider>
+      <ScreenSizeContext.Provider value={SIZES[currentSize]}>{children}</ScreenSizeContext.Provider>
+    </ThemeContext.Provider>
   )
 }
 
