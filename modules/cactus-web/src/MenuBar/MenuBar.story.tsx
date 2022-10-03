@@ -137,7 +137,7 @@ export const MenuBarDark: MBStory = ({ breadth, totalDepth, variant }) => {
       }
     }
 
-  return <MenuBar variant="dark">{menuItems.map(makeMenus())}</MenuBar>
+  return <MenuBar variant={variant}>{menuItems.map(makeMenus())}</MenuBar>
 }
 MenuBarDark.argTypes = { variant: { options: ['light', 'dark'] } }
 MenuBarDark.args = { breadth: 8, totalDepth: 2, variant: 'dark' }
