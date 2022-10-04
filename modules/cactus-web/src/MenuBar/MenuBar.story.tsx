@@ -41,6 +41,8 @@ type MBStory = Story<{
 }>
 
 const useMenuItems = (breadth: number, totalDepth: number) => {
+  const [currentActive, setCurrentActive] = React.useState(-1)
+
   const menuItems = React.useMemo(() => {
     const getItems = (depth: number): (string | string[])[] => {
       const items = []
@@ -56,88 +58,49 @@ const useMenuItems = (breadth: number, totalDepth: number) => {
     }
     return getItems(totalDepth)
   }, [breadth, totalDepth])
-  return menuItems
+
+  let parentIndex = -1
+  const makeMenus = (item: string | Array<string>, index: number, array: (string | string[])[]) => {
+    // Top-level call, set the parent index to propagate down.
+    const isTopLevel = array === menuItems
+    if (isTopLevel) parentIndex = index
+    const topLevelIndex = parentIndex
+    const props = { key: index, 'aria-current': index === currentActive }
+    if (Array.isArray(item)) {
+      const [title, ...children] = item
+      return (
+        <MenuBar.List {...props} title={title}>
+          {children.map(makeMenus)}
+        </MenuBar.List>
+      )
+    } else {
+      return (
+        <MenuBar.Item
+          {...props}
+          onClick={() =>
+            setCurrentActive((current) => {
+              return isTopLevel && current === topLevelIndex ? -1 : topLevelIndex
+            })
+          }
+        >
+          {item}
+        </MenuBar.Item>
+      )
+    }
+  }
+
+  return menuItems.map(makeMenus)
 }
 
 export const BasicUsage: MBStory = ({ breadth, totalDepth }) => {
-  const [currentActive, setCurrentActive] = React.useState(-1)
   const menuItems = useMenuItems(breadth, totalDepth)
-  let parentIndex = -1
-  const makeMenus =
-    (parentIX?: number) =>
-    (item: string | Array<string>, index: number, array: (string | string[])[]) => {
-      // Top-level call, set the parent index to propagate down.
-      if (array === menuItems) parentIndex = index
-      const props = { key: index, 'aria-current': index === currentActive }
-      if (Array.isArray(item)) {
-        const [title, ...children] = item
-        return (
-          <MenuBar.List {...props} title={title}>
-            {children.map(makeMenus(parentIndex))}
-          </MenuBar.List>
-        )
-      } else {
-        return (
-          <MenuBar.Item
-            {...props}
-            onClick={() => {
-              const nextActiveIndex = parentIX ?? index
-              setCurrentActive((current) => {
-                if (current === nextActiveIndex && !parentIX) {
-                  return -1
-                }
-                return nextActiveIndex
-              })
-            }}
-          >
-            {item}
-          </MenuBar.Item>
-        )
-      }
-    }
-
-  return <MenuBar>{menuItems.map(makeMenus())}</MenuBar>
+  return <MenuBar>{menuItems}</MenuBar>
 }
 BasicUsage.args = { breadth: 8, totalDepth: 2 }
 
 export const MenuBarDark: MBStory = ({ breadth, totalDepth, variant }) => {
-  const [currentActive, setCurrentActive] = React.useState(-1)
   const menuItems = useMenuItems(breadth, totalDepth)
-  let parentIndex = -1
-  const makeMenus =
-    (parentIX?: number) =>
-    (item: string | Array<string>, index: number, array: (string | string[])[]) => {
-      // Top-level call, set the parent index to propagate down.
-      if (array === menuItems) parentIndex = index
-      const props = { key: index, 'aria-current': index === currentActive }
-      if (Array.isArray(item)) {
-        const [title, ...children] = item
-        return (
-          <MenuBar.List {...props} title={title}>
-            {children.map(makeMenus(parentIndex))}
-          </MenuBar.List>
-        )
-      } else {
-        return (
-          <MenuBar.Item
-            {...props}
-            onClick={() => {
-              const nextActiveIndex = parentIX ?? index
-              setCurrentActive((current) => {
-                if (current === nextActiveIndex && !parentIX) {
-                  return -1
-                }
-                return nextActiveIndex
-              })
-            }}
-          >
-            {item}
-          </MenuBar.Item>
-        )
-      }
-    }
-
-  return <MenuBar variant={variant}>{menuItems.map(makeMenus())}</MenuBar>
+  return <MenuBar variant={variant}>{menuItems}</MenuBar>
 }
 MenuBarDark.argTypes = { variant: { options: ['light', 'dark'] } }
 MenuBarDark.args = { breadth: 8, totalDepth: 2, variant: 'dark' }
