@@ -6,7 +6,30 @@ import styled from 'styled-components'
 
 import { useDocgen } from './DocgenProvider'
 
-const Table = styled.table`
+interface WithCols {
+  children?: React.ReactNode
+  columns?: string[]
+}
+
+const renderTableHeader = ({ columns, children }: WithCols) => {
+  if (columns) {
+    const tableBody = (
+      <>
+        <thead>
+          <tr>
+            {columns.map((col) => (
+              <th>{col}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>{children}</tbody>
+      </>
+    )
+    return { children: tableBody }
+  }
+}
+
+export const Table = styled.table.attrs(renderTableHeader)`
   border-radius: 8px;
   max-width: 100%;
 
@@ -74,6 +97,14 @@ const Table = styled.table`
       left: 2px;
       width: 30%;
       overflow-x: auto;
+    }
+    ${(p) =>
+      p.columns?.reduce((headers: any, col, ix) => {
+        headers[`td:nth-of-type(${ix + 1})::before`] = { content: `"${col}"` }
+        return headers
+      }, {})}
+    td:last-of-type {
+      border-bottom: 2px solid #131313;
     }
   }
 `

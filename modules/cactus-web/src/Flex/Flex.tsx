@@ -6,7 +6,7 @@ import { Box, BoxProps } from '../Box/Box'
 import { getOmittableProps } from '../helpers/omit'
 import { flexContainer, flexItem, FlexItemProps, FlexProps, gapWorkaround } from '../helpers/styled'
 
-interface FlexBoxProps extends BoxProps, FlexProps, FlexItemProps {}
+export interface FlexBoxProps extends BoxProps, FlexProps, FlexItemProps {}
 
 interface FlexComponent extends StyledComponentBase<'div', CactusTheme, FlexBoxProps> {
   Item: StyledComponentBase<'div', CactusTheme, FlexItemProps>

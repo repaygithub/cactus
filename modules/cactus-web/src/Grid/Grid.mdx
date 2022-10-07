@@ -3,7 +3,7 @@ name: Grid
 menu: Components
 ---
 
-import PropsTable from 'website-src/components/PropsTable'
+import { Table } from 'website-src/components/PropsTable'
 import { livePreviewStyle } from '../helpers/constants'
 import Grid from './Grid'
 import Box from '../Box/Box'
@@ -12,24 +12,49 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # Grid
 
-A responsive grid component designed to help lay out items on a page based on screen size breakpoints.
+The Grid component has two main usagge modes:
+
+**Pseudo-flex mode:** the default usage divides the element into 12 equal columns,
+and then allows you to define how many columns each child takes up at different screen sizes.
+For example, this item takes up 6 columns (half the element's width) on tiny & small screens,
+3 columns (one fourth) on medium screens, and 2 columns (one sixth) on larger screens:
+```jsx
+<Grid>
+  <Grid.Item tiny={6} medium={3} large={2}>
+</Grid>
+```
+
+**CSS grid mode:** you define how many rows & columns there are, how big they are,
+and where each child fits in the grid. The grid and child placement are controlled by
+[styled-system](https://styled-system.com) props, so they can also be changed based on screen size.
+This grid will have one column on tiny screens, and two columns otherwise:
+```jsx
+<Grid rows={[2, 1]} columns={[1, 2]}>
+  <Grid.Item gridArea="1/1" />
+  <Grid.Item gridArea={['2/1', '1/2]} />
+</Grid>
+```
+
+Grid also has a couple of static booleans attached:
+- `Grid.supportsGrid` is equivalent to the `@supports (display: grid)` CSS query
+- `Grid.supportsGap` is equivalent to the `@supports (gap: 1px)` CSS query
 
 ### Try it out
 
-In order to see the behavior of the Grid component, we invite you to resize your window to multiple screen sizes.
+Try looking at this example at several different window/screen sizes.
 
 export const code = `
 <Grid>
-  <Grid.Item tiny={4} medium={4} large={3}>
+  <Grid.Item tiny={6} medium={4} large={3}>
     <Box width="100%" height="25px" backgroundColor="red" />
   </Grid.Item>
-  <Grid.Item tiny={4} medium={4} large={3}>
+  <Grid.Item tiny={6} medium={4} large={3}>
     <Box width="100%" height="25px" backgroundColor="green" />
   </Grid.Item>
-  <Grid.Item tiny={4} medium={4} large={3}>
+  <Grid.Item tiny={6} medium={4} large={3}>
     <Box width="100%" height="25px" backgroundColor="blue" />
   </Grid.Item>
-  <Grid.Item tiny={4} medium={4} large={3}>
+  <Grid.Item tiny={6} medium={4} large={3}>
     <Box width="100%" height="25px" backgroundColor="black" />
   </Grid.Item>
 </Grid>
@@ -41,56 +66,199 @@ export const code = `
   <LivePreview />
 </LiveProvider>
 
-## Best practices
+## Basic usage: Pseudo-flex Mode
 
-The maximum number of columns available per row is 12, but the number of columns you should use varies depending on screen size. See the table below for details.
+Conceptually this mode is similar to a flex wrap container with 12 discrete values for flex-basis;
+it is actually implemented using CSS grid, however, because of the convenience of the `fr` length unit:
+`fr` more accurately accounts for the CSS `gap` property or margins than a percentage-based flex will do.
 
-| **Breakpoint** | **Max. Number of Columns** |
-| -------------- | -------------------------- |
-| `tiny`         | 4                          |
-| `small`        | 6                          |
-| `medium`       | 8                          |
-| `large`        | 12                         |
-| `extraLarge`   | 12                         |
+There isn't much more to say usage-wise than what the initial example showed:
+prop names are screen size breakpoints, values are the number of columns out of
+12 that the item spans at that screen size. If a column span for a certain
+breakpoint isn't defined, `Grid` will always use the next lowest size that _is_ defined.
+For example, if only `tiny` and `large` are defined, the `tiny` value will be
+applied to tiny, small, _and_ medium screens, while the `large` value will apply
+to both large and extraLarge.
+```jsx
+<Grid>
+  // Takes up half the width on tiny, small and medium, one fourth on large & extraLarge.
+  <Grid.Item tiny={6} large={3} />
+</Grid>
+```
 
-## Basic usage
+## Basic Usage: CSS Grid
 
-Our grid is based on a 12-column system and you can pass different values for different screen breakpoints. The number you pass corresponds to how many columns the item should occupy.
-For instance, passing `tiny={3}` to `Grid.Item` is a way of saying that item should occupy 3/12 columns.
+This is normal CSS Grid implemented using [styled-system](https://styled-system.com/responsive-styles).
+Some of the props have been renamed for convenience & to reduce boilerplate (see props table below).
 
-If a column size for a certain breakpoint isn't defined, `Grid` will always use the next lowest size that _is_ defined. For example, the items in the grid below
-only define `tiny` and `large` sizes. If the viewport had a width of 1050px, that would fall under the `medium` breakpoint, but since that isn't defined, the grid
-will use the column size provided for `tiny`. If the screen grew to 1500px wide, that would fall under the `extraLarge` breakpoint, and the grid would arrange the
-columns using the definitions for `large`.
+#### Row & Column Integer Shortcut
+
+For some of the most common use cases you can take a shortcut by simply passing the
+number of rows and/or columns you want, and Grid will pick a default "length":
 
 ```jsx
-import React from 'react'
-import { Box, Grid } from '@repay/cactus-web
+<Grid rows={3} cols={4}>
+// Is equivalent to
+<Grid rows="repeat(3, min-content)" cols="repeat(4, 1fr)">
+```
 
-const renderGrid = () => (
-  <Grid>
-    <Grid.Item tiny={6} large={3}>
-      <Box width="100%" height="25px" />
-    </Grid.Item>
-    <Grid.Item tiny={6} large={3}>
-      <Box width="100%" height="25px" />
-    </Grid.Item>
-    <Grid.Item tiny={6} large={3}>
-      <Box width="100%" height="25px" />
-    </Grid.Item>
-    <Grid.Item tiny={6} large={3}>
-      <Box width="100%" height="25px" />
-    </Grid.Item>
-  </Grid>
-)
+#### Grid Areas
+
+While Grid fully supports the `grid`, `gridTemplate`, and `gridTemplateAreas` props,
+their syntax isn't very React-friendly. An alternative/workaround is the `gridAreas` prop,
+which defines CSS classes that can be used to place grid items:
+
+```jsx
+<Grid
+  rows={2}
+  cols="1fr 4fr min-content"
+  gridAreas={{
+    'left-column': '1 / 1',
+    'main-area': '1 / 2',
+    'right-column': '1 / 3',
+    'footer': '2 / 1 / span 1 / span 3',
+  }}
+>
+  <Grid.Item className="left-column" />
+  <MainPanel className="main-area" />
+  <Box className="footer" />
+</Grid>
+```
+Each class has a [grid-area](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-area) property
+that defines the area. While not as flexible as grid templates, the named classes
+can be applied to any element, not just `Grid.Item`. These areas can also be defined
+to be responsive: in this example, the defined area will be row 3 column 1 on tiny screens,
+and row 2 column 2 on larger screens.
+```
+<Grid gridAreas={{ 'my-area': ['3 / 1', '2 / 2'] }}>
+```
+
+#### Flex Compatibility
+
+Grid also supports all the props from the <a href="../flex/">Flex</a> component, which can simplify the
+transition between a single column on mobile and multiple columns on larger screens.
+Here's the responsive example from the beginning, rewritten using flex:
+```jsx
+<Grid display={['flex', 'grid']} flexFlow="column" rows={1} cols={2}>
+  <Grid.Item gridArea="1/1" />
+  <Grid.Item gridArea="1/2" />
+</Grid>
+```
+That might not seem much simpler at a glance, but the more child items you have,
+the more you save by not having to place them all twice.
+
+### IE Support
+
+Contrary to popular belief, IE 11 does have pretty good grid support. It's based on
+an old version of the grid specification, though, so it can't be considered "full"
+support; if you need to keep your site IE-compatible, keep these points in mind:
+- `Grid.supportsGrid` is false on IE, due to only partial support.
+- The `display` property is `-ms-grid`; this is set by default, but you need to know it if you change the display, e.g. for the flex column trick mentioned above.
+- The `repeat` keyword is not supported.
+- All row/column start lines must be explicitly defined, since IE doesn't support auto-flow.
+- The `span` keyword cannot be used in start lines.
+- All grid lines must be positive integers; IE doesn't support negative or named grid lines.
+- IE doesn't directly support `grid-area`, `grid-row`, or `grid-column`, and though we have a polyfill for those props, it doesn't provide perfect support.
+- When defining grid end lines, either in `rowEnd`/`colEnd` or in the polyfilled props, it works best to use `span`.
+- `justifyItems`/`justifySelf` & `alignItems`/`alignSelf` _are_ supported, but only `start`, `center`, `stretch`, and `end` keywords.
+- These props are not supported at all: `justifyContent`, `alignContent`, `autoFlow`, `autoRows`, `autoColumns`, `grid`, `gridTemplate`, and `gridTemplateAreas`.
+
+```jsx
+// ✕ Incompatible
+<Grid rows="repeat(2, min-content)" />
+// ✓ Better
+<Grid rows="min-content min-content" />
+
+// ✕ Incompatible
+<Grid.Item row="span 2 / -1" />
+// ✓ Better
+<Grid.Item row="3 / span 2" />
+
+// ✕ Incompatible
+<Grid.Item row="auto" col="custom-area" />
+// ✓ Better
+<Grid.Item row="3" col="5" />
+
+// ✕ Incompatible: the polyfill doesn't have enough context to pair 6 & 4, 3 & 2, because of how styled-system processes responsive styles
+<Grid.Item rowStart={[4, 2]} rowEnd={[6, 3]} />
+// ✓ Better
+<Grid.Item rowStart={[4, 2]} rowEnd={['span 2', 'span 1']} />
+// ✓ Okay; here it works because there's no ambiguity in pairing start with end
+<Grid.Item rowStart="4" rowEnd="6" col={['2/4', '4/8']} />
 ```
 
 ## Properties
 
+export const Row = ({ name, alias, ie, css }) => (
+  <tr>
+    <td>
+      <code>{name}</code>
+    </td>
+    <td>
+      {alias && (<code>{alias}</code>)}
+    </td>
+    <td>{ie || 'None'}</td>
+    <td>
+      <a href={'https://developer.mozilla.org/en-US/docs/Web/CSS/' + css}>{css}</a>
+    </td>
+  </tr>
+)
+
 ## Grid
 
-<PropsTable of={Grid} />
+Supports all <a href="../box/">Box</a> and <a href="../flex/">Flex</a> props, in addition to these:
+
+<Table columns={['Responsive Prop', 'Alias', 'IE Support', 'CSS Property']}>
+  <Row name="rows" ie="minus certain keywords like `repeat()`" css="grid-template-rows" />
+  <Row name="columns" alias="cols" ie="minus certain keywords like `repeat()`" css="grid-template-columns" />
+  <Row name="justifyItems" alias="justify" ie="start, end, center, stretch" css="justify-items" />
+  <Row name="alignItems" ie="start, end, center, stretch" css="align-items" />
+  <Row name="justifyContent" css="justify-content" />
+  <Row name="alignContent" css="align-content" />
+  <Row name="autoFlow" css="grid-auto-flow" />
+  <Row name="autoRows" css="grid-auto-rows" />
+  <Row name="autoColumns" alias="autoCols" css="grid-auto-columns" />
+  <Row name="grid" css="grid" />
+  <Row name="gridTemplate" css="grid-template" />
+  <Row name="gridTemplateAreas" css="grid-template-areas" />
+  <tr>
+    <td>
+      <code>gridAreas</code>
+    </td>
+    <td />
+    <td>positive integer grid lines only</td>
+    <td>
+      <pre>&#123; [className: string]: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-area">grid-area</a> &#125;</pre>
+    </td>
+  </tr>
+</Table>
 
 ## Grid Item
 
-<PropsTable of={Grid} staticProp="Item" />
+Supports all <a href="../flex/">Flex.Item</a> props, in addition to these:
+
+#### Pseudo-flex Mode
+
+<Table columns={['React Prop', 'Default Value', 'Type']}>
+  <tr>
+    <td>
+      <code>tiny, small, medium, large, extraLarge</code>
+    </td>
+    <td>1</td>
+    <td>integer 1-12</td>
+  </tr>
+</Table>
+
+#### CSS Grid
+
+<Table columns={['Responsive Prop', 'Alias', 'IE Support', 'CSS Property']}>
+  <Row name="row" ie="positive integers only" css="grid-row" />
+  <Row name="rowStart" ie="positive integers only" css="grid-row-start" />
+  <Row name="rowEnd" ie="positive integers only; prefer `span`" css="grid-row-end" />
+  <Row name="column" alias="col" ie="positive integers only" css="grid-column" />
+  <Row name="columnStart" alias="colStart" ie="positive integers only" css="grid-column-start" />
+  <Row name="columnEnd" alias="colEnd" ie="positive integers only; prefer `span`" css="grid-column-end" />
+  <Row name="gridArea" ie="positive integers only" css="grid-area" />
+  <Row name="justifySelf" ie="start, end, center, stretch" css="justify-self" />
+  <Row name="alignSelf" ie="start, end, center, stretch" css="align-self" />
+</Table>
