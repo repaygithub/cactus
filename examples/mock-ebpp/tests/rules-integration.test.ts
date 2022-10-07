@@ -85,4 +85,3 @@ const definitions = (name: string, url: string) => {
 }
 
 definitions('Rules Integration Tests', 'http://localhost:33567/rules')
-definitions('Rules Integration Tests (Fields Only)', 'http://localhost:33567/rules-fields')
