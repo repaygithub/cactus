@@ -1,17 +1,21 @@
-import { border, color, colorStyle, mediaGTE, radius, textStyle } from '@repay/cactus-theme'
+import { mediaGTE, radius, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { compose, height, HeightProps, margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
-import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
+import { StatusProps, StatusPropType } from '../helpers/status'
 import { styledProp } from '../helpers/styled'
+import { commonInputStyles } from '../TextInput/TextInput'
 
 type AreaElementProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'height' | 'width'>
-export interface TextAreaProps extends AreaElementProps, MarginProps, HeightProps, WidthProps {
-  disabled?: boolean
-  status?: Status | null
+export interface TextAreaProps
+  extends AreaElementProps,
+    StatusProps,
+    MarginProps,
+    HeightProps,
+    WidthProps {
   resize?: boolean
 }
 
@@ -21,41 +25,19 @@ interface AreaProps extends TextAreaProps {
 }
 
 const Area = styled.textarea<AreaProps>`
-  border: ${border('darkContrast')};
   border-radius: ${radius(8)};
   min-height: 100px;
   ${mediaGTE('small')} {
     min-width: 336px;
   }
-  box-sizing: border-box;
   ${textStyle('body')}
   padding: 8px 16px;
-  outline: none;
-  ${colorStyle('standard')};
   height: ${(p) => p.$height};
   width: ${(p) => p.$width};
   display: block;
   resize: ${(p) => (p.resize ? 'vertical' : 'none')};
 
-  &:first-line {
-    padding-right: 15px;
-  }
-
-  &:focus {
-    border-color: ${color('callToAction')};
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    border-color: ${color('lightGray')};
-    ${colorStyle('disable')};
-  }
-
-  &:disabled::placeholder {
-    color: ${color('mediumGray')};
-    font-style: oblique;
-  }
-  ${getStatusStyles}
+  ${commonInputStyles}
 `
 
 const TextAreaBase = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(

@@ -7,13 +7,13 @@ export type Status = typeof statuses[number]
 type StatusBackground = 'successLight' | 'warningLight' | 'errorLight'
 export const StatusPropType = PropTypes.oneOf<Status>(statuses)
 
-interface StatusProps {
-  theme: CactusTheme
+export interface StatusProps {
   status?: Status | null
+  /** !important */
   disabled?: boolean
 }
 
-export const getStatusStyles = (p: StatusProps): CSSObject | undefined => {
+export const getStatusStyles = (p: StatusProps & { theme: CactusTheme }): CSSObject | undefined => {
   if (!p.disabled && statuses.includes(p.status as any)) {
     return {
       borderColor: color(p, p.status as Status),
