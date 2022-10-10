@@ -2,6 +2,7 @@ import { gte, isEqual, lte, noop } from 'lodash'
 import React from 'react'
 import { css } from 'styled-components'
 
+import { isIE } from '../helpers/constants'
 import { useValue } from '../helpers/react'
 
 const gridKeyOrder = ['header', 'left', 'component', 'right', 'footer'] as const
@@ -108,7 +109,17 @@ interface LayoutCtx extends BaseContext {
   dispatch: React.Dispatch<LayoutAction>
 }
 
-const INITIAL_STATE: LayoutState = { components: [], styles: [], classes: {} }
+const BASIC_GRID = {
+  display: isIE ? '-ms-grid' : 'grid',
+  // Using 'fixed' + overflow, Safari won't properly display fixed children.
+  position: 'absolute',
+  overflow: 'auto',
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0,
+}
+const INITIAL_STATE: LayoutState = { components: [], styles: [BASIC_GRID], classes: {} }
 
 export const LayoutContext = React.createContext<LayoutCtx>({
   dispatch: noop,
@@ -269,12 +280,6 @@ const toComponentLayout = (role: string, position: Position, order: number): Com
 }
 
 const ZERO_POSITION: CSSPosition = { top: 0, left: 0, bottom: 0, right: 0 }
-const BASIC_GRID = `
-  display: -ms-grid;
-  display: grid;
-  position: absolute;
-  overflow: auto;
-`
 
 const generateGridStyles = (components: ComponentLayout[]): StyleList => {
   const styles: StyleList = [BASIC_GRID]
@@ -312,10 +317,6 @@ const generateGridStyles = (components: ComponentLayout[]): StyleList => {
     -ms-grid-columns: ${colValue};
     grid-template-columns: ${colValue};
   `)
-  // Some CSS engines are too dumb to figure out height/width from the fixed position offsets.
-  fixed.width = `calc(100% - ${fixed.left + fixed.right}px)`
-  fixed.height = `calc(100% - ${fixed.top + fixed.bottom}px)`
-  styles.push(fixedKeyOrder.reduce(reduceToPx, fixed))
   // The last line is at +1, and another +1 to offset negative line numbers starting at -1.
   const lastRow = rows.length + 2
   const lastColumn = columns.length + 2
@@ -325,6 +326,8 @@ const generateGridStyles = (components: ComponentLayout[]): StyleList => {
       ${asStyle('column', grid, gridCols, lastColumn)}
     }`)
   }
+  // Putting this as the last array item for the Safari height workaround.
+  styles.push(fixed)
   return styles
 }
 
