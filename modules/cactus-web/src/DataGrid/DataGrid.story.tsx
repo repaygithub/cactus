@@ -177,6 +177,8 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
   lastPageLabel,
   margin,
   sticky,
+  disableFocusStyles,
+  disableHoverStyles,
 }) => {
   const size = useContext(ScreenSizeContext)
   const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
@@ -269,7 +271,13 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
           )}
         </DataGrid.TopSection>
       )}
-      <DataGrid.Table data={usableData} dividers={dividers} sticky={sticky}>
+      <DataGrid.Table
+        data={usableData}
+        dividers={dividers}
+        sticky={sticky}
+        disableFocusStyles={disableFocusStyles}
+        disableHoverStyles={disableHoverStyles}
+      >
         <DataGrid.DataColumn id="name" title="Name" align={align} />
         <DataGrid.DataColumn id="created" title="Created" sortable={sortableCols} align={align} />
         <DataGrid.DataColumn id="updated" title="Updated" sortable={sortableCols} align={align} />
@@ -399,6 +407,8 @@ BasicUsage.args = {
   spacingBottom: '4',
   sticky: 'none',
   fullWidth: true,
+  disableFocusStyles: false,
+  disableHoverStyles: false,
 }
 
 export const LotsAndLotsOfRows = DataGridContainer.bind(null)
