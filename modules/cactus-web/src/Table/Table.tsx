@@ -1,4 +1,13 @@
-import { CactusTheme, ColorStyle, TextStyle } from '@repay/cactus-theme'
+import {
+  border,
+  boxShadow,
+  CactusTheme,
+  color,
+  ColorStyle,
+  radius,
+  TextStyle,
+  textStyle,
+} from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext, useLayoutEffect } from 'react'
 import styled, {
@@ -12,7 +21,7 @@ import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { extractMargins } from '../helpers/omit'
 import { useMergedRefs } from '../helpers/react'
-import { border, boxShadow, media, radius, textStyle } from '../helpers/theme'
+import { media } from '../helpers/theme'
 import variant from '../helpers/variant'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
@@ -285,7 +294,7 @@ const ContentBox = styled.div`
 const StyledCell = styled.td(
   variant({
     table: css<TableCellProps>`
-      text-align: ${(p): string => p.align || 'left'};
+      text-align: ${(p) => p.align || 'left'};
       padding: 16px;
       ${(p) =>
         p.width
@@ -301,7 +310,7 @@ const StyledCell = styled.td(
             `};
     `,
     mini: css<TableCellProps>`
-      text-align: ${(p): string => p.align || 'left'};
+      text-align: ${(p) => p.align || 'left'};
       padding: 8px;
       ${(p) => p.width && width};
     `,
@@ -315,7 +324,7 @@ const StyledCell = styled.td(
         box-sizing: border-box;
         padding: 8px 16px;
         :nth-of-type(even) {
-          background-color: ${(p): string => p.theme.colors.lightContrast};
+          background-color: ${color('lightContrast')};
         }
         :last-child {
           border-bottom-left-radius: inherit;
@@ -341,8 +350,8 @@ const StyledHeader = styled.thead<TableHeaderProps>`
   &&&&& th,
   &&&&& td {
     text-transform: uppercase;
-    border: ${(p): string => border(p.theme, 'base')};
-    border-right: ${(p): string => (p.dividers ? border(p.theme, 'mediumContrast') : '')};
+    border: ${border('base')};
+    border-right: ${(p) => (p.dividers ? border(p.theme, 'mediumContrast') : '')};
     ${(p): ColorStyle => p.theme.colorStyles.base};
   }
   ${headerVariants}
@@ -365,20 +374,19 @@ const getCTABorder = (p: ThemeProps<CactusTheme>, focus?: boolean): ReturnType<t
 
 const table = css<TableProps>`
   display: table;
-  ${(p): FlattenSimpleInterpolation | TextStyle =>
-    textStyle(p.theme, p.variant === 'mini' ? 'small' : 'body')};
+  ${(p) => textStyle(p.theme, p.variant === 'mini' ? 'small' : 'body')};
   border-spacing: 0;
   td,
   th {
-    border-right: ${(p): string => (p.dividers ? border(p.theme, 'lightContrast') : '')};
-    background-color: ${(p): string => p.theme.colors.white};
-    border-top: ${(p): string => border(p.theme, 'transparent')};
-    border-bottom: ${(p): string => border(p.theme, 'transparent')};
+    border-right: ${(p) => (p.dividers ? border(p.theme, 'lightContrast') : '')};
+    background-color: ${color('white')};
+    border-top: ${border('transparent')};
+    border-bottom: ${border('transparent')};
     :first-child {
-      border-left: ${(p): string => border(p.theme, 'lightContrast')};
+      border-left: ${border('lightContrast')};
     }
     :last-child {
-      border-right: ${(p): string => border(p.theme, 'lightContrast')};
+      border-right: ${border('lightContrast')};
       :focus-within {
         z-index: 1;
       }
@@ -389,10 +397,10 @@ const table = css<TableProps>`
   tr:nth-of-type(even) {
     td,
     th {
-      background-color: ${(p): string => p.theme.colors.lightContrast};
+      background-color: ${color('lightContrast')};
     }
     td:not(:last-child) {
-      border-right: ${(p): string => (p.dividers ? border(p.theme, 'white') : '')};
+      border-right: ${(p) => (p.dividers ? border(p.theme, 'white') : '')};
     }
   }
 
@@ -413,7 +421,7 @@ const table = css<TableProps>`
   thead > tr:first-child {
     th,
     td {
-      border-top-color: ${(p): string => p.theme.colors.lightContrast};
+      border-top-color: ${color('lightContrast')};
       :first-child {
         ${getShape('top-left')};
       }
@@ -440,7 +448,7 @@ const table = css<TableProps>`
     & > tr:last-child {
       th,
       td {
-        border-bottom-color: ${(p): string => p.theme.colors.lightContrast};
+        border-bottom-color: ${(p) => p.theme.colors.lightContrast};
         :first-child {
           ${getShape('bottom-left')};
         }
@@ -453,7 +461,7 @@ const table = css<TableProps>`
 `
 
 const card = css<TableProps>`
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'tiny')};
+  ${textStyle('tiny')};
   overflow-wrap: break-word;
   &,
   thead,
@@ -468,9 +476,9 @@ const card = css<TableProps>`
     flex-flow: column nowrap;
     min-width: 240px;
     max-width: 360px;
-    ${(p): string => boxShadow(p.theme, 1)};
-    background-color: ${(p): string => p.theme.colors.white};
-    border: ${(p): string => border(p.theme, 'lightContrast')};
+    ${boxShadow(1)}
+    background-color: ${color('white')};
+    border: ${border('lightContrast')};
     border-radius: ${radius(8)};
     margin: 4px;
     outline: 0;
@@ -478,7 +486,7 @@ const card = css<TableProps>`
       ${(p) =>
         !p.disableFocusStyles &&
         css`
-          border-color: ${p.theme.colors.callToAction};
+          border-color: ${color('callToAction')};
         `}
     }
   }
@@ -489,7 +497,7 @@ const card = css<TableProps>`
     max-width: 100%;
     padding: 8px 16px;
     :nth-of-type(even) {
-      background-color: ${(p): string => p.theme.colors.lightContrast};
+      background-color: ${color('lightContrast')};
     }
     :last-child {
       border-bottom-left-radius: inherit;
@@ -499,8 +507,8 @@ const card = css<TableProps>`
 `
 
 const StyledTable = styled.table<TableProps>`
-  ${(p): string => (p.fullWidth ? 'min-width: 100%' : '')};
-  color: ${(p): string => p.theme.colors.darkestContrast};
+  ${(p) => (p.fullWidth ? 'min-width: 100%' : '')};
+  color: ${color('darkestContrast')};
   th {
     font-weight: 600;
   }
