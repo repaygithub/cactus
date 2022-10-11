@@ -207,7 +207,7 @@ export const TableRow: React.FC<TableRowProps> = ({ children, ...props }): React
 
   return (
     <TableContext.Provider value={{ ...context, cellIndex: 0 }}>
-      <tr {...props} tabIndex={0}>
+      <tr tabIndex={0} {...props}>
         {children}
       </tr>
     </TableContext.Provider>
