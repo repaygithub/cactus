@@ -38,6 +38,8 @@ interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableEle
   as?: React.ElementType
   dividers?: boolean
   sticky?: StickyColAlignment
+  disableFocusStyles?: boolean
+  disableHoverStyles?: boolean
 }
 
 interface TableHeaderProps extends React.TableHTMLAttributes<HTMLTableSectionElement> {
@@ -49,8 +51,7 @@ interface TableHeaderProps extends React.TableHTMLAttributes<HTMLTableSectionEle
 export interface TableCellProps
   extends WidthProps,
     Omit<
-      React.TdHTMLAttributes<HTMLTableDataCellElement> &
-        React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
+      React.TdHTMLAttributes<HTMLTableCellElement> & React.ThHTMLAttributes<HTMLTableCellElement>,
       'width'
     > {
   variant?: TableVariant
@@ -152,7 +153,7 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
   }
 )
 
-export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellProps>(
+export const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
   ({ children, ...props }, ref): React.ReactElement => {
     const context = useContext<TableContextProps>(TableContext)
     if (context.cellType && !props.as) {
@@ -217,7 +218,7 @@ type ForwardRefComponent<T, P> = React.ForwardRefExoticComponent<
 >
 type TableComponentType = ForwardRefComponent<HTMLTableElement, TableProps> & {
   Header: ForwardRefComponent<HTMLTableSectionElement, TableHeaderProps>
-  Cell: ForwardRefComponent<HTMLTableDataCellElement, TableCellProps>
+  Cell: ForwardRefComponent<HTMLTableCellElement, TableCellProps>
   Row: React.FC<TableRowProps>
   Body: React.ElementType<TableBodyProps>
 }
@@ -237,12 +238,16 @@ Table.displayName = 'Table'
 
 Table.propTypes = {
   fullWidth: PropTypes.bool,
+  disableFocusStyles: PropTypes.bool,
+  disableHoverStyles: PropTypes.bool,
   cardBreakpoint: PropTypes.oneOf<Size>(['tiny', 'small', 'medium', 'large', 'extraLarge']),
   variant: PropTypes.oneOf<TableVariant>(['table', 'card', 'mini']),
 }
 
 Table.defaultProps = {
   cardBreakpoint: 'tiny',
+  disableFocusStyles: false,
+  disableHoverStyles: false,
 }
 
 export default DefaultTable
@@ -392,11 +397,15 @@ const table = css<TableProps>`
   }
 
   &&& tr:hover {
-    ${getCTABorder}
+    ${(p) => !p.disableHoverStyles && getCTABorder(p)}
   }
   &&& tr:focus {
-    outline: 0;
-    ${(p) => getCTABorder(p, true)}
+    ${(p) =>
+      !p.disableFocusStyles &&
+      css`
+        outline: 0;
+        ${getCTABorder(p, true)}
+      `}
   }
   // first row
   & > tr:first-of-type,
@@ -443,7 +452,7 @@ const table = css<TableProps>`
   }
 `
 
-const card = css`
+const card = css<TableProps>`
   ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'tiny')};
   overflow-wrap: break-word;
   &,
@@ -466,7 +475,11 @@ const card = css`
     margin: 4px;
     outline: 0;
     :focus {
-      border-color: ${(p): string => p.theme.colors.callToAction};
+      ${(p) =>
+        !p.disableFocusStyles &&
+        css`
+          border-color: ${p.theme.colors.callToAction};
+        `}
     }
   }
   th,
