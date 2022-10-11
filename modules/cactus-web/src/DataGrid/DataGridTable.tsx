@@ -13,6 +13,8 @@ export interface DataGridTableProps {
   data: Datum[]
   dividers?: boolean
   sticky?: StickyColAlignment
+  disableFocusStyles?: boolean
+  disableHoverStyles?: boolean
 }
 
 const renderHeader = ({ columns, sortOptions, onSort, isCardView }: DataGridContextType) => (
@@ -123,6 +125,8 @@ DataGridTable.propTypes = {
   children: PropTypes.node.isRequired,
   data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   dividers: PropTypes.bool,
+  disableFocusStyles: PropTypes.bool,
+  disableHoverStyles: PropTypes.bool,
 }
 
 DataGridTable.displayName = 'Table'
