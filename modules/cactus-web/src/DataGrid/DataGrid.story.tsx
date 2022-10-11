@@ -145,6 +145,8 @@ interface Args {
   prevPageLabel: string
   nextPageLabel: string
   lastPageLabel: string
+  disableFocusStyles: boolean
+  disableHoverStyles: boolean
 }
 
 const DataGridContainer: Story<typeof DataGrid, Args> = ({
