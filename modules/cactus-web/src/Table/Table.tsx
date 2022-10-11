@@ -5,18 +5,11 @@ import {
   color,
   ColorStyle,
   radius,
-  TextStyle,
   textStyle,
 } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext, useLayoutEffect } from 'react'
-import styled, {
-  css,
-  DefaultTheme,
-  FlattenInterpolation,
-  FlattenSimpleInterpolation,
-  ThemeProps,
-} from 'styled-components'
+import styled, { css, DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { extractMargins } from '../helpers/omit'
