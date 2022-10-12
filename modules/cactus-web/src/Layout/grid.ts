@@ -113,13 +113,10 @@ const BASIC_GRID = {
   display: isIE ? '-ms-grid' : 'grid',
   // Using 'fixed' + overflow, Safari won't properly display fixed children.
   position: 'absolute',
-  overflow: 'auto',
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0,
+  overflow: 'visible',
 }
-const INITIAL_STATE: LayoutState = { components: [], styles: [BASIC_GRID], classes: {} }
+
+const INITIAL_STATE: LayoutState = { components: [], styles: [], classes: {} }
 
 export const LayoutContext = React.createContext<LayoutCtx>({
   dispatch: noop,
@@ -282,6 +279,7 @@ const toComponentLayout = (role: string, position: Position, order: number): Com
 const ZERO_POSITION: CSSPosition = { top: 0, left: 0, bottom: 0, right: 0 }
 
 const generateGridStyles = (components: ComponentLayout[]): StyleList => {
+  // @ts-ignore
   const styles: StyleList = [BASIC_GRID]
 
   const rows: Dimension[] = []
@@ -316,7 +314,18 @@ const generateGridStyles = (components: ComponentLayout[]): StyleList => {
     grid-template-rows: ${rowValue};
     -ms-grid-columns: ${colValue};
     grid-template-columns: ${colValue};
+    min-height: 100%;
+    width: 100%;
   `)
+  // @ts-ignore
+  fixed.paddingTop = fixed.top // @ts-ignore
+  fixed.paddingBottom = fixed.bottom // @ts-ignore
+  fixed.paddingLeft = fixed.left // @ts-ignore
+  fixed.paddingRight = fixed.right // @ts-ignore
+  delete fixed.left // @ts-ignore
+  delete fixed.bottom // @ts-ignore
+  delete fixed.top // @ts-ignore
+  delete fixed.right
   // The last line is at +1, and another +1 to offset negative line numbers starting at -1.
   const lastRow = rows.length + 2
   const lastColumn = columns.length + 2
@@ -408,7 +417,7 @@ const getFixedBox = (fixed: CSSPosition, layout: FixedLayout) => {
   // Delete the opposite: e.g. if this is top, delete bottom.
   delete box[fixedKeyOrder[(layout.index + 2) % 4]]
   // left/right are odd indexes, top/bottom are evens.
-  box[layout.index % 2 ? 'width' : 'height'] = `${layout.size}px`
+  box[layout.index % 2 ? 'width' : 'height'] = `${layout.size}px` // @ts-ignore
   fixed[layout.key] += layout.size
   return fixedKeyOrder.reduce(reduceToPx, box)
 }
