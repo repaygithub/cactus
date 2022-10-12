@@ -41,7 +41,7 @@ const getNotificationPosition = (
 
 const NotificationWrapper = styled.div<NotificationWrapperProps>`
   position: fixed;
-  z-index: 100;
+  z-index: 1000;
   background-color: ${(p) => p.theme.colors.white};
   border-radius: 8px;
 
