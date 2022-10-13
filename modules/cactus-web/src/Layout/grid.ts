@@ -272,8 +272,9 @@ const ZERO_POSITION: CSSPosition = { top: 0, left: 0, bottom: 0, right: 0 }
 const BASIC_GRID = `
   display: -ms-grid;
   display: grid;
-  position: absolute;
-  overflow: auto;
+  box-sizing: border-box;
+  width: 100vw;
+  min-height: 100vh;
 `
 
 const generateGridStyles = (components: ComponentLayout[]): StyleList => {
@@ -311,11 +312,11 @@ const generateGridStyles = (components: ComponentLayout[]): StyleList => {
     grid-template-rows: ${rowValue};
     -ms-grid-columns: ${colValue};
     grid-template-columns: ${colValue};
+    padding-left: ${fixed.left}px;
+    padding-right: ${fixed.right}px;
+    padding-top: ${fixed.top}px;
+    padding-bottom: ${fixed.bottom}px;
   `)
-  // Some CSS engines are too dumb to figure out height/width from the fixed position offsets.
-  fixed.width = `calc(100% - ${fixed.left + fixed.right}px)`
-  fixed.height = `calc(100% - ${fixed.top + fixed.bottom}px)`
-  styles.push(fixedKeyOrder.reduce(reduceToPx, fixed))
   // The last line is at +1, and another +1 to offset negative line numbers starting at -1.
   const lastRow = rows.length + 2
   const lastColumn = columns.length + 2

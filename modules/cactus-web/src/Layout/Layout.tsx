@@ -46,6 +46,7 @@ const Main = styled(MainImpl).withConfig(
   omitProps<MainProps & OverflowProps>(overflow, overflowX, overflowY)
 )`
   display: block;
+  position: relative;
   box-sizing: border-box;
   width: 100%;
   ${overflow};
