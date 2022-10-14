@@ -284,7 +284,7 @@ const generateGridStyles = (components: ComponentLayout[]): StyleList => {
   const gridItems: GridItem[] = []
   const gridRows: GridMap = {}
   const gridCols: GridMap = {}
-  const fixed: CSSPosition & Sizes = { ...ZERO_POSITION }
+  const fixed: CSSPosition & Sizes & { position?: 'fixed' | 'absolute' } = { ...ZERO_POSITION }
   for (const layout of components) {
     if (layout.type === 'fixed') {
       styles.push(css`
@@ -315,6 +315,13 @@ const generateGridStyles = (components: ComponentLayout[]): StyleList => {
   // Some CSS engines are too dumb to figure out height/width from the fixed position offsets.
   fixed.width = `calc(100% - ${fixed.left + fixed.right}px)`
   fixed.height = `calc(100% - ${fixed.top + fixed.bottom}px)`
+  if (
+    navigator.userAgent.match(/chrome|chromium/i) &&
+    navigator.userAgent.match(/android/i) &&
+    'ontouchstart' in document.documentElement
+  ) {
+    fixed.position = 'fixed'
+  }
   styles.push(fixedKeyOrder.reduce(reduceToPx, fixed))
   // The last line is at +1, and another +1 to offset negative line numbers starting at -1.
   const lastRow = rows.length + 2
