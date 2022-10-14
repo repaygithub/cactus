@@ -88,8 +88,8 @@ Layout.args = {
   rowCount: 3,
   hasBody: true,
   sticky: 'none',
-  disableFocusStyles: false,
-  disableHoverStyles: false,
+  rowFocus: 'default',
+  rowHover: true,
 }
 
 export const StylesOnly: TableStory = ({

@@ -21,6 +21,7 @@ import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSize
 type CellAlignment = 'center' | 'right' | 'left'
 type CellType = 'th' | 'td'
 type BorderCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+type FocusOption = 'none' | 'mouse-only' | 'default'
 export type TableVariant = 'table' | 'card' | 'mini'
 export type StickyColAlignment = 'right' | 'none'
 
@@ -31,6 +32,7 @@ interface TableContextProps {
   cellIndex: number
   variant: TableVariant
   dividers?: boolean
+  rowFocus: FocusOption
 }
 
 interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableElement> {
@@ -40,8 +42,8 @@ interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableEle
   as?: React.ElementType
   dividers?: boolean
   sticky?: StickyColAlignment
-  disableFocusStyles?: boolean
-  disableHoverStyles?: boolean
+  rowFocus?: FocusOption
+  rowHover?: boolean
 }
 
 interface TableHeaderProps extends React.TableHTMLAttributes<HTMLTableSectionElement> {
@@ -70,6 +72,7 @@ const DEFAULT_CONTEXT: TableContextProps = {
   cellIndex: 0,
   variant: 'table',
   dividers: false,
+  rowFocus: 'default',
 }
 
 const TableContext = createContext<TableContextProps>(DEFAULT_CONTEXT)
@@ -88,9 +91,12 @@ interface heightInfoProps {
 }
 
 export const Table = React.forwardRef<HTMLTableElement, TableProps>(
-  ({ children, cardBreakpoint, sticky = 'none', ...props }, ref): React.ReactElement => {
+  (
+    { children, cardBreakpoint, sticky = 'none', rowFocus = 'default', ...props },
+    ref
+  ): React.ReactElement => {
     const size = useContext(ScreenSizeContext)
-    const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [] }
+    const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [], rowFocus }
     const tableRef = React.useRef<HTMLTableElement>(null)
     const mergedRef = useMergedRefs(ref, tableRef)
     const marginProps = extractMargins(props)
@@ -202,12 +208,18 @@ export const TableHeader = React.forwardRef<HTMLTableSectionElement, TableHeader
   }
 )
 
+const focusMap: { [K in FocusOption]: number | undefined } = {
+  none: undefined,
+  'mouse-only': -1,
+  default: 0,
+}
+
 export const TableRow: React.FC<TableRowProps> = ({ children, ...props }): React.ReactElement => {
   const context = useContext<TableContextProps>(TableContext)
 
   return (
     <TableContext.Provider value={{ ...context, cellIndex: 0 }}>
-      <tr tabIndex={0} {...props}>
+      <tr tabIndex={focusMap[context.rowFocus]} {...props}>
         {children}
       </tr>
     </TableContext.Provider>
@@ -240,16 +252,16 @@ Table.displayName = 'Table'
 
 Table.propTypes = {
   fullWidth: PropTypes.bool,
-  disableFocusStyles: PropTypes.bool,
-  disableHoverStyles: PropTypes.bool,
+  rowFocus: PropTypes.oneOf<FocusOption>(['none', 'mouse-only', 'default']),
+  rowHover: PropTypes.bool,
   cardBreakpoint: PropTypes.oneOf<Size>(['tiny', 'small', 'medium', 'large', 'extraLarge']),
   variant: PropTypes.oneOf<TableVariant>(['table', 'card', 'mini']),
 }
 
 Table.defaultProps = {
   cardBreakpoint: 'tiny',
-  disableFocusStyles: false,
-  disableHoverStyles: false,
+  rowFocus: 'default',
+  rowHover: true,
 }
 
 export default DefaultTable
@@ -398,15 +410,11 @@ const table = css<TableProps>`
   }
 
   &&& tr:hover {
-    ${(p) => !p.disableHoverStyles && getCTABorder(p)}
+    ${(p) => p.rowHover && getCTABorder(p)}
   }
   &&& tr:focus {
-    ${(p) =>
-      !p.disableFocusStyles &&
-      css`
-        outline: 0;
-        ${getCTABorder(p, true)}
-      `}
+    outline: 0;
+    ${(p) => getCTABorder(p, true)}
   }
   // first row
   & > tr:first-of-type,
@@ -441,7 +449,7 @@ const table = css<TableProps>`
     & > tr:last-child {
       th,
       td {
-        border-bottom-color: ${(p) => p.theme.colors.lightContrast};
+        border-bottom-color: ${color('lightContrast')};
         :first-child {
           ${getShape('bottom-left')};
         }
@@ -476,11 +484,7 @@ const card = css<TableProps>`
     margin: 4px;
     outline: 0;
     :focus {
-      ${(p) =>
-        !p.disableFocusStyles &&
-        css`
-          border-color: ${color('callToAction')};
-        `}
+      border-color: ${color('callToAction')};
     }
   }
   th,
