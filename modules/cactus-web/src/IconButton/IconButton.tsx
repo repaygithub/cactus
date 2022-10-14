@@ -3,7 +3,7 @@ import { CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
+import { margin, MarginProps, system } from 'styled-system'
 
 import { isIE } from '../helpers/constants'
 import { getOmittableProps } from '../helpers/omit'
@@ -160,6 +160,22 @@ const IconButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 )
 
+const focusOutline = system({
+  iconSize: (value: IconButtonSizes) => {
+    const offset = focusOutlineSpacing[value] || focusOutlineSpacing.medium
+    const styles: Record<string, string> = {
+      height: `calc(100% + ${offset}px)`,
+      width: `calc(100% + ${offset}px)`,
+    }
+    if (isIE) {
+      const ieOffset = offset / 2
+      styles.top = `-${ieOffset + 1}px`
+      styles.left = `-${ieOffset}px`
+    }
+    return styles
+  },
+})
+
 const styleProps = getOmittableProps(margin, 'display', 'inverse', 'variant', 'iconSize')
 export const IconButton = styled(IconButtonBase).withConfig({
   shouldForwardProp: (p) => !styleProps.has(p),
@@ -185,19 +201,7 @@ export const IconButton = styled(IconButtonBase).withConfig({
       content: '';
       display: block;
       position: absolute;
-      ${(p) => `
-        height: calc(100% + ${focusOutlineSpacing[p.iconSize || 'medium']}px);
-        width: calc(100% + ${focusOutlineSpacing[p.iconSize || 'medium']}px);
-      `}
-      ${(p) => {
-        if (isIE) {
-          const IEOffset = focusOutlineSpacing[p.iconSize || 'medium'] / 2
-          return `
-            top: -${IEOffset + 1}px;
-            left: -${IEOffset}px;
-          `
-        }
-      }}
+      ${focusOutline}
       ${(p) => `border: ${borderSize(p)} solid;`}
       ${(p) => shapeMap[p.theme.shape]}
       border-color: ${(p): string => p.theme.colors.callToAction};
