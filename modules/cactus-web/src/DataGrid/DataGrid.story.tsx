@@ -2,7 +2,7 @@ import React, { ReactElement, useContext, useState } from 'react'
 
 import { DataGrid, ScreenSizeContext, SIZES, SplitButton } from '../'
 import { HIDE_CONTROL, SPACE, Story, STRING } from '../helpers/storybook'
-import { StickyColAlignment } from '../Table/Table'
+import { FocusOption, StickyColAlignment } from '../Table/Table'
 import { JustifyContent } from './types'
 
 interface Datum {
@@ -145,8 +145,8 @@ interface Args {
   prevPageLabel: string
   nextPageLabel: string
   lastPageLabel: string
-  disableFocusStyles: boolean
-  disableHoverStyles: boolean
+  rowFocus: FocusOption
+  rowHover: boolean
 }
 
 const DataGridContainer: Story<typeof DataGrid, Args> = ({
@@ -179,8 +179,8 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
   lastPageLabel,
   margin,
   sticky,
-  disableFocusStyles,
-  disableHoverStyles,
+  rowFocus,
+  rowHover,
 }) => {
   const size = useContext(ScreenSizeContext)
   const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
@@ -277,8 +277,8 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
         data={usableData}
         dividers={dividers}
         sticky={sticky}
-        disableFocusStyles={disableFocusStyles}
-        disableHoverStyles={disableHoverStyles}
+        rowFocus={rowFocus}
+        rowHover={rowHover}
       >
         <DataGrid.DataColumn id="name" title="Name" align={align} />
         <DataGrid.DataColumn id="created" title="Created" sortable={sortableCols} align={align} />
@@ -409,8 +409,8 @@ BasicUsage.args = {
   spacingBottom: '4',
   sticky: 'none',
   fullWidth: true,
-  disableFocusStyles: false,
-  disableHoverStyles: false,
+  rowFocus: 'default',
+  rowHover: true,
 }
 
 export const LotsAndLotsOfRows = DataGridContainer.bind(null)

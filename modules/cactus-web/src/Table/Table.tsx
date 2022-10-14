@@ -21,7 +21,7 @@ import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSize
 type CellAlignment = 'center' | 'right' | 'left'
 type CellType = 'th' | 'td'
 type BorderCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-type FocusOption = 'none' | 'mouse-only' | 'default'
+export type FocusOption = 'none' | 'mouse-only' | 'default'
 export type TableVariant = 'table' | 'card' | 'mini'
 export type StickyColAlignment = 'right' | 'none'
 
