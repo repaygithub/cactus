@@ -269,10 +269,16 @@ const toComponentLayout = (role: string, position: Position, order: number): Com
 }
 
 const ZERO_POSITION: CSSPosition = { top: 0, left: 0, bottom: 0, right: 0 }
+// Special case fix for a bug that is caused by the address bar disappearing on Chrome for Android.
+const IS_ANDROID_CHROME =
+  navigator.userAgent.match(/chrome|chromium/i) &&
+  navigator.userAgent.match(/android/i) &&
+  'ontouchstart' in document.documentElement
+const POSITION = IS_ANDROID_CHROME ? 'fixed' : 'absolute'
 const BASIC_GRID = `
   display: -ms-grid;
   display: grid;
-  position: absolute;
+  position: ${POSITION};
   overflow: auto;
 `
 
@@ -284,7 +290,7 @@ const generateGridStyles = (components: ComponentLayout[]): StyleList => {
   const gridItems: GridItem[] = []
   const gridRows: GridMap = {}
   const gridCols: GridMap = {}
-  const fixed: CSSPosition & Sizes & { position?: 'fixed' | 'absolute' } = { ...ZERO_POSITION }
+  const fixed: CSSPosition & Sizes = { ...ZERO_POSITION }
   for (const layout of components) {
     if (layout.type === 'fixed') {
       styles.push(css`
@@ -315,13 +321,6 @@ const generateGridStyles = (components: ComponentLayout[]): StyleList => {
   // Some CSS engines are too dumb to figure out height/width from the fixed position offsets.
   fixed.width = `calc(100% - ${fixed.left + fixed.right}px)`
   fixed.height = `calc(100% - ${fixed.top + fixed.bottom}px)`
-  if (
-    navigator.userAgent.match(/chrome|chromium/i) &&
-    navigator.userAgent.match(/android/i) &&
-    'ontouchstart' in document.documentElement
-  ) {
-    fixed.position = 'fixed'
-  }
   styles.push(fixedKeyOrder.reduce(reduceToPx, fixed))
   // The last line is at +1, and another +1 to offset negative line numbers starting at -1.
   const lastRow = rows.length + 2
