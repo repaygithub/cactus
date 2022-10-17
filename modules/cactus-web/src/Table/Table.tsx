@@ -21,7 +21,7 @@ import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSize
 type CellAlignment = 'center' | 'right' | 'left'
 type CellType = 'th' | 'td'
 type BorderCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-export type FocusOption = 'none' | 'mouse-only' | 'default'
+export type FocusOption = boolean | 'mouse-only'
 export type TableVariant = 'table' | 'card' | 'mini'
 export type StickyColAlignment = 'right' | 'none'
 
@@ -72,7 +72,7 @@ const DEFAULT_CONTEXT: TableContextProps = {
   cellIndex: 0,
   variant: 'table',
   dividers: false,
-  rowFocus: 'default',
+  rowFocus: true,
 }
 
 const TableContext = createContext<TableContextProps>(DEFAULT_CONTEXT)
@@ -90,76 +90,72 @@ interface heightInfoProps {
   cells: any[]
 }
 
-export const Table = React.forwardRef<HTMLTableElement, TableProps>(
-  (
-    { children, cardBreakpoint, sticky = 'none', rowFocus = 'default', ...props },
-    ref
-  ): React.ReactElement => {
-    const size = useContext(ScreenSizeContext)
-    const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [], rowFocus }
-    const tableRef = React.useRef<HTMLTableElement>(null)
-    const mergedRef = useMergedRefs(ref, tableRef)
-    const marginProps = extractMargins(props)
-    useLayoutEffect(() => {
-      const heightInfo: heightInfoProps[] = []
-      let height = 0
+export const Table = React.forwardRef<HTMLTableElement, TableProps>((initProps, ref) => {
+  const { children, cardBreakpoint, sticky = 'none', rowFocus = true, ...props } = initProps
+  const size = useContext(ScreenSizeContext)
+  const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [], rowFocus }
+  const tableRef = React.useRef<HTMLTableElement>(null)
+  const mergedRef = useMergedRefs(ref, tableRef)
+  const marginProps = extractMargins(props)
+  useLayoutEffect(() => {
+    const heightInfo: heightInfoProps[] = []
+    let height = 0
 
-      if (context.variant === 'card') {
-        const cells = tableRef.current?.querySelectorAll(`${StyledCell}`)
-        if (cells && cells.length > 0) {
-          cells.forEach((cell) => {
-            const cellIndex = (cell as HTMLTableCellElement).cellIndex
-            const info = heightInfo[cellIndex] || (heightInfo[cellIndex] = { max: 0, cells: [] })
-            const [first, second] = cell.childNodes as any
-            const rect1 = first?.getBoundingClientRect?.()
-            const rect2 = second?.getBoundingClientRect?.()
-            if (rect1) {
-              if (!rect2 || rect1.width + rect2.width < cell.clientWidth - 16) {
-                height = rect1.height
-              } else {
-                height = rect1.height + rect2.height + 16
-              }
-              info.max = Math.max(info.max, height)
-              info.cells.push({ height, cell })
+    if (context.variant === 'card') {
+      const cells = tableRef.current?.querySelectorAll(`${StyledCell}`)
+      if (cells && cells.length > 0) {
+        cells.forEach((cell) => {
+          const cellIndex = (cell as HTMLTableCellElement).cellIndex
+          const info = heightInfo[cellIndex] || (heightInfo[cellIndex] = { max: 0, cells: [] })
+          const [first, second] = cell.childNodes as any
+          const rect1 = first?.getBoundingClientRect?.()
+          const rect2 = second?.getBoundingClientRect?.()
+          if (rect1) {
+            if (!rect2 || rect1.width + rect2.width < cell.clientWidth - 16) {
+              height = rect1.height
+            } else {
+              height = rect1.height + rect2.height + 16
             }
-          })
+            info.max = Math.max(info.max, height)
+            info.cells.push({ height, cell })
+          }
+        })
 
-          // We queue the updates then make them all at once to avoid layout thrashing.
-          for (const info of heightInfo) {
-            for (const cellInfo of info.cells) {
-              cellInfo.cell.style.minHeight = `${info.max}px`
-            }
+        // We queue the updates then make them all at once to avoid layout thrashing.
+        for (const info of heightInfo) {
+          for (const cellInfo of info.cells) {
+            cellInfo.cell.style.minHeight = `${info.max}px`
           }
         }
       }
-    })
+    }
+  })
 
-    if (props.variant) {
-      context.variant = props.variant
-    } else if (cardBreakpoint && size <= SIZES[cardBreakpoint]) {
-      context.variant = 'card'
-    }
-    if (props.dividers) {
-      context.dividers = props.dividers
-    }
-    props.variant = context.variant
-    return (
-      <TableContext.Provider value={context}>
-        {props.as ? (
+  if (props.variant) {
+    context.variant = props.variant
+  } else if (cardBreakpoint && size <= SIZES[cardBreakpoint]) {
+    context.variant = 'card'
+  }
+  if (props.dividers) {
+    context.dividers = props.dividers
+  }
+  props.variant = context.variant
+  return (
+    <TableContext.Provider value={context}>
+      {props.as ? (
+        <StyledTable {...props} sticky={sticky} ref={mergedRef}>
+          {children}
+        </StyledTable>
+      ) : (
+        <Wrapper {...marginProps} fullWidth={props.fullWidth}>
           <StyledTable {...props} sticky={sticky} ref={mergedRef}>
             {children}
           </StyledTable>
-        ) : (
-          <Wrapper {...marginProps} fullWidth={props.fullWidth}>
-            <StyledTable {...props} sticky={sticky} ref={mergedRef}>
-              {children}
-            </StyledTable>
-          </Wrapper>
-        )}
-      </TableContext.Provider>
-    )
-  }
-)
+        </Wrapper>
+      )}
+    </TableContext.Provider>
+  )
+})
 
 export const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
   ({ children, ...props }, ref): React.ReactElement => {
@@ -208,18 +204,13 @@ export const TableHeader = React.forwardRef<HTMLTableSectionElement, TableHeader
   }
 )
 
-const focusMap: { [K in FocusOption]: number | undefined } = {
-  none: undefined,
-  'mouse-only': -1,
-  default: 0,
-}
-
 export const TableRow: React.FC<TableRowProps> = ({ children, ...props }): React.ReactElement => {
   const context = useContext<TableContextProps>(TableContext)
+  const tabIndex = context.rowFocus === 'mouse-only' ? -1 : context.rowFocus ? 0 : undefined
 
   return (
     <TableContext.Provider value={{ ...context, cellIndex: 0 }}>
-      <tr tabIndex={focusMap[context.rowFocus]} {...props}>
+      <tr tabIndex={tabIndex} {...props}>
         {children}
       </tr>
     </TableContext.Provider>
@@ -252,7 +243,8 @@ Table.displayName = 'Table'
 
 Table.propTypes = {
   fullWidth: PropTypes.bool,
-  rowFocus: PropTypes.oneOf<FocusOption>(['none', 'mouse-only', 'default']),
+  // @ts-ignore
+  rowFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['mouse-only'])]),
   rowHover: PropTypes.bool,
   cardBreakpoint: PropTypes.oneOf<Size>(['tiny', 'small', 'medium', 'large', 'extraLarge']),
   variant: PropTypes.oneOf<TableVariant>(['table', 'card', 'mini']),
@@ -260,7 +252,7 @@ Table.propTypes = {
 
 Table.defaultProps = {
   cardBreakpoint: 'tiny',
-  rowFocus: 'default',
+  rowFocus: true,
   rowHover: true,
 }
 

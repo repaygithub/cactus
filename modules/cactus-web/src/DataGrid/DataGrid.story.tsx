@@ -393,6 +393,7 @@ BasicUsage.argTypes = {
   nextPageLabel: { name: 'Pagination: nextPageLabel', ...STRING },
   lastPageLabel: { name: 'Pagination: lastPageLabel', ...STRING },
   margin: SPACE,
+  rowFocus: { options: [true, false, 'mouse-only'] },
 }
 BasicUsage.args = {
   initialData: INITIAL_DATA,
@@ -409,7 +410,7 @@ BasicUsage.args = {
   spacingBottom: '4',
   sticky: 'none',
   fullWidth: true,
-  rowFocus: 'default',
+  rowFocus: true,
   rowHover: true,
 }
 

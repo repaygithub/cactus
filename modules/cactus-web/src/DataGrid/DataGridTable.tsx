@@ -125,7 +125,8 @@ DataGridTable.propTypes = {
   children: PropTypes.node.isRequired,
   data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   dividers: PropTypes.bool,
-  rowFocus: PropTypes.oneOf<FocusOption>(['none', 'mouse-only', 'default']),
+  // @ts-ignore
+  rowFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['mouse-only'])]),
   rowHover: PropTypes.bool,
 }
 
