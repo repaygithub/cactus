@@ -4,6 +4,7 @@ import {
   CactusTheme,
   color,
   ColorStyle,
+  mediaGTE,
   radius,
   textStyle,
 } from '@repay/cactus-theme'
@@ -14,7 +15,6 @@ import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { extractMargins } from '../helpers/omit'
 import { useMergedRefs } from '../helpers/react'
-import { media } from '../helpers/theme'
 import variant from '../helpers/variant'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
@@ -298,10 +298,10 @@ const StyledCell = styled.td(
           ? width
           : css`
               min-width: calc(160px * 0.7125);
-              ${media(p.theme, 'large')} {
+              ${mediaGTE('large')} {
                 min-width: calc(160px * 0.875);
               }
-              ${media(p.theme, 'extraLarge')} {
+              ${mediaGTE('extraLarge')} {
                 min-width: 160px;
               }
             `};
