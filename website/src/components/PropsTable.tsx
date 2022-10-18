@@ -29,7 +29,7 @@ const renderTableHeader = ({ columns, children }: WithCols) => {
   }
 }
 
-export const Table = styled.table.attrs(renderTableHeader)`
+export const BaseTable = styled.table.attrs(renderTableHeader)`
   border-radius: 8px;
   max-width: 100%;
 
@@ -109,7 +109,7 @@ export const Table = styled.table.attrs(renderTableHeader)`
   }
 `
 
-const CactusTable = styled(Table)`
+const CactusTable = styled(BaseTable)`
   @media only screen and (max-width: 750px) {
     td:nth-of-type(1):before {
       content: ' Name';
@@ -133,7 +133,7 @@ const CactusTable = styled(Table)`
   }
 `
 
-const StylingTable = styled(Table)`
+const StylingTable = styled(BaseTable)`
   @media only screen and (max-width: 750px) {
     td:nth-of-type(1):before {
       content: ' Name';
