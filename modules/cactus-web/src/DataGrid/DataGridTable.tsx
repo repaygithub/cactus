@@ -4,7 +4,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import { border, radius } from '../helpers/theme'
-import Table, { StickyColAlignment } from '../Table/Table'
+import Table, { FocusOption, StickyColAlignment } from '../Table/Table'
 import { DataGridContext } from './helpers'
 import { CellInfo, Column, DataGridContextType, Datum } from './types'
 
@@ -13,6 +13,8 @@ export interface DataGridTableProps {
   data: Datum[]
   dividers?: boolean
   sticky?: StickyColAlignment
+  rowFocus?: FocusOption
+  rowHover?: boolean
 }
 
 const renderHeader = ({ columns, sortOptions, onSort, isCardView }: DataGridContextType) => (
@@ -123,6 +125,9 @@ DataGridTable.propTypes = {
   children: PropTypes.node.isRequired,
   data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   dividers: PropTypes.bool,
+  // @ts-ignore
+  rowFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['mouse-only'])]),
+  rowHover: PropTypes.bool,
 }
 
 DataGridTable.displayName = 'Table'
