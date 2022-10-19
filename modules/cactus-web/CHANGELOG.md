@@ -1,3 +1,30 @@
+# v9.11.0 (Wed Oct 19 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-1050 :: Table Hover/Focus Style Controls [#806](https://github.com/repaygithub/cactus/pull/806) ([@Dhalton](https://github.com/Dhalton))
+- removed reach from modal [#812](https://github.com/repaygithub/cactus/pull/812) ([@wilysword](https://github.com/wilysword))
+- CACTUS-972 Grid is grid [#799](https://github.com/repaygithub/cactus/pull/799) ([@wilysword](https://github.com/wilysword))
+- CACTUS-1034 :: MenuBar Active Styles [#801](https://github.com/repaygithub/cactus/pull/801) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🐛 Bug Fix
+
+- CACTUS-1063 :: Fix Layout Height Bug [#810](https://github.com/repaygithub/cactus/pull/810) ([@Dhalton](https://github.com/Dhalton))
+- CACTUS-1057 :: Fix Notification Provider [#808](https://github.com/repaygithub/cactus/pull/808) ([@daniloPenaR](https://github.com/daniloPenaR))
+- CACTUS-1043: add italic placeholder styles to TextArea [#802](https://github.com/repaygithub/cactus/pull/802) ([@wilysword](https://github.com/wilysword))
+
+#### 🏠 Internal
+
+- Fix Docs [#813](https://github.com/repaygithub/cactus/pull/813) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 3
+
+- [@Dhalton](https://github.com/Dhalton)
+- [@wilysword](https://github.com/wilysword)
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+
+---
+
 # v9.10.0 (Mon Sep 19 2022)
 
 #### 🚀 Enhancement
