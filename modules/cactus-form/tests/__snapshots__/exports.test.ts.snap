@@ -5,6 +5,7 @@ Array [
   "DependentField",
   "Field",
   "FieldSpy",
+  "Form",
   "validateRequired",
 ]
 `;

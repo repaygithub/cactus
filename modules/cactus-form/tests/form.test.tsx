@@ -2,16 +2,16 @@ import { CheckBoxGroup, StyleProvider } from '@repay/cactus-web'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
-import { Form, FormSpy } from 'react-final-form'
+import { Form as FinalForm, FormSpy } from 'react-final-form'
 
-import { DependentField, Field, FieldSpy } from '../src/index'
+import { DependentField, Field, FieldSpy, Form } from '../src/index'
 
 const noop = () => undefined
 const form = ({ children }: any) => React.createElement('form', {}, children)
 
 const App = (props: any) => (
   <StyleProvider>
-    <Form onSubmit={noop} component={form} {...props} />
+    <FinalForm onSubmit={noop} component={form} {...props} />
   </StyleProvider>
 )
 
@@ -477,6 +477,46 @@ describe('final-form functionality', () => {
       userEvent.type(getByTestId('field'), 'Hey')
       expect(value).toHaveTextContent('Hey')
       expect(error).toHaveTextContent('')
+    })
+  })
+
+  describe('<Form />', () => {
+    test('renders a form with no subscriptions by default', () => {
+      const renderCounter = jest.fn()
+      const { getByLabelText, getByText } = render(
+        <StyleProvider>
+          <Form onSubmit={noop}>
+            {renderCounter()}
+            <Field name="change" label="Change Me" />
+            <button type="submit">Submit</button>
+          </Form>
+        </StyleProvider>
+      )
+
+      const field = getByLabelText('Change Me')
+      const submit = getByText('Submit')
+      userEvent.type(field, 'Value Change')
+      userEvent.click(submit)
+
+      expect(renderCounter).toHaveBeenCalledTimes(1)
+    })
+
+    test('provides default reset behavior', () => {
+      const { getByLabelText, getByText } = render(
+        <StyleProvider>
+          <Form onSubmit={noop}>
+            <Field name="change" label="Change Me" />
+            <button type="reset">Reset</button>
+          </Form>
+        </StyleProvider>
+      )
+
+      const field = getByLabelText('Change Me')
+      const reset = getByText('Reset')
+      userEvent.type(field, 'Value Change')
+      userEvent.click(reset)
+
+      expect(field).toHaveValue('')
     })
   })
 })
