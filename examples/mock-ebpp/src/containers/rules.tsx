@@ -1,10 +1,10 @@
 import { RouteComponentProps } from '@reach/router'
-import { Field } from '@repay/cactus-form'
+import { Field, Form } from '@repay/cactus-form'
 import { ActionsAdd } from '@repay/cactus-icons'
 import { Accordion, Box, Button, Flex, Text, TextButton } from '@repay/cactus-web'
 import arrayMutators from 'final-form-arrays'
 import React from 'react'
-import { Form, FormRenderProps, useForm } from 'react-final-form'
+import { useForm } from 'react-final-form'
 import { Helmet } from 'react-helmet'
 
 import { post } from '../api'
@@ -40,20 +40,15 @@ const keyCounters: { [K in KeyPrefix]: number } = {
   action: 0,
 }
 
-const SUB = {}
-
 const Rules: React.FC<RouteComponentProps> = () => {
   const handleSubmit = ({ rules }: FormRules): void => {
     post(rules)
     console.log((window as any).apiData)
   }
   return (
-    <Form
-      component={RulesForm}
-      mutators={arrayMutators as any}
-      onSubmit={handleSubmit}
-      subscription={SUB}
-    />
+    <Form mutators={arrayMutators as any} onSubmit={handleSubmit}>
+      <RulesForm />
+    </Form>
   )
 }
 
@@ -92,7 +87,7 @@ const useFieldArray = (name: string, prefix: KeyPrefix) => {
   }
 }
 
-const RulesForm = ({ form, handleSubmit }: FormRenderProps<FormRules>) => {
+const RulesForm = () => {
   const {
     fields: rules,
     newestKey: newestRule,
@@ -102,15 +97,7 @@ const RulesForm = ({ form, handleSubmit }: FormRenderProps<FormRules>) => {
     moveDown: handleRuleDownClick,
   } = useFieldArray('rules', 'rule')
   return (
-    <Box
-      as="form"
-      onSubmit={handleSubmit}
-      onReset={() => form.reset()}
-      borderColor="base"
-      borderWidth="2px"
-      borderStyle="solid"
-      marginX="5%"
-    >
+    <Box borderColor="base" borderWidth="2px" borderStyle="solid" marginX="5%">
       <Helmet>
         <title>Rules</title>
       </Helmet>
