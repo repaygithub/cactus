@@ -7,10 +7,12 @@ order: 3
 
 For the most part you can just use [React Final Form](https://final-form.org/docs/react-final-form/getting-started)
 as it's documented, substituting our `Field` component for theirs.
-We also add two new components:
+We also add two new components, as well as a basic `Form` wrapper and our own version of React Final Form's `FormSpy`:
 
 - `DependentField` is like a `Field`, but takes a set of field names and a callback to use when any of those fields changes.
 - `FieldSpy` is analagous to [FormSpy](https://final-form.org/docs/react-final-form/api/FormSpy), but for a single field.
+- `FormSpy` works the same way that React Final Form's `FormSpy` works, except that it includes a fix for a bug where the initial state was incorrect.
+- `Form` is a wrapper around React Final Form's `Form` component that sets an empty subscription by default, and sets the `onReset` handler on the `form` for you.
 
 ## Field
 
@@ -215,4 +217,68 @@ const MyForm = (props) => (
     </FieldSpy>
   </Form>
 )
+```
+
+## FormSpy
+
+A re-implementation of [FormSpy](https://final-form.org/docs/react-final-form/api/FormSpy), but with a
+fix for a bug that sometimes caused incorrect initial values on the first render. Allows you to spy on
+form state values and re-render a section of your form with updated values when the values you spy on change.
+If you provide an `onChange` handler, `FormSpy` will return `null`.
+
+```
+const spyOn = { dirty: true }
+const MyForm = (props) => (
+  <Form {...props}>
+    <Field name="power" type="number" />
+    <FormSpy subscription={spyOn}>
+      {({ dirty }) => (
+        <span>Dirty value: {dirty}</span>
+      )}
+    </FormSpy>
+  </Form>
+)
+```
+
+OR
+
+```
+const spyOn = { dirty: true }
+const MyForm = (props) => (
+  <Form {...props}>
+    <Field name="power" type="number" />
+    <FormSpy
+      subscription={spyOn}
+      render={({ dirty }) => <span>Dirty value: {dirty}</span>}
+    />
+  </Form>
+)
+```
+
+OR
+
+```
+const spyOn = { dirty: true }
+const RenderOnDirtyChange = ({ dirty }) => <span>Dirty value: {dirty}</span>
+const MyForm = (props) => (
+  <Form {...props}>
+    <FormSpy subscription={spyOn} component={RenderOnDirtyChange} />
+  </Form>
+)
+```
+
+## Form
+
+A wrapper around [Form](https://final-form.org/docs/react-final-form/api/Form) that includes an empty subscription
+by default. It will also include a basic render function and form reset function if neither `component` or `render`
+props are provided. Because the subscription is empty by default, we recommend that you use spies (`FormSpy`, `FieldSpy`)
+to hook into form state changes.
+
+```
+<Form>
+  <Field name="power" type="number" />
+  <button type="reset">
+    Reset handler included in 'Form'
+  </button>
+</Form>
 ```
