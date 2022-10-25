@@ -1,4 +1,5 @@
 import { formSubscriptionItems } from 'final-form'
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Form as FinalForm, FormProps as FinalFormProps, FormRenderProps } from 'react-final-form'
 
@@ -21,9 +22,32 @@ function Form<FormValues>(props: FinalFormProps<FormValues>) {
     props = { ...props, render: renderSimpleForm }
     delete props.component
   }
-  console.log(props.subscription)
   return FinalForm(props)
 }
 Form.defaultProps = { subscription: {} }
+
+const requireOneProp = (props: FinalFormProps, propName: string, componentName: string) => {
+  if (!props.component && !props.render && !props.children) {
+    return new Error(
+      `One of props 'component', 'render', or 'children' was not specified in '${componentName}.'`
+    )
+  }
+}
+
+Form.propTypes = {
+  component: requireOneProp,
+  render: requireOneProp,
+  children: requireOneProp,
+  onSubmit: PropTypes.func.isRequired,
+  debug: PropTypes.func,
+  decorators: PropTypes.arrayOf(PropTypes.func),
+  form: PropTypes.object,
+  initialValues: PropTypes.object,
+  initialValuesEqual: PropTypes.func,
+  keepDirtyOnReinitialize: PropTypes.bool,
+  mutators: PropTypes.objectOf(PropTypes.func),
+  validate: PropTypes.func,
+  validateOnBlur: PropTypes.bool,
+}
 
 export default Form
