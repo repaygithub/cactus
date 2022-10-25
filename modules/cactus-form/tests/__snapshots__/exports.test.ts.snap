@@ -6,6 +6,7 @@ Array [
   "Field",
   "FieldSpy",
   "Form",
+  "FormSpy",
   "validateRequired",
 ]
 `;

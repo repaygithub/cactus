@@ -2,9 +2,9 @@ import { CheckBoxGroup, StyleProvider } from '@repay/cactus-web'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
-import { Form as FinalForm, FormSpy } from 'react-final-form'
+import { Form as FinalForm, FormSpy as FinalFormSpy } from 'react-final-form'
 
-import { DependentField, Field, FieldSpy, Form } from '../src/index'
+import { DependentField, Field, FieldSpy, Form, FormSpy } from '../src/index'
 
 const noop = () => undefined
 const form = ({ children }: any) => React.createElement('form', {}, children)
@@ -14,6 +14,15 @@ const App = (props: any) => (
     <FinalForm onSubmit={noop} component={form} {...props} />
   </StyleProvider>
 )
+const hasFormApi = (props: Record<string, any>) => {
+  expect(props.form).toBeDefined()
+  expect(typeof props.form.batch).toBe('function')
+  expect(typeof props.form.blur).toBe('function')
+  expect(typeof props.form.change).toBe('function')
+  expect(typeof props.form.focus).toBe('function')
+  expect(typeof props.form.initialize).toBe('function')
+  expect(typeof props.form.reset).toBe('function')
+}
 
 describe('final-form functionality', () => {
   describe('<Field />', () => {
@@ -305,7 +314,7 @@ describe('final-form functionality', () => {
             <CheckBoxGroup.Item label="Two" value="dos" />
             <CheckBoxGroup.Item label="Three" value="tres" />
           </Field>
-          <FormSpy subscription={{ values: true }} onChange={spyValues} />
+          <FinalFormSpy subscription={{ values: true }} onChange={spyValues} />
         </App>
       )
       userEvent.click(getByLabelText('One'))
@@ -327,7 +336,7 @@ describe('final-form functionality', () => {
             <Field as={CheckBoxGroup.Item} type="checkbox" name="er" label="Two" />
             <Field as={CheckBoxGroup.Item} type="checkbox" name="san" label="Three" />
           </CheckBoxGroup>
-          <FormSpy subscription={{ values: true }} onChange={spyValues} />
+          <FinalFormSpy subscription={{ values: true }} onChange={spyValues} />
         </App>
       )
       userEvent.click(getByLabelText('One'))
@@ -517,6 +526,163 @@ describe('final-form functionality', () => {
       userEvent.click(reset)
 
       expect(field).toHaveValue('')
+    })
+  })
+
+  describe('<FormSpy />', () => {
+    test('subscribes to everything by default', () => {
+      const renderFn = jest.fn().mockImplementation(() => <div />)
+      render(
+        <App>
+          <Field name="test" label="Test Field" />
+          <FormSpy render={renderFn} />
+        </App>
+      )
+
+      expect(renderFn).toHaveBeenCalledTimes(2)
+      hasFormApi(renderFn.mock.calls[0][0])
+      expect(renderFn.mock.calls[0][0].dirty).toBe(false)
+      expect(renderFn.mock.calls[0][0].errors).toEqual({})
+      expect(renderFn.mock.calls[0][0].invalid).toBe(false)
+      expect(renderFn.mock.calls[0][0].pristine).toBe(true)
+      expect(renderFn.mock.calls[0][0].submitFailed).toBe(false)
+      expect(renderFn.mock.calls[0][0].submitSucceeded).toBe(false)
+      expect(renderFn.mock.calls[0][0].submitting).toBe(false)
+      expect(renderFn.mock.calls[0][0].valid).toBe(true)
+      expect(renderFn.mock.calls[0][0].validating).toBe(false)
+      expect(renderFn.mock.calls[0][0].values).toEqual({})
+      hasFormApi(renderFn.mock.calls[1][0])
+      expect(renderFn.mock.calls[1][0].dirty).toBe(false)
+      expect(renderFn.mock.calls[1][0].errors).toEqual({})
+      expect(renderFn.mock.calls[1][0].invalid).toBe(false)
+      expect(renderFn.mock.calls[1][0].pristine).toBe(true)
+      expect(renderFn.mock.calls[1][0].submitFailed).toBe(false)
+      expect(renderFn.mock.calls[1][0].submitSucceeded).toBe(false)
+      expect(renderFn.mock.calls[1][0].submitting).toBe(false)
+      expect(renderFn.mock.calls[1][0].valid).toBe(true)
+      expect(renderFn.mock.calls[1][0].validating).toBe(false)
+      expect(renderFn.mock.calls[1][0].values).toEqual({})
+    })
+
+    test('can spy on specific state values', () => {
+      const renderFn = jest.fn().mockImplementation(() => <div />)
+      const { getByLabelText } = render(
+        <App>
+          <Field name="test" label="Test Field" />
+          <FormSpy subscription={{ dirty: true, values: true }}>{renderFn}</FormSpy>
+        </App>
+      )
+
+      expect(renderFn).toHaveBeenCalledTimes(2)
+      hasFormApi(renderFn.mock.calls[0][0])
+      expect(renderFn.mock.calls[0][0].dirty).toBe(false)
+      expect(renderFn.mock.calls[0][0].errors).toBeUndefined()
+      expect(renderFn.mock.calls[0][0].invalid).toBeUndefined()
+      expect(renderFn.mock.calls[0][0].pristine).toBeUndefined()
+      expect(renderFn.mock.calls[0][0].submitFailed).toBeUndefined()
+      expect(renderFn.mock.calls[0][0].submitSucceeded).toBeUndefined()
+      expect(renderFn.mock.calls[0][0].submitting).toBeUndefined()
+      expect(renderFn.mock.calls[0][0].valid).toBeUndefined()
+      expect(renderFn.mock.calls[0][0].validating).toBeUndefined()
+      expect(renderFn.mock.calls[0][0].values).toEqual({})
+      hasFormApi(renderFn.mock.calls[1][0])
+      expect(renderFn.mock.calls[1][0].dirty).toBe(false)
+      expect(renderFn.mock.calls[1][0].errors).toBeUndefined()
+      expect(renderFn.mock.calls[1][0].invalid).toBeUndefined()
+      expect(renderFn.mock.calls[1][0].pristine).toBeUndefined()
+      expect(renderFn.mock.calls[1][0].submitFailed).toBeUndefined()
+      expect(renderFn.mock.calls[1][0].submitSucceeded).toBeUndefined()
+      expect(renderFn.mock.calls[1][0].submitting).toBeUndefined()
+      expect(renderFn.mock.calls[1][0].valid).toBeUndefined()
+      expect(renderFn.mock.calls[1][0].validating).toBeUndefined()
+      expect(renderFn.mock.calls[1][0].values).toEqual({})
+
+      userEvent.type(getByLabelText('Test Field'), 'S')
+
+      expect(renderFn).toHaveBeenCalledTimes(3)
+      hasFormApi(renderFn.mock.calls[2][0])
+      expect(renderFn.mock.calls[2][0].dirty).toBe(true)
+      expect(renderFn.mock.calls[2][0].errors).toBeUndefined()
+      expect(renderFn.mock.calls[2][0].invalid).toBeUndefined()
+      expect(renderFn.mock.calls[2][0].pristine).toBeUndefined()
+      expect(renderFn.mock.calls[2][0].submitFailed).toBeUndefined()
+      expect(renderFn.mock.calls[2][0].submitSucceeded).toBeUndefined()
+      expect(renderFn.mock.calls[2][0].submitting).toBeUndefined()
+      expect(renderFn.mock.calls[2][0].valid).toBeUndefined()
+      expect(renderFn.mock.calls[2][0].validating).toBeUndefined()
+      expect(renderFn.mock.calls[2][0].values).toEqual({ test: 'S' })
+    })
+
+    test('will unsubscribe on unmount', () => {
+      const renderFn = jest.fn().mockImplementation(() => <div />)
+      const Toggle: React.FC<any> = ({ children }) => {
+        const [show, setShow] = React.useState<boolean>(true)
+        return (
+          <>
+            <button type="button" onClick={() => setShow((s) => !s)}>
+              toggle
+            </button>
+            {show && children}
+          </>
+        )
+      }
+      const { getByText } = render(
+        <App>
+          <Toggle>
+            <FormSpy render={renderFn} />
+          </Toggle>
+        </App>
+      )
+
+      expect(renderFn).toHaveBeenCalledTimes(2)
+      userEvent.click(getByText('toggle'))
+      expect(renderFn).toHaveBeenCalledTimes(2)
+    })
+
+    test('calls onChange', () => {
+      const onChange = jest.fn()
+      const { getByLabelText } = render(
+        <App>
+          <Field name="test" label="Test Field" />
+          <FormSpy subscription={{ dirty: true, values: true }} onChange={onChange} />
+        </App>
+      )
+
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange.mock.calls[0][0].dirty).toBe(false)
+      expect(onChange.mock.calls[0][0].errors).toBeUndefined()
+      expect(onChange.mock.calls[0][0].invalid).toBeUndefined()
+      expect(onChange.mock.calls[0][0].pristine).toBeUndefined()
+      expect(onChange.mock.calls[0][0].submitFailed).toBeUndefined()
+      expect(onChange.mock.calls[0][0].submitSucceeded).toBeUndefined()
+      expect(onChange.mock.calls[0][0].submitting).toBeUndefined()
+      expect(onChange.mock.calls[0][0].valid).toBeUndefined()
+      expect(onChange.mock.calls[0][0].validating).toBeUndefined()
+      expect(onChange.mock.calls[0][0].values).toEqual({})
+
+      userEvent.type(getByLabelText('Test Field'), 'A')
+
+      expect(onChange).toHaveBeenCalledTimes(2)
+      expect(onChange.mock.calls[1][0].dirty).toBe(true)
+      expect(onChange.mock.calls[1][0].values).toEqual({ test: 'A' })
+    })
+
+    test('ignores render when given onChange', () => {
+      const onChange = jest.fn()
+      const renderFn = jest.fn().mockImplementation(() => <div />)
+
+      render(
+        <App>
+          <FormSpy
+            subscription={{ dirty: true, values: true }}
+            render={renderFn}
+            onChange={onChange}
+          />
+        </App>
+      )
+
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(renderFn).not.toHaveBeenCalled()
     })
   })
 })
