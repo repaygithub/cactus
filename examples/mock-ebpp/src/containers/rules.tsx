@@ -1,5 +1,5 @@
 import { RouteComponentProps } from '@reach/router'
-import { Field, Form } from '@repay/cactus-form'
+import { Field, Form, FormSpy } from '@repay/cactus-form'
 import { ActionsAdd } from '@repay/cactus-icons'
 import { Accordion, Box, Button, Flex, Text, TextButton } from '@repay/cactus-web'
 import arrayMutators from 'final-form-arrays'
@@ -130,14 +130,18 @@ const RulesForm = () => {
             </FieldsAccordion>
           ))}
         </Accordion.Provider>
-        <Flex width="100%" justifyContent="center" mt={4} py={3}>
-          <Button type="reset" variant="standard" mr={3}>
-            Reset
-          </Button>
-          <Button type="submit" variant="action" ml={3}>
-            Submit
-          </Button>
-        </Flex>
+        <FormSpy subscription={{ dirty: true }}>
+          {({ dirty }: { dirty: boolean }) => (
+            <Flex width="100%" justifyContent="center" mt={4} py={3}>
+              <Button type="reset" variant="standard" mr={3} disabled={!dirty}>
+                Reset
+              </Button>
+              <Button type="submit" variant="action" ml={3} disabled={!dirty}>
+                Submit
+              </Button>
+            </Flex>
+          )}
+        </FormSpy>
       </Box>
     </Box>
   )
