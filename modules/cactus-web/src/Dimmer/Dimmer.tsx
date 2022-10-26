@@ -26,8 +26,7 @@ export const Dimmer = styledUnpoly(DimmerBase)`
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  padding-bottom: calc(100vh-100%);
+  height: 100%;
   box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
