@@ -23,7 +23,6 @@ import {
 
 import Dimmer from '../Dimmer/Dimmer'
 import FocusLock from '../FocusLock/FocusLock'
-import { isFocusLost } from '../helpers/events'
 import { omitProps } from '../helpers/omit'
 import { usePortal } from '../helpers/portal'
 import { trapScroll } from '../helpers/scroll'
@@ -79,11 +78,27 @@ const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>(
         return trapScroll(dimmerRef)
       }
     }, [isOpen]) // eslint-disable-line react-hooks/exhaustive-deps
-    const closeOnBlur = (event: React.FocusEvent<HTMLDivElement>) => {
-      if (isFocusLost(event)) {
+
+    const mouseRef = React.useRef<EventTarget | null>(null)
+
+    const onMouseDown = (event: React.MouseEvent<HTMLElement>) => {
+      mouseRef.current = event.target
+    }
+
+    const onDimmerClick = (event: React.MouseEvent<HTMLElement>) => {
+      // First condition ignores click-and-drag.
+      if (event.target === mouseRef.current) {
         onClose()
       }
     }
+
+    const { onClick: propClick } = props
+
+    const onModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
+      event.stopPropagation()
+      propClick?.(event)
+    }
+
     const closeOnEscape = (event: React.KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose()
@@ -94,7 +109,8 @@ const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>(
         className={className}
         ref={dimmerRef}
         active={isOpen}
-        onBlur={closeOnBlur}
+        onMouseDown={onMouseDown}
+        onClick={onDimmerClick}
         onKeyDown={closeOnEscape}
       >
         <FocusLock className="flex-container">
@@ -103,6 +119,7 @@ const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>(
             aria-modal
             aria-label={modalLabel}
             tabIndex={-1}
+            onClick={onModalClick}
             {...props}
             ref={ref}
           >
