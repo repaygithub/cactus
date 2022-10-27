@@ -32,7 +32,10 @@ export class ScreenSize {
   }
 }
 
-type MediaMatch = Pick<MediaQueryList, 'matches' | 'addListener' | 'removeListener'>
+type MediaMatch = Pick<
+  MediaQueryList,
+  'matches' | 'addListener' | 'removeListener' | 'addEventListener' | 'removeEventListener'
+>
 type QueryType = { [K in Size]: MediaMatch }
 
 type SizeCache = ScreenSize[] & { [K in Size]: ScreenSize }
@@ -53,7 +56,13 @@ export const ScreenSizeContext = React.createContext<ScreenSize>(SIZES[DEFAULT_S
 export const useScreenSize = (): ScreenSize => React.useContext(ScreenSizeContext)
 
 const createQueries = (theme: CactusTheme): QueryType => ({
-  tiny: { matches: true, addListener: noop, removeListener: noop },
+  tiny: {
+    matches: true,
+    addListener: noop,
+    removeListener: noop,
+    removeEventListener: noop,
+    addEventListener: noop,
+  },
   small: window.matchMedia(theme.mediaQueries.small.replace(/^@media /, '')),
   medium: window.matchMedia(theme.mediaQueries.medium.replace(/^@media /, '')),
   large: window.matchMedia(theme.mediaQueries.large.replace(/^@media /, '')),
@@ -81,13 +90,21 @@ export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     const q: QueryType = queries || createQueries(theme)
     const listener = () => setSize(getMatchedSize(q))
     for (const key of Object.keys(q)) {
-      q[key as Size].addListener(listener)
+      if (!('addEventListener' in q[key as Size])) {
+        q[key as Size].addListener(listener)
+      } else {
+        q[key as Size].addEventListener('change', listener)
+      }
     }
     listener()
 
     return (): void => {
       for (const key of Object.keys(q)) {
-        q[key as Size].removeListener(listener)
+        if (!('removeEventListener' in q[key as Size])) {
+          q[key as Size].removeListener(listener)
+        } else {
+          q[key as Size].removeEventListener('change', listener)
+        }
       }
     }
   }, [theme]) // eslint-disable-line react-hooks/exhaustive-deps
