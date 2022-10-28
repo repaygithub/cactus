@@ -1,3 +1,17 @@
+# v9.11.1 (Fri Oct 28 2022)
+
+#### 🐛 Bug Fix
+
+- cactus-1075:: modal-bugfix-1 [#816](https://github.com/repaygithub/cactus/pull/816) ([@maxrcollins](https://github.com/maxrcollins))
+- CACTUS-1060 :: Remove `vh` styles from Dimmer [#814](https://github.com/repaygithub/cactus/pull/814) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### Authors: 2
+
+- [@maxrcollins](https://github.com/maxrcollins)
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+
+---
+
 # v9.11.0 (Wed Oct 19 2022)
 
 #### 🚀 Enhancement
