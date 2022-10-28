@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Form as FinalForm, FormProps as FinalFormProps, FormRenderProps } from 'react-final-form'
 
-function renderSimpleForm<FormValues>({
+const renderSimpleForm = <FormValues,>({
   handleSubmit,
   form,
   ...rest
-}: FormRenderProps<FormValues>) {
+}: FormRenderProps<FormValues>) => {
   // `react-final-form` adds all the state properties even if they don't have values.
   for (const key of formSubscriptionItems) {
     // @ts-ignore
@@ -16,7 +16,7 @@ function renderSimpleForm<FormValues>({
   return <form onSubmit={handleSubmit} onReset={() => form.restart()} {...rest} />
 }
 
-function Form<FormValues>(props: FinalFormProps<FormValues>) {
+const Form = <FormValues,>(props: FinalFormProps<FormValues>) => {
   const component = props.component || props.as || 'form'
   if (component === 'form' && !props.render) {
     props = { ...props, render: renderSimpleForm }
@@ -26,7 +26,7 @@ function Form<FormValues>(props: FinalFormProps<FormValues>) {
 }
 Form.defaultProps = { subscription: {} }
 
-const requireOneProp = (props: FinalFormProps, propName: string, componentName: string) => {
+const requireOneProp = (props: FinalFormProps, _: string, componentName: string) => {
   if (!props.component && !props.render && !props.children) {
     return new Error(
       `One of props 'component', 'render', or 'children' was not specified in '${componentName}.'`

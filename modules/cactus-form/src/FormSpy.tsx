@@ -1,20 +1,26 @@
 import { FormState, formSubscriptionItems } from 'final-form'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { FormSpyProps, FormSpyRenderProps, useForm, useFormState } from 'react-final-form'
+import { useForm, useFormState, UseFormStateParams } from 'react-final-form'
+
+import { RenderFunc, RenderProps, UnknownProps } from './types'
 
 const DEFAULT_SUBSCRIPTION: Record<string, boolean> = {}
 formSubscriptionItems.forEach((sub) => {
   DEFAULT_SUBSCRIPTION[sub] = true
 })
 
+interface FormSpyProps extends UseFormStateParams, RenderProps, UnknownProps {}
 type State = FormState<Record<string, any>, Partial<Record<string, any>>>
-type RestPropsWithChildren = Pick<FormSpyProps, 'onChange'> &
-  State & {
-    children?: React.ReactNode
-  }
 
-function FormSpy({ render, component, children, subscription, onChange, ...rest }: FormSpyProps) {
+const FormSpy: RenderFunc<FormSpyProps> = ({
+  render,
+  component,
+  children,
+  subscription,
+  onChange,
+  ...rest
+}: FormSpyProps) => {
   const form = useForm('FormSpy')
   const sub = subscription || DEFAULT_SUBSCRIPTION
   const [state, setState] = React.useState<State>(() => {
@@ -31,17 +37,15 @@ function FormSpy({ render, component, children, subscription, onChange, ...rest 
   useFormState({ onChange, subscription: sub })
   if (!!onChange) return null
 
-  const props: FormSpyRenderProps = Object.assign(rest, state, { form })
+  const props = Object.assign(rest, state, { form })
   if (typeof children === 'function') {
     return children(props)
   }
-  ;(props as RestPropsWithChildren).children = children
-  return render
-    ? render(props)
-    : React.createElement(component as React.ComponentType<RestPropsWithChildren>, props)
+  props.children = children
+  return render ? render(props) : React.createElement(component as React.ComponentType<any>, props)
 }
 
-const requireOneProp = (props: FormSpyProps, propName: string, componentName: string) => {
+const requireOneProp = (props: FormSpyProps, _: string, componentName: string) => {
   if (!props.component && !props.render && !props.children && !props.onChange) {
     return new Error(
       `One of props 'component', 'render', 'children' or 'onChange' was not specified in '${componentName}.'`
