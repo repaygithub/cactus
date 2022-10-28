@@ -23,7 +23,6 @@ import {
 
 import Dimmer from '../Dimmer/Dimmer'
 import FocusLock from '../FocusLock/FocusLock'
-import { isFocusLost } from '../helpers/events'
 import { omitProps } from '../helpers/omit'
 import { usePortal } from '../helpers/portal'
 import { trapScroll } from '../helpers/scroll'
@@ -68,54 +67,78 @@ interface CloseButtonProps {
 }
 
 // Overflow & flex don't mix well, so we need an intermediate div for scrolling.
-const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>(
-  ({ children, isOpen, onClose, modalLabel, className, closeButtonProps, ...props }, ref) => {
-    const dimmerRef = React.useRef<HTMLDivElement>(null)
-    React.useEffect(() => {
-      if (dimmerRef.current) {
-        const modal =
-          (ref as any)?.current || dimmerRef.current.querySelector<HTMLElement>('[aria-modal]')
-        if (modal) modal.focus()
-        return trapScroll(dimmerRef)
-      }
-    }, [isOpen]) // eslint-disable-line react-hooks/exhaustive-deps
-    const closeOnBlur = (event: React.FocusEvent<HTMLDivElement>) => {
-      if (isFocusLost(event)) {
-        onClose()
-      }
+const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>((props, ref) => {
+  const {
+    children,
+    isOpen,
+    onClose,
+    modalLabel,
+    className,
+    closeButtonProps,
+    onClick,
+    ...otherProps
+  } = props
+  const dimmerRef = React.useRef<HTMLDivElement>(null)
+  React.useEffect(() => {
+    if (dimmerRef.current) {
+      const modal =
+        (ref as any)?.current || dimmerRef.current.querySelector<HTMLElement>('[aria-modal]')
+      if (modal) modal.focus()
+      return trapScroll(dimmerRef)
     }
-    const closeOnEscape = (event: React.KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose()
-      }
-    }
-    return usePortal(
-      <Dimmer
-        className={className}
-        ref={dimmerRef}
-        active={isOpen}
-        onBlur={closeOnBlur}
-        onKeyDown={closeOnEscape}
-      >
-        <FocusLock className="flex-container">
-          <ModalPopUp
-            role="dialog"
-            aria-modal
-            aria-label={modalLabel}
-            tabIndex={-1}
-            {...props}
-            ref={ref}
-          >
-            <CloseButton {...closeButtonProps} onClick={onClose}>
-              <NavigationClose />
-            </CloseButton>
-            {children}
-          </ModalPopUp>
-        </FocusLock>
-      </Dimmer>
-    )
+  }, [isOpen]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const mouseRef = React.useRef<EventTarget | null>(null)
+
+  const onMouseDown = (event: React.MouseEvent<HTMLElement>) => {
+    mouseRef.current = event.target
   }
-)
+
+  const onDimmerClick = (event: React.MouseEvent<HTMLElement>) => {
+    // if statement to ignore click-and-drag.
+    if (event.target === mouseRef.current) {
+      onClose()
+    }
+  }
+
+  const onModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation()
+    onClick?.(event)
+  }
+
+  const closeOnEscape = (event: React.KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      onClose()
+    }
+  }
+  return usePortal(
+    <Dimmer
+      className={className}
+      ref={dimmerRef}
+      active={isOpen}
+      onMouseDown={onMouseDown}
+      onClick={onDimmerClick}
+      onKeyDown={closeOnEscape}
+    >
+      <FocusLock className="flex-container">
+        <ModalPopUp
+          role="dialog"
+          aria-modal
+          aria-label={modalLabel}
+          tabIndex={-1}
+          onClick={onModalClick}
+          {...otherProps}
+          ref={ref}
+        >
+          <CloseButton {...closeButtonProps} onClick={onClose}>
+            <NavigationClose />
+          </CloseButton>
+          {children}
+        </ModalPopUp>
+      </FocusLock>
+    </Dimmer>
+  )
+})
 ModalBase.displayName = 'Modal'
 
 // Because there's an intermediate container percentages don't work well, so we
