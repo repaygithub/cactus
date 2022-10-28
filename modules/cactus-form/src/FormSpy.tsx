@@ -28,9 +28,7 @@ const FormSpy: RenderFunc<FormSpyProps> = ({
     return initialState as unknown as State
   })
   React.useEffect(() => {
-    const unsub = form.subscribe(setState, sub)
-
-    return () => unsub()
+    return form.subscribe(setState, sub)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const props = Object.assign(rest, state, { form })
