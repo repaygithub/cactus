@@ -227,11 +227,10 @@ form state values and re-render a section of your form with updated values when 
 If you provide an `onChange` handler, `FormSpy` will return `null`.
 
 ```
-const spyOn = { dirty: true }
 const MyForm = (props) => (
   <Form {...props}>
     <Field name="power" type="number" />
-    <FormSpy subscription={spyOn}>
+    <FormSpy subscription={{ dirty: true }}>
       {({ dirty }) => (
         <span>Dirty value: {dirty}</span>
       )}
@@ -243,12 +242,11 @@ const MyForm = (props) => (
 OR
 
 ```
-const spyOn = { dirty: true }
 const MyForm = (props) => (
   <Form {...props}>
     <Field name="power" type="number" />
     <FormSpy
-      subscription={spyOn}
+      subscription={{ dirty: true }}
       render={({ dirty }) => <span>Dirty value: {dirty}</span>}
     />
   </Form>
@@ -258,11 +256,10 @@ const MyForm = (props) => (
 OR
 
 ```
-const spyOn = { dirty: true }
 const RenderOnDirtyChange = ({ dirty }) => <span>Dirty value: {dirty}</span>
 const MyForm = (props) => (
   <Form {...props}>
-    <FormSpy subscription={spyOn} component={RenderOnDirtyChange} />
+    <FormSpy subscription={{ dirty: true }} component={RenderOnDirtyChange} />
   </Form>
 )
 ```
