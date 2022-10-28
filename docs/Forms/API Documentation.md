@@ -7,6 +7,7 @@ order: 3
 
 For the most part you can just use [React Final Form](https://final-form.org/docs/react-final-form/getting-started)
 as it's documented, substituting our `Field` component for theirs.
+This library re-exports everything from `final-form` and `react-final-form` except for the components that we override.
 We also add two new components, as well as a basic `Form` wrapper and our own version of React Final Form's `FormSpy`:
 
 - `DependentField` is like a `Field`, but takes a set of field names and a callback to use when any of those fields changes.
@@ -224,7 +225,8 @@ const MyForm = (props) => (
 A re-implementation of [FormSpy](https://final-form.org/docs/react-final-form/api/FormSpy), but with a
 fix for a bug that sometimes caused incorrect initial values on the first render. Allows you to spy on
 form state values and re-render a section of your form with updated values when the values you spy on change.
-If you provide an `onChange` handler, `FormSpy` will return `null`.
+Our `FormSpy` supports all of the same props that Final Form's implementation does, apart from the `onChange` prop,
+which is not supported in this implementation.
 
 ```
 const MyForm = (props) => (
