@@ -1,7 +1,7 @@
 import { FormState, formSubscriptionItems } from 'final-form'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { useForm, useFormState, UseFormStateParams } from 'react-final-form'
+import { useForm, UseFormStateParams } from 'react-final-form'
 
 import { RenderFunc, RenderProps, UnknownProps } from './types'
 
@@ -10,7 +10,7 @@ formSubscriptionItems.forEach((sub) => {
   DEFAULT_SUBSCRIPTION[sub] = true
 })
 
-interface FormSpyProps extends UseFormStateParams, RenderProps, UnknownProps {}
+interface FormSpyProps extends Omit<UseFormStateParams, 'onChange'>, RenderProps, UnknownProps {}
 type State = FormState<Record<string, any>, Partial<Record<string, any>>>
 
 const FormSpy: RenderFunc<FormSpyProps> = ({
@@ -18,7 +18,6 @@ const FormSpy: RenderFunc<FormSpyProps> = ({
   component,
   children,
   subscription,
-  onChange,
   ...rest
 }: FormSpyProps) => {
   const form = useForm('FormSpy')
@@ -34,9 +33,6 @@ const FormSpy: RenderFunc<FormSpyProps> = ({
     return () => unsub()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  useFormState({ onChange, subscription: sub })
-  if (!!onChange) return null
-
   const props = Object.assign(rest, state, { form })
   if (typeof children === 'function') {
     return children(props)
@@ -48,7 +44,7 @@ const FormSpy: RenderFunc<FormSpyProps> = ({
 const requireOneProp = (props: FormSpyProps, _: string, componentName: string) => {
   if (!props.component && !props.render && !props.children && !props.onChange) {
     return new Error(
-      `One of props 'component', 'render', 'children' or 'onChange' was not specified in '${componentName}.'`
+      `One of props 'component', 'render', 'children' was not specified in '${componentName}.'`
     )
   }
 }
@@ -57,7 +53,6 @@ const requireOneProp = (props: FormSpyProps, _: string, componentName: string) =
   component: requireOneProp,
   render: requireOneProp,
   children: requireOneProp,
-  onChange: requireOneProp,
   subscription: PropTypes.objectOf(PropTypes.bool),
 }
 

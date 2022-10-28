@@ -21,6 +21,9 @@ const Form = <FormValues,>(props: FinalFormProps<FormValues>) => {
   if (component === 'form' && !props.render) {
     props = { ...props, render: renderSimpleForm }
     delete props.component
+  } else if (props.as) {
+    props = { ...props, component: props.as }
+    delete props.as
   }
   return FinalForm(props)
 }
