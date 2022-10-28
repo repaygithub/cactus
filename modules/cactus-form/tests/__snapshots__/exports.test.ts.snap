@@ -2,11 +2,21 @@
 
 exports[`@repay/cactus-form should match snapshot of exports 1`] = `
 Array [
+  "ARRAY_ERROR",
   "DependentField",
+  "FORM_ERROR",
   "Field",
   "FieldSpy",
   "Form",
   "FormSpy",
+  "configOptions",
+  "createForm",
+  "fieldSubscriptionItems",
+  "formSubscriptionItems",
+  "useField",
+  "useForm",
+  "useFormState",
   "validateRequired",
+  "withTypes",
 ]
 `;
