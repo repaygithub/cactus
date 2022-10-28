@@ -638,51 +638,5 @@ describe('final-form functionality', () => {
       userEvent.click(getByText('toggle'))
       expect(renderFn).toHaveBeenCalledTimes(2)
     })
-
-    test('calls onChange', () => {
-      const onChange = jest.fn()
-      const { getByLabelText } = render(
-        <App>
-          <Field name="test" label="Test Field" />
-          <FormSpy subscription={{ dirty: true, values: true }} onChange={onChange} />
-        </App>
-      )
-
-      expect(onChange).toHaveBeenCalledTimes(1)
-      expect(onChange.mock.calls[0][0].dirty).toBe(false)
-      expect(onChange.mock.calls[0][0].errors).toBeUndefined()
-      expect(onChange.mock.calls[0][0].invalid).toBeUndefined()
-      expect(onChange.mock.calls[0][0].pristine).toBeUndefined()
-      expect(onChange.mock.calls[0][0].submitFailed).toBeUndefined()
-      expect(onChange.mock.calls[0][0].submitSucceeded).toBeUndefined()
-      expect(onChange.mock.calls[0][0].submitting).toBeUndefined()
-      expect(onChange.mock.calls[0][0].valid).toBeUndefined()
-      expect(onChange.mock.calls[0][0].validating).toBeUndefined()
-      expect(onChange.mock.calls[0][0].values).toEqual({})
-
-      userEvent.type(getByLabelText('Test Field'), 'A')
-
-      expect(onChange).toHaveBeenCalledTimes(2)
-      expect(onChange.mock.calls[1][0].dirty).toBe(true)
-      expect(onChange.mock.calls[1][0].values).toEqual({ test: 'A' })
-    })
-
-    test('ignores render when given onChange', () => {
-      const onChange = jest.fn()
-      const renderFn = jest.fn().mockImplementation(() => <div />)
-
-      render(
-        <App>
-          <FormSpy
-            subscription={{ dirty: true, values: true }}
-            render={renderFn}
-            onChange={onChange}
-          />
-        </App>
-      )
-
-      expect(onChange).toHaveBeenCalledTimes(1)
-      expect(renderFn).not.toHaveBeenCalled()
-    })
   })
 })
