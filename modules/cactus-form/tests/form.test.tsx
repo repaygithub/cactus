@@ -183,6 +183,26 @@ describe('final-form functionality', () => {
       )
     })
 
+    test('uses modified original props object if processMeta returns undefined', () => {
+      const rf = jest.fn()
+      rf.mockReturnValue(null)
+      const processMeta = (props: any, meta: any) => {
+        props.error = meta.error
+      }
+      render(
+        <App>
+          <Field name="test" required processMeta={processMeta} render={rf} />
+        </App>
+      )
+      expect(rf).toHaveBeenCalledWith(
+        expect.objectContaining({
+          name: 'test',
+          required: true,
+          error: 'Missing required field',
+        })
+      )
+    })
+
     test('allows custom required messages', () => {
       const rf = jest.fn()
       rf.mockReturnValue(null)
