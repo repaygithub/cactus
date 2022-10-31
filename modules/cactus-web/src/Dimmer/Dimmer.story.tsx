@@ -1,10 +1,12 @@
 import { Page } from 'puppeteer'
 import React, { useState } from 'react'
 
-import { Box, Button, Dimmer, Flex } from '../'
+import { Box, Button, Dimmer, Flex, Grid } from '../'
+import { HIDE_CONTROL, Story } from '../helpers/storybook'
 
 export default {
   title: 'Dimmer',
+  component: Dimmer,
 } as const
 
 export const ActivePageDimmer = (): React.ReactElement => {
@@ -42,4 +44,45 @@ ActivePageDimmer.parameters = {
   beforeScreenshot: async (page: Page) => {
     await page.click('[id="dimmer-btn"]')
   },
+}
+
+export const AbsolutelyPositioned: Story<typeof Dimmer> = (args) => {
+  const [dimIndex, setDim] = useState(4)
+  const items: React.ReactElement[] = []
+  for (let i = 0; i < 9; i++) {
+    items.push(
+      <Grid.Item
+        key={i}
+        as={Flex}
+        border="1px solid black"
+        position="relative"
+        justifyContent="center"
+        alignItems="flex-start"
+        row={Math.floor(i / 3) + 1}
+        col={(i % 3) + 1}
+      >
+        <Dimmer {...args} active={i === dimIndex}>
+          <Box colors="standard" margin={2} padding={2} borderRadius="themed">
+            Ya done dimmed
+          </Box>
+        </Dimmer>
+        <Button marginTop={3} onClick={() => setDim(i)}>
+          Dim me!
+        </Button>
+      </Grid.Item>
+    )
+  }
+  return (
+    <Grid rows="100px 100px 100px" cols={3}>
+      {items}
+    </Grid>
+  )
+}
+AbsolutelyPositioned.argTypes = {
+  active: HIDE_CONTROL,
+  position: { control: { type: 'inline-radio', options: ['fixed', 'absolute'] } },
+}
+AbsolutelyPositioned.args = {
+  position: 'absolute',
+  opacity: '0.4',
 }

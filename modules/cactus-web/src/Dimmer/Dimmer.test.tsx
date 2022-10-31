@@ -3,8 +3,8 @@ import * as React from 'react'
 import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Dimmer from './Dimmer'
 
-describe('Dimmer render content as children', () => {
-  test('Page Dimmer: Should render content when active=true', () => {
+describe('component: Dimmer', () => {
+  test('should render content when active=true', () => {
     const { container } = renderWithTheme(
       <Dimmer active>
         <h2>Children is here!</h2>
@@ -13,7 +13,7 @@ describe('Dimmer render content as children', () => {
     expect(container).toHaveTextContent('Children is here!')
   })
 
-  test('Page Dimmer: Should NOT render content when active=false', () => {
+  test('should NOT render content when active=false', () => {
     const { container } = renderWithTheme(
       <Dimmer active={false}>
         <h2>Children is here!</h2>
@@ -22,27 +22,20 @@ describe('Dimmer render content as children', () => {
     expect(container).not.toHaveTextContent('Children is here!')
   })
 
-  test('Dimmer should blur elements that have focus when it becomes active', () => {
-    const buttonBlur = jest.fn()
-    const { getByText, rerender } = renderWithTheme(
+  test('should vary styles by props', () => {
+    const { getByTestId } = renderWithTheme(
       <>
-        <button onBlur={buttonBlur}>I should be blurred</button>
-        <Dimmer active={false} />
+        <Dimmer active data-testid="fullscreen" />
+        <Dimmer active data-testid="partial" position="absolute" opacity="0.5" />
       </>
     )
-
-    const button = getByText('I should be blurred')
-    button.focus()
-    expect(document.activeElement).toBe(button)
-
-    rerender(
-      <>
-        <button onBlur={buttonBlur}>I should be blurred</button>
-        <Dimmer active />
-      </>
-    )
-
-    expect(document.activeElement).not.toBe(button)
-    expect(buttonBlur).toHaveBeenCalled()
+    expect(getByTestId('fullscreen')).toHaveStyle({
+      position: 'fixed',
+      backgroundColor: 'rgba(46, 53, 56, 0.9)',
+    })
+    expect(getByTestId('partial')).toHaveStyle({
+      position: 'absolute',
+      backgroundColor: 'rgba(46, 53, 56, 0.5)',
+    })
   })
 })

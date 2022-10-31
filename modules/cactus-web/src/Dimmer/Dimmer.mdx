@@ -3,41 +3,44 @@ name: Dimmer
 menu: Components
 ---
 
-import Dimmer from './Dimmer'
-import { Flex } from '../Flex/Flex'
-import { Button } from '../Button/Button'
-import { Box } from '../Box/Box'
-import cactusTheme from '@repay/cactus-theme'
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 import PropsTable from 'website-src/components/PropsTable'
 
 # Dimmer
 
-The `Dimmer` component helps by attenuating any distraction to focus the attention on a specific Component. It works by darkening the entire page and displaying their child component over the darkened area.
+The `Dimmer` is used to attenuate distractions and focus the attention on a specific component.
+It normally works by darkening the entire page and displaying their child component over the darkened area;
+it has a second mode with absolute positioning that can be used to cover just one section of a page.
 
 ## Basic usage
 
-The only thing that you have to do is implement the Dimmer and pass the content as as child. At the moment the `Dimmer` only works with one boolean prop `active` and it is `false` by default.
+Dimmer has one required prop: `active`. When it is false, neither the Dimmer nor any of its children are rendered.
+When true, the Dimmer's content will be rendered in the center of a darkened overlay.
 
-When `active` is `true`, the content inside the Dimmer will be displayed over a full-page darkened area.
-
-```js
+```jsx
 import React, { useState } from 'react'
 import { Dimmer } from '@repay/cactus-web'
 
 export default () => {
   const [open, setOpen] = useState(false)
-
-  //...Your implementation to manage if the Dimmer is active or not (By default should not be)
-
   return (
     <Dimmer active={open}>
-      {
-        //...Content
-      }
+      <Content />
     </Dimmer>
   )
 }
+```
+
+To set the overlay over a single section of the page, just change the `position` prop.
+You can also change the opacity to make it less obtrusive; this could be used,
+for example, to indicate data in a DataGrid is being loaded without being too visually loud.
+
+```jsx
+<Box position="relative"
+  <Dimmer active={isFetching} position="absolute" opacity="0.2">
+    <Spinner />
+  </Dimmer>
+  <DataGrid {...dataProps} />
+</Box>
 ```
 
 ## Properties
