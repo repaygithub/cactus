@@ -14,7 +14,6 @@
   "sideEffects": false,
   "scripts": {
     "cleanup": "rm -rf ts i",
-    "start": "start-storybook -p 9001 -c .storybook",
     "dev": "echo -e \"This now builds in watch mode, use yarn icons start for storybook\\n\"; repay-scripts dev --lib --tree-shaking ts/index.ts",
     "prebuild": "yarn build:ts",
     "build": "yarn prebuild && repay-scripts build --lib --tree-shaking ts/index.ts && yarn postbuild",
@@ -23,13 +22,11 @@
     "build:ts": "node ./scripts/svgr && yarn postbuild:ts",
     "postbuild:ts": "node ./scripts/post-build-ts",
     "build:types": "tsc -p tsconfig.json --emitDeclarationOnly",
-    "build:stories": "build-storybook -c .storybook -o ./.storybook/dist",
     "debug": "node --inspect-brk ./node_modules/.bin/svgr svgs -d built --config-file svgr.config.js --ext tsx",
     "test": "yarn jest",
     "test:local": " yarn test:types && yarn test",
     "test:ci": "yarn test:local --maxWorkers=2 && yarn test:stories",
-    "test:types": "tsc -p tsconfig.test.json --noEmit",
-    "test:stories": "start-storybook -p 9133 -c .storybook --smoke-test"
+    "test:types": "tsc -p tsconfig.test.json --noEmit"
   },
   "jest": {
     "transform": {
@@ -70,10 +67,6 @@
     "@repay/babel-preset": "^1.1.4",
     "@repay/cactus-theme": "^3.2.4",
     "@repay/scripts": "^3.0.4",
-    "@storybook/addon-controls": "6.3.8",
-    "@storybook/addon-ie11": "^0.0.6",
-    "@storybook/react": "6.3.8",
-    "@storybook/theming": "6.3.8",
     "@svgr/core": "^5.4.0",
     "@testing-library/react": "^12.1.4",
     "@types/jest": "^27.4.1",
