@@ -1,0 +1,51 @@
+{
+  "name": "cactus-storybook",
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": "https://github.com/repaygithub/cactus/storybook",
+  "scripts": {
+    "start": "start-storybook -p 6006",
+    "build": "build-storybook -o dist",
+    "test:visual": "yarn jest storyshots.test.js",
+    "test:visual-update": "yarn test:visual -u"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(t|j)sx?$": [
+        "babel-jest",
+        {
+          "configFile": "./.storybook/babel.config.js"
+        }
+      ],
+      "^.+\\.mdx?$": "@storybook/addon-docs/jest-transform-mdx"
+    },
+    "testEnvironment": "jsdom"
+  },
+  "dependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "react-live": "^2.4.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.3",
+    "@babel/runtime": "^7.19.4",
+    "@mdx-js/react": "^1.6.22",
+    "@repay/babel-preset": "^1.1.4",
+    "@storybook/addon-actions": "^6.5.12",
+    "@storybook/addon-controls": "^6.5.12",
+    "@storybook/addon-docs": "^6.5.12",
+    "@storybook/addon-links": "^6.5.12",
+    "@storybook/addon-storyshots": "^6.5.12",
+    "@storybook/addon-storyshots-puppeteer": "^6.5.12",
+    "@storybook/addon-viewport": "^6.5.12",
+    "@storybook/react": "^6.5.12",
+    "@storybook/theming": "^6.5.12",
+    "babel-jest": "^27.5.1",
+    "babel-loader": "^8.2.5",
+    "core-js": "^3.25.5",
+    "jest": "^27.5.1",
+    "puppeteer": "^5.0.0",
+    "require-from-string": "^2.0.2",
+    "webpack": "^4.0.0"
+  }
+}
