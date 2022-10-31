@@ -1,12 +1,17 @@
 import React from 'react'
 
 import { AccessibleField } from '../'
-import { FIELD_ARGS, Story } from '../helpers/storybook'
+import { Story } from '../helpers/storybook'
+import docsMeta from './AccessibleField.story.mdx'
 
+delete docsMeta.includeStories
 export default {
-  title: 'AccessibleField',
-  component: AccessibleField,
-  parameters: { cactus: { overrides: { maxWidth: '500px' } } },
+  title: 'Cactus Web/Components/AccessibleField',
+  ...docsMeta,
+  parameters: {
+    ...docsMeta.parameters,
+    cactus: { overrides: { maxWidth: '500px' } },
+  },
 } as const
 
 export const BasicUsage: Story<typeof AccessibleField> = (args) => (
@@ -14,9 +19,6 @@ export const BasicUsage: Story<typeof AccessibleField> = (args) => (
     <input style={{ minWidth: '300px' }} />
   </AccessibleField>
 )
-BasicUsage.argTypes = {
-  ...FIELD_ARGS,
-}
 BasicUsage.args = {
   name: 'field_name',
   label: 'Field Label',

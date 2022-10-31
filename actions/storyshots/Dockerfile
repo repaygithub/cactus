@@ -43,5 +43,5 @@ RUN apt-get update && apt-get install -y \
   procps \
 # These are existing packages with security updates.
   libc6 zlib1g libpcre2-8-0
-ENTRYPOINT ["yarn", "w", "@repay/cactus-web"]
+ENTRYPOINT ["yarn", "w", "cactus-storybook"]
 CMD ["test:visual-update"]
