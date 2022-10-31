@@ -1,9 +1,0 @@
-{
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "resolveJsonModule": true,
-    "lib": ["dom", "esnext"],
-    "types": ["color", "react", "react-dom", "react-helmet", "react-motion", "styled-components"]
-  },
-  "include": ["src"]
-}
