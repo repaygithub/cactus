@@ -9,7 +9,7 @@
 !examples/standard/package.json
 !examples/mock-ebpp/package.json
 !examples/theme-components/package.json
-!website/package.json
+!storybook/package.json
 !.yarn/plugins/*
 !.yarn/releases/*
 !.yarnrc.yml

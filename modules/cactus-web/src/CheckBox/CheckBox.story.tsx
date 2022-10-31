@@ -1,17 +1,21 @@
 import React from 'react'
 
 import { CheckBox } from '../'
-import { actions, Story, STRING } from '../helpers/storybook'
+import { AddContext } from '@storybook/addon-docs'
+import { Story } from '../helpers/storybook'
+import DocsPage from './CheckBox.mdx'
 
-export default {
-  title: 'CheckBox',
+const meta = {
+  title: 'Cactus Web/Components/CheckBox',
   component: CheckBox,
-  argTypes: {
-    id: STRING,
-    ...actions('onChange', 'onFocus', 'onBlur'),
-  },
   args: { disabled: false },
+  parameters: { docs: { page: () => (
+    <AddContext mdxComponentAnnotations={meta} mdxStoryNameToKey={{'Basic Usage': 'Basic Usage'}}>
+      <DocsPage />
+    </AddContext>
+  )} },
 } as const
+export default meta
 
 export const BasicUsage: Story<typeof CheckBox> = (args) => <CheckBox name="kaneki" {...args} />
 

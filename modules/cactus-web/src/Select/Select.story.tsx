@@ -20,7 +20,7 @@ const disabledOptions = [
 ]
 
 export default {
-  title: 'Select',
+  title: 'Cactus Web/Components/Select',
   component: Select,
   argTypes: {
     options: HIDE_CONTROL,
@@ -32,7 +32,6 @@ export default {
     noOptionsText: STRING,
     placeholder: STRING,
     status: { options: ['success', 'warning', 'error'] },
-    ...actions('onChange', 'onBlur', 'onFocus'),
   },
   args: {
     id: 'select',
@@ -62,7 +61,9 @@ export const CollisionsInLargeContainer: BasicStory = ({ showOptions, options, .
     </div>
   </React.Fragment>
 )
-CollisionsInLargeContainer.argTypes = { options: { control: 'array' }, margin: SPACE }
+CollisionsInLargeContainer.argTypes = { options: { control: 'array' }, margin: SPACE,
+    ...actions('onChange', 'onBlur', 'onFocus'),
+}
 CollisionsInLargeContainer.args = {
   options: ['name', 'other', 'three'],
   showOptions: true,
@@ -95,6 +96,7 @@ export const LongListOfOptions: Story<typeof Select, ChangeArg> = (args) => {
   )
 }
 LongListOfOptions.storyName = 'Long list of options'
+LongListOfOptions.argTypes = actions('onChange', 'onBlur', 'onFocus')
 
 export const LongOptionLabels: Story<typeof Select, ChangeArg> = (args) => {
   const [value, setValue] = React.useState<SelectValueType>('')
@@ -110,6 +112,7 @@ export const LongOptionLabels: Story<typeof Select, ChangeArg> = (args) => {
 }
 LongOptionLabels.storyName = 'Long option labels'
 LongOptionLabels.parameters = { storyshots: false }
+LongOptionLabels.argTypes = actions('onChange', 'onBlur', 'onFocus')
 export const WithMultiselect: Story<typeof Select, ChangeArg> = (args) => {
   const [value, setValue] = React.useState<SelectValueType>(defaultMultiValue)
   return (
@@ -123,6 +126,7 @@ export const WithMultiselect: Story<typeof Select, ChangeArg> = (args) => {
   )
 }
 WithMultiselect.args = { multiple: true }
+WithMultiselect.argTypes = actions('onChange', 'onBlur', 'onFocus')
 
 type OptionAl = ChangeArg & { showOptions: boolean }
 export const WithComboBox: Story<typeof Select, OptionAl> = ({
@@ -145,6 +149,7 @@ export const WithComboBox: Story<typeof Select, OptionAl> = ({
 WithComboBox.args = { showOptions: true, comboBox: true }
 WithComboBox.storyName = 'With ComboBox'
 WithComboBox.parameters = { storyshots: false }
+WithComboBox.argTypes = actions('onChange', 'onBlur', 'onFocus')
 
 export const WithMultiSelectComboBox: Story<typeof Select, ChangeArg> = (args) => {
   const [value, setValue] = React.useState<SelectValueType>([])
@@ -162,6 +167,7 @@ WithMultiSelectComboBox.storyName = 'With MultiSelect ComboBox'
 WithMultiSelectComboBox.parameters = {
   storyshots: false,
 }
+WithMultiSelectComboBox.argTypes = actions('onChange', 'onBlur', 'onFocus')
 
 export const WithDisabledOptions: Story<typeof Select, ChangeArg> = (args) => {
   const [value, setValue] = React.useState<SelectValueType>([])
@@ -180,3 +186,4 @@ WithDisabledOptions.parameters = {
     await page.click('button[name="select"]')
   },
 }
+WithDisabledOptions.argTypes = actions('onChange', 'onBlur', 'onFocus')
