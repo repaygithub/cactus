@@ -60,14 +60,12 @@ const useFieldArray = (name: string, prefix: KeyPrefix) => {
     () =>
       form.registerField(
         name,
-        ({ value }: { value?: any[] }) => {
-          if (value) {
-            setFields((old) => {
-              const sameLength = value.length === old.length
-              const sameKeys = sameLength && value.every((v, i) => v.key === old[i].key)
-              return sameKeys ? old : value.map((v, i) => ({ name: `${name}[${i}]`, key: v.key }))
-            })
-          }
+        ({ value = [] }: { value?: any[] }) => {
+          setFields((old) => {
+            const sameLength = value.length === old.length
+            const sameKeys = sameLength && value.every((v, i) => v.key === old[i].key)
+            return sameKeys ? old : value.map((v, i) => ({ name: `${name}[${i}]`, key: v.key }))
+          })
         },
         { value: true, length: true }
       ),
