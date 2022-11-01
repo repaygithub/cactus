@@ -367,7 +367,7 @@ const OuterSidebar = styled.div`
     content: '';
     display: table;
     clear: both;
-    height: 0px;
+    height: 0;
   }
 `
 

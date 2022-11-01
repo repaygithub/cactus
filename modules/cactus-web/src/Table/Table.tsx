@@ -80,7 +80,7 @@ const TableContext = createContext<TableContextProps>(DEFAULT_CONTEXT)
 const Wrapper = styled.div<TableProps>`
   max-width: 100%;
   overflow-x: auto;
-  margin: 0px 16px;
+  margin: 0 16px;
   ${margin}
   ${(p) => (p.fullWidth ? 'width: 100%;' : '')};
 `
@@ -429,8 +429,8 @@ const table = css<TableProps>`
     th,
     td {
       border-top-color: transparent;
-      border-top-left-radius: 0px;
-      border-top-right-radius: 0px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
     }
   }
   // last row

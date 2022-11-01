@@ -175,7 +175,7 @@ const DropdownButton = styled.button<VariantInterface>`
   width: 36px;
   ${(p) => dropdownButtonShapeMap[p.theme.shape]}
   margin-left: 1px;
-  border: 0px;
+  border: 0;
   outline: none;
   cursor: pointer;
   flex-grow: 0;
