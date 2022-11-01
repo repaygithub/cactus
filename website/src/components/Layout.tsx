@@ -387,7 +387,6 @@ const RootLink = styled(Link)`
   display: block;
   padding: ${(p): number => p.theme.space[3]}px;
   text-decoration: none;
-  color: ${(p): string => p.theme.colors.base};
   background-color: ${(p): string => p.theme.colors.base};
   color: ${(p): string => p.theme.colors.baseText};
   font-weight: 600;
