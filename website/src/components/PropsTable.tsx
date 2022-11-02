@@ -114,7 +114,7 @@ const CactusTable = styled(BaseTable)`
     td:nth-of-type(1):before {
       content: ' Name';
     }
-      td:nth-of-type(2):before {
+    td:nth-of-type(2):before {
       content: ' Required';
     }
     td:nth-of-type(3):before {
@@ -138,7 +138,7 @@ const StylingTable = styled(BaseTable)`
     td:nth-of-type(1):before {
       content: ' Name';
     }
-      td:nth-of-type(2):before {
+    td:nth-of-type(2):before {
       content: ' Required';
     }
 

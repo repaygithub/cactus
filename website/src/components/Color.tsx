@@ -226,43 +226,44 @@ const SmallTitle = styled(Span)`
 `
 
 const Table = styled.table`
-width: 100%;
+  width: 100%;
 
-tr:first-child {
-  border-bottom: 1px solid;
-}
-
-@media only screen and (max-width: 500px) {
-
-  th, td{
-    border: none;
-  }
-  table, tbody{
-    display: grid;
-    border: none;
-  }
-  tbody{
-    grid-row-gap: 20%;
-    grid-template-columns: 85px 85px 85px;
-    align: left;
-  }
-
-  tr{
-    text-align: center;
-    border-left: 1px solid;
-    &:nth-child(1) {
-       border-left: none;
-    }
-  }
-
-  th:first-child {
-    border-bottom: 1px solid;
-  }
-  td:first-child {
-    border-bottom: 1px solid;
-  }
   tr:first-child {
-    border-bottom: none;
+    border-bottom: 1px solid;
+  }
+
+  @media only screen and (max-width: 500px) {
+    th,
+    td {
+      border: none;
+    }
+    table,
+    tbody {
+      display: grid;
+      border: none;
+    }
+    tbody {
+      grid-row-gap: 20%;
+      grid-template-columns: 85px 85px 85px;
+    }
+
+    tr {
+      text-align: center;
+      border-left: 1px solid;
+      &:nth-child(1) {
+        border-left: none;
+      }
+    }
+
+    th:first-child {
+      border-bottom: 1px solid;
+    }
+    td:first-child {
+      border-bottom: 1px solid;
+    }
+    tr:first-child {
+      border-bottom: none;
+    }
   }
 `
 
