@@ -5107,10 +5107,8 @@ __metadata:
     typescript: ~4.6.2
   peerDependencies:
     "@repay/cactus-web": ">=3.0.0"
-    final-form: ^4.20.4
     prop-types: ">=15.0.0"
     react: ^16.8.3 || ^17.0.0
-    react-final-form: ^6.5.8
   languageName: unknown
   linkType: soft
 
