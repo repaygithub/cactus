@@ -15,8 +15,8 @@ const Size: React.FC = () => {
 interface MQ {
   minPx: number
   matches: boolean
-  removeListener: (x: () => void) => void
-  addListener: (x: () => void) => void
+  removeEventListener: (evtType: string, x: () => void) => void
+  addEventListener: (evtType: string, x: () => void) => void
 }
 
 describe('component: ScreenSizeProvider', () => {
@@ -39,10 +39,10 @@ describe('component: ScreenSizeProvider', () => {
       const result: MQ = {
         minPx: minPxMatch ? parseInt(minPxMatch[0]) : 0,
         matches: false,
-        removeListener: () => {
+        removeEventListener: () => {
           return
         },
-        addListener: (listener) => {
+        addEventListener: (_, listener) => {
           media.listener = listener
         },
       }
