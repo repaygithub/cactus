@@ -1,12 +1,15 @@
-import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { DocsContainer } from '@storybook/addon-docs'
+import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport'
 import React from 'react'
 
 import { StyleProvider } from '../../modules/cactus-web/src/'
 
-const STYLE = { global: true }
 export const decorators = [
-  (Story) => <StyleProvider global><Story /></StyleProvider>
+  (Story) => (
+    <StyleProvider global>
+      <Story />
+    </StyleProvider>
+  ),
 ]
 
 const customViewports = {
@@ -27,7 +30,7 @@ const customViewports = {
 }
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
+  actions: { argTypesRegex: '^on[A-Z].*' },
   docs: {
     inlineStories: false,
     iframeHeight: 'auto',

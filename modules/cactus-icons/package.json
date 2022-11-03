@@ -14,7 +14,6 @@
   "sideEffects": false,
   "scripts": {
     "cleanup": "rm -rf ts i",
-    "dev": "echo -e \"This now builds in watch mode, use yarn icons start for storybook\\n\"; repay-scripts dev --lib --tree-shaking ts/index.ts",
     "prebuild": "yarn build:ts",
     "build": "yarn prebuild && repay-scripts build --lib --tree-shaking ts/index.ts && yarn postbuild",
     "postbuild": "yarn build:types && node scripts/gen-docs.js",
