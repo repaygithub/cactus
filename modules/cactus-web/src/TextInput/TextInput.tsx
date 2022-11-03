@@ -8,27 +8,22 @@ import defaultTheme, {
 } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { compose, margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { omitMargins } from '../helpers/omit'
-import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
+import { getStatusStyles, StatusProps, StatusPropType } from '../helpers/status'
 
 type TextStyleKey = keyof TextStyleCollection
 export const textStyles = Object.keys(defaultTheme.textStyles) as TextStyleKey[]
 
 type InputElementProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'width'>
-export interface TextInputProps extends InputElementProps, MarginProps, WidthProps {
-  /** !important */
-  disabled?: boolean
-  status?: Status | null
+export interface TextInputProps extends InputElementProps, StatusProps, MarginProps, WidthProps {
   textStyle?: TextStyleKey
 }
 
-interface InputProps {
+interface InputProps extends StatusProps {
   $width: string
-  disabled?: boolean
-  status?: Status | null
   textStyle?: TextStyleKey
 }
 
@@ -44,15 +39,11 @@ const TextInputBase = React.forwardRef<HTMLInputElement, TextInputProps>(
   }
 )
 
-const Input = styled.input<InputProps>`
+export const commonInputStyles = css<StatusProps>`
   box-sizing: border-box;
   border: ${border('darkContrast')};
-  border-radius: ${radius(20)};
   outline: none;
-  padding: 3px 28px 3px 15px;
-  ${(p) => textStyle(p, p.textStyle || 'body')};
   ${colorStyle('standard')}
-  width: ${(p) => p.$width};
 
   &:disabled {
     cursor: not-allowed;
@@ -70,10 +61,19 @@ const Input = styled.input<InputProps>`
 
   &::placeholder {
     color: ${color('mediumContrast')};
-    font-style: oblique;
+    font-style: italic;
   }
 
   ${getStatusStyles}
+`
+
+const Input = styled.input<InputProps>`
+  border-radius: ${radius(20)};
+  padding: 3px 28px 3px 15px;
+  ${(p) => textStyle(p, p.textStyle || 'body')};
+  width: ${(p) => p.$width};
+
+  ${commonInputStyles}
 `
 
 export const TextInput = styled(TextInputBase)`

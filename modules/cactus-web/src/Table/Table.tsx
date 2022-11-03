@@ -1,24 +1,27 @@
-import { CactusTheme, ColorStyle, TextStyle } from '@repay/cactus-theme'
+import {
+  border,
+  boxShadow,
+  CactusTheme,
+  color,
+  ColorStyle,
+  mediaGTE,
+  radius,
+  textStyle,
+} from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext, useLayoutEffect } from 'react'
-import styled, {
-  css,
-  DefaultTheme,
-  FlattenInterpolation,
-  FlattenSimpleInterpolation,
-  ThemeProps,
-} from 'styled-components'
+import styled, { css, DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { extractMargins } from '../helpers/omit'
 import { useMergedRefs } from '../helpers/react'
-import { border, boxShadow, media, radius, textStyle } from '../helpers/theme'
 import variant from '../helpers/variant'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
 type CellAlignment = 'center' | 'right' | 'left'
 type CellType = 'th' | 'td'
 type BorderCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+export type FocusOption = boolean | 'mouse-only'
 export type TableVariant = 'table' | 'card' | 'mini'
 export type StickyColAlignment = 'right' | 'none'
 
@@ -29,6 +32,7 @@ interface TableContextProps {
   cellIndex: number
   variant: TableVariant
   dividers?: boolean
+  rowFocus: FocusOption
 }
 
 interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableElement> {
@@ -38,6 +42,8 @@ interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableEle
   as?: React.ElementType
   dividers?: boolean
   sticky?: StickyColAlignment
+  rowFocus?: FocusOption
+  rowHover?: boolean
 }
 
 interface TableHeaderProps extends React.TableHTMLAttributes<HTMLTableSectionElement> {
@@ -49,8 +55,7 @@ interface TableHeaderProps extends React.TableHTMLAttributes<HTMLTableSectionEle
 export interface TableCellProps
   extends WidthProps,
     Omit<
-      React.TdHTMLAttributes<HTMLTableDataCellElement> &
-        React.ThHTMLAttributes<HTMLTableHeaderCellElement>,
+      React.TdHTMLAttributes<HTMLTableCellElement> & React.ThHTMLAttributes<HTMLTableCellElement>,
       'width'
     > {
   variant?: TableVariant
@@ -67,6 +72,7 @@ const DEFAULT_CONTEXT: TableContextProps = {
   cellIndex: 0,
   variant: 'table',
   dividers: false,
+  rowFocus: true,
 }
 
 const TableContext = createContext<TableContextProps>(DEFAULT_CONTEXT)
@@ -84,75 +90,74 @@ interface heightInfoProps {
   cells: any[]
 }
 
-export const Table = React.forwardRef<HTMLTableElement, TableProps>(
-  ({ children, cardBreakpoint, sticky = 'none', ...props }, ref): React.ReactElement => {
-    const size = useContext(ScreenSizeContext)
-    const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [] }
-    const tableRef = React.useRef<HTMLTableElement>(null)
-    const mergedRef = useMergedRefs(ref, tableRef)
-    const marginProps = extractMargins(props)
-    useLayoutEffect(() => {
-      const heightInfo: heightInfoProps[] = []
-      let height = 0
+export const Table = React.forwardRef<HTMLTableElement, TableProps>((initProps, ref) => {
+  const { children, cardBreakpoint, sticky = 'none', rowFocus = true, ...props } = initProps
+  const size = useContext(ScreenSizeContext)
+  const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [], rowFocus }
+  const tableRef = React.useRef<HTMLTableElement>(null)
+  const mergedRef = useMergedRefs(ref, tableRef)
+  const marginProps = extractMargins(props)
+  useLayoutEffect(() => {
+    const heightInfo: heightInfoProps[] = []
+    let height = 0
 
-      if (context.variant === 'card') {
-        const cells = tableRef.current?.querySelectorAll(`${StyledCell}`)
-        if (cells && cells.length > 0) {
-          cells.forEach((cell) => {
-            const cellIndex = (cell as HTMLTableCellElement).cellIndex
-            const info = heightInfo[cellIndex] || (heightInfo[cellIndex] = { max: 0, cells: [] })
-            const [first, second] = cell.childNodes as any
-            const rect1 = first?.getBoundingClientRect?.()
-            const rect2 = second?.getBoundingClientRect?.()
-            if (rect1) {
-              if (!rect2 || rect1.width + rect2.width < cell.clientWidth - 16) {
-                height = rect1.height
-              } else {
-                height = rect1.height + rect2.height + 16
-              }
-              info.max = Math.max(info.max, height)
-              info.cells.push({ height, cell })
+    if (context.variant === 'card') {
+      const cells = tableRef.current?.querySelectorAll(`${StyledCell}`)
+      if (cells && cells.length > 0) {
+        cells.forEach((cell) => {
+          const cellIndex = (cell as HTMLTableCellElement).cellIndex
+          const info = heightInfo[cellIndex] || (heightInfo[cellIndex] = { max: 0, cells: [] })
+          const [first, second] = cell.childNodes as any
+          const rect1 = first?.getBoundingClientRect?.()
+          const rect2 = second?.getBoundingClientRect?.()
+          if (rect1) {
+            if (!rect2 || rect1.width + rect2.width < cell.clientWidth - 16) {
+              height = rect1.height
+            } else {
+              height = rect1.height + rect2.height + 16
             }
-          })
+            info.max = Math.max(info.max, height)
+            info.cells.push({ height, cell })
+          }
+        })
 
-          // We queue the updates then make them all at once to avoid layout thrashing.
-          for (const info of heightInfo) {
-            for (const cellInfo of info.cells) {
-              cellInfo.cell.style.minHeight = `${info.max}px`
-            }
+        // We queue the updates then make them all at once to avoid layout thrashing.
+        for (const info of heightInfo) {
+          for (const cellInfo of info.cells) {
+            cellInfo.cell.style.minHeight = `${info.max}px`
           }
         }
       }
-    })
+    }
+  })
 
-    if (props.variant) {
-      context.variant = props.variant
-    } else if (cardBreakpoint && size <= SIZES[cardBreakpoint]) {
-      context.variant = 'card'
-    }
-    if (props.dividers) {
-      context.dividers = props.dividers
-    }
-    props.variant = context.variant
-    return (
-      <TableContext.Provider value={context}>
-        {props.as ? (
+  if (props.variant) {
+    context.variant = props.variant
+  } else if (cardBreakpoint && size <= SIZES[cardBreakpoint]) {
+    context.variant = 'card'
+  }
+  if (props.dividers) {
+    context.dividers = props.dividers
+  }
+  props.variant = context.variant
+  return (
+    <TableContext.Provider value={context}>
+      {props.as ? (
+        <StyledTable {...props} sticky={sticky} ref={mergedRef}>
+          {children}
+        </StyledTable>
+      ) : (
+        <Wrapper {...marginProps} fullWidth={props.fullWidth}>
           <StyledTable {...props} sticky={sticky} ref={mergedRef}>
             {children}
           </StyledTable>
-        ) : (
-          <Wrapper {...marginProps} fullWidth={props.fullWidth}>
-            <StyledTable {...props} sticky={sticky} ref={mergedRef}>
-              {children}
-            </StyledTable>
-          </Wrapper>
-        )}
-      </TableContext.Provider>
-    )
-  }
-)
+        </Wrapper>
+      )}
+    </TableContext.Provider>
+  )
+})
 
-export const TableCell = React.forwardRef<HTMLTableDataCellElement, TableCellProps>(
+export const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
   ({ children, ...props }, ref): React.ReactElement => {
     const context = useContext<TableContextProps>(TableContext)
     if (context.cellType && !props.as) {
@@ -201,10 +206,11 @@ export const TableHeader = React.forwardRef<HTMLTableSectionElement, TableHeader
 
 export const TableRow: React.FC<TableRowProps> = ({ children, ...props }): React.ReactElement => {
   const context = useContext<TableContextProps>(TableContext)
+  const tabIndex = context.rowFocus === 'mouse-only' ? -1 : context.rowFocus ? 0 : undefined
 
   return (
     <TableContext.Provider value={{ ...context, cellIndex: 0 }}>
-      <tr {...props} tabIndex={0}>
+      <tr tabIndex={tabIndex} {...props}>
         {children}
       </tr>
     </TableContext.Provider>
@@ -217,7 +223,7 @@ type ForwardRefComponent<T, P> = React.ForwardRefExoticComponent<
 >
 type TableComponentType = ForwardRefComponent<HTMLTableElement, TableProps> & {
   Header: ForwardRefComponent<HTMLTableSectionElement, TableHeaderProps>
-  Cell: ForwardRefComponent<HTMLTableDataCellElement, TableCellProps>
+  Cell: ForwardRefComponent<HTMLTableCellElement, TableCellProps>
   Row: React.FC<TableRowProps>
   Body: React.ElementType<TableBodyProps>
 }
@@ -237,12 +243,17 @@ Table.displayName = 'Table'
 
 Table.propTypes = {
   fullWidth: PropTypes.bool,
+  // @ts-ignore
+  rowFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['mouse-only'])]),
+  rowHover: PropTypes.bool,
   cardBreakpoint: PropTypes.oneOf<Size>(['tiny', 'small', 'medium', 'large', 'extraLarge']),
   variant: PropTypes.oneOf<TableVariant>(['table', 'card', 'mini']),
 }
 
 Table.defaultProps = {
   cardBreakpoint: 'tiny',
+  rowFocus: true,
+  rowHover: true,
 }
 
 export default DefaultTable
@@ -280,23 +291,23 @@ const ContentBox = styled.div`
 const StyledCell = styled.td(
   variant({
     table: css<TableCellProps>`
-      text-align: ${(p): string => p.align || 'left'};
+      text-align: ${(p) => p.align || 'left'};
       padding: 16px;
       ${(p) =>
         p.width
           ? width
           : css`
               min-width: calc(160px * 0.7125);
-              ${media(p.theme, 'large')} {
+              ${mediaGTE('large')} {
                 min-width: calc(160px * 0.875);
               }
-              ${media(p.theme, 'extraLarge')} {
+              ${mediaGTE('extraLarge')} {
                 min-width: 160px;
               }
             `};
     `,
     mini: css<TableCellProps>`
-      text-align: ${(p): string => p.align || 'left'};
+      text-align: ${(p) => p.align || 'left'};
       padding: 8px;
       ${(p) => p.width && width};
     `,
@@ -310,7 +321,7 @@ const StyledCell = styled.td(
         box-sizing: border-box;
         padding: 8px 16px;
         :nth-of-type(even) {
-          background-color: ${(p): string => p.theme.colors.lightContrast};
+          background-color: ${color('lightContrast')};
         }
         :last-child {
           border-bottom-left-radius: inherit;
@@ -336,8 +347,8 @@ const StyledHeader = styled.thead<TableHeaderProps>`
   &&&&& th,
   &&&&& td {
     text-transform: uppercase;
-    border: ${(p): string => border(p.theme, 'base')};
-    border-right: ${(p): string => (p.dividers ? border(p.theme, 'mediumContrast') : '')};
+    border: ${border('base')};
+    border-right: ${(p) => (p.dividers ? border(p.theme, 'mediumContrast') : '')};
     ${(p): ColorStyle => p.theme.colorStyles.base};
   }
   ${headerVariants}
@@ -360,20 +371,19 @@ const getCTABorder = (p: ThemeProps<CactusTheme>, focus?: boolean): ReturnType<t
 
 const table = css<TableProps>`
   display: table;
-  ${(p): FlattenSimpleInterpolation | TextStyle =>
-    textStyle(p.theme, p.variant === 'mini' ? 'small' : 'body')};
+  ${(p) => textStyle(p.theme, p.variant === 'mini' ? 'small' : 'body')};
   border-spacing: 0;
   td,
   th {
-    border-right: ${(p): string => (p.dividers ? border(p.theme, 'lightContrast') : '')};
-    background-color: ${(p): string => p.theme.colors.white};
-    border-top: ${(p): string => border(p.theme, 'transparent')};
-    border-bottom: ${(p): string => border(p.theme, 'transparent')};
+    border-right: ${(p) => (p.dividers ? border(p.theme, 'lightContrast') : '')};
+    background-color: ${color('white')};
+    border-top: ${border('transparent')};
+    border-bottom: ${border('transparent')};
     :first-child {
-      border-left: ${(p): string => border(p.theme, 'lightContrast')};
+      border-left: ${border('lightContrast')};
     }
     :last-child {
-      border-right: ${(p): string => border(p.theme, 'lightContrast')};
+      border-right: ${border('lightContrast')};
       :focus-within {
         z-index: 1;
       }
@@ -384,15 +394,15 @@ const table = css<TableProps>`
   tr:nth-of-type(even) {
     td,
     th {
-      background-color: ${(p): string => p.theme.colors.lightContrast};
+      background-color: ${color('lightContrast')};
     }
     td:not(:last-child) {
-      border-right: ${(p): string => (p.dividers ? border(p.theme, 'white') : '')};
+      border-right: ${(p) => (p.dividers ? border(p.theme, 'white') : '')};
     }
   }
 
   &&& tr:hover {
-    ${getCTABorder}
+    ${(p) => p.rowHover && getCTABorder(p)}
   }
   &&& tr:focus {
     outline: 0;
@@ -404,7 +414,7 @@ const table = css<TableProps>`
   thead > tr:first-child {
     th,
     td {
-      border-top-color: ${(p): string => p.theme.colors.lightContrast};
+      border-top-color: ${color('lightContrast')};
       :first-child {
         ${getShape('top-left')};
       }
@@ -431,7 +441,7 @@ const table = css<TableProps>`
     & > tr:last-child {
       th,
       td {
-        border-bottom-color: ${(p): string => p.theme.colors.lightContrast};
+        border-bottom-color: ${color('lightContrast')};
         :first-child {
           ${getShape('bottom-left')};
         }
@@ -443,8 +453,8 @@ const table = css<TableProps>`
   }
 `
 
-const card = css`
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'tiny')};
+const card = css<TableProps>`
+  ${textStyle('tiny')};
   overflow-wrap: break-word;
   &,
   thead,
@@ -459,14 +469,14 @@ const card = css`
     flex-flow: column nowrap;
     min-width: 240px;
     max-width: 360px;
-    ${(p): string => boxShadow(p.theme, 1)};
-    background-color: ${(p): string => p.theme.colors.white};
-    border: ${(p): string => border(p.theme, 'lightContrast')};
+    ${boxShadow(1)}
+    background-color: ${color('white')};
+    border: ${border('lightContrast')};
     border-radius: ${radius(8)};
     margin: 4px;
     outline: 0;
     :focus {
-      border-color: ${(p): string => p.theme.colors.callToAction};
+      border-color: ${color('callToAction')};
     }
   }
   th,
@@ -476,7 +486,7 @@ const card = css`
     max-width: 100%;
     padding: 8px 16px;
     :nth-of-type(even) {
-      background-color: ${(p): string => p.theme.colors.lightContrast};
+      background-color: ${color('lightContrast')};
     }
     :last-child {
       border-bottom-left-radius: inherit;
@@ -486,8 +496,8 @@ const card = css`
 `
 
 const StyledTable = styled.table<TableProps>`
-  ${(p): string => (p.fullWidth ? 'min-width: 100%' : '')};
-  color: ${(p): string => p.theme.colors.darkestContrast};
+  ${(p) => (p.fullWidth ? 'min-width: 100%' : '')};
+  color: ${color('darkestContrast')};
   th {
     font-weight: 600;
   }

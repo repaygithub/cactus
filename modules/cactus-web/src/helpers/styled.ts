@@ -116,15 +116,17 @@ const flexKeys = [
 const itemKeys = ['flex', 'flexGrow', 'flexShrink', 'flexBasis', 'alignSelf', 'order'] as const
 
 export interface FlexProps extends Pick<SS.FlexboxProps, typeof flexKeys[number]> {
-  flexFlow?: SS.ResponsiveValue<boolean | Property.FlexFlow>
+  flexFlow?: SS.ResponsiveValue<Property.FlexFlow>
   gap?: SS.ResponsiveValue<Property.Gap<string | number>>
   rowGap?: SS.ResponsiveValue<Property.RowGap<string | number>>
   colGap?: SS.ResponsiveValue<Property.ColumnGap<string | number>>
 }
-export type FlexItemProps = Pick<SS.FlexboxProps, typeof itemKeys[number]>
 
-// Not exhaustive, but all possible values include at least one of these words.
-const isFlexKey = RegExp.prototype.test.bind(/row|column|reverse|wrap/)
+export interface FlexOptionProps extends Omit<FlexProps, 'flexFlow'> {
+  flexFlow?: SS.ResponsiveValue<boolean | Property.FlexFlow>
+}
+
+export type FlexItemProps = Pick<SS.FlexboxProps, typeof itemKeys[number]>
 
 export const flexContainer = SS.system({
   ...pick(SS.flexbox.config, flexKeys),
@@ -132,10 +134,18 @@ export const flexContainer = SS.system({
   gap: { property: 'gap', scale: 'space' },
   rowGap: { property: 'rowGap', scale: 'space' },
   colGap: { property: 'columnGap', scale: 'space' },
-  // Gives a shortcut to common flex props, e.g. `<C flexFlow="row wrap">`
-  // is equivalent to `<C display="flex" flexDirection="row" flexWrap="wrap">`.
-  // Depending on where it's used, the `display` part could be redundant;
-  // keep that in mind if you need a different `display` value (e.g. 'inline-flex').
+  flexFlow: true,
+})
+export const flexItem = pickStyles(SS.flexbox, ...itemKeys)
+
+// Not exhaustive, but all possible values include at least one of these words.
+const isFlexKey = RegExp.prototype.test.bind(/row|column|reverse|wrap/)
+// Just like `flexContainer`, except it expects the default display mode to be
+// something other than flex and has a shortcut to "activate" flex behavior:
+// `<C flexFlow>` -> `<C display="flex" flexFlow="row nowrap">`.
+// Be careful that it doesn't override another display mode, e.g. `inline-flex`.
+export const flexContainerOption = SS.system({
+  ...flexContainer.config,
   flexFlow: (value: any) => {
     if (typeof value === 'boolean') {
       return value ? { display: 'flex' } : undefined
@@ -144,7 +154,6 @@ export const flexContainer = SS.system({
     }
   },
 })
-export const flexItem = pickStyles(SS.flexbox, ...itemKeys)
 
 export type AllWidthProps = SS.WidthProps & SS.MinWidthProps & SS.MaxWidthProps
 export const allWidth = SS.compose(SS.width, SS.minWidth, SS.maxWidth)

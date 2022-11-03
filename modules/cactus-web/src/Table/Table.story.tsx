@@ -78,6 +78,7 @@ Layout.argTypes = {
   hasBody: { name: 'has tbody' },
   margin: SPACE,
   sticky: { name: 'Sticky column position', options: ['right', 'none'] },
+  rowFocus: { options: [true, false, 'mouse-only'] },
 }
 Layout.args = {
   captionText: '',
@@ -88,6 +89,8 @@ Layout.args = {
   rowCount: 3,
   hasBody: true,
   sticky: 'none',
+  rowFocus: true,
+  rowHover: true,
 }
 
 export const StylesOnly: TableStory = ({

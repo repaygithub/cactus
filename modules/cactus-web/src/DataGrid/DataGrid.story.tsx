@@ -2,7 +2,7 @@ import React, { ReactElement, useContext, useState } from 'react'
 
 import { DataGrid, ScreenSizeContext, SIZES, SplitButton } from '../'
 import { HIDE_CONTROL, SPACE, Story, STRING } from '../helpers/storybook'
-import { StickyColAlignment } from '../Table/Table'
+import { FocusOption, StickyColAlignment } from '../Table/Table'
 import { JustifyContent } from './types'
 
 interface Datum {
@@ -145,6 +145,8 @@ interface Args {
   prevPageLabel: string
   nextPageLabel: string
   lastPageLabel: string
+  rowFocus: FocusOption
+  rowHover: boolean
 }
 
 const DataGridContainer: Story<typeof DataGrid, Args> = ({
@@ -177,6 +179,8 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
   lastPageLabel,
   margin,
   sticky,
+  rowFocus,
+  rowHover,
 }) => {
   const size = useContext(ScreenSizeContext)
   const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
@@ -269,7 +273,13 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
           )}
         </DataGrid.TopSection>
       )}
-      <DataGrid.Table data={usableData} dividers={dividers} sticky={sticky}>
+      <DataGrid.Table
+        data={usableData}
+        dividers={dividers}
+        sticky={sticky}
+        rowFocus={rowFocus}
+        rowHover={rowHover}
+      >
         <DataGrid.DataColumn id="name" title="Name" align={align} />
         <DataGrid.DataColumn id="created" title="Created" sortable={sortableCols} align={align} />
         <DataGrid.DataColumn id="updated" title="Updated" sortable={sortableCols} align={align} />
@@ -383,6 +393,7 @@ BasicUsage.argTypes = {
   nextPageLabel: { name: 'Pagination: nextPageLabel', ...STRING },
   lastPageLabel: { name: 'Pagination: lastPageLabel', ...STRING },
   margin: SPACE,
+  rowFocus: { options: [true, false, 'mouse-only'] },
 }
 BasicUsage.args = {
   initialData: INITIAL_DATA,
@@ -399,6 +410,8 @@ BasicUsage.args = {
   spacingBottom: '4',
   sticky: 'none',
   fullWidth: true,
+  rowFocus: true,
+  rowHover: true,
 }
 
 export const LotsAndLotsOfRows = DataGridContainer.bind(null)

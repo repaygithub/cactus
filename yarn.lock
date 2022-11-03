@@ -5090,7 +5090,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.17.5
     "@repay/babel-preset": 1.1.4
-    "@repay/cactus-web": ^9.10.0
+    "@repay/cactus-web": ^9.11.1
     "@repay/scripts": ^3.0.4
     "@testing-library/jest-dom": ^5.16.2
     "@testing-library/react": ^12.1.4
@@ -5107,10 +5107,8 @@ __metadata:
     typescript: ~4.6.2
   peerDependencies:
     "@repay/cactus-web": ">=3.0.0"
-    final-form: ^4.20.4
     prop-types: ">=15.0.0"
     react: ^16.8.3 || ^17.0.0
-    react-final-form: ^6.5.8
   languageName: unknown
   linkType: soft
 
@@ -5220,7 +5218,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@repay/cactus-web@^9.0.0, @repay/cactus-web@^9.10.0, @repay/cactus-web@workspace:modules/cactus-web":
+"@repay/cactus-web@^9.0.0, @repay/cactus-web@^9.11.1, @repay/cactus-web@workspace:modules/cactus-web":
   version: 0.0.0-use.local
   resolution: "@repay/cactus-web@workspace:modules/cactus-web"
   dependencies:

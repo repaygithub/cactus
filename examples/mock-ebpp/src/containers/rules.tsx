@@ -1,10 +1,10 @@
 import { RouteComponentProps } from '@reach/router'
-import { Field } from '@repay/cactus-form'
+import { Field, Form, FormSpy } from '@repay/cactus-form'
 import { ActionsAdd } from '@repay/cactus-icons'
 import { Accordion, Box, Button, Flex, Text, TextButton } from '@repay/cactus-web'
 import arrayMutators from 'final-form-arrays'
 import React from 'react'
-import { Form, FormRenderProps, useForm } from 'react-final-form'
+import { useForm } from 'react-final-form'
 import { Helmet } from 'react-helmet'
 
 import { post } from '../api'
@@ -40,20 +40,15 @@ const keyCounters: { [K in KeyPrefix]: number } = {
   action: 0,
 }
 
-const SUB = {}
-
 const Rules: React.FC<RouteComponentProps> = () => {
   const handleSubmit = ({ rules }: FormRules): void => {
     post(rules)
     console.log((window as any).apiData)
   }
   return (
-    <Form
-      component={RulesForm}
-      mutators={arrayMutators as any}
-      onSubmit={handleSubmit}
-      subscription={SUB}
-    />
+    <Form mutators={arrayMutators as any} onSubmit={handleSubmit}>
+      <RulesForm />
+    </Form>
   )
 }
 
@@ -65,14 +60,12 @@ const useFieldArray = (name: string, prefix: KeyPrefix) => {
     () =>
       form.registerField(
         name,
-        ({ value }: { value?: any[] }) => {
-          if (value) {
-            setFields((old) => {
-              const sameLength = value.length === old.length
-              const sameKeys = sameLength && value.every((v, i) => v.key === old[i].key)
-              return sameKeys ? old : value.map((v, i) => ({ name: `${name}[${i}]`, key: v.key }))
-            })
-          }
+        ({ value = [] }: { value?: any[] }) => {
+          setFields((old) => {
+            const sameLength = value.length === old.length
+            const sameKeys = sameLength && value.every((v, i) => v.key === old[i].key)
+            return sameKeys ? old : value.map((v, i) => ({ name: `${name}[${i}]`, key: v.key }))
+          })
         },
         { value: true, length: true }
       ),
@@ -92,7 +85,7 @@ const useFieldArray = (name: string, prefix: KeyPrefix) => {
   }
 }
 
-const RulesForm = ({ form, handleSubmit }: FormRenderProps<FormRules>) => {
+const RulesForm = () => {
   const {
     fields: rules,
     newestKey: newestRule,
@@ -102,15 +95,7 @@ const RulesForm = ({ form, handleSubmit }: FormRenderProps<FormRules>) => {
     moveDown: handleRuleDownClick,
   } = useFieldArray('rules', 'rule')
   return (
-    <Box
-      as="form"
-      onSubmit={handleSubmit}
-      onReset={() => form.reset()}
-      borderColor="base"
-      borderWidth="2px"
-      borderStyle="solid"
-      marginX="5%"
-    >
+    <Box borderColor="base" borderWidth="2px" borderStyle="solid" marginX="5%">
       <Helmet>
         <title>Rules</title>
       </Helmet>
@@ -143,14 +128,18 @@ const RulesForm = ({ form, handleSubmit }: FormRenderProps<FormRules>) => {
             </FieldsAccordion>
           ))}
         </Accordion.Provider>
-        <Flex width="100%" justifyContent="center" mt={4} py={3}>
-          <Button type="reset" variant="standard" mr={3}>
-            Reset
-          </Button>
-          <Button type="submit" variant="action" ml={3}>
-            Submit
-          </Button>
-        </Flex>
+        <FormSpy subscription={{ dirty: true }}>
+          {({ dirty }: { dirty: boolean }) => (
+            <Flex width="100%" justifyContent="center" mt={4} py={3}>
+              <Button type="reset" variant="standard" mr={3} disabled={!dirty}>
+                Reset
+              </Button>
+              <Button type="submit" variant="action" ml={3} disabled={!dirty}>
+                Submit
+              </Button>
+            </Flex>
+          )}
+        </FormSpy>
       </Box>
     </Box>
   )

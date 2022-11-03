@@ -7,10 +7,13 @@ order: 3
 
 For the most part you can just use [React Final Form](https://final-form.org/docs/react-final-form/getting-started)
 as it's documented, substituting our `Field` component for theirs.
-We also add two new components:
+This library re-exports everything from `final-form` and `react-final-form` except for the components that we override.
+We also add two new components, as well as a basic `Form` wrapper and our own version of React Final Form's `FormSpy`:
 
 - `DependentField` is like a `Field`, but takes a set of field names and a callback to use when any of those fields changes.
 - `FieldSpy` is analagous to [FormSpy](https://final-form.org/docs/react-final-form/api/FormSpy), but for a single field.
+- `FormSpy` works the same way that React Final Form's `FormSpy` works, except that it includes a fix for a bug where the initial state was incorrect.
+- `Form` is a wrapper around React Final Form's `Form` component that sets an empty subscription by default, and sets the `onReset` handler on the `form` for you.
 
 ## Field
 
@@ -22,7 +25,7 @@ if you pass overrides, make sure you know how to register the changes you want w
 It also has two additional props:
 
 - `getFieldComponent` should be a function that accepts the props object and returns a valid component: either a string e.g. "input" or a functional or class component. It's only called if no render function or `component` prop is given, and is called _before_ the base Field, so it doesn't have access to any `final-form` data.
-- `processMeta` is a function that takes two arguments: the props (including the `input` props from [the base Field](https://final-form.org/docs/react-final-form/types/FieldRenderProps) merged with the forwarded props), and the `meta` object from the base Field. It should return a single object containing the final version of the props to be passed to the component/render func.
+- `processMeta` is a function that takes two arguments: the props (including the `input` props from [the base Field](https://final-form.org/docs/react-final-form/types/FieldRenderProps) merged with the forwarded props), and the `meta` object from the base Field. It should either return a single object containing the final version of the props to be passed to the component/render func, or it should modify the props argument that is passed in to the function and return nothing. If nothing is returned from `processMeta`, the component/render func will be called with the same props object that was updated in the function.
   - Note that although it's not named as such `processMeta` does follow the rules of hooks, so you can use hooks in whatever function you pass here.
   - One possibility is to use `React.useContext(I18nContext)` from `@repay/cactus-i18n` to implement translated labels/error messages for your fields.
 - It also accepts an `as` prop as an alias of `component`, to fit in better with all the [styled-components](https://styled-components.com/) we use in Cactus Web.
@@ -215,4 +218,66 @@ const MyForm = (props) => (
     </FieldSpy>
   </Form>
 )
+```
+
+## FormSpy
+
+A re-implementation of [FormSpy](https://final-form.org/docs/react-final-form/api/FormSpy), but with a
+fix for a bug that sometimes caused incorrect initial values on the first render. Allows you to spy on
+form state values and re-render a section of your form with updated values when the values you spy on change.
+Our `FormSpy` supports all of the same props that Final Form's implementation does, apart from the `onChange` prop,
+which is not supported in this implementation.
+
+```
+const MyForm = (props) => (
+  <Form {...props}>
+    <Field name="power" type="number" />
+    <FormSpy subscription={{ dirty: true }}>
+      {({ dirty }) => (
+        <span>Dirty value: {dirty}</span>
+      )}
+    </FormSpy>
+  </Form>
+)
+```
+
+OR
+
+```
+const MyForm = (props) => (
+  <Form {...props}>
+    <Field name="power" type="number" />
+    <FormSpy
+      subscription={{ dirty: true }}
+      render={({ dirty }) => <span>Dirty value: {dirty}</span>}
+    />
+  </Form>
+)
+```
+
+OR
+
+```
+const RenderOnDirtyChange = ({ dirty }) => <span>Dirty value: {dirty}</span>
+const MyForm = (props) => (
+  <Form {...props}>
+    <FormSpy subscription={{ dirty: true }} component={RenderOnDirtyChange} />
+  </Form>
+)
+```
+
+## Form
+
+A wrapper around [Form](https://final-form.org/docs/react-final-form/api/Form) that includes an empty subscription
+by default. It will also include a basic render function and form reset function if neither `component` or `render`
+props are provided. Because the subscription is empty by default, we recommend that you use spies (`FormSpy`, `FieldSpy`)
+to hook into form state changes.
+
+```
+<Form>
+  <Field name="power" type="number" />
+  <button type="reset">
+    Reset handler included in 'Form'
+  </button>
+</Form>
 ```

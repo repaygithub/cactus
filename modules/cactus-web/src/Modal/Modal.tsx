@@ -1,4 +1,3 @@
-import { DialogContent, DialogOverlay } from '@reach/dialog'
 import { NavigationClose } from '@repay/cactus-icons'
 import { border, CactusColor, colorStyle, mediaGTE, radius, space } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
@@ -23,12 +22,15 @@ import {
 } from 'styled-system'
 
 import Dimmer from '../Dimmer/Dimmer'
+import FocusLock from '../FocusLock/FocusLock'
 import { omitProps } from '../helpers/omit'
+import { usePortal } from '../helpers/portal'
+import { trapScroll } from '../helpers/scroll'
 import {
-  flexContainer,
+  flexContainerOption,
   flexItem,
   FlexItemProps,
-  FlexProps,
+  FlexOptionProps,
   gapWorkaround,
   pickStyles,
   Styled,
@@ -42,7 +44,7 @@ export const modalType = ['action', 'danger', 'warning', 'success'] as const
 export type ModalType = typeof modalType[number]
 
 type SizeProps = 'height' | 'minHeight' | 'maxHeight' | 'width' | 'minWidth' | 'maxWidth'
-type StyleProps = SpaceProps & FlexProps & FlexItemProps & Pick<LayoutProps, SizeProps>
+type StyleProps = SpaceProps & FlexOptionProps & FlexItemProps & Pick<LayoutProps, SizeProps>
 type DivProps = React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>
 
 interface ModalPopupProps extends StyleProps, TextAlignProps {
@@ -65,20 +67,78 @@ interface CloseButtonProps {
 }
 
 // Overflow & flex don't mix well, so we need an intermediate div for scrolling.
-const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>(
-  ({ children, isOpen, onClose, modalLabel, className, closeButtonProps, ...props }, ref) => (
-    <DialogOverlay className={className} isOpen={isOpen} onDismiss={onClose}>
-      <div className="flex-container">
-        <ModalPopUp aria-label={modalLabel} {...props} ref={ref}>
+const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>((props, ref) => {
+  const {
+    children,
+    isOpen,
+    onClose,
+    modalLabel,
+    className,
+    closeButtonProps,
+    onClick,
+    ...otherProps
+  } = props
+  const dimmerRef = React.useRef<HTMLDivElement>(null)
+  React.useEffect(() => {
+    if (dimmerRef.current) {
+      const modal =
+        (ref as any)?.current || dimmerRef.current.querySelector<HTMLElement>('[aria-modal]')
+      if (modal) modal.focus()
+      return trapScroll(dimmerRef)
+    }
+  }, [isOpen]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const mouseRef = React.useRef<EventTarget | null>(null)
+
+  const onMouseDown = (event: React.MouseEvent<HTMLElement>) => {
+    mouseRef.current = event.target
+  }
+
+  const onDimmerClick = (event: React.MouseEvent<HTMLElement>) => {
+    // if statement to ignore click-and-drag.
+    if (event.target === mouseRef.current) {
+      onClose()
+    }
+  }
+
+  const onModalClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation()
+    onClick?.(event)
+  }
+
+  const closeOnEscape = (event: React.KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      onClose()
+    }
+  }
+  return usePortal(
+    <Dimmer
+      className={className}
+      ref={dimmerRef}
+      active={isOpen}
+      onMouseDown={onMouseDown}
+      onClick={onDimmerClick}
+      onKeyDown={closeOnEscape}
+    >
+      <FocusLock className="flex-container">
+        <ModalPopUp
+          role="dialog"
+          aria-modal
+          aria-label={modalLabel}
+          tabIndex={-1}
+          onClick={onModalClick}
+          {...otherProps}
+          ref={ref}
+        >
           <CloseButton {...closeButtonProps} onClick={onClose}>
             <NavigationClose />
           </CloseButton>
           {children}
         </ModalPopUp>
-      </div>
-    </DialogOverlay>
+      </FocusLock>
+    </Dimmer>
   )
-)
+})
 ModalBase.displayName = 'Modal'
 
 // Because there's an intermediate container percentages don't work well, so we
@@ -106,7 +166,7 @@ const convertPercentToFixed = (suffix: string, ...styleFns: typeof width[]) => {
 // Even vertical margins/padding are percentages of parent's width, per CSS spec.
 const widths = convertPercentToFixed('vw', width, minWidth, maxWidth, margin, padding)
 const heights = convertPercentToFixed('vh', height, minHeight, maxHeight)
-const modalStyles = compose(flexItem, flexContainer, textAlign)
+const modalStyles = compose(flexItem, flexContainerOption, textAlign)
 
 const variantColors: { [K in ModalType]: CactusColor } = {
   action: 'callToAction',
@@ -115,7 +175,7 @@ const variantColors: { [K in ModalType]: CactusColor } = {
   danger: 'error',
 }
 
-const ModalPopUp = styledWithClass(DialogContent, 'cactus-modal').withConfig(
+const ModalPopUp = styledWithClass('div', 'cactus-modal').withConfig(
   omitProps<ModalPopupProps>(widths, heights, modalStyles, 'variant')
 )`
   ${colorStyle('standard')}
@@ -181,11 +241,9 @@ CloseButton.propTypes = { label: PropTypes.string.isRequired }
 // because it's defined in the `IconButton` component and local styles override those.
 CloseButton.defaultProps = { label: 'Close Modal', iconSize: ['small', 'small', 'medium'] }
 
-export const Modal = styledUnpoly(Dimmer, ModalBase)`
-  box-sizing: content-box;
+export const Modal = styledUnpoly(ModalBase)`
   display: block;
   overflow: auto;
-  overscroll-behavior: none;
   z-index: 101;
 
   & > .flex-container {

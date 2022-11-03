@@ -269,10 +269,18 @@ const toComponentLayout = (role: string, position: Position, order: number): Com
 }
 
 const ZERO_POSITION: CSSPosition = { top: 0, left: 0, bottom: 0, right: 0 }
+// Special case fix for a bug that is caused by the address bar disappearing on Chrome for Android.
+const IS_ANDROID_CHROME =
+  typeof navigator !== 'undefined' &&
+  typeof document !== 'undefined' &&
+  navigator.userAgent.match(/chrome|chromium/i) &&
+  navigator.userAgent.match(/android/i) &&
+  'ontouchstart' in document.documentElement
+const POSITION = IS_ANDROID_CHROME ? 'fixed' : 'absolute'
 const BASIC_GRID = `
   display: -ms-grid;
   display: grid;
-  position: absolute;
+  position: ${POSITION};
   overflow: auto;
 `
 

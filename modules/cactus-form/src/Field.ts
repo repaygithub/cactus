@@ -38,7 +38,7 @@ const FIELD_PROPS: (keyof FieldConfig)[] = [
 ]
 
 type ComponentMapper = (props: UnknownProps) => React.ElementType<any>
-type PostProcessor = (props: UnknownProps, meta: FieldMetaState<unknown>) => UnknownProps
+type PostProcessor = (props: UnknownProps, meta: FieldMetaState<unknown>) => UnknownProps | void
 
 export interface FieldProps extends UnknownProps, RenderProps, FieldConfig {
   name: string
@@ -155,7 +155,8 @@ const Field: RenderFunc<FieldProps> = ({
 
   const field = useField(name, fieldConfig)
   const inputProps = Object.assign(field.input, props)
-  const fieldProps = processMeta(inputProps, field.meta)
+  const updatedProps = processMeta(inputProps, field.meta)
+  const fieldProps = updatedProps || inputProps
   if (render) {
     return render(fieldProps)
   } else if (component) {

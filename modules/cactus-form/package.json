@@ -1,6 +1,6 @@
 {
   "name": "@repay/cactus-form",
-  "version": "1.1.5",
+  "version": "1.1.7",
   "description": "Wrapper for final-form/react-final-form",
   "main": "dist/cactus-form.cjs.js",
   "module": "dist/cactus-form.js",
@@ -52,7 +52,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.5",
     "@repay/babel-preset": "1.1.4",
-    "@repay/cactus-web": "^9.10.0",
+    "@repay/cactus-web": "^9.11.1",
     "@repay/scripts": "^3.0.4",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
@@ -68,11 +68,13 @@
     "react-final-form": "^6.5.8",
     "typescript": "~4.6.2"
   },
+  "dependencies": {
+    "final-form": "^4.20.4",
+    "react-final-form": "^6.5.8"
+  },
   "peerDependencies": {
     "@repay/cactus-web": ">=3.0.0",
-    "final-form": "^4.20.4",
     "prop-types": ">=15.0.0",
-    "react": "^16.8.3 || ^17.0.0",
-    "react-final-form": "^6.5.8"
+    "react": "^16.8.3 || ^17.0.0"
   }
 }

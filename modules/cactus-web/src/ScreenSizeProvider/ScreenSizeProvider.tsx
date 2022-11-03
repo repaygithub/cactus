@@ -3,9 +3,10 @@ import { noop } from 'lodash'
 import React from 'react'
 import { ThemeContext } from 'styled-components'
 
-type MediaQuery = keyof Required<CactusTheme>['mediaQueries']
+// This should really be in cactus-theme...
+export const screenSizes = ['tiny', 'small', 'medium', 'large', 'extraLarge'] as const
 
-export type Size = 'tiny' | MediaQuery
+export type Size = typeof screenSizes[number]
 
 const ORDER: { [K in Size]: number } = {
   tiny: 0,
@@ -31,14 +32,17 @@ export class ScreenSize {
   }
 }
 
-type MediaMatch = Pick<MediaQueryList, 'matches' | 'addListener' | 'removeListener'>
+type MediaMatch = Pick<
+  MediaQueryList,
+  'matches' | 'addListener' | 'removeListener' | 'addEventListener' | 'removeEventListener'
+>
 type QueryType = { [K in Size]: MediaMatch }
 
 type SizeCache = ScreenSize[] & { [K in Size]: ScreenSize }
 
-export const SIZES = Object.keys(ORDER).reduce((sizes: any, s): void => {
-  const size = new ScreenSize(s as Size)
-  sizes[ORDER[s as Size]] = size
+export const SIZES = screenSizes.reduce((sizes: any, s): void => {
+  const size = new ScreenSize(s)
+  sizes[ORDER[s]] = size
   sizes[s] = size
   return sizes
 }, []) as SizeCache
@@ -52,7 +56,13 @@ export const ScreenSizeContext = React.createContext<ScreenSize>(SIZES[DEFAULT_S
 export const useScreenSize = (): ScreenSize => React.useContext(ScreenSizeContext)
 
 const createQueries = (theme: CactusTheme): QueryType => ({
-  tiny: { matches: true, addListener: noop, removeListener: noop },
+  tiny: {
+    matches: true,
+    addListener: noop,
+    removeListener: noop,
+    removeEventListener: noop,
+    addEventListener: noop,
+  },
   small: window.matchMedia(theme.mediaQueries.small.replace(/^@media /, '')),
   medium: window.matchMedia(theme.mediaQueries.medium.replace(/^@media /, '')),
   large: window.matchMedia(theme.mediaQueries.large.replace(/^@media /, '')),
@@ -80,13 +90,21 @@ export const ScreenSizeProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     const q: QueryType = queries || createQueries(theme)
     const listener = () => setSize(getMatchedSize(q))
     for (const key of Object.keys(q)) {
-      q[key as Size].addListener(listener)
+      if (!('addEventListener' in q[key as Size])) {
+        q[key as Size].addListener(listener)
+      } else {
+        q[key as Size].addEventListener('change', listener)
+      }
     }
     listener()
 
     return (): void => {
       for (const key of Object.keys(q)) {
-        q[key as Size].removeListener(listener)
+        if (!('removeEventListener' in q[key as Size])) {
+          q[key as Size].removeListener(listener)
+        } else {
+          q[key as Size].removeEventListener('change', listener)
+        }
       }
     }
   }, [theme]) // eslint-disable-line react-hooks/exhaustive-deps

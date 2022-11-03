@@ -1,134 +1,331 @@
 import { CactusTheme } from '@repay/cactus-theme'
+import { Property } from 'csstype'
 import PropTypes from 'prop-types'
+import React from 'react'
 import styled, { StyledComponentBase } from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
+import * as SS from 'styled-system'
 
+import Flex, { FlexBoxProps } from '../Flex/Flex'
+import { isIE } from '../helpers/constants'
 import { getOmittableProps } from '../helpers/omit'
+import { useMergedRefs } from '../helpers/react'
+import { FlexItemProps } from '../helpers/styled'
+import { screenSizes, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 
-const GUTTER_WIDTH = 16
+const DEFAULT_GAP = 4
+const PSEUDO_FLEX_COLS = 12
+const COLUMN_NUMS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const
 
-type ColumnNum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
-
-interface GridProps extends MarginProps {
-  justify?: 'start' | 'center' | 'end' | 'normal'
+// Typescript (rightly) dislikes IE property names, so...
+const css = {
+  grid: '-ms-grid',
+  gridTemplateRows: '-ms-grid-rows' as 'gridTemplateRows',
+  gridTemplateColumns: '-ms-grid-columns' as 'gridTemplateColumns',
+  gridRowStart: '-ms-grid-row' as 'gridRowStart',
+  gridColumnStart: '-ms-grid-column' as 'gridColumnStart',
+  // ...not really true, but as close as we can get.
+  gridRowEnd: '-ms-grid-row-span' as 'gridRowEnd',
+  gridColumnEnd: '-ms-grid-column-span' as 'gridColumnEnd',
+  justifySelf: '-ms-grid-column-align' as 'justifySelf',
+  alignSelf: '-ms-grid-row-align' as 'alignSelf',
+}
+if (!isIE) {
+  Object.keys(css).forEach((key) => ((css as any)[key] = key))
 }
 
-interface ItemProps {
-  tiny: ColumnNum
-  small?: ColumnNum
-  medium?: ColumnNum
-  large?: ColumnNum
-  extraLarge?: ColumnNum
+type GridProperty = keyof typeof css
+type ScreenSize = typeof screenSizes[number]
+type ColumnNum = typeof COLUMN_NUMS[number]
+type PseudoFlexProps = { [K in ScreenSize]?: ColumnNum }
+
+interface GridBoxProps extends FlexBoxProps {
+  rows?: SS.ResponsiveValue<Property.GridTemplateRows<string | number>>
+  cols?: SS.ResponsiveValue<Property.GridTemplateColumns<string | number>>
+  columns?: SS.ResponsiveValue<Property.GridTemplateColumns<string | number>>
+  // Backwards compat; I recommend using `justifyItems` for clarity.
+  justify?: SS.ResponsiveValue<Property.JustifyItems>
+  justifyItems?: SS.ResponsiveValue<Property.JustifyItems>
+  autoFlow?: SS.ResponsiveValue<Property.GridAutoFlow>
+  autoRows?: SS.ResponsiveValue<Property.GridAutoRows<string | number>>
+  autoCols?: SS.ResponsiveValue<Property.GridAutoColumns<string | number>>
+  autoColumns?: SS.ResponsiveValue<Property.GridAutoColumns<string | number>>
+  gridAreas?: { [key: string]: SS.ResponsiveValue<Property.GridArea> }
+  // I'm supporting these for completeness, but their syntax isn't very React-friendly.
+  grid?: SS.ResponsiveValue<Property.Grid>
+  gridTemplate?: SS.ResponsiveValue<Property.GridTemplate>
+  gridTemplateAreas?: SS.ResponsiveValue<Property.GridTemplateAreas>
 }
 
-const calculateFlexItemSize = (columnNum: ColumnNum) =>
-  `calc(${(columnNum / 12) * 100}% - ${GUTTER_WIDTH}px)`
+interface GridItemProps extends FlexItemProps, PseudoFlexProps {
+  row?: SS.ResponsiveValue<Property.GridRow>
+  rowStart?: SS.ResponsiveValue<Property.GridRowStart>
+  rowEnd?: SS.ResponsiveValue<Property.GridRowEnd>
+  col?: SS.ResponsiveValue<Property.GridColumn>
+  column?: SS.ResponsiveValue<Property.GridColumn>
+  colStart?: SS.ResponsiveValue<Property.GridColumnStart>
+  columnStart?: SS.ResponsiveValue<Property.GridColumnStart>
+  colEnd?: SS.ResponsiveValue<Property.GridColumnEnd>
+  columnEnd?: SS.ResponsiveValue<Property.GridColumnEnd>
+  gridArea?: SS.ResponsiveValue<Property.GridArea>
+  justifySelf?: SS.ResponsiveValue<Property.JustifySelf>
+}
 
-export const Item = styled.div<ItemProps>`
-  box-sizing: border-box;
+interface GridComponent extends StyledComponentBase<'div', CactusTheme, GridBoxProps> {
+  Item: StyledComponentBase<'div', CactusTheme, GridItemProps>
+  supportsGrid: boolean
+  supportsGap: boolean
+}
 
-  margin: ${GUTTER_WIDTH / 2}px ${GUTTER_WIDTH / 2}px;
-  width: ${(p) => calculateFlexItemSize(p.tiny)};
-
-  @media (min-width: 769px) {
-    width: ${(p) => (p.small ? calculateFlexItemSize(p.small) : undefined)};
-  }
-
-  @media (min-width: 1025px) {
-    width: ${(p) => (p.medium ? calculateFlexItemSize(p.medium) : undefined)};
-  }
-
-  @media (min-width: 1201px) {
-    width: ${(p) => (p.large ? calculateFlexItemSize(p.large) : undefined)};
-  }
-
-  @media (min-width: 1441px) {
-    width: ${(p) => (p.extraLarge ? calculateFlexItemSize(p.extraLarge) : undefined)};
-  }
-
-  @supports (display: grid) {
-    grid-column: span ${(p): ColumnNum => p.tiny};
-    width: auto;
-    margin: 0;
-
-    @media (min-width: 769px) {
-      grid-column: span ${(p): ColumnNum | undefined => p.small};
+const gridItemStyles = (function () {
+  let itemStyleConfig: SS.Config
+  if (isIE) {
+    const delimiter = /\s*\/\s*/
+    const spanRegex = /span/i
+    const getStartSpan = (
+      startProp: GridProperty,
+      spanProp: GridProperty,
+      start: string,
+      end?: string
+    ) => {
+      const styles: { [K in GridProperty]?: string } = {}
+      if (end) {
+        if (spanRegex.test(end)) {
+          styles[spanProp] = String(parseInt(end.replace(spanRegex, '')))
+        } else {
+          styles[spanProp] = String(parseInt(end) - parseInt(start))
+        }
+      }
+      styles[startProp] = start
+      return styles
     }
 
-    @media (min-width: 1025px) {
-      grid-column: span ${(p): ColumnNum | undefined => p.medium};
-    }
+    const getCombinedStartEndParser =
+      (startProp: GridProperty, spanProp: GridProperty): SS.ConfigFunction =>
+      (spec) => {
+        if (spec) {
+          if (typeof spec === 'number') {
+            return getStartSpan(startProp, spanProp, String(spec))
+          } else if (typeof spec === 'string') {
+            const [start, end] = spec.split(delimiter)
+            return getStartSpan(startProp, spanProp, start, end)
+          }
+        }
+      }
 
-    @media (min-width: 1201px) {
-      grid-column: span ${(p): ColumnNum | undefined => p.large};
-    }
+    const getStartParser =
+      (startProp: GridProperty): SS.ConfigFunction =>
+      (start) => {
+        if (start) {
+          return { [startProp]: String(start) }
+        }
+      }
 
-    @media (min-width: 1441px) {
-      grid-column: span ${(p): ColumnNum | undefined => p.extraLarge};
+    const getEndParser =
+      (spanProp: GridProperty): SS.ConfigFunction =>
+      (span, _, props) => {
+        if (span) {
+          let end = span
+          if (typeof span === 'string') {
+            if (spanRegex.test(span)) {
+              span = span.replace(spanRegex, '').trim()
+            } else {
+              end = parseInt(span)
+            }
+          }
+          if (typeof end === 'number') {
+            const start =
+              spanProp === css.gridRowEnd ? props.rowStart : props.colStart || props.columnStart
+            span = end - (parseInt(start) || 1)
+          }
+          return { [spanProp]: String(span) }
+        }
+      }
+
+    itemStyleConfig = {
+      row: getCombinedStartEndParser(css.gridRowStart, css.gridRowEnd),
+      rowStart: getStartParser(css.gridRowStart),
+      rowEnd: getEndParser(css.gridRowEnd),
+      col: getCombinedStartEndParser(css.gridColumnStart, css.gridColumnEnd),
+      colStart: getStartParser(css.gridColumnStart),
+      colEnd: getEndParser(css.gridColumnEnd),
+      gridArea: (areaSpec: unknown) => {
+        if (areaSpec && typeof areaSpec === 'string') {
+          const [rowStart, colStart, rowEnd, colEnd] = areaSpec.split(delimiter)
+          const rowStyles = getStartSpan(css.gridRowStart, css.gridRowEnd, rowStart, rowEnd)
+          const colStyles = getStartSpan(css.gridColumnStart, css.gridColumnEnd, colStart, colEnd)
+          return Object.assign(rowStyles, colStyles)
+        }
+      },
+      justifySelf: { property: css.justifySelf },
+      alignSelf: { property: css.alignSelf },
+    }
+  } else {
+    // Stringify to ensure grid lines won't be treated like CSS <length> values.
+    const transform = (val: unknown) => (typeof val === 'number' ? String(val) : val)
+    itemStyleConfig = {
+      row: { property: 'gridRow', transform },
+      rowStart: { property: 'gridRowStart', transform },
+      rowEnd: { property: 'gridRowEnd', transform },
+      col: { property: 'gridColumn', transform },
+      colStart: { property: 'gridColumnStart', transform },
+      colEnd: { property: 'gridColumnEnd', transform },
+      gridArea: { property: 'gridArea', transform },
+      justifySelf: true,
     }
   }
-`
+  itemStyleConfig.column = itemStyleConfig.col
+  itemStyleConfig.columnStart = itemStyleConfig.colStart
+  itemStyleConfig.columnEnd = itemStyleConfig.colEnd
+  return SS.system(itemStyleConfig)
+})()
 
-const ColumnPropType = PropTypes.oneOf<ColumnNum>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+const pseudoFlexStyles = (function (): SS.styleFn {
+  const parser: SS.styleFn = (props: GridItemProps & { theme: CactusTheme }) => {
+    const spans = screenSizes.map((size) => props[size] && `span ${props[size]}`)
+    return gridItemStyles({ colEnd: spans, theme: props.theme })
+  }
+  parser.propNames = [...screenSizes]
+  return parser
+})()
 
-Item.propTypes = {
-  tiny: ColumnPropType.isRequired,
+const itemStyleProps = getOmittableProps(gridItemStyles, pseudoFlexStyles)
+
+export const GridItem = styled(Flex.Item).withConfig({
+  shouldForwardProp: (p: any) => !itemStyleProps.has(p),
+})`
+  ${pseudoFlexStyles}
+  && {
+    ${gridItemStyles}
+  }
+` as GridComponent['Item']
+GridItem.displayName = 'Grid.Item'
+
+const ColumnPropType = PropTypes.oneOf<ColumnNum>(COLUMN_NUMS)
+GridItem.propTypes = {
+  tiny: ColumnPropType,
   small: ColumnPropType,
   medium: ColumnPropType,
   large: ColumnPropType,
   extraLarge: ColumnPropType,
 }
 
-const flexJustifyMap = {
-  start: 'flex-start',
-  end: 'flex-end',
-  center: 'center',
-  normal: 'normal',
-}
-
-interface GridComponent extends StyledComponentBase<'div', CactusTheme, GridProps> {
-  Item: typeof Item
-}
-
-const styleProps = getOmittableProps(margin, 'justify')
-export const Grid = styled.div.withConfig({
-  shouldForwardProp: (p) => !styleProps.has(p),
-})<GridProps>`
-  box-sizing: border-box;
-  width: 100%;
-
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
-  > ${Item} {
-    display: flex;
-    justify-content: ${(p): string => (p.justify ? flexJustifyMap[p.justify] : 'flex-start')};
+export const Grid: GridComponent = (function () {
+  const repeat = (count: number, text: string) => {
+    if (!isIE) return `repeat(${count}, ${text})`
+    const result: string[] = []
+    for (let i = 0; i < count; i++) result.push(text)
+    return result.join(' ')
   }
+  // Shortcut, e.g. so you can just say `cols={4}` and it'll add 4 equal columns.
+  const templateTransform = (defaultSize: string) => (val: unknown) =>
+    typeof val === 'number' ? repeat(val, defaultSize) : val
 
-  @supports (display: grid) {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(1px, 1fr));
-    grid-gap: ${GUTTER_WIDTH}px;
-    justify-items: ${(p): string => (p.justify ? p.justify : 'normal')};
+  const gridStyleConfig: SS.Config = {
+    rows: { property: css.gridTemplateRows, transform: templateTransform('min-content') },
+    cols: { property: css.gridTemplateColumns, transform: templateTransform('1fr') },
+    justifyItems: { property: 'justifyItems' },
+    autoFlow: { property: 'gridAutoFlow' },
+    autoRows: { property: 'gridAutoRows' },
+    autoCols: { property: 'gridAutoColumns' },
+    grid: true,
+    gridTemplate: true,
+    gridTemplateAreas: true,
+  }
+  gridStyleConfig.justify = gridStyleConfig.justifyItems
+  gridStyleConfig.columns = gridStyleConfig.cols
+  gridStyleConfig.autoColumns = gridStyleConfig.autoCols
 
-    > ${Item} {
-      display: block;
+  let gridTag: any
+  let justifyStyles: SS.styleFn
+
+  if (isIE) {
+    // Technically there are other indicator props, but none are supported in any
+    // way by IE, so if going for IE-compatible they won't be using those anyway.
+    const isPseudoFlexMode = (props: GridBoxProps) => ({
+      isPseudoFlex: !(props.rows || props.cols || props.columns || props.gridAreas),
+    })
+
+    const gridBase = React.forwardRef<HTMLDivElement, { isPseudoFlex: boolean }>(
+      ({ isPseudoFlex, ...props }, inRef) => {
+        // Make sure we re-run the effect when screen size changes.
+        useScreenSize()
+        const ref = useMergedRefs(inRef)
+        React.useLayoutEffect(() => {
+          // IE doesn't auto-fill grids, so we have to do it ourselves.
+          if (ref.current && isPseudoFlex) {
+            let column = 0 // The math's a bit easier starting from zero.
+            let row = 1
+            const gridItems = ref.current.children
+            for (let i = 0; i < gridItems.length; i++) {
+              const item = gridItems[i] as HTMLElement
+              const span = parseInt(getComputedStyle(item)[css.gridColumnEnd])
+              if (span + column > PSEUDO_FLEX_COLS) {
+                row += 1
+                column = 0
+              }
+              item.style[css.gridRowStart] = String(row)
+              item.style[css.gridColumnStart] = String(column + 1)
+              column += span
+            }
+            ref.current.style[css.gridTemplateRows] = repeat(row, 'min-content')
+          }
+        })
+        return <Flex {...props} ref={ref} />
+      }
+    )
+    gridTag = styled(gridBase).attrs(isPseudoFlexMode)
+
+    const applyJustifyToChildren = (value: unknown) => {
+      if (value) return { '& > *': { [css.justifySelf]: value } }
     }
+    // Keeping this separate in case we implement inline styles, see CACTUS-975.
+    justifyStyles = SS.system({
+      justify: applyJustifyToChildren,
+      justifyItems: applyJustifyToChildren,
+      alignItems: (value: unknown) => {
+        // Note the key is slightly different to prevent overwriting
+        // if both `alignItems` & `justifyItems` are passed.
+        if (value) return { '&>*': { [css.alignSelf]: value } }
+      },
+    })
+  } else {
+    gridTag = styled(Flex)
+    // Could be a constant, but it makes things more symmetrical with the IE code.
+    justifyStyles = () => ({ justifyItems: 'normal' })
   }
 
-  ${margin}
-`
+  const pseudoFlexColumns = repeat(PSEUDO_FLEX_COLS, 'minmax(1px, 1fr)')
+  const systemStyles = SS.system(gridStyleConfig)
+  const gridStyles = (props: GridBoxProps & { theme: CactusTheme }) => {
+    const styles = justifyStyles(props)
+    styles.width = '100%'
+    styles.display = css.grid
+    styles[css.gridTemplateColumns] = pseudoFlexColumns
+    styles['&&'] = systemStyles(props)
 
-const DefaultGrid = Grid as any
-DefaultGrid.Item = Item
+    const { gridAreas } = props
+    if (gridAreas) {
+      for (const className of Object.keys(gridAreas)) {
+        styles[`.${className}`] = gridItemStyles({
+          gridArea: gridAreas[className],
+          theme: props.theme,
+        })
+      }
+    }
+    return styles
+  }
 
-Grid.propTypes = {
-  justify: PropTypes.oneOf(['start', 'center', 'end', 'normal']),
-}
+  const styleProps = getOmittableProps(systemStyles, 'gridAreas')
+  return gridTag.withConfig({
+    displayName: 'Grid',
+    shouldForwardProp: (p: any) => !styleProps.has(p),
+  })(gridStyles)
+})()
 
-Grid.defaultProps = {
-  justify: 'normal',
-}
+Grid.defaultProps = { gap: DEFAULT_GAP }
 
-export default DefaultGrid as GridComponent
+Grid.Item = GridItem
+Grid.supportsGap = Flex.supportsGap
+Grid.supportsGrid = typeof CSS !== 'undefined' && CSS.supports?.('display', 'grid')
+
+export default Grid

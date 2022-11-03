@@ -1,41 +1,53 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
+import { ResponsiveValue, system } from 'styled-system'
 
-export interface DimmerProps extends React.HTMLAttributes<HTMLDivElement> {
+import { styledUnpoly } from '../helpers/styled'
+
+type Opacity = string | number
+interface DimmerStyleProps {
+  opacity?: ResponsiveValue<Opacity>
+  position?: ResponsiveValue<'fixed' | 'absolute'>
+}
+
+interface DimmerProps extends React.HTMLAttributes<HTMLDivElement> {
   active: boolean
 }
 
-// TODO Use the idea from Modal of having separate scroll & flex elements? Also scroll trap.
-class DimmerBase extends React.Component<DimmerProps> {
-  public static propTypes = {
-    active: PropTypes.bool.isRequired,
-  }
-  componentDidUpdate(prevProps: DimmerProps): void {
-    if (prevProps.active === false && this.props.active === true && document.activeElement) {
-      try {
-        ;(document.activeElement as HTMLElement).blur()
-      } catch {}
-    }
-  }
-  render(): React.ReactElement | null {
-    const { active, ...rest } = this.props
-    return active ? <div {...rest} /> : null
-  }
-}
+const DimmerBase = React.forwardRef<HTMLDivElement, DimmerProps>(({ active, ...props }, ref) => {
+  return active ? <div {...props} ref={ref} /> : null
+})
+DimmerBase.displayName = 'Dimmer'
 
-export const Dimmer = styled(DimmerBase).attrs({ as: DimmerBase })`
+const background = (opacity?: Opacity) => `rgba(46, 53, 56, ${opacity || '0.9'})`
+
+const dimmerStyles = system({
+  position: true,
+  opacity: {
+    properties: ['backgroundColor'],
+    transform: background,
+  },
+})
+
+export const Dimmer = styledUnpoly(DimmerBase).withConfig<DimmerStyleProps>({
+  shouldForwardProp: (prop) => prop !== 'position' && prop !== 'opacity',
+})`
   position: fixed;
   display: flex;
-  background: rgba(46, 53, 56, 0.9);
+  background-color: ${background()};
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 100;
+  ${dimmerStyles}
 `
+Dimmer.propTypes = {
+  active: PropTypes.bool.isRequired,
+}
 
 export default Dimmer
