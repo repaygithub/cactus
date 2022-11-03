@@ -374,6 +374,7 @@ const OuterSidebar = styled.div`
 const WindowBox = styled(Box)`
   max-width: 2000px;
   padding: 16px 40px;
+
   @media only screen and (max-width: 400px) {
     padding: 16px 10px;
   }

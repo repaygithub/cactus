@@ -213,6 +213,7 @@ const VertHCell = styled(Cell)`
 const AccessibilityFlex = styled(Flex)`
   max-width: 500px;
   margin: 16px;
+
   @media only screen and (max-width: 500px) {
     max-width: 95%;
   }
