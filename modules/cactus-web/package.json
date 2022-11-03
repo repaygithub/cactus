@@ -23,7 +23,6 @@
     "test:local": " yarn test:types && yarn test",
     "test:ci": "yarn test:local --maxWorkers=2 && yarn test:stories",
     "test:types": "tsc -p ./tsconfig.json --noEmit",
-    "dev": "echo \"This now builds in watch mode, use yarn web start for storybook\\n\"; repay-scripts dev --lib --tree-shaking src/index.ts",
     "build": "repay-scripts build --lib --tree-shaking src/index.ts && yarn postbuild",
     "postbuild": "yarn build:types",
     "build:types": "tsc --project ./tsconfig.build.json --emitDeclarationOnly"

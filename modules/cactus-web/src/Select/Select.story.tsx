@@ -61,8 +61,10 @@ export const CollisionsInLargeContainer: BasicStory = ({ showOptions, options, .
     </div>
   </React.Fragment>
 )
-CollisionsInLargeContainer.argTypes = { options: { control: 'array' }, margin: SPACE,
-    ...actions('onChange', 'onBlur', 'onFocus'),
+CollisionsInLargeContainer.argTypes = {
+  options: { control: 'array' },
+  margin: SPACE,
+  ...actions('onChange', 'onBlur', 'onFocus'),
 }
 CollisionsInLargeContainer.args = {
   options: ['name', 'other', 'three'],
