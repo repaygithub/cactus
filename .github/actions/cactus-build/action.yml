@@ -1,0 +1,90 @@
+name: "Build and Archive Cactus"
+description: "Builds all cactus modules and store their dist files in artifacts to share between jobs"
+runs:
+  using: "composite"
+  steps: 
+    - name: Cache fwk build
+      id: cache-fwk-dist
+      uses: actions/cache@v3
+      env:
+        fwk-key: ${{ hashFiles('modules/cactus-fwk/src/**') }}
+      with:
+        path: ./modules/cactus-fwk/dist
+        key: ${{ runner.os }}-fwk-dist-${{ env.fwk-key }}
+
+    - name: Build cactus-fwk
+      run: yarn fwk build
+      if: steps.cache-fwk-dist.outputs.cache-hit != 'true'
+      shell: bash
+
+    - name: Cache theme build
+      id: cache-theme-dist
+      uses: actions/cache@v3
+      env: 
+        theme-key: ${{ hashFiles('modules/cactus-theme/src/**') }}
+      with:
+        path: ./modules/cactus-theme/dist
+        key: ${{ runner.os }}-theme-dist-${{ env.theme-key }}
+
+    - name: Build cactus-theme
+      run: yarn theme build
+      if: steps.cache-theme-dist.outputs.cache-hit != 'true'
+      shell: bash
+    
+    - name: Cache i18n build
+      id: cache-i18n-dist
+      uses: actions/cache@v3
+      env:
+        i18n-key: ${{ hashFiles('modules/cactus-i18n/src/**') }}
+      with:
+        path: ./modules/cactus-i18n/dist
+        key: ${{ runner.os }}-i18n-dist-${{ env.i18n-key }}
+
+    - name: Build cactus-i18n
+      run: yarn i18n build
+      if: steps.cache-i18n-dist.outputs.cache-hit != 'true'
+      shell: bash
+
+    - name:  Cache icons build 
+      id: cache-icons-dist
+      uses: actions/cache@v3
+      env:
+        icons-key: ${{ hashFiles('modules/cactus-icons/src/**') }}
+      with: 
+        path: |
+          ./modules/cactus-icons/i
+          ./modules/cactus-icons/ts
+        key: ${{ runner.os }}-icons-dist-${{ env.icons-key }}
+
+    - name: Build cactus-icons
+      run: yarn icons build
+      if: steps.cache-icons-dist.outputs.cache-hit != 'true'
+      shell: bash
+
+    - name: Cache web build 
+      id: cache-web-dist
+      uses: actions/cache@v3
+      env:
+        web-key: $${{ hashFiles('modules/cactus-web/src/**') }}
+      with: 
+        path: ./modules/cactus-web/dist
+        key: ${{ runner.os }}-web-dist-${{ env.web-key }}
+
+    - name: Build cactus-web
+      run: yarn web build
+      if: steps.cache-web-dist.outputs.cache-hit != 'true'
+      shell: bash
+
+    - name: Cache form build
+      id: cache-form-dist
+      uses: actions/cache@v3
+      env:
+        form-key: ${{ hashFiles('modules/cactus-form/src/**') }}
+      with: 
+        path: ./modules/cactus-form/dist
+        key: ${{ runner.os }}-form-dist-${{ env.form-key }}
+
+    - name: Build cactus-form
+      run: yarn form build
+      if: steps.cache-form-dist.outputs.cache-hit != 'true'
+      shell: bash

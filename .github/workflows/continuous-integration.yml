@@ -11,43 +11,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Get Yarn Cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - uses: actions/checkout@v3
 
-      - uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: NodeJS Version
-        run: node --version
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
 
-      - name: Install Packages
-        run: yarn install --immutable
-
-      - name: Lint Packages
-        run: yarn lint
-
-      - name: Build cactus-fwk
-        run: yarn fwk build
-
-      - name: Build cactus-theme
-        run: yarn theme build
-
-      - name: Build cactus-i18n
-        run: yarn i18n build
-
-      - name: Build cactus-icons
-        run: yarn icons build
-
-      - name: Build cactus-web
-        run: yarn web build
-
-      - name: Build cactus-form
-        run: yarn form build
+      - name: Build Modules
+        uses: ./.github/actions/cactus-build
 
       - name: Test Modules
         run: |
@@ -57,88 +27,35 @@ jobs:
           yarn form test:ci
           yarn icons test:ci
           yarn web test:ci
+
   integration-tests:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Get Yarn Cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - uses: actions/checkout@v3
 
-      - uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: NodeJS Version
-        run: node --version
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
 
-      - name: Install Packages
-        run: yarn install --immutable
-
-      - name: Build cactus-fwk
-        run: yarn fwk build
-
-      - name: Build cactus-theme
-        run: yarn theme build
-
-      - name: Build cactus-i18n
-        run: yarn i18n build
-
-      - name: Build cactus-icons
-        run: yarn icons build
-
-      - name: Build cactus-web
-        run: yarn web build
-
-      - name: Build cactus-form
-        run: yarn form build
+      - name: Build Modules
+        uses: ./.github/actions/cactus-build
 
       - name: Integration Tests
         uses: ./actions/integration-tests
         env:
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+  
   visual-tests:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-      - name: Get Yarn Cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - uses: actions/checkout@v3
 
-      - uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: NodeJS Version
-        run: node --version
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
 
-      - name: Install Packages
-        run: yarn install --immutable
-
-      - name: Build cactus-fwk
-        run: yarn fwk build
-
-      - name: Build cactus-theme
-        run: yarn theme build
-
-      - name: Build cactus-i18n
-        run: yarn i18n build
-
-      - name: Build cactus-icons
-        run: yarn icons build
-
-      - name: Build cactus-web
-        run: yarn web build
-
-      - name: Build cactus-form
-        run: yarn form build
+      - name: Build Modules
+        uses: ./.github/actions/cactus-build
 
       - name: Visual Tests
         uses: ./actions/storyshots
@@ -152,44 +69,17 @@ jobs:
         uses: ./actions/create-pull-request
         with:
           branch: ${{ steps.extract_branch.outputs.branch }}-patch
+
   docs-test:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-      - name: Get Yarn Cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+      - uses: actions/checkout@v3
 
-      - uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: NodeJS Version
-        run: node --version
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
 
-      - name: Install Packages
-        run: yarn install --immutable
-
-      - name: Build cactus-fwk
-        run: yarn fwk build
-
-      - name: Build cactus-theme
-        run: yarn theme build
-
-      - name: Build cactus-i18n
-        run: yarn i18n build
-
-      - name: Build cactus-icons
-        run: yarn icons build
-
-      - name: Build cactus-web
-        run: yarn web build
-
-      - name: Build cactus-form
-        run: yarn form build
+      - name: Build Modules
+        uses: ./.github/actions/cactus-build
 
       - name: Test Docs Website
         run: yarn docs test:ci
