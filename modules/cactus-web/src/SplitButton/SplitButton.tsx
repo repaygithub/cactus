@@ -92,7 +92,7 @@ const MainActionButton = styled.button<VariantInterface>`
       : ''}
   ${(p) => p.disabled && p.theme.colorStyles.disable}
 
-    &.dd-closed {
+  &.dd-closed {
     ${cssVariant({
       standard: css`
         border-color: ${(p): string => p.theme.colors.darkestContrast};
@@ -106,7 +106,7 @@ const MainActionButton = styled.button<VariantInterface>`
     })}
 
     &:hover,
-      &:focus {
+    &:focus {
       ${cssVariant({
         standard: css`
           border-color: ${(p): string => p.theme.colors.callToAction};

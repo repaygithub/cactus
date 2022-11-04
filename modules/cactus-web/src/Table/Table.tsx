@@ -259,7 +259,7 @@ Table.defaultProps = {
 export default DefaultTable
 
 const getShape = (location: BorderCorner): FlattenInterpolation<ThemeProps<DefaultTheme>> =>
-  css`border-${location}-radius: ${radius(8)}`
+  css`border-${location}-radius: ${radius(8)};`
 
 const HeaderBox = styled.div.attrs({ 'aria-hidden': 'true' })`
   text-transform: uppercase;
