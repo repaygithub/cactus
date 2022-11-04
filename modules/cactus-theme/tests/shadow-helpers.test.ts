@@ -36,12 +36,12 @@ describe('helper: shadow', () => {
       `border: 1px solid ${defaultProps.theme.colors.lightContrast};`
     )
 
-    expect(shadow(withShadow, 5, 'rgb(1, 2, 3)')).toBe(_('0px 45px 48px'))
+    expect(shadow(withShadow, 5, 'rgb(1, 2, 3)')).toBe(_('0 45px 48px'))
     expect(shadow(noShadow, 5, 'rgb(1, 2, 3)')).toBe(`border: 1px solid rgb(1, 2, 3);`)
   })
 
   test('allows fallback: CSS property', () => {
-    expect(shadow(withShadow, 2, 'outline: 1px solid black')).toBe(_('0px 9px 24px'))
+    expect(shadow(withShadow, 2, 'outline: 1px solid black')).toBe(_('0 9px 24px'))
     expect(shadow(noShadow, 2, 'outline: 1px solid black')).toBe('outline: 1px solid black')
   })
 
