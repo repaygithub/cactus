@@ -1,24 +1,23 @@
-import { ColorStyle } from '@repay/cactus-theme'
+import { border, ColorStyle, fontSize } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { ReactElement, useContext } from 'react'
-import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { keyDownAsClick } from '../helpers/a11y'
-import { border, fontSize } from '../helpers/theme'
+import { withStyles } from '../helpers/styled'
 import { DataGridContext } from './helpers'
 
-export interface PageSizeSelectProps extends MarginProps {
+export interface PageSizeSelectProps {
   pageSize?: number
   initialPageSize?: number
   makePageSizeLabel?: (pageSize: number) => string
-  pageSizeSelectLabel?: React.ReactChild
+  pageSizeSelectLabel?: React.ReactNode
   pageSizeOptions: number[]
 }
 
 const defaultPageSizeLabel = (pageSize: number): string => `View ${pageSize} rows per page`
 
-const PageSizeSelect = (props: PageSizeSelectProps): ReactElement => {
+const BasePageSizeSelect = (props: PageSizeSelectProps): ReactElement => {
   const { pageState, updatePageState } = useContext(DataGridContext)
   const {
     pageSizeSelectLabel,
@@ -32,7 +31,7 @@ const PageSizeSelect = (props: PageSizeSelectProps): ReactElement => {
     updatePageState({ pageSize: currentPageSize })
   }, [currentPageSize]) // eslint-disable-line react-hooks/exhaustive-deps
   return (
-    <StyledPageSizeSelect {...rest}>
+    <div {...rest}>
       <span>{pageSizeSelectLabel || 'View'}</span>
       <ol className="page-options-list">
         {pageSizeOptions?.map((pageSize): ReactElement => {
@@ -53,13 +52,16 @@ const PageSizeSelect = (props: PageSizeSelectProps): ReactElement => {
           )
         })}
       </ol>
-    </StyledPageSizeSelect>
+    </div>
   )
 }
 
-const StyledPageSizeSelect = styled.div`
+const PageSizeSelect = withStyles('div', {
+  as: BasePageSizeSelect,
+  displayName: 'PageSizeSelect',
+  styles: [margin],
+})<MarginProps>`
   display: inline-box;
-  ${margin}
 
   span {
     margin-right: 8px;
@@ -82,16 +84,16 @@ const StyledPageSizeSelect = styled.div`
     padding: 2px 8px;
     display: block;
 
-    border-left: ${(p): string => border(p.theme, 'lightContrast')};
+    border-left: ${border('lightContrast')};
 
     &:last-child {
-      border-right: ${(p): string => border(p.theme, 'lightContrast')};
+      border-right: ${border('lightContrast')};
     }
 
     &,
     a {
       color: ${(p): string => p.theme.colors.darkestContrast};
-      ${(p): string => fontSize(p.theme, 'small')};
+      ${fontSize('small')};
       line-height: 18px;
       text-decoration: none;
     }
@@ -133,9 +135,7 @@ PageSizeSelect.defaultProps = {
 PageSizeSelect.propTypes = {
   makePageSizeLabel: PropTypes.func,
   pageSizeSelectLabel: PropTypes.node,
-  pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+  pageSizeOptions: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
 }
-
-PageSizeSelect.displayName = 'PageSizeSelect'
 
 export default PageSizeSelect

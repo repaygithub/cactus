@@ -16,6 +16,12 @@ export interface TransientProps {
   $variant?: TableVariant
 }
 
+export interface TableProps {
+  fullWidth: boolean
+  cardBreakpoint: Size
+  variant: TableVariant | undefined
+}
+
 export interface CellInfo {
   id?: string
   value?: any
@@ -93,14 +99,11 @@ export interface ColumnProps extends Omit<TableCellProps, 'as' | 'children' | 't
   as?: React.ComponentType<any>
 }
 
-export interface DataGridContextType extends ColumnState {
+export interface DataGridContextType extends ColumnState, TableProps {
   columnDispatch: ColumnDispatch
   sortOptions: SortOption[]
   onSort: (newSortOptions: SortOption[]) => void
   pageState: PaginationOptions
   updatePageState: (action: PageStateAction, raiseEvent?: boolean) => void
-  fullWidth: boolean
-  cardBreakpoint: Size
   isCardView: boolean
-  variant: TableVariant | undefined
 }
