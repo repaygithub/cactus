@@ -1,22 +1,17 @@
 import { iconSizes } from '@repay/cactus-icons'
-import { CactusTheme } from '@repay/cactus-theme'
+import { border, CactusTheme } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React from 'react'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps, system } from 'styled-system'
 
 import { isIE } from '../helpers/constants'
-import { getOmittableProps } from '../helpers/omit'
-import { borderSize } from '../helpers/theme'
+import { withStyles } from '../helpers/styled'
 
 export type IconButtonVariants = 'standard' | 'action' | 'danger' | 'warning' | 'success' | 'dark'
 export type IconButtonSizes = 'tiny' | 'small' | 'medium' | 'large'
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  label?: string
-}
-
 interface IconStyleProps extends MarginProps {
+  label?: string
   iconSize?: IconButtonSizes
   variant?: IconButtonVariants
   disabled?: boolean
@@ -149,17 +144,6 @@ const variantOrDisabled = (
   }
 }
 
-const IconButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (props, ref): React.ReactElement => {
-    const { label, children, ...buttonProps } = props
-    return (
-      <button aria-label={label} ref={ref} {...buttonProps}>
-        {children}
-      </button>
-    )
-  }
-)
-
 const focusOutline = system({
   iconSize: (value: IconButtonSizes) => {
     const offset = focusOutlineSpacing[value] || focusOutlineSpacing.medium
@@ -176,11 +160,13 @@ const focusOutline = system({
   },
 })
 
-const styleProps = getOmittableProps(margin, 'display', 'inverse', 'variant', 'iconSize')
-export const IconButton = styled(IconButtonBase).withConfig({
-  shouldForwardProp: (p) => !styleProps.has(p),
+export const IconButton = withStyles('button', {
+  displayName: 'IconButton',
+  transitiveProps: ['inverse', 'variant', 'label'],
+  styles: [margin, iconSizes, system({ display: true })],
+  extraAttrs: (props) => (props.label ? { 'aria-label': props.label } : undefined),
 })<IconStyleProps>`
-  display: ${(p): string => p.display || 'inline-flex'};
+  display: inline-flex;
   box-sizing: border-box;
   align-items: center;
   justify-content: center;
@@ -202,23 +188,20 @@ export const IconButton = styled(IconButtonBase).withConfig({
       display: block;
       position: absolute;
       ${focusOutline}
-      ${(p) => `border: ${borderSize(p)} solid;`}
+      border: ${border('callToAction')};
       ${(p) => shapeMap[p.theme.shape]}
-      border-color: ${(p): string => p.theme.colors.callToAction};
       box-sizing: border-box;
     }
   }
 
   ${variantOrDisabled}
-  ${margin}
-  ${iconSizes}
 `
 
 IconButton.propTypes = {
   iconSize: PropTypes.oneOf(['tiny', 'small', 'medium', 'large']),
   variant: PropTypes.oneOf(['standard', 'action', 'danger', 'warning', 'success', 'dark']),
   disabled: PropTypes.bool,
-  label: (props: ButtonProps, propName: string, componentName: string): Error | null => {
+  label: (props: any, propName: string, componentName: string): Error | null => {
     if (!props.label && !props['aria-label'] && !props['aria-labelledby']) {
       return new Error(
         `One of props 'label' or 'aria-labelledby' was not specified in ${componentName}.`
@@ -238,7 +221,6 @@ IconButton.propTypes = {
 IconButton.defaultProps = {
   variant: 'standard',
   iconSize: 'medium',
-  display: 'inline-flex',
   type: 'button',
 }
 
