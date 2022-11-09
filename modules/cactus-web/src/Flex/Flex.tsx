@@ -1,10 +1,15 @@
 import { CactusTheme } from '@repay/cactus-theme'
-import styled, { StyledComponentBase } from 'styled-components'
-import { compose } from 'styled-system'
+import { StyledComponentBase } from 'styled-components'
 
 import { Box, BoxProps } from '../Box/Box'
-import { getOmittableProps } from '../helpers/omit'
-import { flexContainer, flexItem, FlexItemProps, FlexProps, gapWorkaround } from '../helpers/styled'
+import {
+  flexContainer,
+  flexItem,
+  FlexItemProps,
+  FlexProps,
+  gapWorkaround,
+  withStyles,
+} from '../helpers/styled'
 
 export interface FlexBoxProps extends BoxProps, FlexProps, FlexItemProps {}
 
@@ -25,21 +30,19 @@ export const justifyOptions = [
 ] as const
 export type JustifyContent = typeof justifyOptions[number]
 
-const styleProps = getOmittableProps(flexContainer, flexItem)
-export const Flex: FlexComponent = styled(Box).withConfig({
-  shouldForwardProp: (p) => !styleProps.has(p),
+export const Flex: FlexComponent = withStyles(Box, {
+  displayName: 'Flex',
+  transitiveProps: gapWorkaround?.propNames,
+  styles: [flexContainer, flexItem],
 })<FlexBoxProps>`
   display: flex;
   flex-wrap: wrap;
   ${gapWorkaround}
-  ${compose(flexContainer, flexItem)}
 ` as any
 Flex.supportsGap = !gapWorkaround
 
-const itemStyleProps = getOmittableProps(flexItem)
-Flex.Item = styled.div.withConfig({
-  shouldForwardProp: (p) => !itemStyleProps.has(p),
-})<FlexItemProps>(flexItem)
-Flex.Item.displayName = 'Flex.Item'
+Flex.Item = withStyles('div', { displayName: 'Flex.Item', styles: [flexItem] })<FlexItemProps>(
+  flexItem
+)
 
 export default Flex

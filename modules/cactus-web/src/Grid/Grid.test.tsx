@@ -32,7 +32,7 @@ describe('component: Grid', () => {
           <Grid.Item tiny={6} small={3} data-testid="item" />
         </Grid>
       )
-      expect(getByTestId('item')).toHaveStyle({ gridColumnEnd: 'span 6' })
+      expect(getByTestId('item')).toHaveStyle({ gridColumnEnd: 'span 3' })
     })
   })
 
@@ -75,8 +75,7 @@ describe('component: Grid', () => {
       gridAutoColumns: 'test6',
       rowGap: '14px',
       columnGap: '24px',
-      // `width` isn't overridden properly, possibly because it's defined in Box...
-      width: '100%',
+      width: '500px',
     })
   })
 
