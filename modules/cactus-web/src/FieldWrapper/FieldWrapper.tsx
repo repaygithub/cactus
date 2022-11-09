@@ -1,21 +1,16 @@
-import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { flexItem, FlexItemProps } from '../helpers/flexItem'
-import { getOmittableProps } from '../helpers/omit'
+import { withStyles } from '../helpers/styled'
 
 type StyleProps = MarginProps & FlexItemProps & { $gap?: number }
-const styleProps = getOmittableProps(margin, flexItem)
-export const FieldWrapper = styled.div.withConfig({
-  shouldForwardProp: (p) => !styleProps.has(p),
+export const FieldWrapper = withStyles('div', {
+  displayName: 'FieldWrapper',
+  styles: [margin, flexItem],
 })<StyleProps>`
   min-width: 1px; /* IE Fix for some situations. */
   :not(:first-child) {
     margin-top: ${(p) => p.theme.space[p.$gap ?? 4]}px;
-  }
-  && {
-    ${margin}
-    ${flexItem}
   }
 `
 

@@ -1,14 +1,13 @@
 import { iconSize, space } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
+import { MarginProps } from 'styled-system'
 
 import { FieldWrapper } from '../FieldWrapper/FieldWrapper'
 import { Flex } from '../Flex/Flex'
 import { isFocusOut } from '../helpers/events'
-import { omitProps } from '../helpers/omit'
 import { Status } from '../helpers/status'
-import { flexItem, FlexItemProps, styledUnpoly, styledWithClass } from '../helpers/styled'
+import { allWidth, AllWidthProps, FlexItemProps, withStyles } from '../helpers/styled'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 import StatusMessage from '../StatusMessage/StatusMessage'
@@ -48,13 +47,15 @@ interface CommonProps {
 // These are the props commonly used by components that wrap AccessibleField.
 export interface FieldProps extends CommonProps, FlexItemProps, MarginProps {}
 
+interface FieldStyleProps extends AllWidthProps, FlexItemProps, MarginProps {}
+
 interface InnerProps
   extends CommonProps,
     Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'defaultChecked' | 'defaultValue'> {
   children: React.ReactElement | RenderFunc
   disabled?: boolean
 }
-interface AccessibleFieldProps extends InnerProps, FlexItemProps, MarginProps, WidthProps {}
+interface AccessibleFieldProps extends InnerProps, FieldStyleProps {}
 
 interface AccessibleHookArgs {
   id?: string
@@ -213,13 +214,13 @@ function AccessibleFieldBase(props: InnerProps) {
     </div>
   )
 }
-AccessibleFieldBase.displayName = 'AccessibleField'
 
-export const AccessibleField = styledUnpoly(FieldWrapper, AccessibleFieldBase).withConfig(
-  omitProps<AccessibleFieldProps>(width, margin, flexItem)
-)`
+export const AccessibleField = withStyles(FieldWrapper, {
+  displayName: 'AccessibleField',
+  as: AccessibleFieldBase,
+  styles: [allWidth],
+})<FieldStyleProps>`
   position: relative;
-  ${width}
   display: flex;
   flex-direction: column;
 
@@ -232,9 +233,9 @@ export const AccessibleField = styledUnpoly(FieldWrapper, AccessibleFieldBase).w
   .field-status-row ${StatusMessage} {
     margin-top: ${space(2)};
   }
-` as React.FC<AccessibleFieldProps>
+`
 
-const FieldLabel = styledWithClass(Label, 'field-label')`
+const FieldLabel = withStyles(Label, { className: 'field-label' })`
   display: block;
   box-sizing: border-box;
   min-width: 1px;
