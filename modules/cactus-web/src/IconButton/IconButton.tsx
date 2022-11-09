@@ -1,5 +1,5 @@
 import { iconSizes } from '@repay/cactus-icons'
-import { border, CactusTheme } from '@repay/cactus-theme'
+import { border, CactusTheme, iconSize } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps, system } from 'styled-system'
@@ -177,6 +177,7 @@ export const IconButton = withStyles('button', {
   cursor: pointer;
   position: relative;
   overflow: visible;
+  font-size: ${iconSize('medium')};
 
   &::-moz-focus-inner {
     border: 0;
@@ -220,7 +221,6 @@ IconButton.propTypes = {
 
 IconButton.defaultProps = {
   variant: 'standard',
-  iconSize: 'medium',
   type: 'button',
 }
 
