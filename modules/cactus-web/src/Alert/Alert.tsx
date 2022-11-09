@@ -1,14 +1,12 @@
 import { NavigationClose } from '@repay/cactus-icons'
-import { CactusTheme } from '@repay/cactus-theme'
+import { CactusTheme, shadow } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
-import styled, { css, ThemeProps } from 'styled-components'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
+import { css, ThemeProps } from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
 
 import Avatar from '../Avatar/Avatar'
-import { flexItem, FlexItemProps } from '../helpers/flexItem'
-import { omitProps } from '../helpers/omit'
-import { boxShadow } from '../helpers/theme'
+import { allWidth, AllWidthProps, flexItem, FlexItemProps, withStyles } from '../helpers/styled'
 import IconButton from '../IconButton/IconButton'
 
 export type Status = 'error' | 'warning' | 'info' | 'success'
@@ -21,7 +19,7 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   closeTimeout?: number
 }
 
-interface AlertStyleProps extends AlertProps, MarginProps, WidthProps, FlexItemProps {
+interface AlertStyleProps extends MarginProps, AllWidthProps, FlexItemProps {
   type?: Type
   shadow?: boolean
 }
@@ -109,9 +107,12 @@ const AlertBase = (props: AlertProps): React.ReactElement => {
   )
 }
 
-export const Alert = styled(AlertBase).withConfig(
-  omitProps<AlertStyleProps>(margin, width, flexItem, 'type', 'shadow')
-)`
+export const Alert = withStyles('div', {
+  displayName: 'Alert',
+  as: AlertBase,
+  transitiveProps: ['type', 'shadow'],
+  styles: [allWidth, margin, flexItem],
+})<AlertStyleProps>`
   box-sizing: border-box;
   display: flex;
   justify-content: flex-start;
@@ -120,11 +121,8 @@ export const Alert = styled(AlertBase).withConfig(
   background: ${backgroundColor};
   border: 2px solid ${borderColor};
   ${typeVariant}
-  ${(p): string => (p.shadow ? boxShadow(p.theme, 2) : '')};
+  ${(p) => (p.shadow ? shadow(p, 2) : '')};
   border-radius: 8px;
-  ${margin}
-  ${width}
-  ${flexItem}
 
   div:first-child {
     flex: 0 0 auto;

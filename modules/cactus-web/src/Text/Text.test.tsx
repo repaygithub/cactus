@@ -18,6 +18,15 @@ describe('component: Text', () => {
       </Text>
     )
 
-    expect(container.firstChild).not.toBeNull()
+    expect(container.firstChild).toHaveStyle({
+      fontWeight: '600',
+      fontStyle: 'italic',
+      textAlign: 'right',
+      fontSize: '15px',
+      lineHeight: '1.6',
+      color: 'rgb(255, 255, 255)',
+      // JSDOM converts the background color incorrectly, should be (1, 37, 55).
+      backgroundColor: 'rgb(1, 1, 1)',
+    })
   })
 })
