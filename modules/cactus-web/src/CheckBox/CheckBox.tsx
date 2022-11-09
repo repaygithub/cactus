@@ -5,18 +5,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { omitMargins } from '../helpers/omit'
+import { withStyles } from '../helpers/styled'
 
-export interface CheckBoxProps extends React.InputHTMLAttributes<HTMLInputElement>, MarginProps {
-  id?: string
-}
+export type CheckBoxProps = React.InputHTMLAttributes<HTMLInputElement>
 
 const CheckBoxBase = React.forwardRef<HTMLInputElement, CheckBoxProps>((props, ref) => {
-  const componentProps = omitMargins<CheckBoxProps>(props)
-  const { id, className, ...checkBoxProps } = componentProps
+  const { style, className, ...checkBoxProps } = props
   return (
-    <label className={className} htmlFor={id}>
-      <HiddenCheckBox id={id} ref={ref} {...checkBoxProps} />
+    <label className={className} style={style} htmlFor={props.id}>
+      <HiddenCheckBox ref={ref} {...checkBoxProps} />
       <StyledCheckBox aria-hidden={true}>
         <StatusCheck />
       </StyledCheckBox>
@@ -49,14 +46,18 @@ const StyledCheckBox = styled.span`
   }
 `
 
-export const CheckBox = styled(CheckBoxBase)`
+export const CheckBox = withStyles(CheckBoxBase, {
+  as: CheckBoxBase,
+  displayName: 'CheckBox',
+  styles: [margin],
+})<MarginProps>`
   position: relative;
   display: inline-block;
   vertical-align: -1px;
   width: 16px;
   height: 16px;
   line-height: 16px;
-  cursor: ${(p): string => (p.disabled ? 'cursor' : 'pointer')};
+  cursor: ${(p) => (p.disabled ? 'cursor' : 'pointer')};
 
   input:checked ~ span {
     border-color: ${color('callToAction')};
@@ -74,8 +75,6 @@ export const CheckBox = styled(CheckBoxBase)`
     border-color: ${color('lightGray')};
     background-color: ${color('lightGray')};
   }
-
-  ${margin}
 `
 
 CheckBox.propTypes = {

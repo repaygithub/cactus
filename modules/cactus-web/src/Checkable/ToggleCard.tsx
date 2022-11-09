@@ -1,15 +1,14 @@
+import { border, radius, shadow, textStyle } from '@repay/cactus-theme'
 import React from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
+import { margin } from 'styled-system'
 
 import { PolyFCWithRef } from '../helpers/asProps'
 import { isIE } from '../helpers/constants'
 import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import generateId from '../helpers/generateId'
-import { omitProps } from '../helpers/omit'
 import { useBox } from '../helpers/react'
-import { styledWithClass } from '../helpers/styled'
-import { border, boxShadow, radius, textStyle } from '../helpers/theme'
+import { withStyles } from '../helpers/styled'
 import { FlexGroup, GroupProps, makeGroup } from './Group'
 import { CheckableProps, WrapperLabel } from './Wrapper'
 
@@ -99,14 +98,16 @@ type MakeToggleCard = (args: {
 }) => ToggleCardComponent
 
 export const makeToggleCard: MakeToggleCard = ({ type, displayName, groupRole }) => {
-  const Card: ToggleCardComponent = styled(StyledCard)
-    .withConfig(omitProps<MarginProps & FlexItemProps>(margin, flexItem))
-    .attrs({ type, as: ToggleCard })`
+  const Card: ToggleCardComponent = withStyles(StyledCard, {
+    displayName,
+    as: ToggleCard,
+    styles: [margin, flexItem],
+    extraAttrs: { type },
+  })`
     ${FlexGroup} .field-input-group > & {
       flex: 1 0 ${isIE ? 'auto' : '1px'};
     }
   ` as any
-  Card.displayName = displayName
   Card.Group = makeGroup({
     component: FlexGroup,
     displayName: `${displayName}.Group`,
@@ -116,7 +117,7 @@ export const makeToggleCard: MakeToggleCard = ({ type, displayName, groupRole })
   return Card
 }
 
-const CardSpan = styledWithClass('span', 'toggle-card-contents')`
+const CardSpan = withStyles('span', { className: 'toggle-card-contents' })`
   overflow: hidden;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -126,17 +127,17 @@ const CardSpan = styledWithClass('span', 'toggle-card-contents')`
   width: 100%;
   height: 100%;
   padding: ${(p) => p.theme.space[4]}px;
-  border: ${(p) => border(p.theme, 'lightContrast')};
+  border: ${border('lightContrast')};
   border-radius: ${radius(8)};
   ${(p) => p.theme.colorStyles.standard};
-  ${(p) => textStyle(p.theme, 'h4')};
+  ${textStyle('h4')};
 
   label {
-    ${(p) => textStyle(p.theme, 'small')};
+    ${textStyle('small')};
   }
 `
 
-const Inverse = styledWithClass('span', 'toggle-card-inverse')`
+const Inverse = withStyles('span', { className: 'toggle-card-inverse' })`
   display: block;
   box-sizing: content-box;
   width: 100%;
@@ -149,14 +150,11 @@ const Inverse = styledWithClass('span', 'toggle-card-inverse')`
   :last-child {
     margin-bottom: -${(p) => p.theme.space[4]}px;
   }
-  ${(p) => textStyle(p.theme, 'small')};
+  ${textStyle('small')};
 `
 
 const StyledCard = styled(WrapperLabel)`
-  &&&& {
-    max-width: 100%;
-    ${flexItem}
-  }
+  max-width: 100%;
 
   input:focus + ${CardSpan} {
     border-color: ${(p) => p.theme.colors.callToAction};
@@ -172,7 +170,7 @@ const StyledCard = styled(WrapperLabel)`
     }
   }
   input:not(:disabled) + ${CardSpan}:hover {
-    ${(p) => boxShadow(p.theme, 2)};
+    ${shadow(2)};
   }
   input:disabled + ${CardSpan} {
     cursor: not-allowed;
