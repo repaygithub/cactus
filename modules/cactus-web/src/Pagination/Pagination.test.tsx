@@ -142,4 +142,24 @@ describe('component: Pagination', () => {
     }
     expect(func).toHaveBeenCalledTimes(1)
   })
+
+  test('should support style props', () => {
+    const { getByTestId } = renderWithTheme(
+      <Pagination
+        pageCount={1}
+        currentPage={1}
+        onPageChange={() => undefined}
+        data-testid="pages"
+        margin={3}
+        width="300px"
+        maxWidth="70%"
+      />
+    )
+    expect(getByTestId('pages')).toHaveStyle({
+      margin: '8px',
+      width: '300px',
+      maxWidth: '70%',
+      minWidth: '160px',
+    })
+  })
 })
