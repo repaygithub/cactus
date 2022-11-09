@@ -72,6 +72,9 @@ LoadingOnClick.args = { children: 'Submit' }
 LoadingOnClick.argTypes = { loading: HIDE_CONTROL }
 LoadingOnClick.parameters = { storyshots: false }
 
-export const AsLink: Story<typeof Button, { href: string }> = (args) => <Button {...args} as="a" />
+// Typescript doesn't like the args type because it has a `ref` to <button> instead of <a>.
+export const AsLink: Story<typeof Button, { href: string }> = (args: any) => (
+  <Button {...args} as="a" />
+)
 AsLink.storyName = 'As Link'
 AsLink.args = { children: 'Link Button', href: 'https://google.com' }
