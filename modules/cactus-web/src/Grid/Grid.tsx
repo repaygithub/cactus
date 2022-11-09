@@ -8,7 +8,7 @@ import * as SS from 'styled-system'
 import Flex, { FlexBoxProps } from '../Flex/Flex'
 import { isIE } from '../helpers/constants'
 import { useMergedRefs } from '../helpers/react'
-import { FlexItemProps, withStyles } from '../helpers/styled'
+import { FlexItemProps, gapWorkaround, withStyles } from '../helpers/styled'
 import { screenSizes, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 
 const DEFAULT_GAP = 4
@@ -293,6 +293,11 @@ export const Grid: GridComponent = (function (): any {
     styles.width = '100%'
     styles.display = css.grid
     styles[css.gridTemplateColumns] = pseudoFlexColumns
+    if (gapWorkaround) {
+      Object.assign(styles, gapWorkaround({ gap: DEFAULT_GAP, theme: props.theme }))
+    } else {
+      styles.gap = props.theme.space[DEFAULT_GAP]
+    }
 
     const { gridAreas } = props
     if (gridAreas) {
@@ -311,8 +316,6 @@ export const Grid: GridComponent = (function (): any {
     styles: [SS.system(gridStyleConfig)],
   })(gridStyles)
 })()
-
-Grid.defaultProps = { gap: DEFAULT_GAP }
 
 Grid.Item = GridItem
 Grid.supportsGap = Flex.supportsGap

@@ -19,7 +19,6 @@ describe('component: Grid', () => {
         flexWrap: 'wrap',
         // Original to Grid:
         display: 'grid',
-        gap: '16px',
         justifyItems: 'normal',
         width: '100%',
         gridTemplateColumns: 'repeat(12,minmax(1px,1fr))',
