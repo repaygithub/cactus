@@ -35,7 +35,7 @@ runs:
       id: cache-i18n-dist
       uses: actions/cache@v3
       env:
-        i18n-key: ${{ hashFiles('modules/cactus-i18n/dist/*.*'') }}
+        i18n-key: ${{ hashFiles('modules/cactus-i18n/dist/*.*') }}
       with:
         path: ./modules/cactus-i18n/dist
         key: ${{ runner.os }}-i18n-dist-${{ env.i18n-key }}
