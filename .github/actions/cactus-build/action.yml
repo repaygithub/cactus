@@ -7,72 +7,22 @@ runs:
       run: yarn fwk build
       shell: bash
 
-    - name: Store cactus-fwk
-      uses: actions/upload-artifact@v3
-      with:
-        name: fwk-dist
-        path: modules/cactus-fwk/dist
-        retention-days: 1
-
     - name: Build cactus-theme
       run: yarn theme build
       shell: bash
     
-    - name: Store cactus-theme
-      uses: actions/upload-artifact@v3
-      with:
-        name: theme-dist
-        path: modules/cactus-theme/dist
-        retention-days: 1
-
     - name: Build cactus-i18n
       run: yarn i18n build
       shell: bash
-
-    - name: Store cactus-i18n
-      uses: actions/upload-artifact@v3
-      with:
-        name: i18n-dist
-        path: modules/cactus-i18n/dist
-        retention-days: 1
-
 
     - name: Build cactus-icons
       run: yarn icons build
       shell: bash
 
-    - name: Store cactus-icons
-      uses: actions/upload-artifact@v3
-      with:
-        name: icons-dist
-        path: modules/cactus-icons/i
-        retention-days: 1
-
-    - name: Store cactus-icons ts
-      uses: actions/upload-artifact@v3
-      with:
-        name: icons-ts-dist
-        path: modules/cactus-icons/ts
-        retention-days: 1
-
     - name: Build cactus-web
       run: yarn web build
       shell: bash
 
-    - name: Store cactus-web
-      uses: actions/upload-artifact@v3
-      with:
-        name: web-dist
-        path: modules/cactus-web/dist
-        retention-days: 1
-
     - name: Build cactus-form
       run: yarn form build
       shell: bash
-
-    - name: Store cactus-form
-      uses: actions/upload-artifact@v3
-      with:
-        name: form-dist
-        path: modules/cactus-form/dist
-        retention-days: 1
