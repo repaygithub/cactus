@@ -3,11 +3,6 @@ description: "Run yarn install --immutable on every job and get cached lockfile"
 runs:
   using: composite
   steps:
-    - name: Get Yarn Cache
-      id: yarn-cache
-      shell: bash
-      run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
     - uses: actions/cache@v3
       id: cache-deps
       with:
