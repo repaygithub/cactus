@@ -7,7 +7,7 @@ runs:
       id: cache-fwk-dist
       uses: actions/cache@v3
       env:
-        fwk-key: ${{ hashFiles('modules/cactus-fwk/dist/cactus-fwk.cjs.js') }}
+        fwk-key: ${{ hashFiles('modules/cactus-fwk/src/**') }}
       with:
         path: ./modules/cactus-fwk/dist
         key: ${{ runner.os }}-fwk-dist-${{ env.fwk-key }}
@@ -21,7 +21,7 @@ runs:
       id: cache-theme-dist
       uses: actions/cache@v3
       env: 
-        theme-key: ${{ hashFiles('modules/cactus-theme/dist/index.cjs.js') }}
+        theme-key: ${{ hashFiles('modules/cactus-theme/src/**') }}
       with:
         path: ./modules/cactus-theme/dist
         key: ${{ runner.os }}-theme-dist-${{ env.theme-key }}
@@ -35,7 +35,7 @@ runs:
       id: cache-i18n-dist
       uses: actions/cache@v3
       env:
-        i18n-key: ${{ hashFiles('modules/cactus-i18n/dist/cactus-i18n.cjs.js') }}
+        i18n-key: ${{ hashFiles('modules/cactus-i18n/src/**') }}
       with:
         path: ./modules/cactus-i18n/dist
         key: ${{ runner.os }}-i18n-dist-${{ env.i18n-key }}
@@ -49,7 +49,7 @@ runs:
       id: cache-icons-dist
       uses: actions/cache@v3
       env:
-        icons-key: ${{ hashFiles('modules/cactus-icons/i/index.js.map') }}
+        icons-key: ${{ hashFiles('modules/cactus-icons/src/**') }}
       with: 
         path: |
           ./modules/cactus-icons/i
@@ -65,7 +65,7 @@ runs:
       id: cache-web-dist
       uses: actions/cache@v3
       env:
-        web-key: $${{ hashFiles('modules/cactus-web/dist/cactus-web.cjs.js') }}
+        web-key: $${{ hashFiles('modules/cactus-web/src/**') }}
       with: 
         path: ./modules/cactus-web/dist
         key: ${{ runner.os }}-web-dist-${{ env.web-key }}
@@ -79,7 +79,7 @@ runs:
       id: cache-form-dist
       uses: actions/cache@v3
       env:
-        form-key: ${{ hashFiles('modules/cactus-form/dist/cactus-form.cjs.js') }}
+        form-key: ${{ hashFiles('modules/cactus-form/src/**') }}
       with: 
         path: ./modules/cactus-form/dist
         key: ${{ runner.os }}-form-dist-${{ env.form-key }}
