@@ -13,3 +13,7 @@ runs:
       shell: bash
       if: steps.cache-deps.outputs.cache-hit != 'true'
       run: yarn install --immutable
+
+    - name: Lint Packages
+      shell: bash
+      run: yarn lint
