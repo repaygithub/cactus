@@ -15,9 +15,10 @@ some actions to take. It consists of a main action button and any number of othe
 ## Try It Out
 
 export const code = `
-<SplitButton onSelectMainAction={() => console.log('Main Action')} mainActionLabel="Main Action">
-  <SplitButton.Action onSelect={() => console.log('Action 1')}>Action 1</SplitButton.Action>
-  <SplitButton.Action onSelect={() => console.log('Action 2')}>Action 2</SplitButton.Action>
+<SplitButton>
+  <SplitButton.Action onClick={() => console.log('Main Action')}>Main Action</SplitButton.Action>
+  <SplitButton.Action onClick={() => console.log('Action 1')}>Action 1</SplitButton.Action>
+  <SplitButton.Action onClick={() => console.log('Action 2')}>Action 2</SplitButton.Action>
 </SplitButton>
 `
 
@@ -33,7 +34,10 @@ export const code = `
 is likely to be used the most, as opposed to the `MenuButton`, which is used to offer multiple ways of carrying out a
 single action.
 - Pass `aria-label` to `SplitButton` to provide the dropdown trigger with an accessible label.
-- If applicable, pass icons to provide a visual representation of each action to the user.
+
+The main action can be specified in one of two ways:
+- By passing the `main={true}` prop to any SplitButton.Action
+- If no actions have the `main` prop, the first action in the list becomes the main action.
 
 ## Properties
 

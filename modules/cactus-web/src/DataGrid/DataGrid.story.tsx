@@ -295,16 +295,12 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
         />
         <DataGrid.Column width={actionColumnWidth}>
           {(_, { rowIndex }) => (
-            <SplitButton
-              onSelectMainAction={(): void => {
-                return
-              }}
-              mainActionLabel="Edit"
-            >
-              <SplitButton.Action onSelect={() => clone(rowIndex + itemOffset)}>
+            <SplitButton>
+              <SplitButton.Action main>Edit</SplitButton.Action>
+              <SplitButton.Action onClick={() => clone(rowIndex + itemOffset)}>
                 Clone
               </SplitButton.Action>
-              <SplitButton.Action onSelect={() => deleteRow(rowIndex + itemOffset)}>
+              <SplitButton.Action onClick={() => deleteRow(rowIndex + itemOffset)}>
                 Delete
               </SplitButton.Action>
             </SplitButton>

@@ -112,13 +112,10 @@ const StoryActionBar = ({ onClick }: ClickArg) => (
     />
     <ActionBar.Panel id="settings" icon={<ActionsGear />} popupType="dialog" aria-label="Settings">
       <Flex flexDirection="column" flexWrap="nowrap">
-        <SplitButton
-          mb={3}
-          onSelectMainAction={onClick('Main Action')}
-          mainActionLabel="Main Action"
-        >
-          <SplitButton.Action onSelect={onClick('SplitButton One')}>Action One</SplitButton.Action>
-          <SplitButton.Action onSelect={onClick('SplitButton Two')}>Action Two</SplitButton.Action>
+        <SplitButton mb={3}>
+          <SplitButton.Action onClick={onClick('Main Action')}>Main Action</SplitButton.Action>
+          <SplitButton.Action onClick={onClick('SplitButton One')}>Action One</SplitButton.Action>
+          <SplitButton.Action onClick={onClick('SplitButton Two')}>Action Two</SplitButton.Action>
         </SplitButton>
         <Select
           id="select-number"

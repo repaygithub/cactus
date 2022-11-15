@@ -216,22 +216,10 @@ const DataGridContainer = (props: ContainerProps): React.ReactElement => {
         <DataGrid.DataColumn id="active" title="Active" as={BoolComponent} sortable={true} />
         <DataGrid.Column data-testid="last-col">
           {(rowData): React.ReactElement => (
-            <SplitButton
-              onSelectMainAction={(): void => {
-                return
-              }}
-              mainActionLabel="Edit"
-            >
-              <SplitButton.Action
-                onSelect={(): void => {
-                  clone(rowData)
-                }}
-              >
-                Clone
-              </SplitButton.Action>
-              <SplitButton.Action onSelect={(): void => deleteRow(rowData)}>
-                Delete
-              </SplitButton.Action>
+            <SplitButton>
+              <SplitButton.Action main>Edit</SplitButton.Action>
+              <SplitButton.Action onClick={() => clone(rowData)}>Clone</SplitButton.Action>
+              <SplitButton.Action onClick={() => deleteRow(rowData)}>Delete</SplitButton.Action>
             </SplitButton>
           )}
         </DataGrid.Column>
