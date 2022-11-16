@@ -295,10 +295,7 @@ const StyledChevron = styled(NavigationChevronRight)<{ $active?: boolean }>`
 const BreadcrumbPopupList = styled.ul<{ $maxWidth?: number }>`
   box-sizing: border-box;
   margin: 0;
-  padding-top: ${(p) => p.theme.space[3]}px;
-  padding-bottom: ${(p) => p.theme.space[3]}px;
-  padding-left: 0;
-  padding-right: 0;
+  padding: ${(p) => p.theme.space[3]}px 0;
   list-style: none;
   max-width: ${(p) => (p.$maxWidth ? `${p.$maxWidth}px` : 'unset')};
 
@@ -306,10 +303,7 @@ const BreadcrumbPopupList = styled.ul<{ $maxWidth?: number }>`
     width: 100%;
     border-radius: 0;
     outline: none;
-    padding-left: ${(p) => p.theme.space[4]}px;
-    padding-right: ${(p) => p.theme.space[4]}px;
-    padding-top: ${(p) => p.theme.space[2]}px;
-    padding-bottom: ${(p) => p.theme.space[2]}px;
+    padding: ${(p) => p.theme.space[2]}px ${(p) => p.theme.space[4]}px;
 
     &[data-selected='true'] {
       background-color: ${(p) => p.theme.colors.callToAction};

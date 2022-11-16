@@ -87,7 +87,7 @@ const StyledTopSection = styled.div<ExtTransientProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  ${(p) => textStyle(p, p.$variant === 'mini' ? 'small' : 'body')}}
+  ${(p) => textStyle(p, p.$variant === 'mini' ? 'small' : 'body')}
 
   margin-bottom: ${(p) => (p.$variant === 'mini' ? space(p, 3) : space(p, 7))};
 

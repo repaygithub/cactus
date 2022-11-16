@@ -52,7 +52,7 @@ const StyledRadioButton = styled.span<StyledRadioButtonProps>`
     height: 8px;
     border-radius: 50%;
     background-color: ${color('callToAction')};
-    margin: 2px 2px;
+    margin: 2px;
     box-sizing: border-box;
   }
 `
