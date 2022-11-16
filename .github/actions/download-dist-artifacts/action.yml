@@ -1,0 +1,46 @@
+name: "Download dist artifacts of every built module"
+description: "Downloads every single dist folder and stores them in their specific module path. DO NOT USE THIS ACTION IF A BUILDING JOB HAS NOT BEEN DEFINED IN THE WORKFLOW."
+runs:
+  using: "composite"
+  steps: 
+      - name: Download dist for cactus-fwk 
+        uses: actions/download-artifact@v3
+        with: 
+          name: fwk-dist
+          path: modules/cactus-fwk/dist
+
+      - name: Download dist for cactus-theme
+        uses: actions/download-artifact@v3
+        with: 
+          name: theme-dist
+          path: modules/cactus-theme/dist
+
+      - name: Download dist for cactus-i18n
+        uses: actions/download-artifact@v3
+        with: 
+          name: i18n-dist
+          path: modules/cactus-i18n/dist
+
+      - name: Download dist for cactus-icons
+        uses: actions/download-artifact@v3
+        with: 
+          name: icons-dist
+          path: modules/cactus-icons/i
+
+      - name: Download ts dist for cactus-icons
+        uses: actions/download-artifact@v3
+        with: 
+          name: icons-ts-dist
+          path: modules/cactus-icons/ts
+
+      - name: Download dist for cactus-web
+        uses: actions/download-artifact@v3
+        with: 
+          name: web-dist
+          path: modules/cactus-web/dist
+
+      - name: Download dist for cactus-form
+        uses: actions/download-artifact@v3
+        with: 
+          name: form-dist
+          path: modules/cactus-form/dist

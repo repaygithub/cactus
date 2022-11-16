@@ -7,17 +7,34 @@ on:
       - '**'
 
 jobs:
-  unit-tests:
+  install-deps-and-build-modules:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
+
+      - name: NodeJS Version
+        shell: bash
+        run: node --version
 
       - name: Install Dependencies
         uses: ./.github/actions/install-dependencies
 
       - name: Build Modules
         uses: ./.github/actions/cactus-build
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    needs: install-deps-and-build-modules
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Download built modules
+        uses: ./.github/actions/download-dist-artifacts
 
       - name: Test Modules
         run: |
@@ -30,15 +47,16 @@ jobs:
 
   integration-tests:
     runs-on: ubuntu-latest
+    needs: install-deps-and-build-modules
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       - name: Install Dependencies
         uses: ./.github/actions/install-dependencies
 
-      - name: Build Modules
-        uses: ./.github/actions/cactus-build
+      - name: Download built modules
+        uses: ./.github/actions/download-dist-artifacts
 
       - name: Integration Tests
         uses: ./actions/integration-tests
@@ -48,14 +66,16 @@ jobs:
   
   visual-tests:
     runs-on: ubuntu-latest
+    needs: install-deps-and-build-modules
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       - name: Install Dependencies
         uses: ./.github/actions/install-dependencies
 
-      - name: Build Modules
-        uses: ./.github/actions/cactus-build
+      - name: Download built modules
+        uses: ./.github/actions/download-dist-artifacts
 
       - name: Visual Tests
         uses: ./actions/storyshots
@@ -72,14 +92,16 @@ jobs:
 
   docs-test:
     runs-on: ubuntu-latest
+    needs: install-deps-and-build-modules
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       - name: Install Dependencies
         uses: ./.github/actions/install-dependencies
 
-      - name: Build Modules
-        uses: ./.github/actions/cactus-build
+      - name: Download built modules
+        uses: ./.github/actions/download-dist-artifacts
 
       - name: Test Docs Website
         run: yarn docs test:ci
