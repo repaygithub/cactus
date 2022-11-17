@@ -6,7 +6,7 @@ import { HIDE_CONTROL, Story } from '../helpers/storybook'
 export default {
   title: 'Link',
   component: Link,
-  args: { to: 'https://repaygithub.github.io/cactus/' },
+  args: { href: 'https://repaygithub.github.io/cactus/' },
 } as const
 
 export const BasicUsage: Story<typeof Link> = ({ children, to }) => (
