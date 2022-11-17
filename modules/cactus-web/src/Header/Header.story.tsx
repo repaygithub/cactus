@@ -145,7 +145,7 @@ export const WithGoBackLink: HeaderStory = ({ title, bgColor }) => {
   return (
     <Header bgColor={bgColor}>
       <Header.BreadcrumbRow>
-        <Link to="https://repaygithub.github.io/cactus/">Go back!</Link>
+        <Link href="https://repaygithub.github.io/cactus/">Go back!</Link>
       </Header.BreadcrumbRow>
       <Header.Title>{title}</Header.Title>
       <Header.Item>

@@ -97,7 +97,7 @@ export const BasicUsage: Story<
             {item}
           </BrandBar.UserMenuItem>
         ))}
-        <BrandBar.UserMenuItem as={Link} to="https://www.google.com">
+        <BrandBar.UserMenuItem as={Link} href="https://www.google.com">
           Go to Google
         </BrandBar.UserMenuItem>
       </BrandBar.UserMenu>
