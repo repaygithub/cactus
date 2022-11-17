@@ -12,40 +12,38 @@ describe('component: Card', () => {
     expect(cardSyles.margin).toBe('4px')
   })
 
+  test('should support width props', () => {
+    const { getByText } = renderWithTheme(
+      <Card minWidth="10em" width="50%" maxWidth="500px">
+        Content
+      </Card>
+    )
+    expect(getByText('Content')).toHaveStyle({
+      minWidth: '10em',
+      width: '50%',
+      maxWidth: '500px',
+    })
+  })
+
   test('should support padding props', () => {
-    const { getByText, rerender } = renderWithTheme(<Card>Content</Card>)
-
-    let card = getByText('Content')
-    expect(window.getComputedStyle(card).padding).toBe('16px')
-
-    rerender(<Card padding={7}>Content</Card>)
-
-    card = getByText('Content')
-    expect(window.getComputedStyle(card).padding).toBe('40px')
-
-    rerender(
-      <Card padding={7} paddingX={5}>
-        Content
-      </Card>
+    const { getByText } = renderWithTheme(
+      <>
+        <Card>Default</Card>
+        <Card padding={7}>Shortcut</Card>
+        <Card paddingX={5} paddingTop={2}>
+          Separate
+        </Card>
+      </>
     )
 
-    card = getByText('Content')
-    expect(window.getComputedStyle(card).paddingTop).toBe('40px')
-    expect(window.getComputedStyle(card).paddingBottom).toBe('40px')
-    expect(window.getComputedStyle(card).paddingLeft).toBe('24px')
-    expect(window.getComputedStyle(card).paddingRight).toBe('24px')
-
-    rerender(
-      <Card padding={7} paddingY={5}>
-        Content
-      </Card>
-    )
-
-    card = getByText('Content')
-    expect(window.getComputedStyle(card).paddingTop).toBe('24px')
-    expect(window.getComputedStyle(card).paddingBottom).toBe('24px')
-    expect(window.getComputedStyle(card).paddingLeft).toBe('40px')
-    expect(window.getComputedStyle(card).paddingRight).toBe('40px')
+    expect(getByText('Default')).toHaveStyle({ padding: '16px' })
+    expect(getByText('Shortcut')).toHaveStyle({ padding: '40px' })
+    expect(getByText('Separate')).toHaveStyle({
+      paddingTop: '4px',
+      paddingBottom: '16px',
+      paddingLeft: '24px',
+      paddingRight: '24px',
+    })
   })
 
   describe('with theme customization', () => {

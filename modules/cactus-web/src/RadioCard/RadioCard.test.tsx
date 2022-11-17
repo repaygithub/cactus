@@ -14,19 +14,24 @@ describe('component: RadioCard', () => {
         value="quest"
         data-testid="myradio"
         className="sup"
+        margin={3}
+        flexGrow="3"
         style={style}
       />
     )
+    const styles = [style, { margin: '8px' }, { flexGrow: 3 }]
     const input = getByTestId('myradio')
     const wrapper = input.parentElement
     expect(input).toHaveAttribute('id', 'what')
     expect(input).toHaveAttribute('name', 'hope')
     expect(input).toHaveAttribute('value', 'quest')
     expect(input).toHaveAttribute('aria-labelledby', wrapper?.id)
-    expect(input).not.toHaveStyle(style)
     expect(input).not.toHaveClass('sup')
+    for (const s of styles) {
+      expect(input).not.toHaveStyle(s)
+      expect(wrapper).toHaveStyle(s)
+    }
     expect(wrapper?.id).not.toBe('what')
-    expect(wrapper).toHaveStyle(style)
     expect(wrapper).toHaveClass('sup', RadioCard.toString().slice(1))
   })
 

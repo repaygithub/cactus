@@ -2,18 +2,10 @@ import { color, colorStyle, lineHeight, shadow, space, textStyle } from '@repay/
 import PropTypes from 'prop-types'
 import React from 'react'
 import { CSSObject } from 'styled-components'
-import { compose, margin, MarginProps } from 'styled-system'
+import { margin, MarginProps } from 'styled-system'
 
-import { omitProps } from '../helpers/omit'
 import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
-import {
-  flexItem,
-  FlexItemProps,
-  sizing,
-  SizingProps,
-  styledUnpoly,
-  styledWithClass,
-} from '../helpers/styled'
+import { flexItem, FlexItemProps, sizing, SizingProps, withStyles } from '../helpers/styled'
 
 // TODO For the tickmarks (future ticket), I'd suggest the following API:
 // <Range>
@@ -120,7 +112,6 @@ const BaseRange = React.forwardRef<HTMLInputElement, InputProps>(
     )
   }
 )
-BaseRange.displayName = 'Range'
 
 // All browsers have a "null zone" on each end, half the size of the value indicator,
 // so that when the indicator is at max/min the value is centered without overflowing.
@@ -178,9 +169,12 @@ const applyStatusStyles = (styles: CSSObject | undefined) => {
   }
 }
 
-export const Range = styledUnpoly(BaseRange).withConfig(
-  omitProps<RangeProps>(margin, sizing, flexItem)
-)`
+export const Range = withStyles('span', {
+  displayName: 'Range',
+  as: BaseRange,
+  transitiveProps: ['status'],
+  styles: [margin, sizing, flexItem],
+})<MarginProps & SizingProps & FlexItemProps>`
   display: inline-flex;
   flex-direction: column;
   position: relative;
@@ -194,10 +188,6 @@ export const Range = styledUnpoly(BaseRange).withConfig(
   .range-slider {
     ${(p) => applyStatusStyles(getStatusStyles(p))}
   }
-
-  &&& {
-    ${compose(margin, sizing, flexItem)}
-  }
 `
 
 Range.propTypes = {
@@ -208,7 +198,10 @@ Range.propTypes = {
   status: StatusPropType,
 }
 
-const RangeInput = styledWithClass('input', 'range-input').attrs({ type: 'range' })`
+const RangeInput = withStyles('input', {
+  className: 'range-input',
+  extraAttrs: { type: 'range' },
+})`
   ${() => NULL_ZONE_STYLES}
   height: 100%;
   margin: 0;
@@ -237,7 +230,7 @@ const RangeInput = styledWithClass('input', 'range-input').attrs({ type: 'range'
   }
 `
 
-const RangeSlider = styledWithClass('span', 'range-slider')`
+const RangeSlider = withStyles('span', { className: 'range-slider' })`
   flex: 1 0 ${VALUE_SIZE}px;
   display: flex;
   position: relative;

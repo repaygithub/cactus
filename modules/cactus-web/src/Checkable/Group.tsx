@@ -1,3 +1,4 @@
+import { border } from '@repay/cactus-theme'
 import { noop, pick } from 'lodash'
 import React from 'react'
 import styled from 'styled-components'
@@ -6,7 +7,7 @@ import AccessibleField, { ExtFieldProps } from '../AccessibleField/AccessibleFie
 import Box from '../Box/Box'
 import { isIE } from '../helpers/constants'
 import { cloneAll } from '../helpers/react'
-import { border } from '../helpers/theme'
+import { withStyles } from '../helpers/styled'
 
 const getCheckedFromValue = (value: Value, groupValue: GroupValue) =>
   Array.isArray(groupValue) ? groupValue.includes(value) : value === groupValue
@@ -101,14 +102,12 @@ type MakeGroup = (args: {
 }) => React.FC<GroupProps>
 
 export const makeGroup: MakeGroup = ({ component, displayName, role = 'group' }) => {
-  const Group: React.FC<GroupProps> = styled(component).attrs({ role, as: CheckableGroup })``
-  Group.displayName = displayName
-  return Group
+  return withStyles(component, { displayName, as: CheckableGroup, extraAttrs: { role } })``
 }
 
 export const Fieldset = styled(CheckableGroup)`
   .field-label-row {
-    border-bottom: ${(p) => border(p.theme, p.disabled ? 'mediumGray' : 'currentcolor')};
+    border-bottom: ${(p) => border(p, p.disabled ? 'mediumGray' : 'currentcolor')};
   }
   .field-input-group {
     margin: 0 ${(p) => p.theme.space[4]}px;

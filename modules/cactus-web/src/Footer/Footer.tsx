@@ -10,18 +10,9 @@ import {
 import PropTypes from 'prop-types'
 import React from 'react'
 import { css } from 'styled-components'
-import {
-  compose,
-  margin,
-  MarginProps,
-  padding,
-  PaddingProps,
-  position,
-  PositionProps,
-} from 'styled-system'
+import { margin, MarginProps, padding, PaddingProps, position, PositionProps } from 'styled-system'
 
 import { isIE } from '../helpers/constants'
-import omit, { omitProps } from '../helpers/omit'
 import {
   classes,
   flexContainerOption,
@@ -31,8 +22,7 @@ import {
   gapWorkaround,
   sizing,
   SizingProps,
-  styledUnpoly,
-  styledWithClass,
+  withStyles,
 } from '../helpers/styled'
 import { useLayout } from '../Layout/Layout'
 
@@ -48,18 +38,11 @@ interface FooterComponent extends React.FC<FooterProps> {
 
 type LogoProps = FlexItemProps & MarginProps & PositionProps & SizingProps
 
-const stylePropNames = [
-  'variant',
-  ...(flexContainerOption.propNames as string[]),
-  ...(padding.propNames as string[]),
-]
-
-const FooterBase = ({ logo, children, className, ...rest }: FooterProps) => {
+const FooterBase = ({ logo, children, className, flexFlow, ...rest }: FooterProps) => {
   const layoutClass = useLayout('footer', { grid: 'footer' })
-  const isCustomFlex = !!rest.flexFlow
-  const props = omit(rest, stylePropNames)
+  const isCustomFlex = !!flexFlow
   return (
-    <footer {...props} role="contentinfo" className={classes(className, layoutClass)}>
+    <footer {...rest} role="contentinfo" className={classes(className, layoutClass)}>
       {logo && (
         <FooterLogo>{typeof logo === 'string' ? <img alt="Logo" src={logo} /> : logo}</FooterLogo>
       )}
@@ -67,11 +50,11 @@ const FooterBase = ({ logo, children, className, ...rest }: FooterProps) => {
     </footer>
   )
 }
-FooterBase.displayName = 'Footer'
 
-const FooterLogo = styledWithClass('div', 'footer-logo').withConfig(
-  omitProps<LogoProps>(flexItem, margin, position, sizing)
-)`
+const FooterLogo = withStyles('div', {
+  className: 'footer-logo',
+  styles: [flexItem, margin, position, sizing],
+})<LogoProps>`
   margin-bottom: ${space(5)};
   ${mediaGTE('small')} {
     margin-bottom: 0;
@@ -84,13 +67,10 @@ const FooterLogo = styledWithClass('div', 'footer-logo').withConfig(
     max-width: 200px;
     max-height: 40px;
   }
-  &&& {
-    ${compose(flexItem, margin, position, sizing)};
-  }
 `
 FooterLogo.displayName = 'Footer.Logo'
 
-const ContentWrapper = styledWithClass('div', 'footer-content')`
+const ContentWrapper = withStyles('div', { className: 'footer-content' })`
   min-width: 1px;
   max-width: 100%;
   overflow-wrap: break-word;
@@ -121,7 +101,12 @@ const variants: VariantMap = {
   `,
 }
 
-export const Footer = styledUnpoly(FooterBase as FooterComponent)`
+export const Footer: FooterComponent = withStyles('footer', {
+  displayName: 'Footer',
+  as: FooterBase,
+  styles: [flexContainerOption, padding],
+  preserveProps: ['flexFlow'],
+})<FooterProps>`
   ${textStyle('body')};
   position: relative;
   display: flex;
@@ -171,10 +156,7 @@ export const Footer = styledUnpoly(FooterBase as FooterComponent)`
   }
 
   ${gapWorkaround}
-  &&& {
-    ${compose(flexContainerOption, padding)}
-  }
-`
+` as any
 
 Footer.Logo = FooterLogo
 

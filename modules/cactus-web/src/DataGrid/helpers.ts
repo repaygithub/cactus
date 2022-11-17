@@ -2,10 +2,10 @@ import { noop } from 'lodash'
 import { createContext } from 'react'
 import { DefaultTheme, ThemedStyledProps } from 'styled-components'
 
-import { DataGridContextType, PaginationOptions, TransientProps } from './types'
+import { DataGridContextType, PaginationOptions, TableProps } from './types'
 
 export const getMediaQuery = (
-  props: ThemedStyledProps<TransientProps, DefaultTheme>
+  props: ThemedStyledProps<Partial<TableProps>, DefaultTheme>
 ): string | undefined => {
   // Media queries in the theme were built using "min-width", meaning if a user wants
   // the card breakpoint to be at "medium", we will add a media query to apply different
@@ -13,11 +13,11 @@ export const getMediaQuery = (
   // for the next screen size up. For "extraLarge", we can just return a media query for
   // an absurdly large screen that would probably never even occur.
   const {
-    $cardBreakpoint,
+    cardBreakpoint,
     theme: { mediaQueries },
   } = props
   if (mediaQueries !== undefined) {
-    switch ($cardBreakpoint) {
+    switch (cardBreakpoint) {
       case 'tiny':
         return mediaQueries.small
       case 'small':

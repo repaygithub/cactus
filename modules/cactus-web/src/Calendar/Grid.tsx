@@ -1,15 +1,14 @@
 import { border, color, colorStyle, insetBorder, radius, textStyle } from '@repay/cactus-theme'
 import { stubFalse } from 'lodash'
 import React from 'react'
-import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { clampDate, dateParts, getFormatter, toISODate } from '../helpers/dates'
 import { isFocusOut } from '../helpers/events'
 import { getCurrentFocusIndex } from '../helpers/focus'
 import generateId from '../helpers/generateId'
-import { omitProps } from '../helpers/omit'
 import { useValue } from '../helpers/react'
+import { withStyles } from '../helpers/styled'
 
 export type CalendarDate = string | Date
 export type CalendarValue = CalendarDate | string[] | Date[] | null
@@ -37,7 +36,7 @@ export interface CalendarGridLabels {
   weekdays?: string[] | WeekdayLabel[] | null
 }
 
-export interface BaseProps extends FocusProps, React.HTMLAttributes<HTMLDivElement> {
+export interface CalendarGridProps extends FocusProps, React.HTMLAttributes<HTMLDivElement> {
   children?: never
   locale?: string
   isValidDate?: (d: Date) => boolean
@@ -45,8 +44,6 @@ export interface BaseProps extends FocusProps, React.HTMLAttributes<HTMLDivEleme
   labels?: CalendarGridLabels
   onFocusOverflow?: (d: Date, e: React.SyntheticEvent) => void
 }
-
-export type CalendarGridProps = BaseProps & MarginProps
 
 interface GridState {
   overflow: string | null
@@ -193,7 +190,7 @@ const makeIsSelected = (...isoDates: ISODates): ((d: string) => boolean) => {
   return stubFalse
 }
 
-const compareSelected = (old: ISODates, selected: BaseProps['selected']): ISODates => {
+const compareSelected = (old: ISODates, selected: CalendarGridProps['selected']): ISODates => {
   const first = old[0] || ''
   let date = ''
   if (Array.isArray(selected)) {
@@ -228,7 +225,7 @@ const overflowReducer = (state: GridState, [str, dt]: [string, Date]): GridState
   day: dt.getDate(),
 })
 
-export const initGridState = (initialFocus: BaseProps['initialFocus']): GridState => {
+export const initGridState = (initialFocus: CalendarGridProps['initialFocus']): GridState => {
   let year: number, month: number, day: number
   if (typeof initialFocus === 'string') {
     ;[year, month, day] = dateParts(initialFocus)
@@ -272,7 +269,7 @@ const CalendarGridBase = ({
   onFocus,
   onBlur,
   ...rest
-}: BaseProps) => {
+}: CalendarGridProps) => {
   const gridRef = React.useRef<HTMLDivElement>(null)
   const [state, setOverflow] = React.useReducer(overflowReducer, initialFocus, initGridState)
   const year = yearProp ?? state.year
@@ -384,14 +381,15 @@ const CalendarGridBase = ({
 }
 
 const OUTLINE = { thin: '2px' }
-export const CalendarGrid = styled(CalendarGridBase)
-  .withConfig(omitProps<CalendarGridProps>(margin))
-  .attrs({ as: CalendarGridBase })`
+export const CalendarGrid = withStyles(CalendarGridBase, {
+  as: CalendarGridBase,
+  displayName: 'Calendar.Grid',
+  styles: [margin],
+})<MarginProps>`
   box-sizing: border-box;
   display: inline-block;
   width: 300px;
   padding: 0 10px;
-  ${margin}
   ${textStyle('small')}
   ${colorStyle('lightContrast')}
   border-radius: ${radius(20)};
@@ -451,6 +449,5 @@ export const CalendarGrid = styled(CalendarGridBase)
     }
   }
 `
-CalendarGrid.displayName = 'Calendar.Grid'
 
 export default CalendarGrid

@@ -13,6 +13,7 @@ import styled from 'styled-components'
 import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
 
 import { keyDownAsClick, preventAction } from '../helpers/a11y'
+import { withStyles } from '../helpers/styled'
 import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 
 type EmptyFn = () => void
@@ -27,11 +28,11 @@ export interface PageLinkProps {
   onClick?: EmptyFn
 }
 
-export interface PaginationProps extends MarginProps, MaxWidthProps, WidthProps {
+// Width props included because they're needed for the dynamic min-width calculation.
+interface BaseProps extends React.HTMLAttributes<HTMLElement>, MaxWidthProps, WidthProps {
   disabled?: boolean
   pageCount: number
   currentPage: number
-  className?: string
   onPageChange?: (page: number) => void
   linkAs?: React.ComponentType<PageLinkProps>
   label?: string
@@ -42,6 +43,8 @@ export interface PaginationProps extends MarginProps, MaxWidthProps, WidthProps 
   makeLinkLabel?: (page: number) => string
   maxItems?: number
 }
+
+export interface PaginationProps extends BaseProps, MarginProps {}
 
 interface CommonPageProps {
   disabled: boolean
@@ -159,7 +162,7 @@ const useMaxItemCount = (pageCount: number, maxItemProp: number | undefined) => 
   return Math.min(pageCount + CHEVRONS, Math.max(MIN_ITEMS, definedMax))
 }
 
-const useItemCount = (navRef: React.RefObject<HTMLElement>, props: PaginationProps) => {
+const useItemCount = (navRef: React.RefObject<HTMLElement>, props: BaseProps) => {
   const { pageCount, currentPage } = props
   // Calculate the max number of items, with default based on screen size.
 
@@ -232,7 +235,7 @@ const useItemCount = (navRef: React.RefObject<HTMLElement>, props: PaginationPro
   return isSettingBaseline ? maxItems : itemCount.value
 }
 
-export const Pagination: React.FC<PaginationProps> = (props) => {
+const BasePagination: React.FC<BaseProps> = (props) => {
   const {
     disabled = false,
     label,
@@ -246,6 +249,8 @@ export const Pagination: React.FC<PaginationProps> = (props) => {
     prevPageLabel,
     nextPageLabel,
     maxItems,
+    width,
+    maxWidth,
     ...rest
   } = props
   const navigation = useRef<HTMLElement>(null)
@@ -276,7 +281,7 @@ export const Pagination: React.FC<PaginationProps> = (props) => {
     pages.push(getPageButton(pageNum, commonProps, makeLinkLabel(pageNum)))
   }
   return (
-    <Nav {...rest} ref={navigation} aria-label={label} aria-disabled={disabled}>
+    <nav {...rest} ref={navigation} aria-label={label} aria-disabled={disabled}>
       <PageList role="list">
         <PageButton {...commonProps} page={1} aria-label={makeLinkLabel(1)}>
           <NavigationFirst />
@@ -294,11 +299,34 @@ export const Pagination: React.FC<PaginationProps> = (props) => {
           <NavigationLast />
         </PageButton>
       </PageList>
-    </Nav>
+    </nav>
   )
 }
 
-Pagination.displayName = 'Pagination'
+export const Pagination = withStyles('nav', {
+  as: BasePagination,
+  displayName: 'Pagination',
+  styles: [margin, width, maxWidth],
+  preserveProps: ['width', 'maxWidth'],
+})<MarginProps>`
+  min-width: ${MIN_ITEMS * ITEM_WIDTH}px;
+  max-width: 100%;
+
+  ${textStyle('small')}
+  ${colorStyle('standard')}
+  text-align: center;
+
+  &&[aria-disabled='true'] {
+    * {
+      color: ${color('lightGray')};
+      border-color: currentcolor;
+      cursor: not-allowed;
+    }
+    [aria-current='page'] {
+      ${colorStyle('white', 'mediumGray')}
+    }
+  }
+`
 
 Pagination.propTypes = {
   disabled: PropTypes.bool,
@@ -358,31 +386,6 @@ Pagination.defaultProps = {
 }
 
 export default Pagination
-
-const Nav = styled.nav`
-  min-width: ${MIN_ITEMS * ITEM_WIDTH}px;
-  max-width: 100%;
-  && {
-    ${margin}
-    ${width}
-    ${maxWidth}
-  }
-
-  ${textStyle('small')}
-  ${colorStyle('standard')}
-  text-align: center;
-
-  &&[aria-disabled='true'] {
-    * {
-      color: ${color('lightGray')};
-      border-color: currentcolor;
-      cursor: not-allowed;
-    }
-    [aria-current='page'] {
-      ${colorStyle('white', 'mediumGray')}
-    }
-  }
-`
 
 const PageList = styled.ol`
   display: flex;

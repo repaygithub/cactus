@@ -70,6 +70,19 @@ describe('component: Box', () => {
     expect(boxStyles.borderRadius).toBe('25px')
   })
 
+  test('border radius props should accept responsive values', () => {
+    const { getByText } = renderWithTheme(
+      <Box borderRadius={['12px', '15px']} borderTopLeftRadius={['2px', '9px']}>
+        Content
+      </Box>
+    )
+
+    expect(getByText('Content')).toHaveStyle({
+      borderRadius: '15px',
+      borderTopLeftRadius: '9px',
+    })
+  })
+
   test('individual border radius props should accept custom shape definitions', () => {
     const { getByText, rerender } = renderWithTheme(
       <Box

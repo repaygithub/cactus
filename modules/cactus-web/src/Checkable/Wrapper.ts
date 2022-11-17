@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps } from 'styled-system'
+import { MarginProps } from 'styled-system'
 
 export type CheckableProps = MarginProps &
   Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'ref'>
@@ -9,7 +9,6 @@ export const WrapperLabel = styled.label`
   display: inline-block;
   position: relative;
   cursor: pointer;
-  ${margin}
 
   > input {
     position: absolute;

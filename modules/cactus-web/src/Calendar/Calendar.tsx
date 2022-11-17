@@ -1,7 +1,6 @@
 import { NavigationChevronLeft, NavigationChevronRight } from '@repay/cactus-icons'
 import { colorStyle, radius, shadow } from '@repay/cactus-theme'
 import React from 'react'
-import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import Flex from '../Flex/Flex'
@@ -9,7 +8,7 @@ import { isActionKey } from '../helpers/a11y'
 import { dateParts, getFormatter } from '../helpers/dates'
 import { CactusChangeEvent, CactusEventTarget } from '../helpers/events'
 import generateId from '../helpers/generateId'
-import { omitProps } from '../helpers/omit'
+import { withStyles } from '../helpers/styled'
 import IconButton from '../IconButton/IconButton'
 import DropDown from './DropDown'
 import CalendarGrid, { CalendarGridLabels, CalendarValue, FocusProps, initGridState } from './Grid'
@@ -59,7 +58,6 @@ interface InnerCalendarProps extends BaseProps, FocusProps {
   labels?: Partial<CalendarLabels>
   locale?: string
 }
-export type CalendarProps = InnerCalendarProps & MarginProps
 
 interface CalendarState extends SliderProps {
   value: CalendarValue
@@ -359,15 +357,16 @@ class CalendarBase extends React.Component<InnerCalendarProps, CalendarState> {
 }
 
 // TODO Disabled styles
-export const Calendar = styled(CalendarBase)
-  .withConfig(omitProps<CalendarProps>(margin))
-  .attrs({ as: CalendarBase })`
+export const Calendar = withStyles(CalendarBase, {
+  as: CalendarBase,
+  displayName: 'Calendar',
+  styles: [margin],
+})<MarginProps>`
   position: relative; /* Necessary for drop-down positioning. */
   display: flex;
   flex-direction: column;
   box-sizing: content-box;
   width: 300px;
-  ${margin}
   ${colorStyle('standard')};
   border-radius: ${radius(16, 0.6)};
   border-top-left-radius: ${radius(32, 0.6)};

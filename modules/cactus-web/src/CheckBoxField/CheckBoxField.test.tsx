@@ -39,6 +39,9 @@ describe('component: CheckBoxField', () => {
       ...blank,
       marginTop: '16px',
     })
+    // Make sure the margin props aren't passed through to the CheckBox component.
+    expect(getByTestId('default')).toHaveStyle(blank)
+    expect(getByTestId('default').parentElement).toHaveStyle(blank)
   })
 
   test('should support flex item props', () => {

@@ -19,4 +19,64 @@ describe('component: Footer', () => {
 
     expect(getByTestId('image')).toBeInTheDocument()
   })
+
+  test('should support style props', () => {
+    const { getByTestId, rerender } = renderWithTheme(<Footer data-testid="footer" />)
+    const footer = getByTestId('footer')
+    expect(footer).toHaveStyle({
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      paddingTop: '24px',
+      paddingBottom: '24px',
+      paddingLeft: '40px',
+      paddingRight: '40px',
+    })
+    expect(footer.firstElementChild).toHaveClass('footer-content')
+    rerender(<Footer flexFlow="row" alignItems="stretch" padding="2rem" />)
+    expect(footer).toHaveStyle({
+      display: 'flex',
+      flexFlow: 'row',
+      alignItems: 'stretch',
+      paddingTop: '2rem',
+      paddingBottom: '2rem',
+      paddingLeft: '2rem',
+      paddingRight: '2rem',
+    })
+    expect(footer.firstElementChild).toBe(null)
+  })
+
+  describe('component: Footer.Logo', () => {
+    test('should support style props', () => {
+      const { getByTestId, rerender } = renderWithTheme(<Footer.Logo data-testid="logo" />)
+      const logo = getByTestId('logo')
+      expect(logo).toHaveStyle({
+        flexBasis: '',
+        marginBottom: '24px',
+        minHeight: '',
+        minWidth: '',
+        position: '',
+        left: '',
+      })
+      expect(logo).toHaveClass('footer-logo')
+      rerender(
+        <Footer.Logo
+          flexBasis="20%"
+          m={4}
+          minHeight="24px"
+          minWidth="24px"
+          position="absolute"
+          left="10px"
+        />
+      )
+      expect(logo).toHaveStyle({
+        flexBasis: '20%',
+        marginBottom: '16px',
+        minHeight: '24px',
+        minWidth: '24px',
+        position: 'absolute',
+        left: '10px',
+      })
+    })
+  })
 })

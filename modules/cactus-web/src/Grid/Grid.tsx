@@ -7,9 +7,8 @@ import * as SS from 'styled-system'
 
 import Flex, { FlexBoxProps } from '../Flex/Flex'
 import { isIE } from '../helpers/constants'
-import { getOmittableProps } from '../helpers/omit'
 import { useMergedRefs } from '../helpers/react'
-import { FlexItemProps } from '../helpers/styled'
+import { FlexItemProps, gapWorkaround, withStyles } from '../helpers/styled'
 import { screenSizes, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 
 const DEFAULT_GAP = 4
@@ -179,26 +178,21 @@ const gridItemStyles = (function () {
   return SS.system(itemStyleConfig)
 })()
 
-const pseudoFlexStyles = (function (): SS.styleFn {
-  const parser: SS.styleFn = (props: GridItemProps & { theme: CactusTheme }) => {
+const pseudoFlexStyles = (props: GridItemProps) => {
+  if (!props.colEnd && !props.columnEnd) {
     const spans = screenSizes.map((size) => props[size] && `span ${props[size]}`)
-    return gridItemStyles({ colEnd: spans, theme: props.theme })
+    if (spans.some(Boolean)) {
+      return { ...props, colEnd: spans }
+    }
   }
-  parser.propNames = [...screenSizes]
-  return parser
-})()
+}
 
-const itemStyleProps = getOmittableProps(gridItemStyles, pseudoFlexStyles)
-
-export const GridItem = styled(Flex.Item).withConfig({
-  shouldForwardProp: (p: any) => !itemStyleProps.has(p),
-})`
-  ${pseudoFlexStyles}
-  && {
-    ${gridItemStyles}
-  }
-` as GridComponent['Item']
-GridItem.displayName = 'Grid.Item'
+export const GridItem = withStyles(Flex.Item, {
+  displayName: 'Grid.Item',
+  styles: [gridItemStyles],
+  transitiveProps: screenSizes,
+  extraAttrs: pseudoFlexStyles,
+})`` as GridComponent['Item']
 
 const ColumnPropType = PropTypes.oneOf<ColumnNum>(COLUMN_NUMS)
 GridItem.propTypes = {
@@ -209,9 +203,9 @@ GridItem.propTypes = {
   extraLarge: ColumnPropType,
 }
 
-export const Grid: GridComponent = (function () {
+export const Grid: GridComponent = (function (): any {
   const repeat = (count: number, text: string) => {
-    if (!isIE) return `repeat(${count}, ${text})`
+    if (!isIE) return `repeat(${count},${text})`
     const result: string[] = []
     for (let i = 0; i < count; i++) result.push(text)
     return result.join(' ')
@@ -235,7 +229,7 @@ export const Grid: GridComponent = (function () {
   gridStyleConfig.columns = gridStyleConfig.cols
   gridStyleConfig.autoColumns = gridStyleConfig.autoCols
 
-  let gridTag: any
+  let GridBase: React.ComponentType = Flex
   let justifyStyles: SS.styleFn
 
   if (isIE) {
@@ -273,12 +267,11 @@ export const Grid: GridComponent = (function () {
         return <Flex {...props} ref={ref} />
       }
     )
-    gridTag = styled(gridBase).attrs(isPseudoFlexMode)
 
     const applyJustifyToChildren = (value: unknown) => {
       if (value) return { '& > *': { [css.justifySelf]: value } }
     }
-    // Keeping this separate in case we implement inline styles, see CACTUS-975.
+    // Keeping this separate from the inline styles because it applies to children.
     justifyStyles = SS.system({
       justify: applyJustifyToChildren,
       justifyItems: applyJustifyToChildren,
@@ -288,20 +281,23 @@ export const Grid: GridComponent = (function () {
         if (value) return { '&>*': { [css.alignSelf]: value } }
       },
     })
+    GridBase = styled(gridBase).attrs(isPseudoFlexMode)``
   } else {
-    gridTag = styled(Flex)
     // Could be a constant, but it makes things more symmetrical with the IE code.
     justifyStyles = () => ({ justifyItems: 'normal' })
   }
 
   const pseudoFlexColumns = repeat(PSEUDO_FLEX_COLS, 'minmax(1px, 1fr)')
-  const systemStyles = SS.system(gridStyleConfig)
   const gridStyles = (props: GridBoxProps & { theme: CactusTheme }) => {
     const styles = justifyStyles(props)
     styles.width = '100%'
     styles.display = css.grid
     styles[css.gridTemplateColumns] = pseudoFlexColumns
-    styles['&&'] = systemStyles(props)
+    if (gapWorkaround) {
+      Object.assign(styles, gapWorkaround({ gap: DEFAULT_GAP, theme: props.theme }))
+    } else {
+      styles.gap = props.theme.space[DEFAULT_GAP]
+    }
 
     const { gridAreas } = props
     if (gridAreas) {
@@ -314,15 +310,12 @@ export const Grid: GridComponent = (function () {
     }
     return styles
   }
-
-  const styleProps = getOmittableProps(systemStyles, 'gridAreas')
-  return gridTag.withConfig({
+  return withStyles(GridBase, {
     displayName: 'Grid',
-    shouldForwardProp: (p: any) => !styleProps.has(p),
+    transitiveProps: ['gridAreas'],
+    styles: [SS.system(gridStyleConfig)],
   })(gridStyles)
 })()
-
-Grid.defaultProps = { gap: DEFAULT_GAP }
 
 Grid.Item = GridItem
 Grid.supportsGap = Flex.supportsGap
