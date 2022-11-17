@@ -18,7 +18,6 @@ export default {
   },
   args: { label: 'Some tooltip text here' },
 } as const
-
 export const BasicUsage: Story<typeof Tooltip> = (args) => (
   <Flex flexDirection="column" alignItems="flex-start">
     <Tooltip {...args} />

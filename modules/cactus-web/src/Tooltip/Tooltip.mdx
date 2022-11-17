@@ -27,6 +27,21 @@ The `Tooltip` component can be used to provide helpful tips to end users.
 
 - Provide useful tips relevant to the field that the tooltip is associated with.
 
+## Custom positioning
+
+To customize the tooltip positioning, you must pass in a position callback function that itself recieves the tooltip and trigger HTML elements as props. 
+Inside of the function you must add the positioning styles directly to the tooltip element.
+
+Example position function function:
+```jsx
+(tooltip, trigger) => {
+  const triggerRect = trigger.getBoundingClientRect()
+  tooltip.style['top'] = `25px`
+  tooltip.style['left'] = `${triggerRect.right}px`
+  tooltip.style['borderRadius'] = '0px'
+}
+```
+
 ## Basic usage
 
 ```jsx
