@@ -5,9 +5,7 @@ import { margin, MarginProps } from 'styled-system'
 
 import { getOmittableProps } from '../helpers/omit'
 
-interface AnchorProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
-  to: string
-}
+type AnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>
 
 interface LinkStyleProps extends MarginProps {
   variant?: 'standard' | 'dark'
@@ -16,9 +14,9 @@ interface LinkStyleProps extends MarginProps {
 export interface LinkProps extends AnchorProps, LinkStyleProps {}
 
 const LinkBase = React.forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) => {
-  const { to, ...rest } = props
+  const { href, ...rest } = props
 
-  return <a ref={ref} href={to} {...rest} />
+  return <a ref={ref} href={href} {...rest} />
 })
 
 const styleProps = getOmittableProps(margin, 'variant')
@@ -51,7 +49,6 @@ export const Link = styled(LinkBase).withConfig({
 `
 
 Link.propTypes = {
-  to: PropTypes.string.isRequired,
   variant: PropTypes.oneOf(['standard', 'dark']),
 }
 

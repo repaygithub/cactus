@@ -11,8 +11,8 @@ export default {
 
 export const BasicUsage: Story<typeof Link> = ({ children, to }) => (
   <Flex flexDirection="column">
-    <Link to={to}>{children}</Link>
-    <Link variant="dark" to={to}>
+    <Link href={to}>{children}</Link>
+    <Link variant="dark" href={to}>
       I'm a dark link!
     </Link>
   </Flex>
