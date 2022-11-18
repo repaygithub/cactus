@@ -20,4 +20,11 @@ describe('component: FormField', () => {
 
     expect(styles.marginTop).toBe('16px')
   })
+
+  test('should support style props', () => {
+    const { getByTestId } = renderWithTheme(
+      <FieldWrapper data-testid="fieldWrapper" m={2} flexGrow="5" />
+    )
+    expect(getByTestId('fieldWrapper')).toHaveStyle({ margin: '4px', flexGrow: '5' })
+  })
 })

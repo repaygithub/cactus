@@ -6,12 +6,18 @@ import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import Button from './Button'
 
 describe('component: Button', () => {
-  test('should support margin space props', () => {
-    const { getByText } = renderWithTheme(<Button mt={5}>I have margins!</Button>)
-    const button = getByText('I have margins!').parentElement
-    const styled = window.getComputedStyle(button as HTMLElement)
-
-    expect(styled.marginTop).toBe('24px')
+  test('should support style props', () => {
+    const { getByText } = renderWithTheme(
+      <Button mt={5} flex="5 4 6px">
+        I have margins!
+      </Button>
+    )
+    expect(getByText('I have margins!')).toHaveStyle({
+      marginTop: '24px',
+      flexGrow: '5',
+      flexShrink: '4',
+      flexBasis: '6px',
+    })
   })
 
   test('should support svgs as children', () => {
@@ -52,7 +58,7 @@ describe('component: Button', () => {
   })
   test('aria-live prop default and custom', () => {
     const { getByText, rerender } = renderWithTheme(<Button>Click me!</Button>)
-    const button = getByText('Click me!').parentElement
+    const button = getByText('Click me!')
 
     //aria-live should be assertive by default
     expect(button?.getAttribute('aria-live')).toBe('assertive')
@@ -66,7 +72,7 @@ describe('component: Button', () => {
 describe('With theme changes ', () => {
   test('should have 2px border', () => {
     const { getByText } = renderWithTheme(<Button>Click me!</Button>, { border: 'thick' })
-    const button = getByText('Click me!').parentElement
+    const button = getByText('Click me!')
     const styled = window.getComputedStyle(button as HTMLElement)
     expect(styled.borderWidth).toBe('2px')
   })
@@ -74,7 +80,7 @@ describe('With theme changes ', () => {
   test('Should have intermediate border radius', () => {
     const { getByText } = renderWithTheme(<Button>Click me!</Button>, { shape: 'intermediate' })
 
-    const button = getByText('Click me!').parentElement
+    const button = getByText('Click me!')
     const styled = window.getComputedStyle(button as HTMLElement)
     expect(styled.borderRadius).toBe('8px')
   })
@@ -82,14 +88,14 @@ describe('With theme changes ', () => {
   test('Should have square border radius', () => {
     const { getByText } = renderWithTheme(<Button>Click me!</Button>, { shape: 'square' })
 
-    const button = getByText('Click me!').parentElement
+    const button = getByText('Click me!')
     const styled = window.getComputedStyle(button as HTMLElement)
-    expect(styled.borderRadius).toBe('1px')
+    expect(styled.borderRadius).toBe('0px')
   })
 
   test('Should not have box shadows applied', () => {
     const { getByText } = renderWithTheme(<Button>Click me!</Button>, { boxShadows: false })
-    const button = getByText('Click me!').parentElement
+    const button = getByText('Click me!')
     const styled = window.getComputedStyle(button as HTMLElement)
     expect(styled.boxShadow).toBe('')
   })

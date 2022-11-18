@@ -1,11 +1,12 @@
-import { CactusTheme } from '@repay/cactus-theme'
+import { CactusTheme, mediaGTE } from '@repay/cactus-theme'
 import { Property } from 'csstype'
 import { omit, pick } from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { StyledComponent, ThemedStyledFunction } from 'styled-components'
+import styled, { StyledComponent, StyledConfig, ThemedStyledFunction } from 'styled-components'
 import * as SS from 'styled-system'
 
+import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { isIE } from './constants'
 
 // This file exists, in part, because styled-components types are a PAIN.
@@ -32,6 +33,112 @@ export const styledUnpoly = <C extends React.ElementType, F extends React.Elemen
   if ('displayName' in fixed) {
     tag = tag.withConfig({ displayName: (fixed as any).displayName })
   }
+  return tag
+}
+
+type Attrs = { [k: string]: any } | ((props: any) => any)
+type Breakpoint = keyof CactusTheme['mediaQueries']
+
+// `ElementType` is more correct, but using `ComponentType` internally works better.
+interface StyleOpts<T = React.ComponentType> extends StyledConfig {
+  as?: T
+  className?: string
+  extraAttrs?: Attrs
+  styles?: SS.styleFn[]
+  transitiveProps?: readonly string[]
+  preserveProps?: readonly string[]
+}
+
+type StyleTag<C extends React.ElementType> = C extends StyledComponent<
+  infer C0,
+  any,
+  infer S,
+  infer A
+>
+  ? ThemedStyledFunction<C0, CactusTheme, S, A>
+  : ThemedStyledFunction<C, CactusTheme>
+
+type FixedStyleTag<
+  C extends React.ElementType,
+  F extends React.ElementType
+> = C extends StyledComponent<any, any, infer S, infer A>
+  ? ThemedStyledFunction<F, CactusTheme, S, A>
+  : ThemedStyledFunction<F, CactusTheme>
+
+interface WithStyles {
+  <C extends React.ElementType>(component: C, opts: StyleOpts<never>): StyleTag<C>
+  <C extends React.ElementType, F extends React.ElementType>(
+    component: C,
+    opts: StyleOpts<F>
+  ): FixedStyleTag<C, F>
+}
+
+const getInlineStyleHook = (styleParser: SS.styleFn) => {
+  // As long as you don't mess with `styled-components` internals, this follows the rules of hooks.
+  const useInlineStyles = (props: any) => {
+    const currentSize = useScreenSize().valueOf()
+    const parsedStyles = styleParser(props)
+    // Future versions of `styled-components` automatically combine these, but for now...
+    const style = props.style ? { ...props.style, ...parsedStyles } : parsedStyles
+    // Skip `tiny` because `styled-system` doesn't include a media query for it.
+    for (let i = 1; i < SIZES.length; i++) {
+      const key = mediaGTE(props, SIZES[i].size as Breakpoint)
+      if (key in parsedStyles) {
+        if (i <= currentSize) {
+          const stylesForSize = parsedStyles[key]
+          // styled-system doesn't properly omit null/undefined values.
+          for (const k in stylesForSize) {
+            style[k] = stylesForSize[k] ?? style[k]
+          }
+        }
+        delete style[key]
+      }
+    }
+    // Shortcut to check for property existence.
+    for (const _ in style) {
+      return { style }
+    }
+  }
+  return useInlineStyles
+}
+
+// To keep type inference simple we can't include the style prop types,
+// so you need to include them in the tagged template:
+//   const Component = withStyles('div', margin)<MarginProps>`
+//     static: style;
+//   `
+export const withStyles: WithStyles = (component: React.ComponentType, options: StyleOpts) => {
+  const {
+    transitiveProps,
+    preserveProps,
+    styles = [],
+    extraAttrs,
+    className,
+    as: fixedComponent,
+    ...config
+  } = options
+
+  const styleParser: SS.styleFn = styles.length === 1 ? styles[0] : SS.compose(...styles)
+  const transitivePropSet = new Set<string>()
+  // Unlike some of the array methods, Set methods ignore all but the first argument.
+  styleParser.propNames?.forEach(transitivePropSet.add, transitivePropSet)
+  transitiveProps?.forEach(transitivePropSet.add, transitivePropSet)
+  preserveProps?.forEach(transitivePropSet.delete, transitivePropSet)
+
+  if (transitivePropSet.size) {
+    config.shouldForwardProp = (propName) => !transitivePropSet.has(propName)
+  }
+  if (className) {
+    config.componentId = className
+  } else if (!config.displayName) {
+    // Else-if because componentId + displayName behaves oddly.
+    config.displayName = fixedComponent?.displayName || component.displayName
+  }
+
+  let tag: any = styled(component).withConfig(config)
+  if (fixedComponent) tag = tag.attrs({ as: fixedComponent })
+  if (extraAttrs) tag = tag.attrs(extraAttrs)
+  if (styles.length) tag = tag.attrs(getInlineStyleHook(styleParser))
   return tag
 }
 

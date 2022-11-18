@@ -9,18 +9,18 @@ describe('component: Alert', (): void => {
     const { getByText } = renderWithTheme(<Alert>Message</Alert>)
     expect(getByText('Message')).toBeInTheDocument()
   })
-  test('should support flex item props', () => {
+  test('should support style props', () => {
     const { getByTestId } = renderWithTheme(
-      <Alert data-testid="flex-alert" flex={1} flexGrow={1} flexShrink={0} flexBasis={0}>
+      <Alert data-testid="flex-alert" margin={2} minWidth="300px" flex="2 3 400px">
         I have flex props
       </Alert>
     )
 
-    const alert = getByTestId('flex-alert')
-    expect(alert).toHaveStyle('flex: 1')
-    expect(alert).toHaveStyle('flex-grow: 1')
-    expect(alert).toHaveStyle('flex-shrink: 0')
-    expect(alert).toHaveStyle('flex-basis: 0')
+    expect(getByTestId('flex-alert')).toHaveStyle({
+      margin: '4px',
+      minWidth: '300px',
+      flex: '2 3 400px',
+    })
   })
   test('Should call the onClose fn after timeout', async () => {
     const setOpen = jest.fn()

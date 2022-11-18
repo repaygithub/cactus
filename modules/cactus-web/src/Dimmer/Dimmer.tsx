@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { ResponsiveValue, system } from 'styled-system'
 
-import { styledUnpoly } from '../helpers/styled'
+import { withStyles } from '../helpers/styled'
 
 type Opacity = string | number
 interface DimmerStyleProps {
@@ -17,7 +17,6 @@ interface DimmerProps extends React.HTMLAttributes<HTMLDivElement> {
 const DimmerBase = React.forwardRef<HTMLDivElement, DimmerProps>(({ active, ...props }, ref) => {
   return active ? <div {...props} ref={ref} /> : null
 })
-DimmerBase.displayName = 'Dimmer'
 
 const background = (opacity?: Opacity) => `rgba(46, 53, 56, ${opacity || '0.9'})`
 
@@ -29,9 +28,11 @@ const dimmerStyles = system({
   },
 })
 
-export const Dimmer = styledUnpoly(DimmerBase).withConfig<DimmerStyleProps>({
-  shouldForwardProp: (prop) => prop !== 'position' && prop !== 'opacity',
-})`
+export const Dimmer = withStyles('div', {
+  displayName: 'Dimmer',
+  as: DimmerBase,
+  styles: [dimmerStyles],
+})<DimmerStyleProps>`
   position: fixed;
   display: flex;
   background-color: ${background()};

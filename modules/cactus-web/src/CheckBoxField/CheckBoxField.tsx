@@ -1,15 +1,13 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
 
 import CheckBox, { CheckBoxProps } from '../CheckBox/CheckBox'
 import FieldWrapper from '../FieldWrapper/FieldWrapper'
-import { extractFieldStyleProps } from '../helpers/omit'
-import { FlexItemProps } from '../helpers/styled'
+import { withStyles } from '../helpers/styled'
 import useId from '../helpers/useId'
 import Label, { LabelProps } from '../Label/Label'
 
-export interface CheckBoxFieldProps extends CheckBoxProps, FlexItemProps {
+export interface CheckBoxFieldProps extends CheckBoxProps {
   label: React.ReactNode
   labelProps?: Omit<LabelProps, 'children' | 'htmlFor'>
   id?: string
@@ -18,27 +16,28 @@ export interface CheckBoxFieldProps extends CheckBoxProps, FlexItemProps {
 }
 
 const CheckBoxFieldBase = React.forwardRef<HTMLInputElement, CheckBoxFieldProps>((props, ref) => {
-  const { label, labelProps, id, name, ...checkboxProps } = props
-  const styleProps = extractFieldStyleProps(checkboxProps)
+  const { label, labelProps, id, name, className, style, ...checkboxProps } = props
   const checkboxId = useId(id, name)
 
   return (
-    <FieldWrapper {...styleProps} $gap={3}>
+    <div className={className} style={style}>
       <CheckBox {...checkboxProps} ref={ref} id={checkboxId} name={name} />
       <Label {...labelProps} htmlFor={checkboxId}>
         {label}
       </Label>
-    </FieldWrapper>
+    </div>
   )
 })
+CheckBoxFieldBase.displayName = 'CheckBoxField'
 
-export const CheckBoxField = styled(CheckBoxFieldBase)`
+export const CheckBoxField = withStyles(FieldWrapper, { as: CheckBoxFieldBase })`
   ${Label} {
     cursor: ${(p): string => (p.disabled ? 'not-allowed' : 'pointer')};
     padding-left: 8px;
     color: ${(p) => p.disabled && p.theme.colors.mediumGray};
   }
 `
+CheckBoxField.defaultProps = { $gap: 3 }
 
 CheckBoxField.propTypes = {
   label: PropTypes.node.isRequired,

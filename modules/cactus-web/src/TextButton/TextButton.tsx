@@ -1,14 +1,13 @@
-import { CactusTheme } from '@repay/cactus-theme'
+import { border, CactusTheme, radius, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import styled, { css, FlattenInterpolation, ThemeProps } from 'styled-components'
+import { css, FlattenInterpolation, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { getOmittableProps } from '../helpers/omit'
-import { border, radius, textStyle } from '../helpers/theme'
+import { withStyles } from '../helpers/styled'
 
 export type TextButtonVariants = 'standard' | 'action' | 'danger' | 'dark'
 
-interface TextButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, MarginProps {
+interface TextButtonProps extends MarginProps {
   variant?: TextButtonVariants
   /** !important */
   disabled?: boolean
@@ -75,16 +74,17 @@ export const focusStyle = css`
     width: 100%;
     top: 0;
     left: 0;
-    border: ${(p) => border(p.theme, 'callToAction')};
+    border: ${border('callToAction')};
     border-radius: ${radius(20)};
   }
 `
 
-const styleProps = getOmittableProps(margin, 'variant', 'inverse')
-export const TextButton = styled.button.withConfig({
-  shouldForwardProp: (p) => !styleProps.has(p),
+export const TextButton = withStyles('button', {
+  displayName: 'TextButton',
+  transitiveProps: ['variant', 'inverse'],
+  styles: [margin],
 })<TextButtonProps>`
-  ${(p) => textStyle(p.theme, 'body')};
+  ${textStyle('body')};
   position: relative;
   border: none;
   padding: 4px;
@@ -95,7 +95,7 @@ export const TextButton = styled.button.withConfig({
   box-sizing: border-box;
 
   &:hover {
-    text-decoration: ${(p): string => (!p.disabled ? 'underline' : '')};
+    ${(p): string => (!p.disabled ? 'text-decoration: underline;' : '')}
   }
 
   &:focus {
@@ -113,7 +113,6 @@ export const TextButton = styled.button.withConfig({
   }
 
   ${variantOrDisabled}
-  ${margin}
 `
 
 TextButton.propTypes = {

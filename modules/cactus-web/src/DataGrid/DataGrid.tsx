@@ -1,12 +1,11 @@
 import { identity } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { ReactElement, useContext, useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
+import { withStyles } from '../helpers/styled'
 import { useControllableValue } from '../hooks'
 import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
-import { TableVariant } from '../Table/Table'
 import BottomSection from './BottomSection'
 import DataGridColumn, { useColumns } from './DataGridColumn'
 import DataGridTable from './DataGridTable'
@@ -14,9 +13,9 @@ import { DataGridContext, getMediaQuery, initialPageState } from './helpers'
 import PageSizeSelect from './PageSizeSelect'
 import { calcPageState, DataGridPagination, DataGridPrevNext, pageStateReducer } from './Pagination'
 import TopSection from './TopSection'
-import { PageStateAction, PaginationOptions, Pagisort, SortOption, TransientProps } from './types'
+import { PageStateAction, PaginationOptions, Pagisort, SortOption, TableProps } from './types'
 
-interface DataGridProps extends MarginProps {
+interface DataGridProps extends MarginProps, Partial<TableProps> {
   paginationOptions?: PaginationOptions
   sortOptions?: SortOption[]
   initialSort?: SortOption[]
@@ -24,12 +23,9 @@ interface DataGridProps extends MarginProps {
   onPageChange?: (newPageOptions: PaginationOptions) => void
   onSort?: (newSortOptions: SortOption[]) => void
   children: React.ReactNode
-  fullWidth?: boolean
-  cardBreakpoint?: Size
-  variant?: TableVariant
 }
 
-export const DataGrid = (props: DataGridProps): ReactElement => {
+const BaseDataGrid = (props: DataGridProps): ReactElement => {
   const {
     children,
     onPagisort,
@@ -89,12 +85,7 @@ export const DataGrid = (props: DataGridProps): ReactElement => {
   }, [children])
 
   return (
-    <StyledDataGrid
-      fullWidth={fullWidth}
-      $isCardView={isCardView}
-      $cardBreakpoint={cardBreakpoint}
-      {...rest}
-    >
+    <div {...rest}>
       <DataGridContext.Provider
         value={{
           ...columnState,
@@ -112,11 +103,15 @@ export const DataGrid = (props: DataGridProps): ReactElement => {
         {!topSectionRendered && <TopSection />}
         {children}
       </DataGridContext.Provider>
-    </StyledDataGrid>
+    </div>
   )
 }
 
-const StyledDataGrid = styled.div<DataGridProps & TransientProps>`
+export const DataGrid: DataGridType = withStyles('div', {
+  displayName: 'DataGrid',
+  as: BaseDataGrid,
+  styles: [margin],
+})<DataGridProps>`
   display: inline;
   flex-direction: column;
   width: ${(p): string => (p.fullWidth ? '100%' : 'auto')};
@@ -126,9 +121,11 @@ const StyledDataGrid = styled.div<DataGridProps & TransientProps>`
   ${getMediaQuery} {
     display: inline-flex;
   }
-`
+` as any
 
 DataGrid.propTypes = {
+  // TODO When we make `currentPage` & `pageSize` optional, fix this.
+  // @ts-expect-error
   paginationOptions: PropTypes.shape({
     currentPage: PropTypes.number,
     pageSize: PropTypes.number,
@@ -138,6 +135,7 @@ DataGrid.propTypes = {
   }),
   sortOptions: PropTypes.arrayOf(
     PropTypes.shape({ id: PropTypes.string.isRequired, sortAscending: PropTypes.bool.isRequired })
+      .isRequired
   ),
   onPageChange: PropTypes.func,
   onSort: PropTypes.func,
@@ -166,6 +164,4 @@ DataGrid.BottomSection = BottomSection
 DataGrid.Pagination = DataGridPagination
 DataGrid.PrevNext = DataGridPrevNext
 
-DataGrid.displayName = 'DataGrid'
-
-export default DataGrid as DataGridType
+export default DataGrid

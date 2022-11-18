@@ -13,17 +13,25 @@ describe('component: IconButton', () => {
       </IconButton>
     )
 
-    expect(getByLabelText('uchiha-itachi')).toBeInTheDocument()
+    // Test the default styles while we're at it.
+    expect(getByLabelText('uchiha-itachi')).toHaveStyle({
+      display: 'inline-flex',
+      fontSize: '24px',
+      margin: '',
+    })
   })
-  test('should support margin space props', () => {
+
+  test('should support style props', () => {
     const { getByLabelText } = renderWithTheme(
-      <IconButton label="boolest" mb={4}>
+      <IconButton label="boolest" m={4} display="flex" iconSize="small">
         <StatusCheck />
       </IconButton>
     )
-    const iconButton = getByLabelText('boolest')
-    const styles = window.getComputedStyle(iconButton)
-    expect(styles.marginBottom).toBe('16px')
+    expect(getByLabelText('boolest')).toHaveStyle({
+      display: 'flex',
+      fontSize: '16px',
+      margin: '16px',
+    })
   })
 
   test('should trigger onClick', () => {

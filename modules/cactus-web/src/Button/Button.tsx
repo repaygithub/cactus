@@ -1,197 +1,155 @@
-import { BorderSize, ColorStyle, TextStyle } from '@repay/cactus-theme'
+import { border, color, colorStyle, radius, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css, FlattenSimpleInterpolation } from 'styled-components'
+import { css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { AsProps, GenericComponent } from '../helpers/asProps'
-import { getOmittableProps } from '../helpers/omit'
-import { radius, textStyle } from '../helpers/theme'
+import { flexItem, FlexItemProps, withStyles } from '../helpers/styled'
 import Spinner from '../Spinner/Spinner'
 
 export type ButtonVariants = 'standard' | 'action' | 'danger' | 'warning' | 'success'
 
-interface ButtonProps extends MarginProps {
+interface ButtonProps extends FlexItemProps, MarginProps {
   variant?: ButtonVariants
-  /** !important */
   disabled?: boolean
   inverse?: boolean
   loading?: boolean
   loadingText?: string
-  type?: 'submit' | 'reset' | 'button'
 }
 
 type VariantMap = { [K in ButtonVariants]: ReturnType<typeof css> }
 
 const variantMap: VariantMap = {
   action: css`
-    ${(p): ColorStyle => p.theme.colorStyles.callToAction}
-    border-color: ${(p): string => p.theme.colors.callToAction};
+    ${colorStyle('callToAction')}
+    border-color: ${color('callToAction')};
 
     &:hover {
-      ${(p): ColorStyle => p.theme.colorStyles.base}
-      border-color: ${(p): string => p.theme.colors.base};
+      ${colorStyle('base')}
+      border-color: ${color('base')};
     }
   `,
   standard: css`
-    color: ${(p): string => p.theme.colors.base};
-    background-color: ${(p): string => p.theme.colors.white};
-    border-color: ${(p): string => p.theme.colors.base};
+    ${colorStyle('base', 'white')};
+    border-color: ${color('base')};
 
     &:hover {
-      ${(p): ColorStyle => p.theme.colorStyles.base}
-      border-color: ${(p): string => p.theme.colors.base};
+      ${colorStyle('base')}
     }
   `,
   danger: css`
-    ${(p): ColorStyle => p.theme.colorStyles.error}
-    border-color: ${(p): string => p.theme.colors.error};
+    ${colorStyle('error')}
+    border-color: ${color('error')};
 
     &:hover {
-      ${(p): ColorStyle => p.theme.colorStyles.errorDark}
-      border-color: ${(p): string => p.theme.colors.errorDark};
+      ${colorStyle('errorDark')}
+      border-color: ${color('errorDark')};
     }
   `,
   warning: css`
-    ${(p): ColorStyle => p.theme.colorStyles.warning}
-    border-color: ${(p): string => p.theme.colors.warning};
+    ${colorStyle('warning')}
+    border-color: ${color('warning')};
 
     &:hover {
-      ${(p): ColorStyle => p.theme.colorStyles.warningDark}
-      border-color: ${(p): string => p.theme.colors.warningDark};
+      ${colorStyle('warningDark')}
+      border-color: ${color('warningDark')};
     }
   `,
   success: css`
-    ${(p): ColorStyle => p.theme.colorStyles.success}
-    border-color: ${(p): string => p.theme.colors.success};
+    ${colorStyle('success')}
+    border-color: ${color('success')};
 
     &:hover {
-      ${(p): ColorStyle => p.theme.colorStyles.successDark}
-      border-color: ${(p): string => p.theme.colors.successDark};
+      ${colorStyle('successDark')}
+      border-color: ${color('successDark')};
     }
   `,
 }
 
 const inverseVariantMap: VariantMap = {
   action: css`
-    ${(p): ColorStyle => p.theme.colorStyles.callToAction};
-    border-color: ${(p): string => p.theme.colors.callToAction};
+    ${colorStyle('callToAction')};
+    border-color: ${color('callToAction')};
 
     &:hover {
-      color: ${(p): string => p.theme.colors.callToAction};
-      background-color: ${(p): string => p.theme.colors.white};
-      border-color: ${(p): string => p.theme.colors.white};
+      ${colorStyle('callToAction', 'white')};
+      border-color: ${color('white')};
     }
   `,
   standard: css`
-    ${(p): ColorStyle => p.theme.colorStyles.base};
-    border-color: ${(p): string => p.theme.colors.white};
+    ${colorStyle('base')};
+    border-color: ${color('white')};
 
     &:hover {
-      color: ${(p): string => p.theme.colors.base};
-      background-color: ${(p): string => p.theme.colors.white};
-      border-color: ${(p): string => p.theme.colors.white};
+      ${colorStyle('base', 'white')};
     }
   `,
   danger: css`
-    color: ${(p): string => p.theme.colors.error};
-    background-color: ${(p): string => p.theme.colors.white};
-    border-color: ${(p): string => p.theme.colors.error};
+    ${colorStyle('error', 'white')};
+    border-color: ${color('error')};
 
     &:hover {
-      ${(p): ColorStyle => p.theme.colorStyles.error}
+      ${colorStyle('error')}
     }
   `,
   warning: css`
-    color: ${(p): string => p.theme.colors.warning};
-    background-color: ${(p): string => p.theme.colors.white};
-    border-color: ${(p): string => p.theme.colors.warning};
+    ${colorStyle('warning', 'white')};
+    border-color: ${color('warning')};
 
     &:hover {
-      ${(p): ColorStyle => p.theme.colorStyles.warning}
-      border-color: ${(p): string => p.theme.colors.warning};
+      ${colorStyle('warning')}
     }
   `,
   success: css`
-    color: ${(p): string => p.theme.colors.success};
-    background-color: ${(p): string => p.theme.colors.white};
-    border-color: ${(p): string => p.theme.colors.success};
+    ${colorStyle('success', 'white')};
+    border-color: ${color('success')};
 
     &:hover {
-      ${(p): ColorStyle => p.theme.colorStyles.success}
-      border-color: ${(p): string => p.theme.colors.success};
+      ${colorStyle('success')}
     }
   `,
 }
 
 const disabledCss = css`
-  ${(p): ColorStyle => p.theme.colorStyles.disable};
-  border-color: ${(p): string => p.theme.colors.lightGray};
+  ${colorStyle('disable')};
+  border-color: ${color('lightGray')};
   cursor: not-allowed;
 `
 
-const borderMap = {
-  thin: css`
-    border: 1px solid;
-  `,
-  thick: css`
-    border: 2px solid;
-  `,
-}
-
-const getBorder = (size: BorderSize): FlattenSimpleInterpolation => borderMap[size]
-
-interface TransientButtonProps extends Omit<ButtonProps, 'inverse' | 'variant'> {
-  $inverse?: boolean
-  $variant?: ButtonVariants
-}
-
-const variantOrDisabled = (props: TransientButtonProps) => {
-  const map = props.$inverse ? inverseVariantMap : variantMap
+const variantOrDisabled = (props: ButtonProps) => {
+  const map = props.inverse ? inverseVariantMap : variantMap
   if (props.disabled) {
     return disabledCss
-  } else if (props.$variant !== undefined) {
-    return map[props.$variant]
+  } else if (props.variant !== undefined) {
+    return map[props.variant]
   }
 }
 
-function ButtonFunc<E, C extends GenericComponent = 'button'>(
-  props: AsProps<C> & ButtonProps,
-  ref: React.Ref<E>
-): React.ReactElement {
-  const {
-    loading,
-    children,
-    disabled,
-    loadingText,
-    inverse,
-    variant,
-    'aria-live': ariaLive,
-    ...rest
-  } = props
-  let spanProps = null
-  if (loading === true) {
-    spanProps = { style: { visibility: 'hidden' } as React.CSSProperties, 'aria-hidden': true }
+const SHOW_SPINNER = { visibility: 'visible' } as React.CSSProperties
+
+const buttonLoadingState = (props: ButtonProps) => {
+  if (props.loading) {
+    const { children, style } = props as React.HTMLAttributes<any>
+    return {
+      disabled: true,
+      'aria-label': props.loadingText,
+      style: { ...style, color: 'transparent' },
+      children: (
+        <>
+          {children}
+          <Spinner style={SHOW_SPINNER} iconSize="small" color="mediumGray" />
+        </>
+      ),
+    }
   }
-  return (
-    <StyledButton
-      {...(rest as any)}
-      ref={ref as any}
-      $inverse={inverse}
-      $variant={variant}
-      disabled={loading || disabled}
-      aria-live={ariaLive || 'assertive'}
-    >
-      <span {...spanProps}>{children}</span>
-      {loading && <Spinner iconSize="small" aria-label={loadingText} />}
-    </StyledButton>
-  )
 }
 
-const styleProps = getOmittableProps(margin)
-const StyledButton = styled.button.withConfig({
-  shouldForwardProp: (p) => !styleProps.has(p),
-})<{ $inverse?: boolean; $variant?: ButtonVariants }>`
+export const Button = withStyles('button', {
+  displayName: 'Button',
+  styles: [flexItem, margin],
+  transitiveProps: ['inverse', 'variant', 'loading', 'loadingText'],
+  extraAttrs: buttonLoadingState,
+})<ButtonProps>`
   position: relative;
   padding: 2px 30px;
   outline: none;
@@ -200,9 +158,11 @@ const StyledButton = styled.button.withConfig({
   box-sizing: border-box;
   text-decoration: none;
   display: inline-block;
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'body')};
-  ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
+  ${textStyle('body')};
+  border: ${border('transparent') /* color set with variant */};
   border-radius: ${radius(20)};
+
+  ${(p) => p.loading && `> * { visibility: hidden; }`}
 
   &::-moz-focus-inner {
     border: 0;
@@ -217,9 +177,8 @@ const StyledButton = styled.button.withConfig({
       width: calc(100% + 10px);
       top: -5px;
       left: -5px;
-      ${(p): FlattenSimpleInterpolation => getBorder(p.theme.border)};
+      border: ${border('callToAction')};
       border-radius: ${radius(20)};
-      border-color: ${(p): string => p.theme.colors.callToAction};
       box-sizing: border-box;
     }
   }
@@ -237,17 +196,10 @@ const StyledButton = styled.button.withConfig({
     margin-top: -8px;
   }
 
-  ${margin}
   ${variantOrDisabled}
 `
 
-type ButtonType = typeof ButtonFunc
-const ButtonFR = React.forwardRef(ButtonFunc)
-export const Button = ButtonFR as ButtonType
-
-ButtonFR.displayName = 'Button'
-
-ButtonFR.propTypes = {
+Button.propTypes = {
   variant: PropTypes.oneOf(['standard', 'action', 'danger', 'warning', 'success']),
   disabled: PropTypes.bool,
   inverse: PropTypes.bool,
@@ -255,10 +207,11 @@ ButtonFR.propTypes = {
   loadingText: PropTypes.string,
 }
 
-ButtonFR.defaultProps = {
+Button.defaultProps = {
   variant: 'standard',
   type: 'button',
   loadingText: 'loading',
+  'aria-live': 'assertive',
 }
 
 export default Button

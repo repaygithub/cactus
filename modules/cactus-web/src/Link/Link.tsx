@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { getOmittableProps } from '../helpers/omit'
+import { withStyles } from '../helpers/styled'
 
 type AnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>
 
@@ -19,9 +18,10 @@ const LinkBase = React.forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) =
   return <a ref={ref} href={href} {...rest} />
 })
 
-const styleProps = getOmittableProps(margin, 'variant')
-export const Link = styled(LinkBase).withConfig({
-  shouldForwardProp: (p) => !styleProps.has(p),
+export const Link = withStyles(LinkBase, {
+  displayName: 'Link',
+  transitiveProps: ['variant'],
+  styles: [margin],
 })<LinkStyleProps>`
   font-style: italic;
   outline: none;
@@ -44,8 +44,6 @@ export const Link = styled(LinkBase).withConfig({
     color: ${(p): string => p.theme.colors.callToAction};
     background-color: ${(p): string => p.theme.colors.lightCallToAction};
   }
-
-  ${margin};
 `
 
 Link.propTypes = {

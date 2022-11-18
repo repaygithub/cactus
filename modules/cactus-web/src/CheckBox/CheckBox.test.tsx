@@ -70,9 +70,12 @@ describe('component: CheckBox', () => {
       const { getByTestId } = renderWithTheme(<CheckBox id="theme" data-testid="checkbox" />, {
         border: 'thick',
       })
-      const checkBox = getByTestId('checkbox')
-      const checkboxStyles = window.getComputedStyle(checkBox)
-      expect(checkboxStyles.borderWidth).toBe('0px')
+      expect(getByTestId('checkbox').nextElementSibling).toHaveStyle({ borderWidth: '2px' })
+    })
+
+    test('should support margin props', () => {
+      const { getByTestId } = renderWithTheme(<CheckBox m={5} data-testid="checkbox" />)
+      expect(getByTestId('checkbox').parentElement).toHaveStyle({ margin: '24px' })
     })
   })
 })

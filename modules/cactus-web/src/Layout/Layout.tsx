@@ -1,11 +1,10 @@
 import React from 'react'
-import styled from 'styled-components'
 // @ts-ignore The types library doesn't have `overflowX` & `overflowY` for some reason.
 import { overflow, OverflowProps, overflowX, overflowY } from 'styled-system'
 
 import ActionProvider from '../ActionBar/ActionProvider'
-import { getDataProps, omitProps } from '../helpers/omit'
-import { classes, styledWithClass } from '../helpers/styled'
+import { getDataProps } from '../helpers/omit'
+import { classes, withStyles } from '../helpers/styled'
 import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
 import useGridLayout, { LayoutContext, useLayout } from './grid'
 
@@ -16,7 +15,10 @@ interface LayoutProps {
   styles: StyleList
 }
 
-const LayoutWrapper = styledWithClass('div', 'cactus-layout')<LayoutProps>((p) => p.styles)
+const LayoutWrapper = withStyles('div', {
+  className: 'cactus-layout',
+  transitiveProps: ['styles'],
+})<LayoutProps>((p) => p.styles)
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children, ...rest }) => {
   const layout = useGridLayout()
@@ -33,24 +35,22 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children, ...r
   )
 }
 
-type MainProps = React.HTMLAttributes<HTMLElement>
-const MainImpl = React.forwardRef<HTMLElement, MainProps>((p, ref) => {
+const useMainLayout = (p: { className?: string }) => {
   const layoutClass = useLayout('main', {
     width: 'minmax(1px, 1fr)',
     height: 'minmax(max-content, 1fr)',
   })
-  return <main {...p} ref={ref} className={classes(p.className, layoutClass)} />
-})
+  return { className: classes(p.className, layoutClass) }
+}
 
-const Main = styled(MainImpl).withConfig(
-  omitProps<MainProps & OverflowProps>(overflow, overflowX, overflowY)
-)`
+const Main = withStyles('main', {
+  displayName: 'Main',
+  extraAttrs: useMainLayout,
+  styles: [overflow, overflowX, overflowY],
+})<OverflowProps>`
   display: block;
   box-sizing: border-box;
   width: 100%;
-  ${overflow};
-  ${overflowX};
-  ${overflowY};
 `
 Main.defaultProps = { role: 'main' }
 
