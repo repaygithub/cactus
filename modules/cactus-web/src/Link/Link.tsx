@@ -12,13 +12,7 @@ interface LinkStyleProps extends MarginProps {
 
 export interface LinkProps extends AnchorProps, LinkStyleProps {}
 
-const LinkBase = React.forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) => {
-  const { href, ...rest } = props
-
-  return <a ref={ref} href={href} {...rest} />
-})
-
-export const Link = withStyles(LinkBase, {
+export const Link = withStyles('a', {
   displayName: 'Link',
   transitiveProps: ['variant'],
   styles: [margin],

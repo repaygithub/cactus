@@ -100,7 +100,7 @@ Now we have a new route configured, but we have no way to reach it without modif
 Open the `AppLayout.jsx` file in your text editor and add the following snippet as the last child of `<MenuBar />`:
 
 ```jsx
-<MenuBar.Item as={Link} href="/favorites">
+<MenuBar.Item as={Link} to="/favorites">
   Favorites
 </MenuBar.Item>
 ```
