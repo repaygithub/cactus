@@ -9,10 +9,10 @@ export default {
   args: { href: 'https://repaygithub.github.io/cactus/' },
 } as const
 
-export const BasicUsage: Story<typeof Link> = ({ children, to }) => (
+export const BasicUsage: Story<typeof Link> = ({ children, href }) => (
   <Flex flexDirection="column">
-    <Link href={to}>{children}</Link>
-    <Link variant="dark" href={to}>
+    <Link href={href}>{children}</Link>
+    <Link variant="dark" href={href}>
       I'm a dark link!
     </Link>
   </Flex>
