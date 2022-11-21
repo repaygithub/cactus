@@ -2,10 +2,10 @@ module.exports = {
   stories: ['../../docs/**/*.story.mdx', '../../modules/**/*.story.@(js|jsx|ts|tsx)'],
   addons: [
     '@storybook/addon-links',
-    '@storybook/addon-docs',
     '@storybook/addon-actions',
     '@storybook/addon-viewport',
     '@storybook/addon-controls',
+    '../addon-docs/src/preset.js',
   ],
   framework: '@storybook/react',
   features: {

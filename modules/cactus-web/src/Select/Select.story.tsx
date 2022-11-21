@@ -41,7 +41,7 @@ export default {
     comboBox: false,
     canCreateOption: true,
   },
-  parameters: { cactus: { overrides: { maxWidth: '500px' } } },
+  parameters: { docsPath: 'Select/Select.mdx', cactus: { overrides: { maxWidth: '500px' } } },
 } as const
 
 type ChangeArg = { onChange: Action<React.ChangeEvent<{ value: SelectValueType | null }>> }

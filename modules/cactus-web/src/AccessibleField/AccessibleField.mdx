@@ -1,13 +1,10 @@
-import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs'
 import { livePreviewStyle } from '../helpers/constants'
 import AccessibleField from './AccessibleField'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
-<Meta component={AccessibleField} title="Cactus Web/Components/AccessibleField" />
-
 # AccessibleField
 
-The `<AccessibleField />` is intendend as a wrapper with a single child which acts like an html input. This child must accept `id` and `aria-describedby` and place them on the actual input in order to be properly accessible.
+The `<AccessibleField />` is intended as a wrapper with a single child which acts like an html input. This child must accept `id` and `aria-describedby` and place them on the actual input in order to be properly accessible.
 
 ### Try it out
 
@@ -41,12 +38,6 @@ type Status = 'success' | 'warning' | 'error'
 When it comes to status messages, it can accept a status message as a string but will display only one message using the `error`, `warning`, or `success` in that order to determine which status takes priority. For example, if both `error` and `success` are provided, the field will display with `status="error"` and render the error message only.
 
 ## Basic usage
-
-<Canvas>
-  <Story name="Basic Usage" />
-</Canvas>
-
-<ArgsTable story="Basic Usage" />
 
 If `role="group"` (or "radiogroup") is passed, the wrapper div is given the `id`, `aria-labelledby`, and `aria-describedby` props that would normally be passed to the child input, so the AccessibleField acts more like a `<fieldset>` element. You should use the render func in this case to be able to render multiple children instead of the one that is normally accepted.
 

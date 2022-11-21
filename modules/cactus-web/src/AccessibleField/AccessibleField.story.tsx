@@ -2,14 +2,11 @@ import React from 'react'
 
 import { AccessibleField } from '../'
 import { Story } from '../helpers/storybook'
-import docsMeta from './AccessibleField.story.mdx'
 
-delete docsMeta.includeStories
 export default {
   title: 'Cactus Web/Components/AccessibleField',
-  ...docsMeta,
   parameters: {
-    ...docsMeta.parameters,
+    docsPath: 'AccessibleField/AccessibleField.mdx',
     cactus: { overrides: { maxWidth: '500px' } },
   },
 } as const

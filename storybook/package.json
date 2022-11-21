@@ -4,7 +4,7 @@
   "license": "MIT",
   "repository": "https://github.com/repaygithub/cactus/storybook",
   "scripts": {
-    "start": "start-storybook -p 6006",
+    "start": "start-storybook -p 6006 --no-manager-cache",
     "build": "build-storybook -o dist",
     "test:visual": "yarn jest storyshots.test.js",
     "test:visual-update": "yarn test:visual -u"
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
+    "@babel/plugin-transform-react-jsx": "^7.19.0",
     "@babel/runtime": "^7.19.4",
     "@mdx-js/react": "^1.6.22",
     "@repay/babel-preset": "^1.1.4",
@@ -38,13 +39,17 @@
     "@storybook/addon-storyshots": "^6.5.12",
     "@storybook/addon-storyshots-puppeteer": "^6.5.12",
     "@storybook/addon-viewport": "^6.5.12",
+    "@storybook/mdx2-csf": "^0.0.3",
     "@storybook/react": "^6.5.12",
     "@storybook/theming": "^6.5.12",
+    "@storybook/types": "^7.0.0-alpha.44",
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.2.5",
     "core-js": "^3.25.5",
     "jest": "^27.5.1",
     "puppeteer": "^5.0.0",
+    "remark-external-links": "^9.0.1",
+    "remark-slug": "^7.0.1",
     "require-from-string": "^2.0.2",
     "webpack": "^4.0.0"
   }
