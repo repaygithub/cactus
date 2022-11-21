@@ -4,7 +4,7 @@
   "license": "MIT",
   "repository": "https://github.com/repaygithub/cactus/storybook",
   "scripts": {
-    "start": "start-storybook -p 6006 --no-manager-cache",
+    "start": "start-storybook -p 6006",
     "build": "build-storybook -o dist",
     "test:visual": "yarn jest storyshots.test.js",
     "test:visual-update": "yarn test:visual -u"
