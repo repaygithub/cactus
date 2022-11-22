@@ -107,7 +107,7 @@ const HeaderButton = styled.button`
   &:focus {
     outline: none;
 
-    &:after {
+    &::after {
       content: '';
       box-sizing: border-box;
       position: absolute;

@@ -106,7 +106,7 @@ const SidebarDiv = styled.div`
     ${Sidebar.Button}[aria-expanded='true']::after {
       content: '';
       z-index: 99;
-      background-color: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.5);
       position: fixed;
       top: 0;
       bottom: ${WIDTH}px;

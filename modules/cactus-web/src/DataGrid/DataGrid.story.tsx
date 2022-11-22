@@ -298,7 +298,7 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
             <SplitButton>
               <SplitButton.Action main>Edit</SplitButton.Action>
               <SplitButton.Action onClick={() => clone(rowIndex + itemOffset)}>
-                Clone
+                Clone this row
               </SplitButton.Action>
               <SplitButton.Action onClick={() => deleteRow(rowIndex + itemOffset)}>
                 Delete

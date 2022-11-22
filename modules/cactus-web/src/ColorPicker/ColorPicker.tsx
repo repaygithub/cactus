@@ -141,7 +141,7 @@ const PickerDialog = styled(({ handleClose, color, setColor, phrases, ...props }
     border-radius: ${radius(20)};
     height: 32px;
     outline: none;
-    padding: 0px 15px 0px 15px;
+    padding: 0 15px;
     &:focus {
       border: ${border('callToAction')};
     }

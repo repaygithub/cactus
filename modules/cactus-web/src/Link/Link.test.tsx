@@ -6,7 +6,7 @@ import Link from './Link'
 describe('component: Link', () => {
   test('should support margin space props', () => {
     const { getByText } = renderWithTheme(
-      <Link my={4} to="https://somewhere.over/the/rainbow">
+      <Link my={4} href="https://somewhere.over/the/rainbow">
         way up high
       </Link>
     )
@@ -19,7 +19,7 @@ describe('component: Link', () => {
   })
 
   test('should contain the correct href', () => {
-    const { getByText } = renderWithTheme(<Link to="https://throatpunch.com">cough cough</Link>)
+    const { getByText } = renderWithTheme(<Link href="https://throatpunch.com">cough cough</Link>)
 
     expect(getByText('cough cough').getAttribute('href')).toBe('https://throatpunch.com')
   })

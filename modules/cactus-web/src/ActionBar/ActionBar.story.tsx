@@ -23,7 +23,7 @@ const SimpleRouter = () => {
   if (page === 1) {
     return (
       <Flex alignItems="center" justifyContent="center">
-        <Link to="#page2" onClick={onClick}>
+        <Link href="#page2" onClick={onClick}>
           Go to page 2
         </Link>
       </Flex>
@@ -38,7 +38,7 @@ const SimpleRouter = () => {
         orderHint="high"
         onClick={() => setCount((c) => c + 1)}
       />
-      <Link to="#page1" onClick={onClick}>
+      <Link href="#page1" onClick={onClick}>
         Go to page 1
       </Link>
       <Text>Page refreshed {refreshCount} times.</Text>
