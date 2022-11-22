@@ -114,7 +114,7 @@ export function useAccessibleField({
 function AccessibleFieldBase(props: InnerProps) {
   const {
     alignTooltip = 'right',
-    autoTooltip = true,
+    autoTooltip = false,
     children,
     disableTooltip,
     disabled,
