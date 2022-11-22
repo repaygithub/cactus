@@ -113,7 +113,7 @@ describe('component: SplitButton', () => {
       expect(container.querySelector('.SplitButton-dialog')).toHaveStyle({
         borderRadius: '0px',
         borderStyle: '',
-        boxShadow: '0px 3px 8px hsl(200,45%,81%)',
+        boxShadow: '0 3px 8px hsl(200,45%,81%)',
       })
     })
 
@@ -134,7 +134,7 @@ describe('component: SplitButton', () => {
       expect(container.querySelector('.SplitButton-dialog')).toHaveStyle({
         borderRadius: '4px',
         borderStyle: '',
-        boxShadow: '0px 3px 8px hsl(200,45%,81%)',
+        boxShadow: '0 3px 8px hsl(200,45%,81%)',
       })
     })
 
