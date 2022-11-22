@@ -1,4 +1,3 @@
-import { Position } from '@reach/popover'
 import { NotificationInfo } from '@repay/cactus-icons'
 import { border, CactusTheme, color, colorStyle, radius, shadow } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
@@ -15,7 +14,7 @@ export interface TooltipProps extends MarginProps, TextColorProps {
   /** Text to be displayed */
   label: React.ReactNode
   ariaLabel?: string
-  position?: Position
+  position?: PositionCallback
   maxWidth?: string
   disabled?: boolean
   className?: string
@@ -107,23 +106,6 @@ const cactusPosition: PositionCallback = (tooltip, trigger) => {
   })
 }
 
-// TODO: Remove this wrapper when we're ready for v10 breaking changes
-const wrapPosition = (position: Position): PositionCallback => {
-  return (tooltip, trigger) => {
-    const styles = position(trigger?.getBoundingClientRect(), tooltip.getBoundingClientRect())
-    if (styles) {
-      const keys = Object.keys(styles) as (keyof TooltipStyles)[]
-      keys.forEach((key: keyof TooltipStyles) => {
-        let style = styles[key]
-        if (typeof style !== 'string' || !style.includes('px')) {
-          style = `${style}px`
-        }
-        tooltip.style[key] = style
-      })
-    }
-  }
-}
-
 interface StyledInfoProps extends TextColorProps {
   disabled?: boolean
   forceVisible?: boolean
@@ -162,7 +144,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
   const tooltipRef = useRef<HTMLDivElement | null>(null)
   const [stayOpen, setStayOpen] = useState<boolean>(false)
   const hoveringPopup = useRef<boolean>(false)
-  const positionFn = position ? wrapPosition(position) : cactusPosition
+  const positionFn = position || cactusPosition
   const {
     buttonProps: triggerProps,
     popupProps,

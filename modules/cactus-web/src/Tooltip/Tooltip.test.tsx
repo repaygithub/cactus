@@ -3,9 +3,16 @@ import userEvent from '@testing-library/user-event'
 import * as React from 'react'
 
 import renderWithTheme from '../../tests/helpers/renderWithTheme'
+import { PositionCallback } from '../helpers/positionPopover'
 import Tooltip from './Tooltip'
 
 const hiddenStyles = { transform: 'scale(0)', opacity: '0' }
+
+const positionFunction: PositionCallback = (tooltip) => {
+  tooltip.style['top'] = `25px`
+  tooltip.style['left'] = `150px`
+  tooltip.style['borderRadius'] = '0px'
+}
 
 describe('component: Tooltip', () => {
   test('should always render label in invisible div', () => {
@@ -70,12 +77,7 @@ describe('component: Tooltip', () => {
 
   test('should support custom position function', async () => {
     jest.useFakeTimers()
-    renderWithTheme(
-      <Tooltip
-        label="Custom Position"
-        position={() => ({ top: 25, left: '150px', borderRadius: 0 })}
-      />
-    )
+    renderWithTheme(<Tooltip label="Custom Position" position={positionFunction} />)
     act(() => {
       fireEvent.mouseEnter(document.querySelector('span') as Element)
       jest.runAllTimers()
