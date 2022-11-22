@@ -457,7 +457,6 @@ const DropdownPopup = styled(BasePopup)`
   position: fixed;
   z-index: 1000;
   overflow-y: auto;
-  outline: none;
   margin-top: ${DROPDOWN_MARGIN}px;
   background-color: ${(p): string => p.theme.colors.white};
   ${(p) => popupShape('menu', p.theme.shape)}
@@ -497,7 +496,6 @@ const MenuButton = styled.button<ProfileStyleProp>`
   ${(p) => textStyle(p.theme, 'body')};
   height: 100%;
   font-weight: 600;
-  margin-right: 5px;
   background-color: transparent;
   border: 0;
   display: flex;

@@ -300,7 +300,7 @@ function responsiveHeight(): number {
 const getListBoxShadowStyles = (theme: CactusTheme): ReturnType<typeof css> => {
   return theme.boxShadows
     ? css`
-        border: 0px;
+        border: 0;
       `
     : css`
         ${borderMap[theme.border]}
@@ -439,7 +439,7 @@ const StyledListWrapper = styled.div`
     left: 0;
     bottom: 0;
     border-radius: 0;
-    box-shadow: 0px 0px 0px 9999px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
     &:after {
       position: absolute;
       top: 0;

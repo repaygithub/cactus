@@ -16,7 +16,7 @@ const isOutside = (href: string): boolean =>
 const Link = ({ href, to, ...rest }: LinkProps): React.ReactElement => {
   to = to || href || ''
   if (isOutside(to)) {
-    return <RepayLink to={to} {...rest} />
+    return <RepayLink href={to} {...rest} />
   }
   return <LocalLink to={to} {...rest} />
 }

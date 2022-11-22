@@ -48,7 +48,7 @@ export const insetBorder = (
     spread = thickness
   }
   color = theme.colors[color as CactusColor] || color
-  return `box-shadow: inset ${hOffset}px ${vOffset}px 0px ${spread}px ${color}`
+  return `box-shadow: inset ${hOffset}px ${vOffset}px 0 ${spread}px ${color}`
 }
 
 type MaxRadius = 8 | 20
@@ -117,12 +117,12 @@ export const invertColors = (style: ColorStyle): ColorStyle => {
 }
 
 export const shadowTypes = [
-  '0px 0px 3px',
-  '0px 3px 8px',
-  '0px 9px 24px',
-  '0px 12px 24px',
-  '0px 30px 42px',
-  '0px 45px 48px',
+  '0 0 3px',
+  '0 3px 8px',
+  '0 9px 24px',
+  '0 12px 24px',
+  '0 30px 42px',
+  '0 45px 48px',
 ]
 
 export const boxShadow = (theme: CactusTheme, shadowType: number | string): string => {

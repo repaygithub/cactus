@@ -367,13 +367,14 @@ const OuterSidebar = styled.div`
     content: '';
     display: table;
     clear: both;
-    height: 0px;
+    height: 0;
   }
 `
 
 const WindowBox = styled(Box)`
   max-width: 2000px;
   padding: 16px 40px;
+
   @media only screen and (max-width: 400px) {
     padding: 16px 10px;
   }
@@ -387,7 +388,6 @@ const RootLink = styled(Link)`
   display: block;
   padding: ${(p): number => p.theme.space[3]}px;
   text-decoration: none;
-  color: ${(p): string => p.theme.colors.base};
   background-color: ${(p): string => p.theme.colors.base};
   color: ${(p): string => p.theme.colors.baseText};
   font-weight: 600;

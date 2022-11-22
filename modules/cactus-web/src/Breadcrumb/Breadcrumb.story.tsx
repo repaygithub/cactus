@@ -67,7 +67,7 @@ export const HugeListOfBreadcrumbs = (): ReactElement => (
     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((i) => (
       <Breadcrumb.Item key={i} href="/">{`label ${i}`}</Breadcrumb.Item>
     ))}
-    <Breadcrumb.Item as={Link} to="/">
+    <Breadcrumb.Item as={Link} href="/">
       Make a Payment
     </Breadcrumb.Item>
   </Breadcrumb>

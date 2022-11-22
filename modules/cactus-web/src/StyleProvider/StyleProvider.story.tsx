@@ -10,7 +10,8 @@ const BreakpointBox = styled(Box)`
   max-width: 320px;
   width: 50px;
   height: 50px;
-  border-radius: 15% ${(p): string => p.theme.mediaQueries.small} {
+  border-radius: 15%;
+  ${(p): string => p.theme.mediaQueries.small} {
     max-width: 708px;
     width: 75px;
     height: 75px;

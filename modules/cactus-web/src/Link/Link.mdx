@@ -13,7 +13,7 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 ### Try it out
 
-export const code = `<Link to="https://google.com">
+export const code = `<Link href="https://google.com">
   Go to google
 </Link>`
 
@@ -25,7 +25,7 @@ export const code = `<Link to="https://google.com">
 
 ## Basic usage
 
-The `Link` component can be used by passing the url in the `to` prop, and providing the desired text as the children.
+The `Link` component can be used by passing the url in the `href` prop, and providing the desired text as the children.
 
 ```jsx
 import React from 'react'
@@ -35,7 +35,7 @@ const MyComponent = props => {
   // normal component things here
   return (
     <div>
-      <Link to="https://google.com">Go to google</Link>
+      <Link href="https://google.com">Go to google</Link>
       // rest of component
     </div>
   )

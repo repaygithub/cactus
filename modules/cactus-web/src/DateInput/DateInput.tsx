@@ -179,10 +179,9 @@ const LiteralPunctuation = styled.span`
 const ToggleButtons = styled.div`
   box-sizing: border-box;
   display: inline-flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
   justify-content: space-between;
   padding: 0;
-  flex-wrap: nowrap;
   height: 100%;
   position: relative;
 

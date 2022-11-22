@@ -52,7 +52,7 @@ const StyledBottomSection = styled.div<TransientProps & { $justifyContent: Justi
   flex-direction: column;
   align-items: center;
   margin-top: ${(p) => (p.$variant === 'mini' ? `${p.theme.space[3]}px` : `${p.theme.space[7]}px`)};
-  ${(p) => textStyle(p.theme, p.$variant === 'mini' ? 'small' : 'body')}}
+  ${(p) => textStyle(p.theme, p.$variant === 'mini' ? 'small' : 'body')}
 
   // Non-card view styles
   ${getMediaQuery} {

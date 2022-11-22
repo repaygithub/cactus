@@ -158,10 +158,11 @@ const DropDown = styled(DropDownBase)`
     appearance: none;
     background-color: transparent;
     border: none;
-    outline: none
+    outline: none;
     padding: 0 4px;
     ${textStyle('h4')}
-    :focus-visible {
+
+    &:focus-visible {
       outline: 2px solid black;
     }
   }

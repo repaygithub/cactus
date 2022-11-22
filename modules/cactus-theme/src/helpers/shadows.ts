@@ -5,12 +5,12 @@ import { border } from './borders'
 type ShadowValue = string | Record<string, string> | undefined
 
 const shadowTypes = [
-  '0px 0px 3px',
-  '0px 3px 8px',
-  '0px 9px 24px',
-  '0px 12px 24px',
-  '0px 30px 42px',
-  '0px 45px 48px',
+  '0 0 3px',
+  '0 3px 8px',
+  '0 9px 24px',
+  '0 12px 24px',
+  '0 30px 42px',
+  '0 45px 48px',
 ]
 const isCssValue = (x: unknown): x is string => typeof x === 'string' && !x.includes(':')
 

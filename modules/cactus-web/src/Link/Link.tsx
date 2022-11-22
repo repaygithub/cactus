@@ -4,9 +4,7 @@ import { margin, MarginProps } from 'styled-system'
 
 import { withStyles } from '../helpers/styled'
 
-interface AnchorProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
-  to: string
-}
+type AnchorProps = React.AnchorHTMLAttributes<HTMLAnchorElement>
 
 interface LinkStyleProps extends MarginProps {
   variant?: 'standard' | 'dark'
@@ -14,13 +12,7 @@ interface LinkStyleProps extends MarginProps {
 
 export interface LinkProps extends AnchorProps, LinkStyleProps {}
 
-const LinkBase = React.forwardRef<HTMLAnchorElement, AnchorProps>((props, ref) => {
-  const { to, ...rest } = props
-
-  return <a ref={ref} href={to} {...rest} />
-})
-
-export const Link = withStyles(LinkBase, {
+export const Link = withStyles('a', {
   displayName: 'Link',
   transitiveProps: ['variant'],
   styles: [margin],
@@ -49,7 +41,6 @@ export const Link = withStyles(LinkBase, {
 `
 
 Link.propTypes = {
-  to: PropTypes.string.isRequired,
   variant: PropTypes.oneOf(['standard', 'dark']),
 }
 
