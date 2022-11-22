@@ -217,12 +217,10 @@ const getMainAction = (
   for (const child of React.Children.toArray(children) as React.ReactElement[]) {
     if (!child || typeof child !== 'object') continue
     if (child.type === React.Fragment) {
-      if (child.props.children) {
-        const nestedMain = getMainAction(child.props.children, actions, child.key)
-        if (!main && nestedMain) main = nestedMain
-      }
-    } else if (child.props.main) {
-      if (!main) main = child
+      const nestedMain = getMainAction(child.props.children, actions, child.key)
+      if (!main && nestedMain) main = nestedMain
+    } else if (child.props.main && !main) {
+      main = child
     } else if (key) {
       actions.push(React.cloneElement(child, { key: `${key}${child.key}` }))
     } else {
