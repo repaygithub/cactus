@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { Form as FinalForm, FormSpy as FinalFormSpy } from 'react-final-form'
 
-import { DependentField, Field, FieldSpy, Form, FormSpy } from '../src/index'
+import { DependentField, Field, FieldSpy, Form, FormSpy, SubmitButton } from '../src/index'
 
 const noop = () => undefined
 const form = ({ children }: any) => React.createElement('form', {}, children)
@@ -657,6 +657,92 @@ describe('final-form functionality', () => {
       expect(renderFn).toHaveBeenCalledTimes(2)
       userEvent.click(getByText('toggle'))
       expect(renderFn).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  describe('<SubmitButton />', () => {
+    test('is disabled based on form state by default', () => {
+      const { getByText, getByLabelText } = render(
+        <App>
+          <Field name="type" label="Type" />
+          <SubmitButton />
+        </App>
+      )
+
+      const btn = getByText('Submit').parentElement
+      expect(btn).toBeDisabled()
+      userEvent.type(getByLabelText('Type'), 'test')
+      expect(btn).not.toBeDisabled()
+    })
+
+    test('uses custom mapping for state values', () => {
+      const rf = jest.fn()
+      rf.mockReturnValue(null)
+      const processState = (props: any) => {
+        props.disabled = false
+        props.randomProp = 'supported'
+        return props
+      }
+      render(
+        <App>
+          <SubmitButton processState={processState} render={rf}>
+            Sub
+          </SubmitButton>
+        </App>
+      )
+
+      expect(rf).toHaveBeenCalledWith(
+        expect.objectContaining({
+          hasValidationErrors: false,
+          submitting: false,
+          pristine: true,
+          disabled: false,
+          randomProp: 'supported',
+        })
+      )
+    })
+
+    test('uses modified original props object if processState returns undefined', () => {
+      const rf = jest.fn()
+      rf.mockReturnValue(null)
+      const processState = (props: any) => {
+        props.disabled = false
+        props.randomProp = 'supported'
+      }
+      render(
+        <App>
+          <SubmitButton processState={processState} render={rf}>
+            Sub
+          </SubmitButton>
+        </App>
+      )
+
+      expect(rf).toHaveBeenCalledWith(
+        expect.objectContaining({
+          hasValidationErrors: false,
+          submitting: false,
+          pristine: true,
+          disabled: false,
+          randomProp: 'supported',
+        })
+      )
+    })
+
+    test('can override default subscription', () => {
+      const rf = jest.fn()
+      rf.mockReturnValue(null)
+      render(
+        <App>
+          <SubmitButton subscription={{ hasSubmitErrors: true }} render={rf}>
+            Submit Errors Only
+          </SubmitButton>
+        </App>
+      )
+      expect(rf).toHaveBeenCalledWith(
+        expect.objectContaining({
+          hasSubmitErrors: false,
+        })
+      )
     })
   })
 })
