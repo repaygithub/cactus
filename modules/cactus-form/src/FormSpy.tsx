@@ -1,4 +1,4 @@
-import { FormState, formSubscriptionItems } from 'final-form'
+import { FormApi, FormState, formSubscriptionItems } from 'final-form'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { useForm, UseFormStateParams } from 'react-final-form'
@@ -18,14 +18,14 @@ export interface FormSpyProps
     UnknownProps {
   processState?: StateProcessor
 }
-type State = FormState<Record<string, any>, Partial<Record<string, any>>>
+type State = FormState<Record<string, any>, Partial<Record<string, any>>> & { form?: FormApi }
 
 const FormSpy: RenderFunc<FormSpyProps> = ({
   render,
   component,
   children,
   subscription,
-  processState,
+  processState = Object.assign,
   ...rest
 }: FormSpyProps) => {
   const form = useForm('FormSpy')
@@ -39,19 +39,13 @@ const FormSpy: RenderFunc<FormSpyProps> = ({
     return form.subscribe(setState, sub)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const props = Object.assign(rest, state, { form })
-  let updatedProps
-  if (typeof processState === 'function') {
-    updatedProps = processState(props, state)
-  }
-  const finalProps = updatedProps || props
+  state.form = form
+  const props = processState(rest, state) || rest
   if (typeof children === 'function') {
-    return children(finalProps)
+    return children(props)
   }
-  finalProps.children = children
-  return render
-    ? render(finalProps)
-    : React.createElement(component as React.ComponentType<any>, finalProps)
+  props.children = children
+  return render ? render(props) : React.createElement(component as React.ComponentType<any>, props)
 }
 
 const requireOneProp = (props: FormSpyProps, _: string, componentName: string) => {
