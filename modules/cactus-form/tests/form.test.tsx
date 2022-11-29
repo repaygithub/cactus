@@ -619,18 +619,18 @@ describe('final-form functionality', () => {
 
       userEvent.type(getByLabelText('Test Field'), 'S')
 
-      expect(renderFn).toHaveBeenCalledTimes(3)
-      hasFormApi(renderFn.mock.calls[2][0])
-      expect(renderFn.mock.calls[2][0].dirty).toBe(true)
-      expect(renderFn.mock.calls[2][0].errors).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].invalid).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].pristine).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].submitFailed).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].submitSucceeded).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].submitting).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].valid).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].validating).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].values).toEqual({ test: 'S' })
+      expect(renderFn).toHaveBeenCalledTimes(4)
+      hasFormApi(renderFn.mock.calls[3][0])
+      expect(renderFn.mock.calls[3][0].dirty).toBe(true)
+      expect(renderFn.mock.calls[3][0].errors).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].invalid).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].pristine).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].submitFailed).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].submitSucceeded).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].submitting).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].valid).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].validating).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].values).toEqual({ test: 'S' })
     })
 
     test('will unsubscribe on unmount', () => {
@@ -693,9 +693,6 @@ describe('final-form functionality', () => {
 
       expect(rf).toHaveBeenCalledWith(
         expect.objectContaining({
-          hasValidationErrors: false,
-          submitting: false,
-          pristine: true,
           disabled: false,
           randomProp: 'supported',
         })
@@ -719,9 +716,6 @@ describe('final-form functionality', () => {
 
       expect(rf).toHaveBeenCalledWith(
         expect.objectContaining({
-          hasValidationErrors: false,
-          submitting: false,
-          pristine: true,
           disabled: false,
           randomProp: 'supported',
         })
@@ -729,16 +723,16 @@ describe('final-form functionality', () => {
     })
 
     test('can override default subscription', () => {
-      const rf = jest.fn()
-      rf.mockReturnValue(null)
+      const processState = jest.fn()
       render(
         <App>
-          <SubmitButton subscription={{ hasSubmitErrors: true }} render={rf}>
+          <SubmitButton subscription={{ hasSubmitErrors: true }} processState={processState}>
             Submit Errors Only
           </SubmitButton>
         </App>
       )
-      expect(rf).toHaveBeenCalledWith(
+      expect(processState).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'submit' }),
         expect.objectContaining({
           hasSubmitErrors: false,
         })
