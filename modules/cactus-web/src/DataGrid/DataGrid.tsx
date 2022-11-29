@@ -120,7 +120,6 @@ const StyledDataGrid = styled.div<DataGridProps & TransientProps>`
   display: inline;
   flex-direction: column;
   width: ${(p): string => (p.fullWidth ? '100%' : 'auto')};
-  overflow-x: auto;
   ${margin}
 
   ${getMediaQuery} {
