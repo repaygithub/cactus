@@ -453,7 +453,7 @@ override = I'm invisible
   describe('<I18nSection />', () => {
     test('can be rendered without providing context', () => {
       const { container } = render(
-        <I18nSection name="blank">
+        <I18nSection section="blank">
           <I18nText get="this_is_the_key">This is the default content.</I18nText>
         </I18nSection>
       )
@@ -468,7 +468,7 @@ override = I'm invisible
       expect(controller.getLoadState('kleenex', 'en')).toBe('new')
       render(
         <I18nProvider controller={controller}>
-          <I18nSection name="kleenex" content="runny-nose = This text should render">
+          <I18nSection section="kleenex" content="runny-nose = This text should render">
             <I18nText get="runny-nose" />
           </I18nSection>
         </I18nProvider>
@@ -490,7 +490,7 @@ override = I'm invisible
         const mockLoad = (controller._load = jest.fn<Loader>(() => Promise.resolve({ resources })))
         render(
           <I18nProvider controller={controller} section="">
-            <I18nSection name="kleenex" dynamic>
+            <I18nSection section="kleenex" dynamic>
               <I18nText get="runny-nose" />
             </I18nSection>
           </I18nProvider>
@@ -510,7 +510,7 @@ override = I'm invisible
         await controller.loadAll({ section: 'global', lang: 'es', content })
         const { container } = render(
           <I18nProvider controller={controller}>
-            <I18nSection name="global" lang="es">
+            <I18nSection section="global" lang="es">
               <I18nText get="runny-nose" />
             </I18nSection>
           </I18nProvider>
@@ -533,7 +533,7 @@ override = I'm invisible
       const i18nDependencies = [{ section: 'needed', extra: 'data', for: 'load function' }]
       render(
         <I18nProvider controller={controller} section="">
-          <I18nSection name="kleenex" dependencies={i18nDependencies}>
+          <I18nSection section="kleenex" dependencies={i18nDependencies}>
             <I18nText get="runny-nose" section="needed" />
           </I18nSection>
         </I18nProvider>
@@ -588,7 +588,7 @@ override = I'm invisible
       )
       const { container } = render(
         <I18nProvider controller={controller}>
-          <I18nSection name="kleenex">
+          <I18nSection section="kleenex">
             <I18nText get="key_for_the_people" section="global" />
           </I18nSection>
         </I18nProvider>
