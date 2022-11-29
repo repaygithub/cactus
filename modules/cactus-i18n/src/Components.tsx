@@ -73,7 +73,7 @@ interface DependencyLoadType {
 
 interface I18nSectionProps {
   children?: React.ReactNode
-  name: string
+  section: string
   lang?: string
   dependencies?: (string | DependencyLoadType)[]
   [key: string]: any
@@ -100,7 +100,7 @@ function hasLoadedAll(
 }
 
 const I18nSection: React.FC<I18nSectionProps> = ({
-  name: section,
+  section,
   lang,
   dependencies,
   children,
@@ -146,7 +146,7 @@ const I18nSection: React.FC<I18nSectionProps> = ({
 }
 
 I18nSection.propTypes = {
-  name: PropTypes.string.isRequired,
+  section: PropTypes.string.isRequired,
   lang: PropTypes.string,
 }
 
