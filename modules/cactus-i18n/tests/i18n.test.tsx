@@ -20,7 +20,7 @@ import I18nProvider, {
 const NOT_FOUND = { text: null, attrs: {}, found: false }
 
 class I18nController extends BaseI18nController {
-  protected async load(b: BundleInfo, opts: LoadOpts): AsyncLoadResult {
+  protected async _load(b: BundleInfo, opts: LoadOpts): AsyncLoadResult {
     if (opts.defaults) {
       return { resources: [opts.defaults] }
     } else if (typeof opts.content === 'string') {
@@ -30,7 +30,7 @@ class I18nController extends BaseI18nController {
 
   public async loadAll(...loadArgs: any[]) {
     for (const { section, lang, ...opts } of loadArgs) {
-      this._load({ section, lang }, opts)
+      this.load({ section, lang }, opts)
     }
   }
 }
@@ -122,13 +122,13 @@ describe('i18n functionality', () => {
       )
     })
 
-    test('load() should throw when not overridden', () => {
+    test('_load() should throw when not overridden', () => {
       //@ts-ignore
       class BadI18nController extends BaseI18nController {}
       expect(
         (): BaseI18nController =>
           new BadI18nController({ defaultLang: 'en', supportedLangs: ['en'] })
-      ).toThrowError('You must override the `load` method')
+      ).toThrowError('You must override the `_load` method')
     })
 
     test('can access translations outside React context', async () => {
@@ -218,7 +218,7 @@ key-for-no-people = blah blah blue stew`)
         expect(this).toBe(controller)
         return Promise.resolve({ resources: [] })
       })
-      controller._load({ section: 'loadOpts', lang: 'en' }, { loader, onLoad })
+      controller.load({ section: 'loadOpts', lang: 'en' }, { loader, onLoad })
       await Promise.resolve()
       expect(onLoad).toHaveBeenCalledTimes(1)
       expect(loader).toHaveBeenCalledTimes(1)
@@ -245,7 +245,7 @@ key-for-no-people = blah blah blue stew`)
       const error = 'Unsupported language: de'
       expect(() => new I18nController({ lang, supportedLangs: ['en'] })).toThrowError(error)
       const noDefault = new I18nController({ lang: 'en', supportedLangs: ['en'] })
-      expect(() => noDefault._load({ lang, section })).toThrowError(error)
+      expect(() => noDefault.load({ lang, section })).toThrowError(error)
       expect(() => noDefault.setLang(lang)).toThrowError(error)
       expect(() => noDefault.get({ section, lang, id: 'test' })).toThrowError(error)
       // These two functions also indirectly use negotiation, but aren't strict.
@@ -264,13 +264,13 @@ key-for-no-people = blah blah blue stew`)
       controller.addListener(listenError, 'error')
       const load = { section: 'loadTest', lang: 'en' }
       let loader: Loader = jest.fn(() => Promise.reject('oh noes!'))
-      const bundle = controller._load(load, { loader })
+      const bundle = controller.load(load, { loader })
       await step
       expect(listenLoad).not.toHaveBeenCalled()
       expect(listenAll).toHaveBeenLastCalledWith(bundle, 'new', 'oh noes!')
       expect(listenError).toHaveBeenLastCalledWith(bundle, 'new', 'oh noes!')
       loader = jest.fn(() => Promise.resolve({ resources: [] })) as Loader
-      controller._load(load, { loader })
+      controller.load(load, { loader })
       await step
       expect(listenLoad).toHaveBeenLastCalledWith(bundle, 'error', undefined)
       expect(listenAll).toHaveBeenLastCalledWith(bundle, 'error', undefined)
@@ -278,7 +278,7 @@ key-for-no-people = blah blah blue stew`)
       controller.removeListener(listenLoad)
       controller.removeListener(listenAll)
       controller.removeListener(listenError)
-      controller._load({ section: 'one', lang: 'en' }, { loader })
+      controller.load({ section: 'one', lang: 'en' }, { loader })
       await step
       expect(listenLoad).toHaveBeenCalledTimes(1)
       expect(listenAll).toHaveBeenCalledTimes(2)
@@ -349,7 +349,7 @@ key-for-no-people = blah blah blue stew`)
       test('keeps track of failed resources', async () => {
         const controller = new I18nController({ defaultLang: 'en', supportedLangs: ['en'] })
         //@ts-ignore
-        controller.load = jest.fn(() => Promise.reject('oh noes!'))
+        controller._load = jest.fn(() => Promise.reject('oh noes!'))
         expect(controller.getLoadState('global', 'en')).toBe('new')
         await controller.loadAll({ section: 'global', lang: 'en' })
         expect(controller.getLoadState('global', 'en')).toBe('error')
@@ -365,7 +365,7 @@ key-for-no-people = blah blah blue stew`)
           super({ lang, supportedLangs: [lang], useIsolating: false })
         }
 
-        protected async load(bi: BundleInfo, opts: LoadOpts): AsyncLoadResult {
+        protected async _load(bi: BundleInfo, opts: LoadOpts): AsyncLoadResult {
           const resources = []
           if (bi.section === 'two') {
             resources.push(this.loadRef(bi, 'one', opts))
@@ -394,9 +394,9 @@ override = I'm invisible
       test('section with ref loads referred section', async () => {
         const controller = new Controller()
         const loader = jest.fn(function (this: Controller, bi: BundleInfo, o: LoadOpts) {
-          return this.load(bi, o)
+          return this._load(bi, o)
         })
-        controller._load({ section: 'two', lang }, { loader, success: true })
+        controller.load({ section: 'two', lang }, { loader, success: true })
         expect(loader).toHaveBeenCalledTimes(2)
         expect(controller.getLoadState('one', lang)).toBe('loading')
         expect(controller.getLoadState('two', lang)).toBe('loading')
@@ -413,7 +413,7 @@ override = I'm invisible
 
       test('reloading dependency causes section to recompile', async () => {
         const controller = new Controller()
-        controller._load({ section: 'two', lang })
+        controller.load({ section: 'two', lang })
         await step
         expect(controller.getLoadState('one', lang)).toBe('error')
         expect(controller.getLoadState('two', lang)).toBe('loaded')
@@ -422,7 +422,7 @@ override = I'm invisible
         expect(controller.getText({ section: 'two', id: 'override' })).toEqual('You are group two')
         expect(controller.get({ section: 'two', id: 'low' })).toEqual(NOT_FOUND)
 
-        controller._load({ section: 'one', lang }, { success: true })
+        controller.load({ section: 'one', lang }, { success: true })
         await step
         expect(controller.getLoadState('one', lang)).toBe('loaded')
         expect(controller.getText({ section: 'two', id: 'dependent' })).toEqual('I need a hero')
@@ -433,12 +433,12 @@ override = I'm invisible
       test('section with loaded ref does not reload', async () => {
         const controller = new Controller()
         const loader = jest.fn(function (this: Controller, bi: BundleInfo, o: LoadOpts) {
-          return this.load(bi, o)
+          return this._load(bi, o)
         })
-        controller._load({ section: 'one', lang }, { loader, success: true })
+        controller.load({ section: 'one', lang }, { loader, success: true })
         expect(loader).toHaveBeenCalledTimes(1)
         await step
-        controller._load({ section: 'two', lang }, { loader })
+        controller.load({ section: 'two', lang }, { loader })
         expect(loader).toHaveBeenCalledTimes(2)
         await step
 
@@ -487,7 +487,7 @@ override = I'm invisible
         })
         const resources = [new FluentResource('runny-nose = This text should render')]
         // @ts-ignore
-        const mockLoad = (controller.load = jest.fn<Loader>(() => Promise.resolve({ resources })))
+        const mockLoad = (controller._load = jest.fn<Loader>(() => Promise.resolve({ resources })))
         render(
           <I18nProvider controller={controller} section="">
             <I18nSection name="kleenex" dynamic>
@@ -526,7 +526,7 @@ override = I'm invisible
       })
       const resources = [new FluentResource('runny-nose = This text should render')]
       //@ts-ignore
-      const mockLoad = (controller.load = jest.fn<Loader>(({ section }) =>
+      const mockLoad = (controller._load = jest.fn<Loader>(({ section }) =>
         Promise.resolve(section === 'needed' ? { resources } : undefined)
       ))
 
