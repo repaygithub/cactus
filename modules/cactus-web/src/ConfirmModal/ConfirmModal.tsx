@@ -1,5 +1,5 @@
 import icons from '@repay/cactus-icons'
-import { ColorStyle } from '@repay/cactus-theme'
+import { ColorStyle, mediaGTE } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css } from 'styled-components'
@@ -87,7 +87,7 @@ const ConfirmModalBase: React.FC<ConfirmModalProps> = ({
 export const ConfirmModal = styled(ConfirmModalBase)`
   .title-icon {
     flex-direction: column;
-    ${(p): string => p.theme.mediaQueries.medium} {
+    ${mediaGTE('medium')} {
       flex-direction: ${getFlexDirection};
     }
     text-align: center;

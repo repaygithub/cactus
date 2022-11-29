@@ -1,9 +1,7 @@
-import cactusTheme, { CactusTheme } from '@repay/cactus-theme'
+import cactusTheme, { CactusTheme, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import * as styledComponents from 'styled-components'
-
-import { textStyle } from '../helpers/theme'
 
 interface Env {
   NODE_ENV: string
@@ -44,7 +42,7 @@ input,
 select,
 button,
 textarea {
-  ${(p) => textStyle(p.theme, 'body')};
+  ${textStyle('body')};
   font-family: ${(p) => p.theme.font};
 }
 
@@ -54,23 +52,23 @@ body {
 }
 
 small {
-  ${(p) => textStyle(p.theme, 'small')}
+  ${textStyle('small')}
 }
 
 h1 {
-  ${(p) => textStyle(p.theme, 'h1')};
+  ${textStyle('h1')};
 }
 
 h2 {
-  ${(p) => textStyle(p.theme, 'h2')};
+  ${textStyle('h2')};
 }
 
 h3 {
-  ${(p) => textStyle(p.theme, 'h3')};
+  ${textStyle('h3')};
 }
 
 h4, h5, h6 {
-  ${(p) => textStyle(p.theme, 'h4')};
+  ${textStyle('h4')};
 }
 `
 

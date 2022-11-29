@@ -1,4 +1,5 @@
 import { NavigationChevronLeft, NavigationChevronRight } from '@repay/cactus-icons'
+import { mediaGTE, textStyle } from '@repay/cactus-theme'
 import React from 'react'
 import styled, { ThemeContext } from 'styled-components'
 
@@ -11,7 +12,7 @@ import { FocusSetter, useFocusControl } from '../helpers/focus'
 import { omitProps } from '../helpers/omit'
 import { useValue } from '../helpers/react'
 import { BUTTON_WIDTH, GetScrollInfo, ScrollButton, useScroll } from '../helpers/scroll'
-import { border, insetBorder, isResponsiveTouchDevice, media, textStyle } from '../helpers/theme'
+import { border, insetBorder, isResponsiveTouchDevice } from '../helpers/theme'
 
 interface TabListProps extends Omit<React.HTMLAttributes<HTMLElement>, 'role'> {
   fullWidth?: boolean
@@ -248,7 +249,7 @@ interface TransientProps {
 
 const ScrollWrapper = styled.div<TransientProps>`
   ${(p) => p.theme.colorStyles.standard};
-  ${(p) => textStyle(p.theme, 'small')};
+  ${textStyle('small')};
   display: flex;
   align-items: stretch;
   outline: none;
@@ -302,7 +303,7 @@ const StyledTab = styled.div.withConfig(omitProps<TabProps>(flexItem))`
     outline: none;
   }
 
-  ${(p) => media(p.theme, 'small')} {
+  ${mediaGTE('small')} {
     padding: 16px;
     &:focus::after {
       top: 16px;

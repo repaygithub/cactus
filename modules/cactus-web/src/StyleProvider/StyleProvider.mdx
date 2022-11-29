@@ -43,6 +43,7 @@ For more information on Breakpoints and Media Queries visit: https://styled-syst
 ## Media Queries Usage
 
 ```jsx
+import { mediaGTE } from '@repay/cactus-theme'
 import React from 'react'
 import { StyleProvider, Box } from '.@repay/cactus-web'
 import styled from 'styled-components'
@@ -50,16 +51,19 @@ import styled from 'styled-components'
 const BreakpointBox = styled(Box)`
   border-radius: 15%;
 
-  ${p => p.theme.mediaQueries.small} {
+  // Each value in `mediaQueries` is a MediaQueryList object;
+  // use the `media` property to get the text of the query.
+  @media ${p => p.theme.mediaQueries.small.media} {
     border-radius: 25%;
   }
-  ${p => p.theme.mediaQueries.medium} {
+  // @repay/cactus-theme has helpers to shorten common theme property access.
+  ${mediaGTE('medium')} {
     border-radius: 35%;
   }
-  ${p => p.theme.mediaQueries.large} {
+  ${mediaGTE('large')} {
     border-radius: 45%;
   }
-  ${p => p.theme.mediaQueries.extraLarge} {
+  ${mediaGTE('extraLarge')} {
     border-radius: 50%;
   }
 `

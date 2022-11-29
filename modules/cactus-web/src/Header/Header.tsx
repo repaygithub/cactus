@@ -1,3 +1,4 @@
+import { mediaGTE } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { Children, ComponentType, FC, HTMLAttributes, ReactElement } from 'react'
 import styled, { css } from 'styled-components'
@@ -73,21 +74,19 @@ const columnStyles = css`
 
 const MainColumn = styled.div`
   ${columnStyles}
-  ${(p) => `
-    ${p.theme.mediaQueries.small} {
-      padding-top: 0;
-      min-width: 40%;
-      > div:not(:first-child) {
-        margin-left: 0;
-      }
-      align-items: flex-start;
+  ${mediaGTE('small')} {
+    padding-top: 0;
+    min-width: 40%;
+    > div:not(:first-child) {
+      margin-left: 0;
     }
-    flex: 1 1;
-    > * {
-      max-width: 100%;
-      flex-shrink: 0;
-    }
-  `}
+    align-items: flex-start;
+  }
+  flex: 1 1;
+  > * {
+    max-width: 100%;
+    flex-shrink: 0;
+  }
 `
 
 const ItemsColumn = styled.div`
@@ -97,38 +96,36 @@ const ItemsColumn = styled.div`
     margin-top: 8px;
   }
 
-  ${(p) => `
-    ${p.theme.mediaQueries.small} {
-      align-items: flex-end;
-      flex: 1 1 0;
-      hyphens: auto;
-      overflow-wrap: break-word;
-      padding-top: 0;
-      max-width: 100%;
+  ${mediaGTE('small')} {
+    align-items: flex-end;
+    flex: 1 1 0;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    padding-top: 0;
+    max-width: 100%;
+    word-wrap: break-word;
+    > div {
+      margin-top: 0;
+      margin-left: 8px;
       word-wrap: break-word;
-      > div {
-        margin-top: 0;
-        margin-left: 8px;
-        word-wrap: break-word;
-        max-width: 100%;
-        hyphens: auto;
-      }
+      max-width: 100%;
+      hyphens: auto;
     }
+  }
 
-    ${p.theme.mediaQueries.medium} {
-      flex-direction: row;
-      align-items: center;
-      flex: 0 1 auto;
-      > div:not(:first-child) {
-        margin-top: 0;
-      }
+  ${mediaGTE('medium')} {
+    flex-direction: row;
+    align-items: center;
+    flex: 0 1 auto;
+    > div:not(:first-child) {
+      margin-top: 0;
     }
-  `}
+  }
 `
 
 const StyledDescription = styled.div`
   margin-top: ${(p) => `${p.theme.space[3]}px`};
-  ${(p) => p.theme.mediaQueries.small} {
+  ${mediaGTE('small')} {
     margin-top: 0;
   }
 `
@@ -166,14 +163,12 @@ export const StyledHeader = styled.header<HeaderProps & { $hasDescription: boole
   overflow-wrap: break-word;
   hyphens: auto;
 
-  ${(p) => `
-  ${p.theme.mediaQueries.small} {
+  ${mediaGTE('small')} {
     text-align: left;
     justify-content: space-between;
     flex-direction: row;
-    ${p.$hasDescription ? 'padding: 8px 40px 16px 40px;' : 'padding: 8px 40px;'}
-    }
-  `}
+    padding: ${(p) => (p.$hasDescription ? '8px 40px 16px 40px' : '8px 40px')};
+  }
 `
 
 export default Header

@@ -8,7 +8,7 @@ import {
   MenuPopover as ReachMenuPopover,
 } from '@reach/menu-button'
 import { NavigationChevronDown } from '@repay/cactus-icons'
-import { ColorStyle } from '@repay/cactus-theme'
+import { ColorStyle, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
@@ -16,7 +16,7 @@ import { margin, MarginProps } from 'styled-system'
 
 import { extractMargins } from '../helpers/omit'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
-import { border, popupBoxShadow, popupShape, radius, textStyle } from '../helpers/theme'
+import { border, popupBoxShadow, popupShape, radius } from '../helpers/theme'
 
 const MenuButtonStyles = createGlobalStyle`
   :root {
@@ -61,7 +61,7 @@ const MenuList = styled(ReachMenuItems)<MenuListProps>`
     cursor: pointer;
     text-decoration: none;
     overflow-wrap: break-word;
-    ${(p) => textStyle(p.theme, 'small')};
+    ${textStyle('small')};
     ${(p) => p.theme.colorStyles.standard};
     outline: none;
     padding: 4px 16px;
@@ -196,7 +196,7 @@ const StyledButton = styled.button<MenuButtonProps>`
   cursor: pointer;
   appearance: none;
   overflow: visible;
-  ${(p) => textStyle(p.theme, 'body')};
+  ${textStyle('body')};
   ${(p) => buttonVariantMap[p.variant || 'filled']}
 
   &::-moz-focus-inner {

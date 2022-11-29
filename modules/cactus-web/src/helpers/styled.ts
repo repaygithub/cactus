@@ -1,4 +1,4 @@
-import { CactusTheme, mediaGTE } from '@repay/cactus-theme'
+import { CactusTheme, mediaGTE, screenSizes } from '@repay/cactus-theme'
 import { Property } from 'csstype'
 import { omit, pick } from 'lodash'
 import PropTypes from 'prop-types'
@@ -6,7 +6,7 @@ import React from 'react'
 import styled, { StyledComponent, StyledConfig, ThemedStyledFunction } from 'styled-components'
 import * as SS from 'styled-system'
 
-import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
+import { useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { isIE } from './constants'
 
 // This file exists, in part, because styled-components types are a PAIN.
@@ -37,7 +37,6 @@ export const styledUnpoly = <C extends React.ElementType, F extends React.Elemen
 }
 
 type Attrs = { [k: string]: any } | ((props: any) => any)
-type Breakpoint = keyof CactusTheme['mediaQueries']
 
 // `ElementType` is more correct, but using `ComponentType` internally works better.
 interface StyleOpts<T = React.ComponentType> extends StyledConfig {
@@ -81,8 +80,8 @@ const getInlineStyleHook = (styleParser: SS.styleFn) => {
     // Future versions of `styled-components` automatically combine these, but for now...
     const style = props.style ? { ...props.style, ...parsedStyles } : parsedStyles
     // Skip `tiny` because `styled-system` doesn't include a media query for it.
-    for (let i = 1; i < SIZES.length; i++) {
-      const key = mediaGTE(props, SIZES[i].size as Breakpoint)
+    for (let i = 1; i < screenSizes.length; i++) {
+      const key = mediaGTE(props, screenSizes[i])
       if (key in parsedStyles) {
         if (i <= currentSize) {
           const stylesForSize = parsedStyles[key]
