@@ -117,9 +117,10 @@ export const DataGrid = (props: DataGridProps): ReactElement => {
 }
 
 const StyledDataGrid = styled.div<DataGridProps & TransientProps>`
-  display: inline;
+  display: inline-block;
   flex-direction: column;
   width: ${(p): string => (p.fullWidth ? '100%' : 'auto')};
+  overflow-x: auto;
   ${margin}
 
   ${getMediaQuery} {
