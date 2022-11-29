@@ -45,6 +45,11 @@ export interface LoadOpts extends Record<string, any> {
   defaults?: FluentResource
 }
 
+interface LoadOptions extends LoadOpts {
+  lang: string
+  section: string
+}
+
 export interface LoadResult {
   resources: Resource[]
   version?: number
@@ -193,10 +198,7 @@ export default abstract class BaseI18nController {
     return bundle ? bundle.hasMessage(this.getKey(id, section, lang)) : false
   }
 
-  public load(
-    { lang: requestedLang, section }: { lang: string; section: string },
-    loadOpts: LoadOpts = {}
-  ): BundleInfo {
+  public load({ lang: requestedLang, section, ...loadOpts }: LoadOptions): BundleInfo {
     const lang = this.negotiateLang(requestedLang, true)[0]
     const bundleInfo = this.getBundleInfo(section, lang, true) as BundleInfo
     if (bundleInfo.loadState === 'new' || bundleInfo.loadState === 'error') {
@@ -250,7 +252,7 @@ export default abstract class BaseI18nController {
     loadOpts: LoadOpts,
     lang?: string
   ): BundleInfo {
-    const refBundle = this.load({ section, lang: lang || referrer.lang }, loadOpts)
+    const refBundle = this.load({ section, lang: lang || referrer.lang, ...loadOpts })
     if (referrer === refBundle) {
       throw new Error(`Self-referencing section: ${section}/${refBundle.lang}`)
     } else if (referrer.lang !== refBundle.lang) {

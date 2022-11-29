@@ -125,15 +125,14 @@ const I18nSection: React.FC<I18nSectionProps> = ({
   useEffect((): void => {
     if (lang && context !== null) {
       const { controller } = context
-      controller.load({ lang, section }, extraProps)
+      controller.load({ lang, section, ...extraProps })
       if (Array.isArray(dependencies)) {
         for (const dep of dependencies) {
           if (!dep) continue
           else if (typeof dep === 'string') {
             controller.load({ lang, section: dep })
           } else {
-            const { section: depSection, ...depExtra } = dep
-            controller.load({ lang, section: depSection }, depExtra)
+            controller.load({ lang, ...dep })
           }
         }
       }
