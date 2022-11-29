@@ -52,7 +52,7 @@ const I18nProvider: React.FC<I18nProviderProps> = ({ section = 'global', ...prop
   }, [controller])
   useEffect(() => {
     if (section) {
-      controller._load({ section, lang })
+      controller.load({ section, lang })
     }
   }, [controller, section, lang])
   return <I18nContext.Provider value={i18nContext}>{props.children}</I18nContext.Provider>
@@ -125,15 +125,15 @@ const I18nSection: React.FC<I18nSectionProps> = ({
   useEffect((): void => {
     if (lang && context !== null) {
       const { controller } = context
-      controller._load({ lang, section }, extraProps)
+      controller.load({ lang, section }, extraProps)
       if (Array.isArray(dependencies)) {
         for (const dep of dependencies) {
           if (!dep) continue
           else if (typeof dep === 'string') {
-            controller._load({ lang, section: dep })
+            controller.load({ lang, section: dep })
           } else {
             const { section: depSection, ...depExtra } = dep
-            controller._load({ lang, section: depSection }, depExtra)
+            controller.load({ lang, section: depSection }, depExtra)
           }
         }
       }

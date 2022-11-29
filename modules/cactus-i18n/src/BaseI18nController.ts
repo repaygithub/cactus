@@ -104,8 +104,8 @@ export default abstract class BaseI18nController {
     } else if (!options.lang) {
       throw new Error('You must provide a `lang` or `defaultLang`')
     }
-    if (this.load === undefined) {
-      throw new Error('You must override the `load` method')
+    if (this._load === undefined) {
+      throw new Error('You must override the `_load` method')
     }
 
     this._supportedLangs = options.supportedLangs
@@ -115,7 +115,7 @@ export default abstract class BaseI18nController {
     this._bundleOpts = { useIsolating, functions }
   }
 
-  protected abstract load(b: BundleInfo, l: LoadOpts): AsyncLoadResult
+  protected abstract _load(b: BundleInfo, l: LoadOpts): AsyncLoadResult
 
   protected _log(levelOrArg: string, ...args: any[]): void {
     if (this._debugMode) {
@@ -193,7 +193,7 @@ export default abstract class BaseI18nController {
     return bundle ? bundle.hasMessage(this.getKey(id, section, lang)) : false
   }
 
-  public _load(
+  public load(
     { lang: requestedLang, section }: { lang: string; section: string },
     loadOpts: LoadOpts = {}
   ): BundleInfo {
@@ -202,7 +202,7 @@ export default abstract class BaseI18nController {
     if (bundleInfo.loadState === 'new' || bundleInfo.loadState === 'error') {
       const prevState = bundleInfo.loadState
       bundleInfo.loadState = 'loading'
-      const loader = loadOpts.loader || this.load
+      const loader = loadOpts.loader || this._load
       const onLoad = loadOpts.onLoad || this.onLoad
       loader.call(this, bundleInfo, loadOpts).then(
         (result) => {
@@ -250,7 +250,7 @@ export default abstract class BaseI18nController {
     loadOpts: LoadOpts,
     lang?: string
   ): BundleInfo {
-    const refBundle = this._load({ section, lang: lang || referrer.lang }, loadOpts)
+    const refBundle = this.load({ section, lang: lang || referrer.lang }, loadOpts)
     if (referrer === refBundle) {
       throw new Error(`Self-referencing section: ${section}/${refBundle.lang}`)
     } else if (referrer.lang !== refBundle.lang) {
