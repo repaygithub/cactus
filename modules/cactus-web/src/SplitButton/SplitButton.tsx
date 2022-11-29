@@ -1,216 +1,190 @@
-import { MenuItemProps } from '@reach/menu-button'
-import { IconProps, NavigationChevronDown } from '@repay/cactus-icons'
-import { ColorStyle, Shape } from '@repay/cactus-theme'
+import { NavigationChevronDown } from '@repay/cactus-icons'
+import {
+  border,
+  CactusTheme,
+  ColorStyle,
+  colorStyle,
+  iconSize,
+  radius,
+  shadow,
+  textStyle,
+} from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css } from 'styled-components'
+import { css, StyledComponentBase } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { keyDownAsClick } from '../helpers/a11y'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
-import { border, boxShadow, radius, textStyle } from '../helpers/theme'
+import { classes, flexItem, FlexItemProps, withStyles } from '../helpers/styled'
 import usePopup, { TogglePopup } from '../helpers/usePopup'
-import cssVariant from '../helpers/variant'
 import { MenuListItem } from '../MenuItem/MenuItem'
+
+const ACTIVE_ITEM = '[role="menuitem"]:not([aria-disabled="true"])'
+const ITEM_TARGET = `${ACTIVE_ITEM}, ${ACTIVE_ITEM} *`
 
 export type SplitButtonVariant = 'standard' | 'danger' | 'success'
 
-interface DropDownProps extends React.HTMLAttributes<HTMLElement> {
+interface VariantProps {
+  variant?: SplitButtonVariant
+  disabled?: boolean
+}
+
+interface StyleProps extends VariantProps, MarginProps, FlexItemProps {}
+
+interface SplitButtonComponent extends StyledComponentBase<'div', CactusTheme, StyleProps> {
+  Action: typeof SplitButtonAction
+}
+
+interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps {}
+
+interface DialogProps extends React.HTMLAttributes<HTMLElement> {
   anchorRef: React.RefObject<HTMLElement | null>
   variant?: SplitButtonVariant
 }
 
-interface SplitButtonProps extends React.HTMLAttributes<HTMLDivElement>, MarginProps {
-  mainActionLabel: React.ReactNode
-  onSelectMainAction: (event: React.MouseEvent<HTMLButtonElement>) => void
-  mainActionIcon?: React.FC<IconProps>
+interface SplitButtonActionProps extends React.HTMLAttributes<HTMLElement> {
+  main?: boolean
   disabled?: boolean
-  // Aria label for the dropdown trigger. Defaults to "Action List"
-  'aria-label'?: string
-  variant?: SplitButtonVariant
 }
 
-interface SplitButtonActionProps extends Omit<MenuItemProps, 'onSelect'> {
-  // !important
-  onSelect: () => any
-  icon?: React.FC<IconProps>
-}
-interface VariantInterface {
-  variant?: SplitButtonVariant
+interface GetColor {
+  (variant: SplitButtonVariant | undefined, c: CactusTheme['colorStyles']): ColorStyle
+  (variant: SplitButtonVariant | undefined, c: CactusTheme['colors']): string
 }
 
-const mainShapeMap: { [K in Shape]: string } = {
-  square: 'border-radius: 1px;',
-  intermediate: 'border-radius: 8px 1px 1px 8px;',
-  round: 'border-radius: 20px 1px 1px 20px;',
+const getActionColor: GetColor = (variant, colors: any) => {
+  if (variant === 'danger') return colors.errorDark
+  else if (variant === 'success') return colors.successDark
+  return colors.callToAction
 }
 
-const getVariantDark = cssVariant({
-  standard: css`
-    ${(p): ColorStyle => p.theme.colorStyles.callToAction};
-  `,
-  danger: css`
-    ${(p): ColorStyle => p.theme.colorStyles.errorDark};
-  `,
-  success: css`
-    ${(p): ColorStyle => p.theme.colorStyles.successDark};
-  `,
-})
+const getBaseColor: GetColor = (variant, colors: any) => {
+  if (variant === 'danger') return colors.error
+  else if (variant === 'success') return colors.success
+  return colors.darkestContrast
+}
 
-const MainActionButton = styled.button<VariantInterface>`
+const disabledStyles = css`
+  &:disabled {
+    ${colorStyle('disable')}
+    border-color: transparent;
+    cursor: not-allowed;
+  }
+`
+
+const MainActionButton = withStyles('button', { className: 'SplitButton-main' })<VariantProps>`
   box-sizing: border-box;
   flex-grow: 1;
-  border: ${(p) => border(p.theme, '')};
-  ${(p) => mainShapeMap[p.theme.shape]}
-  background-color: ${(p): string => p.theme.colors.white};
-  height: 32px;
+  border: ${(p) => border(p, getBaseColor(p.variant, p.theme.colors))};
+  border-radius: ${radius(20)} 0 0 ${radius(20)};
+  ${colorStyle('standard')}
   outline: none;
-  ${(p) => textStyle(p.theme, 'body')};
+  ${textStyle('body')};
   font-weight: 400;
   cursor: pointer;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding: 2px 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 
   svg {
     margin-right: 4px;
-    margin-bottom: 3px;
   }
 
   &::-moz-focus-inner {
     border: 0;
   }
 
-  ${(p): string =>
-    p.disabled
-      ? `
-    border-color: ${p.theme.colors.lightGray};
-    cursor: not-allowed;
-  `
-      : ''}
-  ${(p) => p.disabled && p.theme.colorStyles.disable}
-
-  &.dd-closed {
-    ${cssVariant({
-      standard: css`
-        border-color: ${(p): string => p.theme.colors.darkestContrast};
-      `,
-      danger: css`
-        border-color: ${(p): string => p.theme.colors.error};
-      `,
-      success: css`
-        border-color: ${(p): string => p.theme.colors.success};
-      `,
-    })}
-
-    &:hover,
-    &:focus {
-      ${cssVariant({
-        standard: css`
-          border-color: ${(p): string => p.theme.colors.callToAction};
-        `,
-        danger: css`
-          border-color: ${(p): string => p.theme.colors.errorDark};
-        `,
-        success: css`
-          border-color: ${(p): string => p.theme.colors.successDark};
-        `,
-      })}
-    }
+  &:hover,
+  &:focus,
+  &.SplitButton-open {
+    border-color: ${(p) => getActionColor(p.variant, p.theme.colors)};
   }
 
-  &.dd-open {
-    ${cssVariant({
-      standard: css`
-        border-color: ${(p): string => p.theme.colors.callToAction};
-      `,
-      danger: css`
-        border-color: ${(p): string => p.theme.colors.errorDark};
-      `,
-      success: css`
-        border-color: ${(p): string => p.theme.colors.successDark};
-      `,
-    })}
+  &:focus-visible {
+    outline: ${border('callToAction', { thin: '2px' })};
+    outline-offset: 1px;
   }
+
+  ${disabledStyles}
 `
 
-const SplitButtonList = styled.div<VariantInterface>`
+const Dialog: React.FC<DialogProps> = ({ anchorRef, variant, ...props }) => {
+  const ref = React.useRef<HTMLDivElement>(null)
+  const visible = !props['aria-hidden']
+  usePositioning({
+    position: positionDropDown,
+    visible,
+    ref,
+    anchorRef,
+    updateOnScroll: true,
+  })
+  return <div ref={ref} hidden={!visible} {...props} />
+}
+
+const DropDown = withStyles('div', { as: Dialog, className: 'SplitButton-dialog' })`
   position: fixed;
   z-index: 1000;
   padding: 8px 0;
   outline: none;
   border-radius: ${radius(8)};
-  ${(p): string => boxShadow(p.theme, 1)};
-  background-color: ${(p): string => p.theme.colors.white};
-  border: ${(p) => (!p.theme.boxShadows ? border(p.theme, 'lightContrast') : '0')};
+  ${shadow(1, 'lightContrast')};
+  ${colorStyle('standard')}
 
   [role='menuitem'] {
     display: block;
     overflow-wrap: break-word;
-    ${(p) => textStyle(p.theme, 'small')};
-    ${(p): ColorStyle => p.theme.colorStyles.standard};
+    ${textStyle('small')};
     padding: 4px 16px;
     text-align: center;
     &:hover {
       color: ${(p) => p.theme.colors.callToAction};
     }
     &:focus {
-      ${getVariantDark}
+      ${(p) => getActionColor(p.variant, p.theme.colorStyles)}
     }
   }
 `
 
-const dropdownButtonShapeMap: { [K in Shape]: string } = {
-  square: 'border-radius: 1px;',
-  intermediate: 'border-radius: 1px 8px 8px 1px;',
-  round: 'border-radius: 1px 20px 20px 1px;',
-}
-
-const DropdownButton = styled.button<VariantInterface>`
+const DropDownButton = withStyles('button', { className: 'SplitButton-dropdown' })<VariantProps>`
   box-sizing: border-box;
-  background-color: ${(p): string => p.theme.colors.darkestContrast};
-  height: 32px;
-  width: 36px;
-  ${(p) => dropdownButtonShapeMap[p.theme.shape]}
+  min-width: 36px;
+  padding: 0;
+  border-radius: 0 ${radius(20)} ${radius(20)} 0;
   margin-left: 1px;
   border: 0;
   outline: none;
   cursor: pointer;
-  flex-grow: 0;
-  ${(p) =>
-    p.disabled
-      ? p.theme.colorStyles.disable
-      : cssVariant({
-          standard: p.theme.colorStyles.darkestContrast,
-          danger: p.theme.colorStyles.error,
-          success: p.theme.colorStyles.success,
-        })};
+  ${(p) => getBaseColor(p.variant, p.theme.colorStyles)}
 
-  ${(p): string =>
-    p.disabled
-      ? `
-  cursor: not-allowed;
-  `
-      : ''}
   &:hover,
-  &:focus {
-    ${(p) => !p.disabled && getVariantDark};
+  &:focus,
+  &[aria-expanded='true'] {
+    ${(p) => getActionColor(p.variant, p.theme.colorStyles)}
+  }
+
+  &:focus-visible {
+    outline: ${border('callToAction', { thin: '2px' })};
+    outline-offset: 1px;
+  }
+
+  ${disabledStyles}
+
+  &[aria-expanded='true'] {
+    ${NavigationChevronDown} {
+      transform: rotate3d(1, 0, 0, 180deg);
+    }
   }
   ${NavigationChevronDown} {
-    width: 10px;
-    height: 10px;
-    color: ${(p): string => p.theme.colors.white};
+    font-size: 10px;
+    margin: 0;
+    color: ${(p) => p.theme.colors.white};
   }
 `
 
-type SplitButtonType = React.FC<SplitButtonProps> & {
-  Action: React.ComponentType<SplitButtonActionProps>
-}
-
 const getMenuItems = (root: HTMLElement) =>
-  Array.from(root.querySelectorAll<HTMLElement>('[role="menuitem"]'))
+  Array.from(root.querySelectorAll<HTMLElement>(ACTIVE_ITEM))
 
 const handleArrows = (event: React.KeyboardEvent<HTMLElement>, toggle: TogglePopup) => {
   switch (event.key) {
@@ -234,17 +208,30 @@ const handleArrows = (event: React.KeyboardEvent<HTMLElement>, toggle: TogglePop
   event.preventDefault()
 }
 
-export const SplitButton: SplitButtonType = (props) => {
-  const {
-    mainActionLabel,
-    mainActionIcon: MainActionIcon,
-    onSelectMainAction,
-    disabled,
-    children,
-    'aria-label': ariaLabel = 'Action List',
-    variant,
-    ...rest
-  } = props
+const getMainAction = (
+  children: React.ReactNode,
+  actions: React.ReactElement[],
+  key: React.Key | null
+): React.ReactElement | null => {
+  let main: React.ReactElement | null = null
+  for (const child of React.Children.toArray(children) as React.ReactElement[]) {
+    if (!child || typeof child !== 'object') continue
+    if (child.type === React.Fragment) {
+      const nestedMain = getMainAction(child.props.children, actions, child.key)
+      if (!main && nestedMain) main = nestedMain
+    } else if (child.props.main && !main) {
+      main = child
+    } else if (key) {
+      actions.push(React.cloneElement(child, { key: `${key}${child.key}` }))
+    } else {
+      actions.push(child)
+    }
+  }
+  return main
+}
+
+const BaseSplitButton = (props: SplitButtonProps) => {
+  const { disabled, children, 'aria-label': ariaLabel = 'Action List', variant, ...rest } = props
   const { expanded, toggle, wrapperProps, buttonProps, popupProps } = usePopup('menu', {
     id: props.id,
     focusControl: getMenuItems,
@@ -252,85 +239,75 @@ export const SplitButton: SplitButtonType = (props) => {
   })
   popupProps.onClick = (e) => {
     const target = e.target as HTMLElement
-    if (target.matches('[role="menuitem"], [role="menuitem"] *')) {
+    if (target.matches(ITEM_TARGET)) {
       const btn = document.getElementById(buttonProps.id as string)
       toggle(false, btn)
     }
   }
   const anchorRef = React.useRef<HTMLDivElement>(null)
+  const actions: React.ReactElement[] = []
+  const mainAction = getMainAction(children, actions, null) || actions.shift()
+  const mainProps: any = mainAction ? { ...mainAction.props } : {}
+  delete mainProps.main
+  if (disabled) mainProps.disabled = true
+  if (expanded) {
+    mainProps.className = classes(mainProps.className, 'SplitButton-open')
+  }
   return (
-    <Wrapper {...rest} ref={anchorRef} {...wrapperProps}>
-      <MainActionButton
-        className={expanded ? 'dd-open' : !disabled ? 'dd-closed' : ''}
-        type="button"
-        disabled={disabled}
-        onClick={onSelectMainAction}
+    <div {...rest} ref={anchorRef} {...wrapperProps}>
+      <MainActionButton {...mainProps} type="button" variant={variant} />
+      <DropDownButton
+        disabled={disabled || !actions.length}
+        aria-label={ariaLabel}
         variant={variant}
+        {...buttonProps}
       >
-        {MainActionIcon && <MainActionIcon iconSize="small" />}
-        {mainActionLabel}
-      </MainActionButton>
-      <DropdownButton disabled={disabled} aria-label={ariaLabel} variant={variant} {...buttonProps}>
-        <NavigationChevronDown iconSize="tiny" aria-hidden="true" />
-      </DropdownButton>
+        <NavigationChevronDown aria-hidden />
+      </DropDownButton>
       <DropDown variant={variant} anchorRef={anchorRef} {...popupProps}>
-        {children}
+        {actions}
       </DropDown>
-    </Wrapper>
-  )
-}
-
-const DropDown: React.FC<DropDownProps> = ({ anchorRef, ...props }) => {
-  const ref = React.useRef<HTMLDivElement>(null)
-  const visible = !props['aria-hidden']
-  usePositioning({
-    position: positionDropDown,
-    visible,
-    ref,
-    anchorRef,
-    updateOnScroll: true,
-  })
-  return <SplitButtonList ref={ref} hidden={!visible} {...props} />
-}
-
-const Action: React.FC<SplitButtonActionProps> = (props) => {
-  const { children, icon: Icon, disabled, onSelect, ...rest } = props
-  const onClick = disabled ? undefined : onSelect
-  return (
-    <div onClick={onClick} {...rest} aria-disabled={disabled} onKeyDown={keyDownAsClick}>
-      {Icon && <Icon mr="4px" mb="3px" iconSize="small" aria-hidden="true" />}
-      {children}
     </div>
   )
 }
 
-export const SplitButtonAction = MenuListItem.withComponent(Action)
-SplitButtonAction.displayName = 'SplitButton.Action'
+const Action: React.FC<SplitButtonActionProps> = (props) => {
+  const { main, disabled, ...rest } = props
+  if (disabled) {
+    delete rest.onClick
+    rest['aria-disabled'] = true
+  }
+  return <div onKeyDown={keyDownAsClick} {...rest} />
+}
 
-const Wrapper = styled.div<VariantInterface & MarginProps>`
-  display: inline-flex;
-  max-width: 100%;
-  position: relative;
-  ${margin}
-
-  ${DropdownButton}[aria-expanded='true'] {
-    ${NavigationChevronDown} {
-      transform: rotate3d(1, 0, 0, 180deg);
-    }
-    ${getVariantDark};
+export const SplitButtonAction = withStyles(MenuListItem, {
+  as: Action,
+  displayName: 'SplitButton.Action',
+})`
+  &&[aria-disabled='true'] {
+    ${colorStyle('disable')}
+    cursor: not-allowed;
   }
 `
 
+export const SplitButton: SplitButtonComponent = withStyles('div', {
+  displayName: 'SplitButton',
+  as: BaseSplitButton,
+  styles: [margin, flexItem],
+})`
+  display: inline-flex;
+  max-width: 100%;
+  position: relative;
+
+  svg {
+    margin-right: 4px;
+    font-size: ${iconSize('small')};
+  }
+` as any
+
 SplitButton.propTypes = {
-  mainActionLabel: PropTypes.node.isRequired,
-  onSelectMainAction: PropTypes.func.isRequired,
-  mainActionIcon: PropTypes.elementType as any,
   disabled: PropTypes.bool,
   variant: PropTypes.oneOf(['standard', 'danger', 'success']),
-}
-
-SplitButton.defaultProps = {
-  variant: 'standard',
 }
 
 SplitButton.Action = SplitButtonAction

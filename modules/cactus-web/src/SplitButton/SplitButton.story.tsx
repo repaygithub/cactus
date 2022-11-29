@@ -18,9 +18,8 @@ export default {
   component: SplitButton,
   argTypes: {
     mainActionLabel: STRING,
-    onSelectMainAction: HIDE_CONTROL,
-    mainActionIcon: icon('mainActionIcon'),
-    ...actions({ name: 'onSelect', wrapper: true }),
+    MainActionIcon: icon('MainActionIcon'),
+    ...actions({ name: 'onClick', wrapper: true }),
   },
   args: {
     mainActionLabel: 'Main Action',
@@ -28,7 +27,11 @@ export default {
   },
 } as const
 
-type SelectArg = { onSelect: ActionWrap<React.MouseEvent | void> }
+type SelectArg = {
+  onClick: ActionWrap<React.MouseEvent | void>
+  mainActionLabel: string
+  MainActionIcon: Icon
+}
 type IconStory = Story<
   typeof SplitButton,
   SelectArg & {
@@ -37,13 +40,29 @@ type IconStory = Story<
   }
 >
 
-const SplitButtonBase: IconStory = ({ ActionIcon1, ActionIcon2, onSelect, ...args }) => {
+const SplitButtonBase: IconStory = ({
+  ActionIcon1,
+  ActionIcon2,
+  onClick,
+  mainActionLabel,
+  MainActionIcon,
+  ...args
+}) => {
   return (
-    <SplitButton {...args} margin="5px" onSelectMainAction={onSelect('Main Action')}>
-      <SplitButton.Action onSelect={onSelect('Action One')} icon={ActionIcon1}>
+    <SplitButton {...args} margin="5px">
+      <SplitButton.Action main onClick={onClick(mainActionLabel)}>
+        {MainActionIcon && <MainActionIcon />}
+        {mainActionLabel}
+      </SplitButton.Action>
+      <SplitButton.Action onClick={onClick('Action One')}>
+        {ActionIcon1 && <ActionIcon1 />}
         Action One
       </SplitButton.Action>
-      <SplitButton.Action onSelect={onSelect('Action Two')} icon={ActionIcon2}>
+      <SplitButton.Action onClick={onClick('Nope')} disabled>
+        Disabled Action
+      </SplitButton.Action>
+      <SplitButton.Action onClick={onClick('Action Two')}>
+        {ActionIcon2 && <ActionIcon2 />}
         Action Two
       </SplitButton.Action>
     </SplitButton>
@@ -67,14 +86,24 @@ BasicUsage.argTypes = {
 BasicUsage.args = { mainActionLabel: 'standard' }
 
 type MultiStory = Story<typeof SplitButton, SelectArg & { actions: string[] }>
-export const WithCollisions: MultiStory = ({ actions: _actions, onSelect, ...args }) => (
+export const WithCollisions: MultiStory = ({
+  actions: _actions,
+  onClick,
+  mainActionLabel,
+  MainActionIcon,
+  ...args
+}) => (
   <React.Fragment>
     <div style={{ position: 'absolute', left: '20px', top: '20px' }}>
       Scroll down and to the right
     </div>
-    <SplitButton {...args} onSelectMainAction={onSelect('Main Action')}>
+    <SplitButton {...args}>
+      <SplitButton.Action onClick={onClick(mainActionLabel)}>
+        {MainActionIcon && <MainActionIcon />}
+        {mainActionLabel}
+      </SplitButton.Action>
       {_actions.map((a, i) => (
-        <SplitButton.Action key={i} onSelect={onSelect(a)} children={a} />
+        <SplitButton.Action key={i} onClick={onClick(a)} children={a} />
       ))}
     </SplitButton>
   </React.Fragment>
@@ -94,13 +123,19 @@ WithCollisions.parameters = {
 }
 
 export const FixedWidthContainer: Story<typeof SplitButton, SelectArg> = ({
-  onSelect,
+  onClick,
+  mainActionLabel,
+  MainActionIcon,
   ...args
 }) => (
   <div style={{ width: '125px' }}>
-    <SplitButton {...args} onSelectMainAction={onSelect('Main Action')}>
-      <SplitButton.Action onSelect={onSelect('Action One')}>Action One</SplitButton.Action>
-      <SplitButton.Action onSelect={onSelect('Action Two')}>Action Two</SplitButton.Action>
+    <SplitButton {...args}>
+      <SplitButton.Action onClick={onClick(mainActionLabel)}>
+        {MainActionIcon && <MainActionIcon />}
+        {mainActionLabel}
+      </SplitButton.Action>
+      <SplitButton.Action onClick={onClick('Action One')}>Action One</SplitButton.Action>
+      <SplitButton.Action onClick={onClick('Action Two')}>Action Two</SplitButton.Action>
     </SplitButton>
   </div>
 )

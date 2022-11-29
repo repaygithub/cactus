@@ -139,14 +139,12 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
               <DataGrid.DataColumn id="id" title="Account ID" />
               <DataGrid.Column>
                 {(rowData): React.ReactElement => (
-                  <SplitButton
-                    mainActionLabel="View Account"
-                    onSelectMainAction={() => {
-                      navigate(`/account/${rowData.id}`)
-                    }}
-                  >
+                  <SplitButton>
+                    <SplitButton.Action main onClick={() => navigate(`/account/${rowData.id}`)}>
+                      View Account
+                    </SplitButton.Action>
                     <SplitButton.Action
-                      onSelect={() => {
+                      onClick={() => {
                         setState((state) => ({
                           ...state,
                           accounts: state.accounts.filter(
