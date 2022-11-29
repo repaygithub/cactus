@@ -29,8 +29,8 @@ class I18nController extends BaseI18nController {
   }
 
   public async loadAll(...loadArgs: any[]) {
-    for (const { section, lang, ...opts } of loadArgs) {
-      this.load({ section, lang }, opts)
+    for (const options of loadArgs) {
+      this.load(options)
     }
   }
 }
@@ -218,7 +218,7 @@ key-for-no-people = blah blah blue stew`)
         expect(this).toBe(controller)
         return Promise.resolve({ resources: [] })
       })
-      controller.load({ section: 'loadOpts', lang: 'en' }, { loader, onLoad })
+      controller.load({ section: 'loadOpts', lang: 'en', loader, onLoad })
       await Promise.resolve()
       expect(onLoad).toHaveBeenCalledTimes(1)
       expect(loader).toHaveBeenCalledTimes(1)
@@ -262,15 +262,15 @@ key-for-no-people = blah blah blue stew`)
       controller.addListener(listenLoad)
       controller.addListener(listenAll, 'all')
       controller.addListener(listenError, 'error')
-      const load = { section: 'loadTest', lang: 'en' }
-      let loader: Loader = jest.fn(() => Promise.reject('oh noes!'))
-      const bundle = controller.load(load, { loader })
+      const loader: Loader = jest.fn(() => Promise.reject('oh noes!'))
+      const load = { section: 'loadTest', lang: 'en', loader }
+      const bundle = controller.load(load)
       await step
       expect(listenLoad).not.toHaveBeenCalled()
       expect(listenAll).toHaveBeenLastCalledWith(bundle, 'new', 'oh noes!')
       expect(listenError).toHaveBeenLastCalledWith(bundle, 'new', 'oh noes!')
-      loader = jest.fn(() => Promise.resolve({ resources: [] })) as Loader
-      controller.load(load, { loader })
+      load.loader = jest.fn(() => Promise.resolve({ resources: [] })) as Loader
+      controller.load(load)
       await step
       expect(listenLoad).toHaveBeenLastCalledWith(bundle, 'error', undefined)
       expect(listenAll).toHaveBeenLastCalledWith(bundle, 'error', undefined)
@@ -278,7 +278,7 @@ key-for-no-people = blah blah blue stew`)
       controller.removeListener(listenLoad)
       controller.removeListener(listenAll)
       controller.removeListener(listenError)
-      controller.load({ section: 'one', lang: 'en' }, { loader })
+      controller.load({ section: 'one', lang: 'en', loader: load.loader })
       await step
       expect(listenLoad).toHaveBeenCalledTimes(1)
       expect(listenAll).toHaveBeenCalledTimes(2)
@@ -396,7 +396,7 @@ override = I'm invisible
         const loader = jest.fn(function (this: Controller, bi: BundleInfo, o: LoadOpts) {
           return this._load(bi, o)
         })
-        controller.load({ section: 'two', lang }, { loader, success: true })
+        controller.load({ section: 'two', lang, loader, success: true })
         expect(loader).toHaveBeenCalledTimes(2)
         expect(controller.getLoadState('one', lang)).toBe('loading')
         expect(controller.getLoadState('two', lang)).toBe('loading')
@@ -422,7 +422,7 @@ override = I'm invisible
         expect(controller.getText({ section: 'two', id: 'override' })).toEqual('You are group two')
         expect(controller.get({ section: 'two', id: 'low' })).toEqual(NOT_FOUND)
 
-        controller.load({ section: 'one', lang }, { success: true })
+        controller.load({ section: 'one', lang, success: true })
         await step
         expect(controller.getLoadState('one', lang)).toBe('loaded')
         expect(controller.getText({ section: 'two', id: 'dependent' })).toEqual('I need a hero')
@@ -435,10 +435,10 @@ override = I'm invisible
         const loader = jest.fn(function (this: Controller, bi: BundleInfo, o: LoadOpts) {
           return this._load(bi, o)
         })
-        controller.load({ section: 'one', lang }, { loader, success: true })
+        controller.load({ section: 'one', lang, loader, success: true })
         expect(loader).toHaveBeenCalledTimes(1)
         await step
-        controller.load({ section: 'two', lang }, { loader })
+        controller.load({ section: 'two', lang, loader })
         expect(loader).toHaveBeenCalledTimes(2)
         await step
 
