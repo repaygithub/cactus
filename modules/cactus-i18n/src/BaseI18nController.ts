@@ -222,6 +222,34 @@ export default abstract class BaseI18nController {
     return bundleInfo
   }
 
+  public loadAsync({
+    lang: requestedLang,
+    section,
+    ...loadOpts
+  }: LoadOptions): Promise<{ bundleInfo: BundleInfo; prevState: LoadState }> {
+    const lang = this.negotiateLang(requestedLang, true)[0]
+    const bundleInfo = this.getBundleInfo(section, lang, true) as BundleInfo
+    return new Promise((resolve, reject) => {
+      if (bundleInfo.loadState === 'new' || bundleInfo.loadState === 'error') {
+        const prevState = bundleInfo.loadState
+        bundleInfo.loadState = 'loading'
+        const loader = loadOpts.loader || this._load
+        loader.call(this, bundleInfo, loadOpts).then(
+          (result) => {
+            if (bundleInfo.update('loaded', loadOpts, result)) {
+              resolve({ bundleInfo, prevState })
+            }
+          },
+          (error) => {
+            this._log('error', 'FTL Resource failed to load', { section, lang, error })
+            bundleInfo.update('error', loadOpts)
+            reject({ bundleInfo, prevState, error })
+          }
+        )
+      }
+    })
+  }
+
   public hasLoaded(section: string, lang?: string): boolean {
     const language = this.negotiateLang(lang)[0]
     return this.getLoadState(section, language) === 'loaded'
