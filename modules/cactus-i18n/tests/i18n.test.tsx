@@ -1,5 +1,5 @@
 import { FluentResource } from '@fluent/bundle'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import * as React from 'react'
 
 import I18nProvider, {
@@ -14,6 +14,7 @@ import I18nProvider, {
   Loader,
   LoadOpts,
   useI18nResource,
+  useI18nSection,
   useI18nText,
 } from '../src/index'
 
@@ -519,7 +520,7 @@ override = I'm invisible
       })
     })
 
-    test('will load extra dependencies with custom props', async () => {
+    test('will pass arbitrary section props to load function', async () => {
       const controller = new I18nController({
         defaultLang: 'en',
         supportedLangs: ['en', 'en-US'],
@@ -538,12 +539,9 @@ override = I'm invisible
           </I18nSection>
         </I18nProvider>
       )
-      expect(await screen.findByText('This text should render')).toBeInTheDocument()
-      expect(mockLoad).toHaveBeenCalledTimes(2)
+      expect(mockLoad).toHaveBeenCalledTimes(1)
       expect(mockLoad.mock.calls[0][0]?.section).toBe('kleenex')
-      expect(mockLoad.mock.calls[0][1]).toEqual({})
-      expect(mockLoad.mock.calls[1][0]?.section).toBe('needed')
-      expect(mockLoad.mock.calls[1][1]).toEqual({ extra: 'data', for: 'load function' })
+      expect(mockLoad.mock.calls[0][1]).toEqual({ dependencies: i18nDependencies })
     })
   })
 
@@ -864,6 +862,79 @@ key-for-the-group= We are the { $groupName }!
         </I18nProvider>
       )
       expect(getByTestId('select-me')).toHaveTextContent(/We are the OTHER people!/)
+    })
+  })
+
+  describe('useI18nSection', () => {
+    test('loads multiple sections', async () => {
+      const controller = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'en-US'],
+      })
+      const resource1 = new FluentResource('turnover = This text should render')
+      const resource2 = new FluentResource('dizzy = This text should ALSO render')
+      // @ts-ignore
+      const mockLoad = (controller._load = jest.fn<Loader>(({ section }) =>
+        Promise.resolve({ resources: section === 'section1' ? [resource1] : [resource2] })
+      ))
+      const TestComponent = () => {
+        useI18nSection('section1', 'section2')
+        return (
+          <>
+            <div data-testid="section1">
+              <I18nText section="section1" get="turnover" />
+            </div>
+            <div data-testid="section2">
+              <I18nText section="section2" get="dizzy" />
+            </div>
+          </>
+        )
+      }
+      const { getByTestId } = render(
+        <I18nProvider controller={controller}>
+          <TestComponent />
+        </I18nProvider>
+      )
+
+      await waitFor(() =>
+        expect(getByTestId('section1')).toHaveTextContent('This text should render')
+      )
+      expect(getByTestId('section2')).toHaveTextContent('This text should ALSO render')
+      expect(mockLoad).toHaveBeenCalledTimes(3)
+      expect(mockLoad.mock.calls[0][0].section).toBe('section1')
+      expect(mockLoad.mock.calls[1][0].section).toBe('section2')
+    })
+
+    test('loads a section with arbitrary data passed to load', async () => {
+      const controller = new I18nController({
+        defaultLang: 'en',
+        supportedLangs: ['en', 'en-US'],
+      })
+      const resources = [new FluentResource('telltale = Rose')]
+      // @ts-ignore
+      const mockLoad = (controller._load = jest.fn<Loader>(({ section }) =>
+        Promise.resolve(section === 'my-section' ? { resources } : undefined)
+      ))
+      const TestComponent = () => {
+        useI18nSection({ section: 'my-section', dynamic: true, custom: 'data' })
+        return (
+          <>
+            <div data-testid="my-section">
+              <I18nText section="my-section" get="telltale" />
+            </div>
+          </>
+        )
+      }
+      const { getByTestId } = render(
+        <I18nProvider controller={controller}>
+          <TestComponent />
+        </I18nProvider>
+      )
+      await waitFor(() => expect(getByTestId('my-section')).toHaveTextContent('Rose'))
+      expect(mockLoad).toHaveBeenCalledTimes(2)
+      expect(mockLoad.mock.calls[0][0].section).toBe('my-section')
+      expect(mockLoad.mock.calls[0][1].dynamic).toBe(true)
+      expect(mockLoad.mock.calls[0][1].custom).toBe('data')
     })
   })
 })
