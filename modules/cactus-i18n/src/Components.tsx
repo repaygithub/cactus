@@ -9,7 +9,7 @@ import React, {
 } from 'react'
 
 import BaseI18nController from './BaseI18nController'
-import { I18nContext, useI18nResource, useI18nText } from './hooks'
+import { I18nContext, useI18nResource, useI18nSection, useI18nText } from './hooks'
 import { I18nContextType } from './types'
 
 interface I18nProviderProps {
@@ -66,46 +66,18 @@ I18nProvider.propTypes = {
   section: PropTypes.string,
 }
 
-interface DependencyLoadType {
-  section: string
-  [key: string]: any
-}
-
 interface I18nSectionProps {
   children?: React.ReactNode
   section: string
   lang?: string
-  dependencies?: (string | DependencyLoadType)[]
   [key: string]: any
 }
 
-function hasLoadedAll(
-  controller: BaseI18nController,
-  section: string,
-  lang?: string,
-  dependencies?: (string | DependencyLoadType)[]
-): boolean {
-  if (!controller.hasLoaded(section, lang)) {
-    return false
-  }
-  if (!Array.isArray(dependencies) || dependencies.length === 0) {
-    return true
-  }
-  return dependencies.every((dep): boolean => {
-    if (typeof dep === 'string') {
-      return controller.hasLoaded(dep, lang)
-    }
-    return controller.hasLoaded(dep.section, lang)
-  })
+function hasLoadedAll(controller: BaseI18nController, section: string, lang?: string): boolean {
+  return controller.hasLoaded(section, lang)
 }
 
-const I18nSection: React.FC<I18nSectionProps> = ({
-  section,
-  lang,
-  dependencies,
-  children,
-  ...extraProps
-}) => {
+const I18nSection: React.FC<I18nSectionProps> = ({ section, lang, children, ...extraProps }) => {
   const context = useContext(I18nContext)
   const ctxRef = React.useRef<I18nContextType | null>(null)
   if (context === null) {
@@ -114,7 +86,7 @@ const I18nSection: React.FC<I18nSectionProps> = ({
     const { controller, lang: ctxLang } = context
     lang = controller.negotiateLang(lang || ctxLang, true)[0]
     // Don't change the context until everything is loaded.
-    if (hasLoadedAll(controller, section, lang, dependencies)) {
+    if (hasLoadedAll(controller, section, lang)) {
       if (section === context.section && lang === ctxLang) {
         ctxRef.current = context
       } else {
@@ -122,22 +94,7 @@ const I18nSection: React.FC<I18nSectionProps> = ({
       }
     }
   }
-  useEffect((): void => {
-    if (lang && context !== null) {
-      const { controller } = context
-      controller.load({ lang, section, ...extraProps })
-      if (Array.isArray(dependencies)) {
-        for (const dep of dependencies) {
-          if (!dep) continue
-          else if (typeof dep === 'string') {
-            controller.load({ lang, section: dep })
-          } else {
-            controller.load({ lang, ...dep })
-          }
-        }
-      }
-    }
-  })
+  useI18nSection({ section, lang, ...extraProps })
   // wait to render until section is loaded
   if (context !== null && ctxRef.current === null) {
     return null
