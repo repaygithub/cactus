@@ -286,6 +286,39 @@ key-for-no-people = blah blah blue stew`)
       expect(listenError).toHaveBeenCalledTimes(1)
     })
 
+    test('loadAsync returns a promise', async () => {
+      const controller = new I18nController({ lang: 'en', supportedLangs: ['en'] })
+      const then = jest.fn()
+      const resources = [new FluentResource('quicksand = The Story So Far')]
+      // @ts-ignore
+      controller._load = jest.fn(() => Promise.resolve({ resources }))
+      controller.loadAsync({ section: 'promise', lang: 'en' }).then(then)
+      await waitFor(() => expect(then).toHaveBeenCalledTimes(1))
+      expect(then).toHaveBeenCalledWith({
+        bundleInfo: expect.objectContaining({ section: 'promise', loadState: 'loaded', resources }),
+        prevState: 'new',
+      })
+    })
+
+    test('loadAsync passes error when promise rejects', async () => {
+      const controller = new I18nController({ lang: 'en', supportedLangs: ['en'] })
+      const then = jest.fn()
+      const errHandler = jest.fn()
+      // @ts-ignore
+      controller._load = jest.fn(() => Promise.reject('downfall of us all'))
+      controller.loadAsync({ section: 'promise', lang: 'en' }).then(then).catch(errHandler)
+      await waitFor(() => expect(errHandler).toHaveBeenCalledTimes(1))
+      expect(then).not.toHaveBeenCalled()
+      expect(errHandler).toHaveBeenCalledWith({
+        bundleInfo: expect.objectContaining({
+          section: 'promise',
+          loadState: 'error',
+        }),
+        error: 'downfall of us all',
+        prevState: 'new',
+      })
+    })
+
     describe('with mocked console.error and console.warn', () => {
       let _error: any
       let _warn: any
