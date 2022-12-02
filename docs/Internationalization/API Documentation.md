@@ -12,14 +12,14 @@ capabilities to provide translations for an application. There are a few pieces 
 
 ### Load
 
-The `load` function is what will load your translations into the controller. You must extend `BaseI18nController` in order to provide an implementation of the `load` function.
+The `_load` function is what will load your translations into the controller. You must extend `BaseI18nController` in order to provide an implementation of the `_load` function.
 
-- The developer is responsible for handling failures when loading resources in the load function. (e.g. retry loading, or loading from an alternate source)
-  - You can either handle the error within the `load` method, or return a rejected Promise and handle the error in the `onLoad` method or an error listener.
+- The developer is responsible for handling failures when loading resources in the `_load` function. (e.g. retry loading, or loading from an alternate source)
+  - You can either handle the error within the `_load` method, or return a rejected Promise and handle the error in the `onLoad` method or an error listener.
 - The return value is a Promise that resolves to an object with one required and one optional property:
   - `resources` is an array of Fluent translation strings; you can also put instances of the `FluentResource` class, or the return value of the `loadRef` method (more below). The array is combined such that if the same Fluent translation key exists in two of the resources, the later resource will override the earlier one.
   - `version` if present should be a number indicating the version of the translations. This is tracked per section, and if (when reloading a section) the returned version is less than the current version, the translations will not be updated.
-- The `load` function accepts two arguments: an object that represents the section being loaded, and an options object. The section info argument has following properties:
+- The `_load` function accepts two arguments: an object that represents the section being loaded, and an options object. The section info argument has following properties:
 
 | Property  | Type   | Required | Description                                                                   |
 | --------- | ------ | -------- | ----------------------------------------------------------------------------- |
@@ -27,15 +27,15 @@ The `load` function is what will load your translations into the controller. You
 | `section` | String | Y        | The section of the app that the controller should be loading translations for |
 
 - The options object is completely customizable for your use case: for instance, if you have a mix of hard-coded and stored-in-database translations, you might set `options.dynamic = true` to tell the loader it should look in the DB for a particular section.
-- There are two "built-in" options that are useless in `load` but can be passed to `_load` or `I18nSection`:
-  - `loader` is a function that replaces the `load` method; it can be used if you have a section with a very different loading mechanism than the rest, and you don't want to special case it in your controller class.
+- There are two "built-in" options that are useless in `_load` but can be passed to `load` or `I18nSection`:
+  - `loader` is a function that replaces the `_load` method; it can be used if you have a section with a very different loading mechanism than the rest, and you don't want to special case it in your controller class.
   - `onLoad` is a function that is called once the section is loaded (or an error occurred while loading). It takes three arguments: the section info object, the state the section was in before loading (usually "new", but could be "error" if you're retrying), and the error (if there was one). The default `onLoad` behavior is to call any listeners that have been set on the controller.
   - Both functions bind `this` to the controller when called, which can enable you to keep the default behavior and just do something custom on the side:
 
 ```js
 // Add an extra translation source on top of the normal ones:
 const loader = async (sectionInfo, opts) => {
-  const { resources } = await this.load(sectionInfo, opts)
+  const { resources } = await this._load(sectionInfo, opts)
   const ftl = getSuperSpecialTranslations(sectionInfo)
   return { resources: [...resources, ftl] }
 }
@@ -49,10 +49,10 @@ const onLoad = (sectionInfo, prevState, error) => {
 
 ### LoadRef
 
-The `loadRef` function is meant as a supplement to `load` for specific use cases. Say you have some common translations that appear on multiple pages. They're not quite global enough to wrap the entire app in an `I18nSection`, but it's also inconvenient to put a section everyplace they're used; instead, you can include those translations as a reference. The "common" section will only be loaded once, but can be referenced by as many other sections as needed:
+The `loadRef` function is meant as a supplement to `_load` for specific use cases. Say you have some common translations that appear on multiple pages. They're not quite global enough to wrap the entire app in an `I18nSection`, but it's also inconvenient to put a section everyplace they're used; instead, you can include those translations as a reference. The "common" section will only be loaded once, but can be referenced by as many other sections as needed:
 
 ```
-load(sectionInfo, opts) {
+_load(sectionInfo, opts) {
   const resources = []
   if (needsCommonTranslations(sectionInfo.section)) {
     resources.push(this.loadRef(sectionInfo, 'common', opts))
@@ -66,9 +66,9 @@ Another use case could be if you have two languages that are mostly the same wit
 
 | Argument   | Required | Description                                                          |
 | ---------- | -------- | -------------------------------------------------------------------- |
-| `referrer` | Y        | The object that was received as the first argument to `load`         |
+| `referrer` | Y        | The object that was received as the first argument to `_load`        |
 | `section`  | Y        | The section to be included as a reference                            |
-| `loadOpts` | Y        | The options that were passed as the second argument to `load`        |
+| `loadOpts` | Y        | The options that were passed as the second argument to `_load`       |
 | `lang`     | N        | The language of the reference section (defaults to same as referrer) |
 
 #### Example
@@ -94,20 +94,20 @@ Rendering the `welcome` message in British English with `$name=John` would yield
 
 The `get` function will search for the requested translation. It searches through all matching languages (see [language matching](https://www.projectfluent.org/fluent.js/langneg/#matching)), plus the `defaultLang` if there is one. It accepts a single object argument with the following properties:
 
-| Property   | Type        | Required | Description                                           |
-| ---------- | ----------- | -------- | ----------------------------------------------------- |
-| `lang`     | String      | N        | Override the controller's current language            |
-| `section`  | String      | Y        | The section to search in                              |
-| `id`       | String      | Y        | ID of the message (see `getKey` method)               |
-| `args`     | Object      | N        | Used to resolve variables in the translations         |
+| Property  | Type   | Required | Description                                   |
+| --------- | ------ | -------- | --------------------------------------------- |
+| `lang`    | String | N        | Override the controller's current language    |
+| `section` | String | Y        | The section to search in                      |
+| `id`      | String | Y        | ID of the message (see `getKey` method)       |
+| `args`    | Object | N        | Used to resolve variables in the translations |
 
 The return value is always an object with three properties:
 
-| Property   | Type     | Description                                                                      |
-| ---------- | -------- | -------------------------------------------------------------------------------- |
-| `text`     | Str/null | The main line from the Fluent translation, null if empty or no translation found |
-| `attrs`    | Object   | Any attrs included with the translation                                          |
-| `found`    | Boolean  | Indicates if a translation was found or not                                      |
+| Property | Type     | Description                                                                      |
+| -------- | -------- | -------------------------------------------------------------------------------- |
+| `text`   | Str/null | The main line from the Fluent translation, null if empty or no translation found |
+| `attrs`  | Object   | Any attrs included with the translation                                          |
+| `found`  | Boolean  | Indicates if a translation was found or not                                      |
 
 ### getKey
 
@@ -119,6 +119,7 @@ getKey(id, section, lang) {
   return section === 'global' ? id : `${section}__${id}`
 }
 ```
+
 Other use cases might be if you use IDs that contain invalid Fluent characters like "." and you need to sanitize the ID before passing it to Fluent.
 
 ### GetText
@@ -146,12 +147,13 @@ The `BaseI18nController` constructor accepts a single options object with the fo
 
 ```js
 class I18nController extends BaseI18nController {
-  // Minimum implementation with required load() method
-  load(sectionInfo) {
+  // Minimum implementation with required _load() method
+  _load(sectionInfo) {
     const { lang, section } = sectionInfo
     // Load ftl translations from the source
-    return import(`./locales/${lang}/${section}.js`)
-      .then(({ default: ftl }) => ({ resources: [ftl] }))
+    return import(`./locales/${lang}/${section}.js`).then(({ default: ftl }) => ({
+      resources: [ftl],
+    }))
   }
 }
 
@@ -169,7 +171,7 @@ You may also want to extend other functions based on your needs. This can be don
 export const missingKeys = new Set()
 
 class I18nController extends BaseI18nController {
-  load(args) {
+  _load(args) {
     // code to load translations
   }
 
@@ -226,7 +228,7 @@ function App(props) {
 
   return (
     <I18nProvider controller={i18nController} lang={lang}>
-      <select name="lang" onChange={event => setLang(event.currentTarget.value)}>
+      <select name="lang" onChange={(event) => setLang(event.currentTarget.value)}>
         ...
         <option value="es">Español</option>
       </select>
@@ -242,13 +244,12 @@ The `<I18nSection />` component was designed to allow the translations to be bro
 
 ### Props
 
-| Prop           | Type                | Required | Description                                                                                             |
-| -------------- | ------------------- | -------- | ------------------------------------------------------------------------------------------------------- |
-| `name`         | String              | Y        | Name of the section to load and use as the default in descendant components                             |
-| `lang`         | String              | N        | Used to override the globally selected language                                                         |
-| `dependencies` | Array<String \| {}> | N        | Load additional sections that will be used in descendants, but should not be set as the default section |
+| Prop      | Type   | Required | Description                                                                 |
+| --------- | ------ | -------- | --------------------------------------------------------------------------- |
+| `section` | String | Y        | Name of the section to load and use as the default in descendant components |
+| `lang`    | String | N        | Used to override the globally selected language                             |
 
-Any additional props will be passed as part of the `loadOpts` argument to the `load` function.
+Any additional props will be passed as part of the `loadOpts` argument to the `_load` function.
 
 ### Example Usage
 
@@ -257,24 +258,51 @@ import { I18nSection } from '@repay/cactus-i18n'
 ...
 const sectionComponent = () => {
   return (
-    <I18nSection name="example">
+    <I18nSection section="example">
       ...
     </I18nSection>
   )
 }
 ```
 
-Example with additional section dependencies
+#### Example with additional section props:
 
 ```jsx
 import { I18nSection } from '@repay/cactus-i18n'
 ...
 const Page = () => {
   return (
-    <I18nSection name="pageSpecificTranslations" dependencies={['someExtraGlobalTranslations']}>
+    <I18nSection section="pageSpecificTranslations" dependencies={['someExtraGlobalTranslations']}>
       ...
     </I18nSection>
   )
+}
+```
+
+When passing additional arbitrary props to `I18nSection` like in the above example, you'll want to handle that within your loader. For example:
+
+```jsx
+import { BaseI18nController } from '@repay/cactus-i18n'
+
+class I18nController extends BaseI18nController {
+
+  protected async _load(bundleInfo, extra): Promise<LoadResult> {
+    const [lang] = bundleInfo.lang.split('-')
+    const { default: ftl } = await import(`./locales/${lang}/${bundleInfo.section}.js`)
+    const resources = [ftl]
+    const dependencies = extra.dependencies
+    if (Array.isArray(dependencies)) {
+      for (const dep of dependencies) {
+        if (!dep) continue
+        else if (typeof dep === 'string') {
+          this.load({ lang, section: dep })
+        } else {
+          this.load({ lang, ...dep })
+        }
+      }
+    }
+    return { resources }
+  }
 }
 ```
 
@@ -304,7 +332,7 @@ const text = () => {
 // Section provided; translations for the "example" section will be loaded
 const section = () => {
   return (
-    <I18nSection name="example">
+    <I18nSection section="example">
       <I18nText get="translation-key" args={{ groupName: "example" }} />
     </I18nSection>
   )
@@ -313,7 +341,7 @@ const section = () => {
 // NOTE: the "my-section" should be loaded separately because the text element will not trigger a load
 const override = () => {
   return (
-    <I18nSection name="example">
+    <I18nSection section="example">
       ...
       <I18nText get="translation-key" section="my-section" args={{ groupName: "example" }} />
     </I18nSection>
@@ -348,7 +376,7 @@ const element = () => {
 // Section provided; translations for the "example" section will be loaded
 const section = () => {
   return (
-    <I18NSection name="example">
+    <I18NSection section="example">
       <I18nElement as={Text} get="translation-key" args={{ groupName: "example" }} />
     </I18NSection>
   )
@@ -356,7 +384,7 @@ const section = () => {
 // Section overridden; translations for "my-section" will be used
 const override = () => {
   return (
-    <I18nSection name="example">
+    <I18nSection section="example">
       ...
       <I18nElement as="div" get="translation-key" section="my-section" args={{ groupName: "example" }} />
     </I18nSection>
@@ -433,6 +461,56 @@ class BigComponent extends React.Component {
       </div>
     )
   }
+}
+```
+
+## useI18nSection
+
+`useI18nSection` is a hook that can be used to load one or more sections. It's used within the `<I18nSection />` component, but it does not block rendering while it loads the section. It will return a boolean indicating whether or not the section or sections are loaded. You can pass a simple string indicating the name of the section you wish to load, or you can pass an object with a `section` key and any additional arbitrary data you want. Any extra data will be passed to the second argument of your controller's `_load` function.
+
+### Parameters
+
+`useI18nSection` accepts as many section arguments as you want to pass. Argument can be a string or an object with the following form:
+
+| Key       | Type   | Required | Description                              |
+| --------- | ------ | -------- | ---------------------------------------- |
+| `section` | String | Y        | The name of the section you want to load |
+
+- Any other keys passed in this object will be passed to the second argument of the `_load` function for you to process in whatever way is necessary for your application.
+
+### Example Usage
+
+```jsx
+import { useI18nSection, I18nText } from '@repay/cactus-i18n'
+
+const Component = () => {
+  const hasLoaded = useI18nSection('my-section')
+
+  return hasLoaded ? <I18nText section="my-section" get="my-key" /> : null
+}
+```
+
+Note that you can omit the `hasLoaded` logic in the example above.
+
+### Example with Objects
+
+If you need to process more data in your `_load` function, you can do so by passing objects to `useI18nSection`:
+
+```jsx
+import { useI18nSection, I18nText } from '@repay/cactus-i18n'
+
+const Component = () => {
+  // _load() will be called twice; once for each section. An object containing the `dynamic` value will be passed to the second argument.
+  useI18nSection(
+    { section: 'local-section', dynamic: false },
+    { section: 'remote-section', dynamic: true }
+  )
+  return (
+    <>
+      <I18nText section="local-section" get="local-message" />
+      <I18nText section="remote-section" get="remote-message" />
+    </>
+  )
 }
 ```
 
