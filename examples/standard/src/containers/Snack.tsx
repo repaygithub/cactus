@@ -7,7 +7,7 @@ type SnackProps = RouteComponentProps<{ snack: string }>
 class Snack extends Component<SnackProps> {
   public render(): React.ReactElement {
     return (
-      <I18nSection name={this.props.snack || ''}>
+      <I18nSection section={this.props.snack || ''}>
         <h2>
           <I18nText get="header" />
         </h2>

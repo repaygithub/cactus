@@ -22,7 +22,7 @@ const Snacks: React.FC<RouteComponentProps> = (): ReactElement => {
   // memoize expensive calculation
   const snackList = useMemo((): string[] => fillSnackList(snackKeys), [snackKeys])
   return (
-    <I18nSection name="snacks">
+    <I18nSection section="snacks">
       <h2>
         <I18nText get="snacks-header" />
       </h2>
