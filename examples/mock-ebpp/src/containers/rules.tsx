@@ -1,5 +1,5 @@
 import { RouteComponentProps } from '@reach/router'
-import { Field, Form, FormSpy } from '@repay/cactus-form'
+import { Field, Form, FormSpy, SubmitButton } from '@repay/cactus-form'
 import { ActionsAdd } from '@repay/cactus-icons'
 import { Accordion, Box, Button, Flex, Text, TextButton } from '@repay/cactus-web'
 import arrayMutators from 'final-form-arrays'
@@ -41,9 +41,11 @@ const keyCounters: { [K in KeyPrefix]: number } = {
 }
 
 const Rules: React.FC<RouteComponentProps> = () => {
-  const handleSubmit = ({ rules }: FormRules): void => {
-    post(rules)
-    console.log((window as any).apiData)
+  const handleSubmit = async ({ rules }: FormRules): Promise<void> => {
+    return new Promise((resolve) => setTimeout(resolve, 3000)).then(() => {
+      post(rules)
+      console.log((window as any).apiData)
+    })
   }
   return (
     <Form mutators={arrayMutators as any} onSubmit={handleSubmit}>
@@ -128,18 +130,16 @@ const RulesForm = () => {
             </FieldsAccordion>
           ))}
         </Accordion.Provider>
-        <FormSpy subscription={{ dirty: true }}>
-          {({ dirty }: { dirty: boolean }) => (
-            <Flex width="100%" justifyContent="center" mt={4} py={3}>
+        <Flex width="100%" justifyContent="center" mt={4} py={3}>
+          <FormSpy subscription={{ dirty: true }}>
+            {({ dirty }: { dirty: boolean }) => (
               <Button type="reset" variant="standard" mr={3} disabled={!dirty}>
                 Reset
               </Button>
-              <Button type="submit" variant="action" ml={3} disabled={!dirty}>
-                Submit
-              </Button>
-            </Flex>
-          )}
-        </FormSpy>
+            )}
+          </FormSpy>
+          <SubmitButton ml={3} />
+        </Flex>
       </Box>
     </Box>
   )

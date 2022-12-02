@@ -281,3 +281,47 @@ to hook into form state changes.
   </button>
 </Form>
 ```
+
+## SubmitButton
+
+`SubmitButton` is essentially a `FormSpy` that renders a `Button` with `type="submit"`. By default, it's subscribed
+to `hasValidationErrors`, `submitting`, and `pristine`, and it will set the `disabled` and `loading` props for you based
+on those state values. You can override the default subscription if necessary, and `SubmitButton` supports an extra prop
+called `processState`, which functions similarly to `processMeta` on the `Field` component, so you have full control over
+the subscription and how it affects the output. Most of the time, though, the default subscription and `processState` behavior
+should be all that you need:
+
+```
+<Form>
+  <SubmitButton />
+</Form>
+```
+
+Or, if you need to change the label:
+
+```
+<Form>
+  <SubmitButton>Submit Me!</SubmitButton>
+</Form>
+```
+
+If you need more control for your use-case, though, you can still set the behavior based on your specific needs using
+the `subscription` and the `processState` function.
+
+### processState
+
+`processState` accepts two arguments: the `props` object that will ultimately be passed to the `Button`, and the
+[form state](https://final-form.org/docs/final-form/types/FormState) values that you're subscribed to. You can then use those
+state values to drive the props that get passed to the `Button`. You can either return a new props object from `processState`,
+or if you don't return anything, it will just use the updated props object that was passed to the function.
+
+For example:
+
+```
+const processState = (props, state) => {
+  props.disabled = !state.dirtySinceLastSubmit
+}
+<Form>
+  <SubmitButton subscription={{ dirtySinceLastSubmit: true }} processState={processState} />
+</Form>
+```

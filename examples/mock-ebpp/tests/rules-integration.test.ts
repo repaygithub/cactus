@@ -34,6 +34,7 @@ const definitions = (name: string, url: string) => {
     await selectDropdownOption('Name', 'Do the thing')
     await clickWorkaround(queryByText('Submit'))
 
+    await t.wait(3500)
     const apiData: RulesData = await getApiData()
     await t.expect(apiData).eql([
       {
@@ -68,6 +69,7 @@ const definitions = (name: string, url: string) => {
     await clickWorkaround(queryByLabelText('Move Action #1 down'))
     await clickWorkaround(queryByText('Submit'))
 
+    await t.wait(3500)
     const apiData: RulesData = await getApiData()
     await t.expect(apiData).eql([
       {
