@@ -23,11 +23,27 @@ The `Table` component has a few helpful sub-components:
 - `Table.Row` - a `tr` element.
 - `Table.Body` - a `tbody` element.
 
-The table's `fullWidth` prop can be used to force the table to take up the full width of its parent container. By default, it is also wrapped in a `div` that adds some margins and a horizontal scrollbar if the table is wider than its parent. You can get rid of the div and just have the bare styled table by using `<Table as="table">`, but that's not recommended for most situations.
+### Scroll Wrapper
+
+By default the table is rendered in a div with `overflow-x: auto`.
+In most use cases this makes fitting a table into a site layout easier, regardless of the table's contents;
+however there are some cases where you may not want the wrapper.
+In particular, putting a table in a flex or grid container may result in strange sizing behavior
+unless you pass `width: 100%` to match the table size to the wrapper;
+or for greatest flexibility you can use the `noScrollWrapper` prop to remove the wrapper entirely.
+
+```jsx
+<Flex>
+  <Flex.Item flex="1 1 400px" as={Table} noScrollWrapper>
+    <Table.Header>
+    ...
+  </Flex.Item>
+</Flex>
+```
 
 ### Card Carousel
 
-In addition to the default styling, there is another style of table that is more suitable for mobile devices. In this mode each row is rendered as a "card", where the cells are rendered as rows within the card. The cards are arranged horizontally and can be scrolled (or swiped) side-to-side.
+In addition to the default styling, there is another style of table that is more suitable for mobile devices. In this mode each row is rendered as a "card", where the cells are rendered as rows within the card. The cards are arranged horizontally and can be scrolled (or swiped) side-to-side, even if the scroll wrapper is removed.
 
 There are two ways of controlling card carousel mode: using the `variant` prop, or the `cardBreakpoint` prop. `variant` has the highest precedence: if passed as `variant="table"`, the card carousel will never be used; if passed as `variant="card"`, it will always be used. The `cardBreakpoint` prop can be used to transition between table mode and card mode at one of the theme's CSS media queries, but it will only work if the app is using a `ScreenSizeProvider`. For example, the following table would be in card mode for "tiny" or "small" screen sizes, and table mode for anything larger:
 
@@ -41,7 +57,8 @@ There are two ways of controlling card carousel mode: using the `variant` prop, 
 
 If a `Table.Header` is used, card mode will also render the headers in each cell/row so the user doesn't have to remember which header lines up with which cell.
 
-### Sticky Column 
+### Sticky Column
+
 For the default styling, there is the possibility to set the right most column right to be sticky. This column stays in place as the user scrolls through the table. For enabling this feature, the `Table` component allows a `sticky` prop that currently accepts `none` or `right` values.
 
 ```jsx
