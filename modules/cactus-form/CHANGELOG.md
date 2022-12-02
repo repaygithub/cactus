@@ -1,3 +1,20 @@
+# v1.2.0 (Fri Dec 02 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-1028 :: Form Wrappers [#815](https://github.com/repaygithub/cactus/pull/815) ([@Dhalton](https://github.com/Dhalton))
+
+#### 🏠 Internal
+
+- Cactus-1072  fix linter errors [#821](https://github.com/repaygithub/cactus/pull/821) ([@maxrcollins](https://github.com/maxrcollins))
+
+#### Authors: 2
+
+- [@Dhalton](https://github.com/Dhalton)
+- [@maxrcollins](https://github.com/maxrcollins)
+
+---
+
 # v1.1.1 (Tue Jun 21 2022)
 
 #### 🏠 Internal
