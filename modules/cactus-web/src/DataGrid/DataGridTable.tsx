@@ -77,8 +77,7 @@ const DataGridTable: React.FC<DataGridTableProps> = (props) => {
     <>
       {children}
       <Table
-        margin={0}
-        fullWidth={fullWidth}
+        width={fullWidth ? '100%' : undefined}
         cardBreakpoint={cardBreakpoint}
         variant={variant}
         {...rest}

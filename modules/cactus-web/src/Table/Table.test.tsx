@@ -54,9 +54,9 @@ describe('component: Table', () => {
     expect(dataCell).toHaveStyle('padding: 8px')
   })
 
-  test('supports margin space props', () => {
+  test('supports style props', () => {
     const { getByTitle } = renderWithTheme(
-      <Table title="Table Title" marginTop={2} mb="100px" mx={7}>
+      <Table title="Table Title" minWidth="50%" width="500px" marginTop={2} mb="100px" mx={7}>
         <Table.Header>
           <Table.Cell>Header Cell</Table.Cell>
         </Table.Header>
@@ -68,11 +68,42 @@ describe('component: Table', () => {
       </Table>
     )
 
-    const tableWrapper = getByTitle('Table Title').parentElement
-    expect(tableWrapper).toHaveStyle('margin-top: 4px')
-    expect(tableWrapper).toHaveStyle('margin-bottom: 100px')
-    expect(tableWrapper).toHaveStyle('margin-left: 40px')
-    expect(tableWrapper).toHaveStyle('margin-right: 40px')
+    const table = getByTitle('Table Title')
+    expect(table).toHaveStyle({
+      minWidth: '50%',
+      width: '500px',
+      marginTop: '',
+    })
+    expect(table.parentElement).toHaveStyle({
+      overflowX: 'auto',
+      marginTop: '4px',
+      marginBottom: '100px',
+      marginLeft: '40px',
+      marginRight: '40px',
+    })
+  })
+
+  test('supports noScrollWrapper prop', () => {
+    const { getByTitle } = renderWithTheme(
+      <Table title="Table Title" noScrollWrapper width="500px" margin={3}>
+        <Table.Header>
+          <Table.Cell>Header Cell</Table.Cell>
+        </Table.Header>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell>Data cell</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
+    )
+
+    const table = getByTitle('Table Title')
+    // Without the scroll wrapper
+    expect(table).toHaveStyle({
+      width: '500px',
+      margin: '8px',
+    })
+    expect(table.parentElement).not.toHaveStyle({ overflowX: 'auto' })
   })
 
   test('Sticky column right', () => {
