@@ -1,3 +1,15 @@
+# v3.2.4 (Fri Dec 02 2022)
+
+#### 🏠 Internal
+
+- Cactus-1072  fix linter errors [#821](https://github.com/repaygithub/cactus/pull/821) ([@maxrcollins](https://github.com/maxrcollins))
+
+#### Authors: 1
+
+- [@maxrcollins](https://github.com/maxrcollins)
+
+---
+
 # v3.2.3 (Thu Apr 21 2022)
 
 #### 🏠 Internal
