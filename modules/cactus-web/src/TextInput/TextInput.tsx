@@ -57,7 +57,7 @@ export const commonInputStyles = css<StatusProps>`
 
 const TextInput = styled.input<TextInputProps>`
   border-radius: ${radius(20)};
-  padding: 3px 28px 3px 15px;
+  padding: 3px 15px;
   ${(p) => textStyle(p, p.textStyle || 'body')};
 
   ${margin}
