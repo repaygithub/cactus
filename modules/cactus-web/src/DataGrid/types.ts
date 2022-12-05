@@ -1,4 +1,5 @@
-import { Size } from '../ScreenSizeProvider/ScreenSizeProvider'
+import { ScreenSize } from '@repay/cactus-theme'
+
 import { TableCellProps, TableVariant } from '../Table/Table'
 
 export type JustifyContent =
@@ -12,13 +13,13 @@ export type JustifyContent =
 
 export interface TransientProps {
   $isCardView: boolean
-  $cardBreakpoint: Size
+  $cardBreakpoint: ScreenSize
   $variant?: TableVariant
 }
 
 export interface TableProps {
   fullWidth: boolean
-  cardBreakpoint: Size
+  cardBreakpoint: ScreenSize
   variant: TableVariant | undefined
 }
 

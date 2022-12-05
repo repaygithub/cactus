@@ -6,6 +6,8 @@ import {
   ColorStyle,
   mediaGTE,
   radius,
+  ScreenSize,
+  screenSizes,
   textStyle,
 } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
@@ -16,7 +18,7 @@ import { margin, MarginProps, width, WidthProps } from 'styled-system'
 import { extractMargins } from '../helpers/omit'
 import { useMergedRefs } from '../helpers/react'
 import variant from '../helpers/variant'
-import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
+import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
 type CellAlignment = 'center' | 'right' | 'left'
 type CellType = 'th' | 'td'
@@ -37,7 +39,7 @@ interface TableContextProps {
 
 interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableElement> {
   fullWidth?: boolean
-  cardBreakpoint?: Size
+  cardBreakpoint?: ScreenSize
   variant?: TableVariant
   as?: React.ElementType
   dividers?: boolean
@@ -246,7 +248,7 @@ Table.propTypes = {
   // @ts-ignore
   rowFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['mouse-only'])]),
   rowHover: PropTypes.bool,
-  cardBreakpoint: PropTypes.oneOf<Size>(['tiny', 'small', 'medium', 'large', 'extraLarge']),
+  cardBreakpoint: PropTypes.oneOf<ScreenSize>(screenSizes),
   variant: PropTypes.oneOf<TableVariant>(['table', 'card', 'mini']),
 }
 

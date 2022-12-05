@@ -1,7 +1,8 @@
 import { NavigationArrowDown } from '@repay/cactus-icons'
+import { textStyle } from '@repay/cactus-theme'
 import styled from 'styled-components'
 
-import { border, borderSize, textStyle } from '../helpers/theme'
+import { border, borderSize } from '../helpers/theme'
 
 const listStyle = `
   list-style: none;
@@ -11,7 +12,7 @@ const listStyle = `
 
 export const SidebarMenu = styled.ul`
   ${(p) => p.theme.colorStyles.standard}
-  ${(p) => textStyle(p.theme, 'small')};
+  ${textStyle('small')};
   ${listStyle}
 
   && [role='menuitem'] {

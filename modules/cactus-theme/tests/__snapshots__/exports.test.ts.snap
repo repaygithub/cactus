@@ -4,6 +4,7 @@ exports[`@repay/cactus-i18n should match snapshot of exports 1`] = `
 Array [
   "default",
   "generateTheme",
+  "screenSizes",
   "isResponsiveTouchDevice",
   "border",
   "borderSize",

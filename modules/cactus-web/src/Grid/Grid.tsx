@@ -1,4 +1,4 @@
-import { CactusTheme } from '@repay/cactus-theme'
+import { CactusTheme, ScreenSize, screenSizes } from '@repay/cactus-theme'
 import { Property } from 'csstype'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -9,7 +9,7 @@ import Flex, { FlexBoxProps } from '../Flex/Flex'
 import { isIE } from '../helpers/constants'
 import { useMergedRefs } from '../helpers/react'
 import { FlexItemProps, gapWorkaround, withStyles } from '../helpers/styled'
-import { screenSizes, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
+import { useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 
 const DEFAULT_GAP = 4
 const PSEUDO_FLEX_COLS = 12
@@ -33,7 +33,6 @@ if (!isIE) {
 }
 
 type GridProperty = keyof typeof css
-type ScreenSize = typeof screenSizes[number]
 type ColumnNum = typeof COLUMN_NUMS[number]
 type PseudoFlexProps = { [K in ScreenSize]?: ColumnNum }
 

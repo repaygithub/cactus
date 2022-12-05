@@ -1,6 +1,18 @@
 import Color from 'color'
 
-import cactusTheme, { CactusTheme, ColorVariant, generateTheme } from '../src/theme'
+import defaultTheme, { CactusTheme, ColorVariant, generateTheme, screenSizes } from '../src/theme'
+
+const cactusTheme = {
+  ...defaultTheme,
+  breakpoints: screenSizes.slice(1).reduce((x, key) => {
+    x.push((x[key] = expect.any(String)))
+    return x
+  }, [] as any),
+  mediaQueries: screenSizes.reduce((x, key) => {
+    x.push((x[key] = expect.objectContaining({ media: expect.any(String) })))
+    return x
+  }, [] as any),
+}
 
 function themeAccessibility(themeName: string, theme: CactusTheme): void {
   describe(`${themeName} meets basic accessibility contrast thresholds`, (): void => {
@@ -448,15 +460,29 @@ describe('@repay/cactus-theme', (): void => {
     })
   })
 
+  const expectBreakpoints = (theme: CactusTheme, bp: [string, string, string, string]) => {
+    expect(theme.breakpoints).toMatchObject(
+      bp.reduce((x, breakpoint, ix) => {
+        const key = screenSizes[ix + 1]
+        x.push((x[key] = breakpoint))
+        return x
+      }, [] as any)
+    )
+    const queries: any = [expect.objectContaining({ media: 'screen' })]
+    queries.tiny = queries[0]
+    expect(theme.mediaQueries).toMatchObject(
+      bp.reduce((x, breakpoint, ix) => {
+        const key = screenSizes[ix + 1]
+        const media = `screen and (min-width: ${breakpoint})`
+        x.push((x[key] = expect.objectContaining({ media })))
+        return x
+      }, queries)
+    )
+  }
+
   test('generates a theme with breakpoints and media queries by default', () => {
     const theme = generateTheme()
-    expect(theme.breakpoints).toMatchObject(['768px', '1024px', '1200px', '1440px'])
-    expect(theme.mediaQueries).toMatchObject({
-      small: '@media screen and (min-width: 768px)',
-      medium: '@media screen and (min-width: 1024px)',
-      large: '@media screen and (min-width: 1200px)',
-      extraLarge: '@media screen and (min-width: 1440px)',
-    })
+    expectBreakpoints(theme, ['768px', '1024px', '1200px', '1440px'])
   })
 
   test('generates a theme with custom breakpoints and media queries', () => {
@@ -469,12 +495,6 @@ describe('@repay/cactus-theme', (): void => {
         extraLarge: '1000px',
       },
     })
-    expect(theme.breakpoints).toMatchObject(['400px', '600px', '800px', '1000px'])
-    expect(theme.mediaQueries).toMatchObject({
-      small: '@media screen and (min-width: 400px)',
-      medium: '@media screen and (min-width: 600px)',
-      large: '@media screen and (min-width: 800px)',
-      extraLarge: '@media screen and (min-width: 1000px)',
-    })
+    expectBreakpoints(theme, ['400px', '600px', '800px', '1000px'])
   })
 })

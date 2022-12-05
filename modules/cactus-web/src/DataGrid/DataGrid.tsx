@@ -1,3 +1,4 @@
+import { ScreenSize, screenSizes } from '@repay/cactus-theme'
 import { identity } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { ReactElement, useContext, useEffect, useState } from 'react'
@@ -5,7 +6,7 @@ import { margin, MarginProps } from 'styled-system'
 
 import { withStyles } from '../helpers/styled'
 import { useControllableValue } from '../hooks'
-import { ScreenSizeContext, Size, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
+import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import BottomSection from './BottomSection'
 import DataGridColumn, { useColumns } from './DataGridColumn'
 import DataGridTable from './DataGridTable'
@@ -141,7 +142,7 @@ DataGrid.propTypes = {
   onSort: PropTypes.func,
   children: PropTypes.node.isRequired,
   fullWidth: PropTypes.bool,
-  cardBreakpoint: PropTypes.oneOf<Size>(['tiny', 'small', 'medium', 'large', 'extraLarge']),
+  cardBreakpoint: PropTypes.oneOf<ScreenSize>(screenSizes),
 }
 
 type DataGridType = React.ComponentType<DataGridProps> & {

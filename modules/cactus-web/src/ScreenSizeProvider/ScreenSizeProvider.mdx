@@ -11,7 +11,7 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # ScreenSizeProvider
 
-The `ScreenSizeProvider` gives a programatic way of determining what the current "size" of the screen is, according to the theme's `mediaQueries` object. The possible sizes are directly from the media queries object ("small", "medium", "large", "extraLarge"), with the addition of "tiny" when none of the media queries match. Because it uses `theme.mediaQueries`, it should be nested inside a `StyleProvider`; otherwise it will always give the default size of "large".
+The `ScreenSizeProvider` gives a programatic way of determining what the current "size" of the screen is, according to the theme's `mediaQueries` object. The possible sizes are directly from the media queries object ("tiny", "small", "medium", "large", "extraLarge"). Because it uses `theme.mediaQueries`, it should be nested inside a `StyleProvider`; otherwise it will always give the default size of "large".
 
 ## Basic Usage
 

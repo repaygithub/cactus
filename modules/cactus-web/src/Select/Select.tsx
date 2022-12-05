@@ -1,8 +1,8 @@
 import { ActionsAdd, NavigationChevronDown } from '@repay/cactus-icons'
-import { BorderSize, CactusTheme, ColorStyle, TextStyle } from '@repay/cactus-theme'
+import { BorderSize, CactusTheme, ColorStyle, fontSize, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { useLayoutEffect, useRef, useState } from 'react'
-import styled, { css, FlattenSimpleInterpolation, ThemeContext, withTheme } from 'styled-components'
+import styled, { css, ThemeContext, withTheme } from 'styled-components'
 import { margin, MarginProps, width as styledSystemWidth, WidthProps } from 'styled-system'
 
 import CheckBox from '../CheckBox/CheckBox'
@@ -20,7 +20,7 @@ import { positionDropDown, usePositioning } from '../helpers/positionPopover'
 import { isPurelyEqual, useMergedRefs } from '../helpers/react'
 import { useScrollTrap } from '../helpers/scroll'
 import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
-import { boxShadow, fontSize, isResponsiveTouchDevice, radius, textStyle } from '../helpers/theme'
+import { boxShadow, isResponsiveTouchDevice, radius } from '../helpers/theme'
 import Tag from '../Tag/Tag'
 import TextButton from '../TextButton/TextButton'
 
@@ -192,7 +192,7 @@ const ValueSwitch = (props: {
 
 const ValueSpan = styled.span`
   display: inline-block;
-  ${(p): string => fontSize(p.theme, 'p')};
+  ${fontSize('p')};
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
@@ -224,7 +224,7 @@ const SelectTrigger = styled.button`
   min-width: 60px;
   width: 100%;
   height: 35px;
-  ${(p) => textStyle(p.theme, 'body')}
+  ${textStyle('body')}
   padding: 3px 28px 3px 16px;
   background-color: transparent;
   border-radius: ${radius(20)};
@@ -345,7 +345,7 @@ const NoMatch = styled.li`
   display: list-item;
   border: none;
   height: auto;
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
+  ${textStyle('small')};
   text-align: left;
   box-shadow: none;
   padding: 4px 16px;
@@ -358,7 +358,7 @@ const InternalOption = styled.li`
   display: list-item;
   border: none;
   height: auto;
-  ${(p): FlattenSimpleInterpolation | TextStyle => textStyle(p.theme, 'small')};
+  ${textStyle('small')};
   text-align: left;
   box-shadow: none;
   padding: 4px 16px;
