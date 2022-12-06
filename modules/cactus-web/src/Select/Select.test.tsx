@@ -249,7 +249,7 @@ describe('component: Select', () => {
         <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
       )
       const trigger = getByText('Select an option') // default placeholder
-      fireEvent.keyUp(trigger, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      fireEvent.keyUp(trigger, { key: KeyCodes.UP })
       await animationRender()
       const list = getByRole('listbox')
       expect(document.activeElement).toBe(list)
@@ -261,7 +261,7 @@ describe('component: Select', () => {
         <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
       )
       const trigger = getByText('Select an option') // default placeholder
-      fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyUp(trigger, { key: KeyCodes.DOWN })
       await animationRender()
       const list = getByRole('listbox')
       expect(document.activeElement).toBe(list)
@@ -274,11 +274,10 @@ describe('component: Select', () => {
       )
       // @ts-ignore
       const trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
-      fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      fireEvent.keyDown(getByRole('listbox'), { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyUp(trigger, { key: KeyCodes.DOWN })
+      fireEvent.keyDown(getByRole('listbox'), { key: KeyCodes.DOWN })
       fireEvent.keyDown(getByRole('listbox'), {
-        keyCode: KeyCodes.RETURN,
-        charCode: KeyCodes.RETURN,
+        key: KeyCodes.RETURN,
       })
       await animationRender()
       expect(document.activeElement).toEqual(trigger)
@@ -290,10 +289,9 @@ describe('component: Select', () => {
       )
       // @ts-ignore
       const trigger: HTMLElement = getByText('Select an option').parentElement // default placeholder
-      fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyUp(trigger, { key: KeyCodes.DOWN })
       fireEvent.keyDown(getByRole('listbox'), {
-        keyCode: KeyCodes.ESC,
-        charCode: KeyCodes.ESC,
+        key: KeyCodes.ESC,
       })
       await animationRender()
       expect(document.activeElement).toEqual(trigger)
@@ -304,10 +302,10 @@ describe('component: Select', () => {
         <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
       )
       const trigger = getByText('Select an option') // default placeholder
-      fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyUp(trigger, { key: KeyCodes.DOWN })
       await animationRender()
       const list = getByRole('listbox')
-      fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(list, { key: KeyCodes.DOWN })
       // @ts-ignore
       expect(getActiveValue()).toEqual('tucson')
     })
@@ -324,25 +322,23 @@ describe('component: Select', () => {
         />
       )
       const trigger = getByText('Select an option')
-      fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyUp(trigger, { key: KeyCodes.DOWN })
       expect(box).toEqual({})
       const list = getByRole('listbox')
-      fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(list, { key: KeyCodes.DOWN })
+      fireEvent.keyDown(list, { key: KeyCodes.DOWN })
       fireEvent.keyDown(list, {
-        keyCode: KeyCodes.RETURN,
-        charCode: KeyCodes.RETURN,
+        key: KeyCodes.RETURN,
       })
       await animationRender()
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(box).toEqual({ name: 'city', value: 'flagstaff' })
 
       const newTrigger = getByRole('button', { name: 'flagstaff' })
-      fireEvent.keyUp(newTrigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      fireEvent.keyDown(list, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      fireEvent.keyUp(newTrigger, { key: KeyCodes.DOWN })
+      fireEvent.keyDown(list, { key: KeyCodes.UP })
       fireEvent.keyDown(list, {
-        keyCode: KeyCodes.RETURN,
-        charCode: KeyCodes.RETURN,
+        key: KeyCodes.RETURN,
       })
       await animationRender()
       expect(onChange).toHaveBeenCalledTimes(2)
@@ -361,24 +357,22 @@ describe('component: Select', () => {
         />
       )
       const trigger = getByText('Select an option')
-      fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyUp(trigger, { key: KeyCodes.DOWN })
       expect(box).toEqual({})
       const list = getByRole('listbox')
-      fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      fireEvent.keyDown(list, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(list, { key: KeyCodes.DOWN })
+      fireEvent.keyDown(list, { key: KeyCodes.DOWN })
       fireEvent.keyDown(list, {
-        keyCode: KeyCodes.RETURN,
-        charCode: KeyCodes.RETURN,
+        key: KeyCodes.RETURN,
       })
       await animationRender()
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(box).toEqual({ name: 'city', value: 'flagstaff' })
 
       const newTrigger = getByRole('button', { name: 'flagstaff' })
-      fireEvent.keyUp(newTrigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyUp(newTrigger, { key: KeyCodes.DOWN })
       fireEvent.keyDown(list, {
-        keyCode: KeyCodes.RETURN,
-        charCode: KeyCodes.RETURN,
+        key: KeyCodes.RETURN,
       })
       await animationRender()
       expect(onChange).toHaveBeenCalledTimes(1)
@@ -413,14 +407,14 @@ describe('component: Select', () => {
       const thirdActive = getByText('Third active')
 
       expect(listbox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
-      fireEvent.keyDown(listbox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(listbox, { key: KeyCodes.DOWN })
       expect(listbox.getAttribute('aria-activedescendant')).toBe(secondActive.id)
-      fireEvent.keyDown(listbox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(listbox, { key: KeyCodes.DOWN })
       expect(listbox.getAttribute('aria-activedescendant')).toBe(thirdActive.id)
 
-      fireEvent.keyDown(listbox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      fireEvent.keyDown(listbox, { key: KeyCodes.UP })
       expect(listbox.getAttribute('aria-activedescendant')).toBe(secondActive.id)
-      fireEvent.keyDown(listbox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      fireEvent.keyDown(listbox, { key: KeyCodes.UP })
       expect(listbox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
     })
 
@@ -434,10 +428,10 @@ describe('component: Select', () => {
       const firstOption = getByText('first')
       const lastOption = getByText('last')
 
-      fireEvent.keyDown(listbox, { keyCode: KeyCodes.END, charCode: KeyCodes.END })
+      fireEvent.keyDown(listbox, { key: KeyCodes.END })
       expect(listbox.getAttribute('aria-activedescendant')).toBe(lastOption.id)
 
-      fireEvent.keyDown(listbox, { keyCode: KeyCodes.HOME, charCode: KeyCodes.HOME })
+      fireEvent.keyDown(listbox, { key: KeyCodes.HOME })
       expect(listbox.getAttribute('aria-activedescendant')).toBe(firstOption.id)
     })
 
@@ -458,10 +452,10 @@ describe('component: Select', () => {
       const firstEnabled = getByText('first enabled')
       const lastEnabled = getByText('last enabled')
 
-      fireEvent.keyDown(listbox, { keyCode: KeyCodes.END, charCode: KeyCodes.END })
+      fireEvent.keyDown(listbox, { key: KeyCodes.END })
       expect(listbox.getAttribute('aria-activedescendant')).toBe(lastEnabled.id)
 
-      fireEvent.keyDown(listbox, { keyCode: KeyCodes.HOME, charCode: KeyCodes.HOME })
+      fireEvent.keyDown(listbox, { key: KeyCodes.HOME })
       expect(listbox.getAttribute('aria-activedescendant')).toBe(firstEnabled.id)
     })
 
@@ -471,11 +465,10 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'tucson', 'flagstaff']} />
         )
         const trigger = getByText('Select an option') // default placeholder
-        fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+        fireEvent.keyUp(trigger, { key: KeyCodes.DOWN })
         await animationRender()
         const list = getByRole('listbox')
-        // keycode 84 = t
-        fireEvent.keyDown(list, { keyCode: 84, charCode: 84 })
+        fireEvent.keyDown(list, { key: 't' })
         expect(getActiveValue()).toEqual('tucson')
       })
 
@@ -484,13 +477,11 @@ describe('component: Select', () => {
           <Select id="test-id" name="city" options={['phoenix', 'toledo', 'tucson', 'flagstaff']} />
         )
         const trigger = getByText('Select an option') // default placeholder
-        fireEvent.keyUp(trigger, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+        fireEvent.keyUp(trigger, { key: KeyCodes.DOWN })
         await animationRender()
         const list = getByRole('listbox')
-        // keycode 84 = t
-        fireEvent.keyDown(list, { keyCode: 84, charCode: 84 })
-        // keycode 85 = u
-        fireEvent.keyDown(list, { keyCode: 85, charCode: 85 })
+        fireEvent.keyDown(list, { key: 't' })
+        fireEvent.keyDown(list, { key: 'u' })
         expect(getActiveValue()).toEqual('tucson')
       })
     })
@@ -758,8 +749,7 @@ describe('component: Select', () => {
       expect(box.name).toEqual('city')
       onFocus.mockReset()
       fireEvent.keyDown(getByRole('listbox'), {
-        keyCode: KeyCodes.ESC,
-        charCode: KeyCodes.ESC,
+        key: KeyCodes.ESC,
       })
       expect(onFocus).not.toHaveBeenCalled()
     })
@@ -919,12 +909,10 @@ describe('component: Select', () => {
       const listbox = getByRole('listbox')
       expect(getActiveValue()).toBe('phoenix')
       fireEvent.keyDown(listbox, {
-        keyCode: KeyCodes.DOWN,
-        charCode: KeyCodes.DOWN,
+        key: KeyCodes.DOWN,
       })
       fireEvent.keyDown(listbox, {
-        keyCode: KeyCodes.SPACE,
-        charCode: KeyCodes.SPACE,
+        key: KeyCodes.SPACE,
       })
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(box).toEqual({ name: 'city', value: ['tucson'] })
@@ -935,8 +923,7 @@ describe('component: Select', () => {
       await animationRender()
       expect(getActiveValue()).toBe('tucson')
       fireEvent.keyDown(listbox, {
-        keyCode: KeyCodes.SPACE,
-        charCode: KeyCodes.SPACE,
+        key: KeyCodes.SPACE,
       })
       await animationRender()
       expect(onChange).toHaveBeenCalledTimes(2)
@@ -959,10 +946,9 @@ describe('component: Select', () => {
       const trigger = getByRole('button')
       userEvent.click(trigger)
       const listbox = getByRole('listbox')
-      fireEvent.keyDown(listbox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(listbox, { key: KeyCodes.DOWN })
       fireEvent.keyDown(listbox, {
-        keyCode: KeyCodes.RETURN,
-        charCode: KeyCodes.RETURN,
+        key: KeyCodes.RETURN,
         metaKey: true,
       })
       await animationRender()
@@ -974,8 +960,7 @@ describe('component: Select', () => {
       await animationRender()
       expect(getActiveValue()).toBe('tucson')
       fireEvent.keyDown(listbox, {
-        keyCode: KeyCodes.RETURN,
-        charCode: KeyCodes.RETURN,
+        key: KeyCodes.RETURN,
         metaKey: true,
       })
       await animationRender()
@@ -1078,12 +1063,12 @@ describe('component: Select', () => {
       userEvent.click(trigger)
       await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.DOWN })
       expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-phoenix')
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.DOWN })
       expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-flagstaff')
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.UP })
       expect(searchBox.getAttribute('aria-activedescendant')).toBe('test-id-tucson')
     })
 
@@ -1110,14 +1095,14 @@ describe('component: Select', () => {
       const firstActive = getByText('No skip')
       const secondActive = getByText("Don't skip me")
 
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.DOWN })
       expect(searchBox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.DOWN })
       expect(searchBox.getAttribute('aria-activedescendant')).toBe(secondActive.id)
 
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.UP })
       expect(searchBox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.UP })
       expect(searchBox.getAttribute('aria-activedescendant')).toBe(firstActive.id)
     })
 
@@ -1129,8 +1114,8 @@ describe('component: Select', () => {
       userEvent.click(trigger)
       await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.RETURN })
       await animationRender()
       trigger = getByRole('button')
       expect(trigger).toHaveTextContent('phoenix')
@@ -1145,7 +1130,7 @@ describe('component: Select', () => {
       userEvent.click(trigger)
       await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.ESC, charCode: KeyCodes.ESC })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.ESC })
       await animationRender()
       trigger = getByRole('button')
       expect(document.activeElement).toBe(trigger)
@@ -1252,10 +1237,10 @@ describe('component: Select', () => {
       userEvent.click(trigger)
       await animationRender()
       const searchBox: HTMLElement = document.activeElement as HTMLElement
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.RETURN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.RETURN })
       const phoenix = getByText('phoenix')
       const tucson = getByText('tucson')
       expect(phoenix.getAttribute('aria-selected')).toBe('true')
@@ -1264,8 +1249,8 @@ describe('component: Select', () => {
       expect(box).toEqual({ name: 'city', value: ['phoenix', 'tucson'] })
       expect(getByRole('listbox')).not.toBeNull()
 
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.UP })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.RETURN })
       expect(phoenix.getAttribute('aria-selected')).toBe('false')
       expect(tucson.getAttribute('aria-selected')).toBe('true')
       expect(onChange).toHaveBeenCalledTimes(3)
@@ -1290,10 +1275,9 @@ describe('component: Select', () => {
       userEvent.click(trigger)
       await animationRender()
       let searchBox: HTMLElement = document.activeElement as HTMLElement
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.DOWN })
       fireEvent.keyDown(searchBox, {
-        keyCode: KeyCodes.RETURN,
-        charCode: KeyCodes.RETURN,
+        key: KeyCodes.RETURN,
         metaKey: true,
       })
       await animationRender()
@@ -1306,10 +1290,9 @@ describe('component: Select', () => {
       userEvent.click(trigger)
       await animationRender()
       searchBox = document.activeElement as HTMLElement
-      fireEvent.keyDown(searchBox, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyDown(searchBox, { key: KeyCodes.DOWN })
       fireEvent.keyDown(searchBox, {
-        keyCode: KeyCodes.RETURN,
-        charCode: KeyCodes.RETURN,
+        key: KeyCodes.RETURN,
         metaKey: true,
       })
       await animationRender()
