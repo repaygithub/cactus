@@ -1,6 +1,7 @@
+import { CactusTheme, space } from '@repay/cactus-theme'
 import { noop, pick } from 'lodash'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { ThemedStyledProps } from 'styled-components'
 
 import AccessibleField, { ExtFieldProps } from '../AccessibleField/AccessibleField'
 import Box from '../Box/Box'
@@ -111,15 +112,18 @@ export const Fieldset = styled(CheckableGroup)`
     border-bottom: ${(p) => border(p.theme, p.disabled ? 'mediumGray' : 'currentcolor')};
   }
   .field-input-group {
-    margin: 0 ${(p) => p.theme.space[4]}px;
-    padding-top: ${(p) => p.theme.space[3]}px;
+    margin: 0 ${space(4)};
+    padding-top: ${space(3)};
   }
 `
+
+const getSpacing = (props: ThemedStyledProps<CheckableGroupProps, CactusTheme>) =>
+  !isIE ? `gap: ${space(props, 3)};` : `> * { margin: ${space(props, 2)}; }`
 
 export const FlexGroup = styled(CheckableGroup)`
   .field-input-group {
     display: flex;
     flex-wrap: wrap;
-    ${(p) => (!isIE ? `gap: ${p.theme.space[3]}px;` : `> * { margin: ${p.theme.space[2]}px; }`)}
+    ${getSpacing}
   }
 `

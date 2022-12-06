@@ -214,7 +214,20 @@ const HueWrapper = styled.div`
   margin-top: 32px;
 `
 
-const Pointer = styled.div<{ $type: 'hue' | 'saturation'; $hsl: HSLColor }>`
+const translate = (props: { $type: 'hue' | 'saturation'; $hsl: HSLColor }) => {
+  const { $type: type, $hsl: hsl } = props
+  // Adjust pointer translation based on where the pointer is at so it
+  // doesn't leave the hue/saturation element visually
+  if (type === 'hue') {
+    const xOffset = hsl.h > 160 ? '-24px' : '-8px'
+    return `transform: translate(${xOffset}, -8px);`
+  } else {
+    const xOffset = hsl.s > 0.3 ? '-24px' : '-8px'
+    const yOffset = hsl.l > 0.25 ? '-8px' : '-24px'
+    return `transform: translate(${xOffset}, ${yOffset});`
+  }
+}
+const Pointer = styled.div`
   box-sizing: border-box;
   width: 32px;
   height: 32px;
@@ -222,18 +235,7 @@ const Pointer = styled.div<{ $type: 'hue' | 'saturation'; $hsl: HSLColor }>`
   background-color: transparent;
   border: 8px solid ${themeColor('white')};
   ${boxShadow(0, 'mediumGray')};
-  ${(p) => {
-    // Adjust pointer translation based on where the pointer is at so it
-    // doesn't leave the hue/saturation element visually
-    if (p.$type === 'hue') {
-      const xOffset = p.$hsl.h > 160 ? '-24px' : '-8px'
-      return `transform: translate(${xOffset}, -8px);`
-    } else {
-      const xOffset = p.$hsl.s > 0.3 ? '-24px' : '-8px'
-      const yOffset = p.$hsl.l > 0.25 ? '-8px' : '-24px'
-      return `transform: translate(${xOffset}, ${yOffset});`
-    }
-  }}
+  ${translate}
 `
 
 const blackHsl: HSLColor = { h: 0, s: 0, l: 0 }

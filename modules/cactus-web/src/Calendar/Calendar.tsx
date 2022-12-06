@@ -75,7 +75,8 @@ const memoize = <A extends any[], R>(func: (...a: A) => R): ((...a: A) => R) => 
       return result
     }
     key = args
-    return (result = func(...args))
+    result = func(...args)
+    return result
   }
 }
 

@@ -465,20 +465,22 @@ const DropdownPopup = styled(BasePopup)`
   ${(p) => p.$isTiny && 'width: 100%;'}
 `
 
-const StyledBrandBar = styled.div<{ $isTiny: boolean }>`
+const getLayout = (props: { $isTiny: boolean }) =>
+  props.$isTiny
+    ? `
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+`
+    : `
+flex-direction: row;
+justify-content: space-between;
+align-items: stretch;
+`
+
+const StyledBrandBar = styled.div`
   display: flex;
-  ${(p) =>
-    p.$isTiny
-      ? `
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-  `
-      : `
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
-  `}
+  ${getLayout}
   width: 100%;
   ${(p): string => insetBorder(p.theme, 'lightContrast', 'bottom')};
 `
