@@ -9,7 +9,7 @@ import defaultTheme, {
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
+import { compose, margin, MarginProps, width, WidthProps } from 'styled-system'
 
 import { getStatusStyles, StatusProps, StatusPropType } from '../helpers/status'
 import { flexItem, FlexItemProps } from '../helpers/styled'
@@ -60,9 +60,7 @@ const TextInput = styled.input<TextInputProps>`
   padding: 3px 15px;
   ${(p) => textStyle(p, p.textStyle || 'body')};
 
-  ${margin}
-  ${width}
-  ${flexItem}
+  ${compose(margin, width, flexItem)}
   ${commonInputStyles}
 `
 

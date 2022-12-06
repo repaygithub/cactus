@@ -29,5 +29,5 @@ export const TextAreaVariants: Story<typeof TextArea> = (args) => (
   </Flex>
 )
 TextAreaVariants.argTypes = { disabled: HIDE_CONTROL, status: HIDE_CONTROL }
-TextAreaVariants.args = { resize: false }
+TextAreaVariants.args = { resize: 'none' }
 TextAreaVariants.storyName = 'Text Area with status'

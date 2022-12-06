@@ -7,7 +7,7 @@ import TextArea from './TextArea'
 describe('component: TextArea', () => {
   test('Should support margin space props', () => {
     const { getByTestId } = renderWithTheme(<TextArea ml={5} data-testid="textArea" />)
-    const textArea = getByTestId('textArea').parentElement
+    const textArea = getByTestId('textArea')
     const styles = window.getComputedStyle(textArea as HTMLElement)
     expect(styles.marginLeft).toBe('24px')
   })
