@@ -65,13 +65,11 @@ const withErrorBoundary = <BaseProps extends Record<string, any>>(
     throw new Error('You must pass the `onError` prop when using `withErrorBoundary`!')
   }
 
-  const Wrapped = (props: BaseProps): ReactElement => (
+  return (props: BaseProps): ReactElement => (
     <ErrorBoundary onError={onError} errorView={errorView}>
       <BaseComponent {...props} />
     </ErrorBoundary>
   )
-
-  return Wrapped
 }
 
 export default withErrorBoundary
