@@ -576,7 +576,7 @@ class List extends React.Component<ListProps, ListState> {
   }
 
   private handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>): void => {
-    const key = event.which || event.keyCode
+    const key = event.key
     const active = this.getActiveOpt()
     const options = this.state.options
     if (active === null || options.length === 0) {
@@ -668,8 +668,7 @@ class List extends React.Component<ListProps, ListState> {
     return this.state.options.find((o): boolean => o.id === activeDescendant) || null
   }
 
-  private findOptionToFocus(key: number): ExtendedOptionType | null {
-    const character = String.fromCharCode(key)
+  private findOptionToFocus(character: string): ExtendedOptionType | null {
     const options = this.state.options
     const selected = this.getActiveOpt()
     if (!this.pendingChars && selected !== null) {
@@ -1242,7 +1241,7 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
   }
 
   private handleKeyUp = (event: React.KeyboardEvent<HTMLButtonElement>): void => {
-    const key = event.which || event.keyCode
+    const key = event.key
 
     switch (key) {
       case KeyCodes.UP:
@@ -1349,7 +1348,7 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
   }
 
   private handleComboInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
-    const key = event.which || event.keyCode
+    const key = event.key
     if (this.state.isOpen && this.listRef.current !== null) {
       const active = this.listRef.current.getActiveOpt()
       const options = this.listRef.current.state.options
