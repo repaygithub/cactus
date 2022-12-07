@@ -43,15 +43,29 @@ or for greatest flexibility you can use the `noScrollWrapper` prop to remove the
 
 ### Card Carousel
 
-In addition to the default styling, there is another style of table that is more suitable for mobile devices. In this mode each row is rendered as a "card", where the cells are rendered as rows within the card. The cards are arranged horizontally and can be scrolled (or swiped) side-to-side, even if the scroll wrapper is removed.
+In addition to the default styling, there is another style of table that is more suitable for mobile devices.
+In this mode each row is rendered as a "card", where the cells are rendered vertically within the card.
+The cards are arranged horizontally and can be scrolled (or swiped) side-to-side, even if the scroll wrapper is removed.
 
-There are two ways of controlling card carousel mode: using the `variant` prop, or the `cardBreakpoint` prop. `variant` has the highest precedence: if passed as `variant="table"`, the card carousel will never be used; if passed as `variant="card"`, it will always be used. The `cardBreakpoint` prop can be used to transition between table mode and card mode at one of the theme's CSS media queries, but it will only work if the app is using a `ScreenSizeProvider`. For example, the following table would be in card mode for "tiny" or "small" screen sizes, and table mode for anything larger:
+By default, the table is rendered in card mode on mobile screen sizes, and as a regular table otherwise.
+The default render mode is overridden using the `variant` prop, which has three possible values:
+"card" for card carousel; "table" which is the normal styled table;
+and "mini" which is like the normal table but with smaller font size and less padding.
+
+To easily switch modes at different screen sizes, `variant` supports the same kind of responsive values as `styled-system` props.
 
 ```jsx
 <ScreenSizeProvider>
-  <Table cardBreakpoint="small">
-    ...
-  </Table>
+
+  // Mini-table at all screen sizes.
+  <Table variant="mini" />
+
+  // Card carousel at mobile size, mini-table at tablet size, and regular above that.
+  <Table variant={['card', 'mini', 'table']} />
+
+  // Mini-table at mobile, tablet, and medium desktop sizes, regular table above that.
+  <Table variant={{ tiny: 'mini', large: 'table' }} />
+
 </ScreenSizeProvider>
 ```
 

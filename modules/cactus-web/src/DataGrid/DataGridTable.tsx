@@ -1,4 +1,5 @@
 import { IconProps, NavigationChevronDown, NavigationChevronUp } from '@repay/cactus-icons'
+import { ScreenSize, screenSizes } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { useContext } from 'react'
 import styled from 'styled-components'
@@ -67,21 +68,23 @@ const renderBody = (columns: Column[], data: Datum[]) => (
   </Table.Body>
 )
 
+const getResponsiveVariant = (breakpoint: ScreenSize) => {
+  if (breakpoint === 'extraLarge') return 'card'
+  const tableSize: ScreenSize = screenSizes[screenSizes.indexOf(breakpoint) + 1]
+  return { tiny: 'card', [breakpoint]: 'card', [tableSize]: 'table' } as const
+}
+
 const DataGridTable: React.FC<DataGridTableProps> = (props) => {
   const { children, data, ...rest } = props
 
   const context = useContext(DataGridContext)
   const { cardBreakpoint, fullWidth, variant } = context
+  const variantProp = variant || getResponsiveVariant(cardBreakpoint)
 
   return (
     <>
       {children}
-      <Table
-        width={fullWidth ? '100%' : undefined}
-        cardBreakpoint={cardBreakpoint}
-        variant={variant}
-        {...rest}
-      >
+      <Table width={fullWidth ? '100%' : undefined} variant={variantProp} {...rest}>
         {renderHeader(context)}
         {renderBody(context.columns, data)}
       </Table>

@@ -6,8 +6,6 @@ import {
   ColorStyle,
   mediaGTE,
   radius,
-  ScreenSize,
-  screenSizes,
   textStyle,
 } from '@repay/cactus-theme'
 import { Property } from 'csstype'
@@ -18,9 +16,14 @@ import { margin, MarginProps, ResponsiveValue, system } from 'styled-system'
 
 import { extractMargins } from '../helpers/omit'
 import { useMergedRefs } from '../helpers/react'
-import { allWidth, AllWidthProps, withStyles } from '../helpers/styled'
+import {
+  allWidth,
+  AllWidthProps,
+  responsivePropType,
+  useResponsiveStyles,
+  withStyles,
+} from '../helpers/styled'
 import variant from '../helpers/variant'
-import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
 type CellType = 'th' | 'td'
 type BorderCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
@@ -40,8 +43,7 @@ interface TableContextProps {
 
 type TableAttrs = Omit<React.TableHTMLAttributes<HTMLTableElement>, 'width'>
 interface TableProps extends AllWidthProps, MarginProps, TableAttrs {
-  cardBreakpoint?: ScreenSize
-  variant?: TableVariant
+  variant?: ResponsiveValue<TableVariant>
   dividers?: boolean
   sticky?: StickyColAlignment
   rowFocus?: FocusOption
@@ -92,9 +94,16 @@ interface heightInfoProps {
   cells: any[]
 }
 
+// Use the same format as styled-system config, so we can use the same parser.
+const responsiveVariantToSingle = { variant: (x: TableVariant) => ({ variant: x }) }
+
+export const useTableVariant = (props: Pick<TableProps, 'variant'>): TableVariant => {
+  const { variant } = useResponsiveStyles(responsiveVariantToSingle, props)
+  return (variant as TableVariant) || DEFAULT_CONTEXT.variant
+}
+
 export const Table = React.forwardRef<HTMLTableElement, TableProps>((initProps, ref) => {
-  const { children, cardBreakpoint, sticky = 'none', rowFocus = true, ...props } = initProps
-  const size = useContext(ScreenSizeContext)
+  const { children, sticky = 'none', rowFocus = true, ...props } = initProps
   const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [], rowFocus }
   const tableRef = React.useRef<HTMLTableElement>(null)
   const mergedRef = useMergedRefs(ref, tableRef)
@@ -132,15 +141,10 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>((initProps, 
     }
   })
 
-  if (props.variant) {
-    context.variant = props.variant
-  } else if (cardBreakpoint && size <= SIZES[cardBreakpoint]) {
-    context.variant = 'card'
-  }
   if (props.dividers) {
     context.dividers = props.dividers
   }
-  props.variant = context.variant
+  props.variant = context.variant = useTableVariant(props)
   return (
     <TableContext.Provider value={context}>
       {props.noScrollWrapper ? (
@@ -245,13 +249,12 @@ Table.propTypes = {
   // @ts-ignore
   rowFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['mouse-only'])]),
   rowHover: PropTypes.bool,
-  cardBreakpoint: PropTypes.oneOf<ScreenSize>(screenSizes),
-  variant: PropTypes.oneOf<TableVariant>(['table', 'card', 'mini']),
+  variant: responsivePropType(PropTypes.oneOf<TableVariant>(['table', 'card', 'mini'])),
   noScrollWrapper: PropTypes.bool,
 }
 
 Table.defaultProps = {
-  cardBreakpoint: 'tiny',
+  variant: ['card', 'table'],
   rowFocus: true,
   rowHover: true,
 }
