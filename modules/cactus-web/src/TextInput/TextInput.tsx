@@ -59,8 +59,9 @@ const TextInput = styled.input<TextInputProps>`
   border-radius: ${radius(20)};
   padding: 3px 15px;
   ${(p) => textStyle(p, p.textStyle || 'body')};
-
-  ${compose(margin, width, flexItem)}
+  &&& {
+    ${compose(margin, width, flexItem)}
+  }
   ${commonInputStyles}
 `
 

@@ -12,6 +12,19 @@ describe('component: TextArea', () => {
     expect(styles.marginLeft).toBe('24px')
   })
 
+  test('should support resize property', () => {
+    const { getByTestId, rerender } = renderWithTheme(<TextArea data-testid="textArea" />)
+    let textArea = getByTestId('textArea')
+    let styles = window.getComputedStyle(textArea as HTMLElement)
+    expect(styles.resize).toBe('none')
+
+    rerender(<TextArea data-testid="textArea" resize="horizontal" />)
+
+    textArea = getByTestId('textArea')
+    styles = window.getComputedStyle(textArea as HTMLElement)
+    expect(styles.resize).toBe('horizontal')
+  })
+
   test('Should support ref prop', () => {
     const ref = React.createRef<HTMLTextAreaElement>()
     const { getByTestId } = renderWithTheme(
