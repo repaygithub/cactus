@@ -1,0 +1,50 @@
+
+import { Meta, ArgsTable, Canvas, Story } from '@storybook/addon-docs'
+import { Field } from '../'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import { Form } from 'react-final-form'
+
+<Meta title="Cactus Form/Components/SubmitButton" />
+
+
+# Submit Button
+
+The Submit Button is at it's core, a Button component rendered by a formSpy that disables it when there are validation errors, the form hasn't been touched, or if the form is submitting.
+
+Note that this component isn't required. The form can still be submitted using a custom submit button.
+
+
+### Try it out
+
+export const code = `
+  <Form onSubmit={() => {}}>{() => <form onSubmit={() => {}}>
+    <Field id="field" />
+  </form>} </Form>
+`;
+export const scope = { Field, Form };
+
+
+<LiveProvider code={code} scope={{scope}}>
+  <LiveEditor style={{}} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+
+
+### Example with changing SubmitButton text
+
+```
+const customProcessState = (props, state) => {
+    props.disabled = props.disabled || state.hasValidationErrors || state.pristine
+    props.loading = props.submitting || state.submitting
+    props.children = state.submitting ? 'Submitting' : 'Submit'
+  };
+
+<SubmitButton 
+  processState={customProcessState}
+/>
+```
+The first two lines in customProcessState are part of the defult processState. 
+If you want to keep them and add custom logic, you have to write them again (like below)
