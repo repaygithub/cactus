@@ -10,16 +10,16 @@ order: 3
 The `BaseI18nController` class is designed to control the internationalization by loading resources for a given language, and utilizing Project Fluent's formatting
 capabilities to provide translations for an application. There are a few pieces of the `BaseI18nController` class to take note of here:
 
-### Load
+### loadImpl
 
-The `_load` function is what will load your translations into the controller. You must extend `BaseI18nController` in order to provide an implementation of the `_load` function.
+The `loadImpl` function is what will load your translations into the controller. You must extend `BaseI18nController` in order to provide an implementation of the `loadImpl` function.
 
-- The developer is responsible for handling failures when loading resources in the `_load` function. (e.g. retry loading, or loading from an alternate source)
-  - You can either handle the error within the `_load` method, or return a rejected Promise and handle the error in the `onLoad` method or an error listener.
+- The developer is responsible for handling failures when loading resources in the `loadImpl` function. (e.g. retry loading, or loading from an alternate source)
+  - You can either handle the error within the `loadImpl` method, or return a rejected Promise and handle the error in the `onLoad` method or an error listener.
 - The return value is a Promise that resolves to an object with one required and one optional property:
   - `resources` is an array of Fluent translation strings; you can also put instances of the `FluentResource` class, or the return value of the `loadRef` method (more below). The array is combined such that if the same Fluent translation key exists in two of the resources, the later resource will override the earlier one.
   - `version` if present should be a number indicating the version of the translations. This is tracked per section, and if (when reloading a section) the returned version is less than the current version, the translations will not be updated.
-- The `_load` function accepts two arguments: an object that represents the section being loaded, and an options object. The section info argument has following properties:
+- The `loadImpl` function accepts two arguments: an object that represents the section being loaded, and an options object. The section info argument has following properties:
 
 | Property  | Type   | Required | Description                                                                   |
 | --------- | ------ | -------- | ----------------------------------------------------------------------------- |
@@ -27,15 +27,15 @@ The `_load` function is what will load your translations into the controller. Yo
 | `section` | String | Y        | The section of the app that the controller should be loading translations for |
 
 - The options object is completely customizable for your use case: for instance, if you have a mix of hard-coded and stored-in-database translations, you might set `options.dynamic = true` to tell the loader it should look in the DB for a particular section.
-- There are two "built-in" options that are useless in `_load` but can be passed to `load` or `I18nSection`:
-  - `loader` is a function that replaces the `_load` method; it can be used if you have a section with a very different loading mechanism than the rest, and you don't want to special case it in your controller class.
+- There are two "built-in" options that are useless in `loadImpl` but can be passed to `load` or `I18nSection`:
+  - `loader` is a function that replaces the `loadImpl` method; it can be used if you have a section with a very different loading mechanism than the rest, and you don't want to special case it in your controller class.
   - `onLoad` is a function that is called once the section is loaded (or an error occurred while loading). It takes three arguments: the section info object, the state the section was in before loading (usually "new", but could be "error" if you're retrying), and the error (if there was one). The default `onLoad` behavior is to call any listeners that have been set on the controller.
   - Both functions bind `this` to the controller when called, which can enable you to keep the default behavior and just do something custom on the side:
 
 ```js
 // Add an extra translation source on top of the normal ones:
 const loader = async (sectionInfo, opts) => {
-  const { resources } = await this._load(sectionInfo, opts)
+  const { resources } = await this.loadImpl(sectionInfo, opts)
   const ftl = getSuperSpecialTranslations(sectionInfo)
   return { resources: [...resources, ftl] }
 }
@@ -49,10 +49,10 @@ const onLoad = (sectionInfo, prevState, error) => {
 
 ### LoadRef
 
-The `loadRef` function is meant as a supplement to `_load` for specific use cases. Say you have some common translations that appear on multiple pages. They're not quite global enough to wrap the entire app in an `I18nSection`, but it's also inconvenient to put a section everyplace they're used; instead, you can include those translations as a reference. The "common" section will only be loaded once, but can be referenced by as many other sections as needed:
+The `loadRef` function is meant as a supplement to `loadImpl` for specific use cases. Say you have some common translations that appear on multiple pages. They're not quite global enough to wrap the entire app in an `I18nSection`, but it's also inconvenient to put a section everyplace they're used; instead, you can include those translations as a reference. The "common" section will only be loaded once, but can be referenced by as many other sections as needed:
 
 ```
-_load(sectionInfo, opts) {
+loadImpl(sectionInfo, opts) {
   const resources = []
   if (needsCommonTranslations(sectionInfo.section)) {
     resources.push(this.loadRef(sectionInfo, 'common', opts))
@@ -66,9 +66,9 @@ Another use case could be if you have two languages that are mostly the same wit
 
 | Argument   | Required | Description                                                          |
 | ---------- | -------- | -------------------------------------------------------------------- |
-| `referrer` | Y        | The object that was received as the first argument to `_load`        |
+| `referrer` | Y        | The object that was received as the first argument to `loadImpl`     |
 | `section`  | Y        | The section to be included as a reference                            |
-| `loadOpts` | Y        | The options that were passed as the second argument to `_load`       |
+| `loadOpts` | Y        | The options that were passed as the second argument to `loadImpl`    |
 | `lang`     | N        | The language of the reference section (defaults to same as referrer) |
 
 #### Example
@@ -147,8 +147,8 @@ The `BaseI18nController` constructor accepts a single options object with the fo
 
 ```js
 class I18nController extends BaseI18nController {
-  // Minimum implementation with required _load() method
-  _load(sectionInfo) {
+  // Minimum implementation with required loadImpl() method
+  loadImpl(sectionInfo) {
     const { lang, section } = sectionInfo
     // Load ftl translations from the source
     return import(`./locales/${lang}/${section}.js`).then(({ default: ftl }) => ({
@@ -171,7 +171,7 @@ You may also want to extend other functions based on your needs. This can be don
 export const missingKeys = new Set()
 
 class I18nController extends BaseI18nController {
-  _load(args) {
+  loadImpl(args) {
     // code to load translations
   }
 
@@ -246,10 +246,13 @@ The `<I18nSection />` component was designed to allow the translations to be bro
 
 | Prop      | Type   | Required | Description                                                                 |
 | --------- | ------ | -------- | --------------------------------------------------------------------------- |
-| `section` | String | Y        | Name of the section to load and use as the default in descendant components |
+| `section` | String | N        | Name of the section to load and use as the default in descendant components |
+| `name`    | String | N        | Name of the section to load and use as the default in descendant components |
 | `lang`    | String | N        | Used to override the globally selected language                             |
 
-Any additional props will be passed as part of the `loadOpts` argument to the `_load` function.
+\*`section` is an alias of `name`; you must pass one of them.
+
+\*Any additional props will be passed as part of the `loadOpts` argument to the `loadImpl` function.
 
 ### Example Usage
 
@@ -286,7 +289,7 @@ import { BaseI18nController } from '@repay/cactus-i18n'
 
 class I18nController extends BaseI18nController {
 
-  protected async _load(bundleInfo, extra): Promise<LoadResult> {
+  protected async loadImpl(bundleInfo, extra): Promise<LoadResult> {
     const [lang] = bundleInfo.lang.split('-')
     const { default: ftl } = await import(`./locales/${lang}/${bundleInfo.section}.js`)
     const resources = [ftl]
@@ -466,7 +469,7 @@ class BigComponent extends React.Component {
 
 ## useI18nSection
 
-`useI18nSection` is a hook that can be used to load one or more sections. It's used within the `<I18nSection />` component, but it does not block rendering while it loads the section. It will return a boolean indicating whether or not the section or sections are loaded. You can pass a simple string indicating the name of the section you wish to load, or you can pass an object with a `section` key and any additional arbitrary data you want. Any extra data will be passed to the second argument of your controller's `_load` function.
+`useI18nSection` is a hook that can be used to load one or more sections. It's used within the `<I18nSection />` component, but it does not block rendering while it loads the section. It will return a boolean indicating whether or not the section or sections are loaded. You can pass a simple string indicating the name of the section you wish to load, or you can pass an object with a `section` key and any additional arbitrary data you want. Any extra data will be passed to the second argument of your controller's `loadImpl` function.
 
 ### Parameters
 
@@ -476,7 +479,7 @@ class BigComponent extends React.Component {
 | --------- | ------ | -------- | ---------------------------------------- |
 | `section` | String | Y        | The name of the section you want to load |
 
-- Any other keys passed in this object will be passed to the second argument of the `_load` function for you to process in whatever way is necessary for your application.
+- Any other keys passed in this object will be passed to the second argument of the `loadImpl` function for you to process in whatever way is necessary for your application.
 
 ### Example Usage
 
@@ -494,13 +497,13 @@ Note that you can omit the `hasLoaded` logic in the example above.
 
 ### Example with Objects
 
-If you need to process more data in your `_load` function, you can do so by passing objects to `useI18nSection`:
+If you need to process more data in your `loadImpl` function, you can do so by passing objects to `useI18nSection`:
 
 ```jsx
 import { useI18nSection, I18nText } from '@repay/cactus-i18n'
 
 const Component = () => {
-  // _load() will be called twice; once for each section. An object containing the `dynamic` value will be passed to the second argument.
+  // loadImpl() will be called twice; once for each section. An object containing the `dynamic` value will be passed to the second argument.
   useI18nSection(
     { section: 'local-section', dynamic: false },
     { section: 'remote-section', dynamic: true }
