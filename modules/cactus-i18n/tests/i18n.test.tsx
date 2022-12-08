@@ -534,7 +534,7 @@ override = I'm invisible
         expect(await screen.findByText('This text should render')).toBeInTheDocument()
         expect(mockLoad).toHaveBeenCalledTimes(1)
         expect(mockLoad.mock.calls[0][0]?.section).toBe('kleenex')
-        expect(mockLoad.mock.calls[0][1]).toEqual({ dynamic: true })
+        expect(mockLoad.mock.calls[0][1]).toEqual(expect.objectContaining({ dynamic: true }))
       })
 
       test('language selection', async () => {
@@ -576,7 +576,9 @@ override = I'm invisible
       )
       expect(mockLoad).toHaveBeenCalledTimes(1)
       expect(mockLoad.mock.calls[0][0]?.section).toBe('kleenex')
-      expect(mockLoad.mock.calls[0][1]).toEqual({ dependencies: i18nDependencies })
+      expect(mockLoad.mock.calls[0][1]).toEqual(
+        expect.objectContaining({ dependencies: i18nDependencies })
+      )
     })
   })
 
