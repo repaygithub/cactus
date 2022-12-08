@@ -34,7 +34,7 @@ The `loadImpl` function is what will load your translations into the controller.
 
 ```js
 // Add an extra translation source on top of the normal ones:
-const loader = async (sectionInfo, opts) => {
+async function loader(sectionInfo, opts) {
   const { resources } = await this.loadImpl(sectionInfo, opts)
   const ftl = getSuperSpecialTranslations(sectionInfo)
   return { resources: [...resources, ftl] }
