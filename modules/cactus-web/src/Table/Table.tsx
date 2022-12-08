@@ -10,17 +10,18 @@ import {
   screenSizes,
   textStyle,
 } from '@repay/cactus-theme'
+import { Property } from 'csstype'
 import PropTypes from 'prop-types'
 import React, { createContext, useContext, useLayoutEffect } from 'react'
-import styled, { css, DefaultTheme, FlattenInterpolation, ThemeProps } from 'styled-components'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
+import styled, { css, ThemeProps } from 'styled-components'
+import { margin, MarginProps, ResponsiveValue, system } from 'styled-system'
 
 import { extractMargins } from '../helpers/omit'
 import { useMergedRefs } from '../helpers/react'
+import { allWidth, AllWidthProps, withStyles } from '../helpers/styled'
 import variant from '../helpers/variant'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 
-type CellAlignment = 'center' | 'right' | 'left'
 type CellType = 'th' | 'td'
 type BorderCorner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
 export type FocusOption = boolean | 'mouse-only'
@@ -37,15 +38,15 @@ interface TableContextProps {
   rowFocus: FocusOption
 }
 
-interface TableProps extends MarginProps, React.TableHTMLAttributes<HTMLTableElement> {
-  fullWidth?: boolean
+type TableAttrs = Omit<React.TableHTMLAttributes<HTMLTableElement>, 'width'>
+interface TableProps extends AllWidthProps, MarginProps, TableAttrs {
   cardBreakpoint?: ScreenSize
   variant?: TableVariant
-  as?: React.ElementType
   dividers?: boolean
   sticky?: StickyColAlignment
   rowFocus?: FocusOption
   rowHover?: boolean
+  noScrollWrapper?: boolean
 }
 
 interface TableHeaderProps extends React.TableHTMLAttributes<HTMLTableSectionElement> {
@@ -54,14 +55,13 @@ interface TableHeaderProps extends React.TableHTMLAttributes<HTMLTableSectionEle
   sticky?: StickyColAlignment
 }
 
-export interface TableCellProps
-  extends WidthProps,
-    Omit<
-      React.TdHTMLAttributes<HTMLTableCellElement> & React.ThHTMLAttributes<HTMLTableCellElement>,
-      'width'
-    > {
+// ThHTMLAttributes is a strict subset of TdHTMLAttributes.
+type CellAttrs = Omit<React.TdHTMLAttributes<HTMLTableCellElement>, 'width' | 'align'>
+
+export interface TableCellProps extends AllWidthProps, CellAttrs {
+  ref?: React.Ref<HTMLTableCellElement>
   variant?: TableVariant
-  align?: CellAlignment
+  align?: ResponsiveValue<Property.TextAlign>
   as?: CellType
 }
 
@@ -79,12 +79,12 @@ const DEFAULT_CONTEXT: TableContextProps = {
 
 const TableContext = createContext<TableContextProps>(DEFAULT_CONTEXT)
 
-const Wrapper = styled.div<TableProps>`
+const Wrapper = withStyles('div', {
+  displayName: 'TableWrapper',
+  styles: [margin],
+})<MarginProps>`
   max-width: 100%;
   overflow-x: auto;
-  margin: 0 16px;
-  ${margin}
-  ${(p) => (p.fullWidth ? 'width: 100%;' : '')};
 `
 
 interface heightInfoProps {
@@ -98,7 +98,6 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>((initProps, 
   const context: TableContextProps = { ...DEFAULT_CONTEXT, headers: [], rowFocus }
   const tableRef = React.useRef<HTMLTableElement>(null)
   const mergedRef = useMergedRefs(ref, tableRef)
-  const marginProps = extractMargins(props)
   useLayoutEffect(() => {
     const heightInfo: heightInfoProps[] = []
     let height = 0
@@ -144,12 +143,12 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>((initProps, 
   props.variant = context.variant
   return (
     <TableContext.Provider value={context}>
-      {props.as ? (
+      {props.noScrollWrapper ? (
         <StyledTable {...props} sticky={sticky} ref={mergedRef}>
           {children}
         </StyledTable>
       ) : (
-        <Wrapper {...marginProps} fullWidth={props.fullWidth}>
+        <Wrapper {...extractMargins(props)}>
           <StyledTable {...props} sticky={sticky} ref={mergedRef}>
             {children}
           </StyledTable>
@@ -177,10 +176,10 @@ export const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
       props.variant = 'card'
 
       return (
-        <StyledCell {...props} ref={ref}>
+        <CardCell {...props} ref={ref}>
           {headerContent && <HeaderBox>{headerContent}</HeaderBox>}
           <ContentBox>{children}</ContentBox>
-        </StyledCell>
+        </CardCell>
       )
     }
 
@@ -237,19 +236,18 @@ DefaultTable.Row = TableRow
 DefaultTable.Body = TableBody
 
 TableCell.propTypes = {
-  align: PropTypes.oneOf<CellAlignment>(['center', 'right', 'left']),
   as: PropTypes.oneOf<CellType>(['th', 'td']),
 }
 
 Table.displayName = 'Table'
 
 Table.propTypes = {
-  fullWidth: PropTypes.bool,
   // @ts-ignore
   rowFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['mouse-only'])]),
   rowHover: PropTypes.bool,
   cardBreakpoint: PropTypes.oneOf<ScreenSize>(screenSizes),
   variant: PropTypes.oneOf<TableVariant>(['table', 'card', 'mini']),
+  noScrollWrapper: PropTypes.bool,
 }
 
 Table.defaultProps = {
@@ -260,8 +258,7 @@ Table.defaultProps = {
 
 export default DefaultTable
 
-const getShape = (location: BorderCorner): FlattenInterpolation<ThemeProps<DefaultTheme>> =>
-  css`border-${location}-radius: ${radius(8)};`
+const getShape = (location: BorderCorner) => css`border-${location}-radius: ${radius(8)};`
 
 const HeaderBox = styled.div.attrs({ 'aria-hidden': 'true' })`
   text-transform: uppercase;
@@ -290,49 +287,47 @@ const ContentBox = styled.div`
   }
 `
 
-const StyledCell = styled.td(
+const StyledCell: React.FC<TableCellProps> = withStyles('td', {
+  displayName: 'TableCell',
+  styles: [allWidth, system({ align: { property: 'textAlign' } })],
+  transitiveProps: ['variant'],
+})(
   variant({
-    table: css<TableCellProps>`
-      text-align: ${(p) => p.align || 'left'};
+    table: css<AllWidthProps>`
+      text-align: left;
       padding: 16px;
       ${(p) =>
-        p.width
-          ? width
-          : css`
-              min-width: calc(160px * 0.7125);
-              ${mediaGTE('large')} {
-                min-width: calc(160px * 0.875);
-              }
-              ${mediaGTE('extraLarge')} {
-                min-width: 160px;
-              }
-            `};
+        !p.width &&
+        `
+          min-width: calc(160px * 0.7125);
+          ${mediaGTE(p, 'large')} {
+            min-width: calc(160px * 0.875);
+          }
+          ${mediaGTE(p, 'extraLarge')} {
+            min-width: 160px;
+          }
+        `}
     `,
-    mini: css<TableCellProps>`
-      text-align: ${(p) => p.align || 'left'};
+    mini: css`
+      text-align: left;
       padding: 8px;
-      ${(p) => p.width && width};
-    `,
-    card: css`
-      && {
-        display: flex;
-        width: 240px;
-        flex-flow: row wrap;
-        justify-content: space-between;
-        align-items: flex-start;
-        box-sizing: border-box;
-        padding: 8px 16px;
-        :nth-of-type(even) {
-          background-color: ${color('lightContrast')};
-        }
-        :last-child {
-          border-bottom-left-radius: inherit;
-          border-bottom-right-radius: inherit;
-        }
-      }
     `,
   })
-)
+) as any
+
+// This one ignores prop styles.
+const CardCell: React.FC<TableCellProps> = withStyles('td', {
+  displayName: 'CardCell',
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  transitiveProps: ['align', 'variant', ...allWidth.propNames!],
+})`
+  display: flex;
+  width: 240px;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-sizing: border-box;
+` as any
 
 const headerVariants = variant({
   card: css`
@@ -356,7 +351,7 @@ const StyledHeader = styled.thead<TableHeaderProps>`
   ${headerVariants}
 `
 
-const getCTABorder = (p: ThemeProps<CactusTheme>, focus?: boolean): ReturnType<typeof css> => {
+const getCTABorder = (p: ThemeProps<CactusTheme>, focus?: boolean) => {
   return css`
     th,
     td {
@@ -455,14 +450,24 @@ const table = css<TableProps>`
   }
 `
 
+// Card carousel needs overflow regardless of wrapper; overflow doesn't normally
+// work with <table> elements, but it does work when changing the `display` property.
 const card = css<TableProps>`
   ${textStyle('tiny')};
+  // This margin prevents the box shadow from being cut off.
+  margin-bottom: 6px;
+  ${(p) =>
+    p.noScrollWrapper &&
+    `
+    overflow-x: auto;
+    max-width: 100%;
+  `}
   overflow-wrap: break-word;
   &,
   thead,
   tbody,
   tfoot {
-    display: inline-flex;
+    display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
   }
@@ -483,7 +488,6 @@ const card = css<TableProps>`
   }
   th,
   td {
-    display: block;
     text-align: center;
     max-width: 100%;
     padding: 8px 16px;
@@ -497,11 +501,15 @@ const card = css<TableProps>`
   }
 `
 
-const StyledTable = styled.table<TableProps>`
-  ${(p) => (p.fullWidth ? 'min-width: 100%' : '')};
+const StyledTable = withStyles('table', {
+  displayName: 'Table',
+  as: 'table',
+  styles: [margin, allWidth],
+  transitiveProps: ['variant', 'dividers', 'sticky', 'rowHover', 'noScrollWrapper'],
+})`
   color: ${color('darkestContrast')};
   th {
     font-weight: 600;
   }
   ${variant({ table, card, mini: table })};
-`
+` as React.FC<TableProps & { ref?: React.Ref<HTMLTableElement> }>

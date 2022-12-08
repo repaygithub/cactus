@@ -7,11 +7,12 @@ export default {
   title: 'Table',
   component: Table,
   argTypes: {
-    fullWidth: { control: 'boolean', defaultValue: true },
+    width: STRING,
+    minWidth: STRING,
+    maxWidth: STRING,
     cardBreakpoint: { options: ['tiny', 'small', 'medium', 'large', 'extraLarge'] },
     variant: { options: ['table', 'card', 'mini'] },
     dividers: { control: 'boolean' },
-    as: HIDE_CONTROL,
   },
 } as const
 
@@ -124,7 +125,7 @@ export const StylesOnly: TableStory = ({
   }
 
   return (
-    <Table {...args} as="table">
+    <Table {...args}>
       {captionText && <caption>{captionText}</caption>}
       {header}
       <Body>{rows}</Body>
@@ -133,7 +134,7 @@ export const StylesOnly: TableStory = ({
 }
 StylesOnly.argTypes = { ...Layout.argTypes }
 delete StylesOnly.argTypes.alignment
-StylesOnly.args = { ...Layout.args }
+StylesOnly.args = { ...Layout.args, noScrollWrapper: true }
 
 export const WithLongValues: Story<
   typeof Table,
@@ -177,7 +178,6 @@ export const WithLongValues: Story<
 }
 WithLongValues.argTypes = {
   variant: HIDE_CONTROL,
-  fullWidth: HIDE_CONTROL,
   cardBreakpoint: HIDE_CONTROL,
   dividers: HIDE_CONTROL,
 }
