@@ -69,6 +69,25 @@ For the default styling, there is the possibility to set the right most column r
 </ScreenSizeProvider>
 ```
 
+### Table Width Behavior
+
+The HTML `<table>` element has somewhat strange width behavior. `minWidth` and `width`
+can make a narrow table expand, but neither `width` nor `maxWidth` can make a wide table narrower.
+We support these props anyway because they may be useful in certain cases,
+such as defining a valid width range in conjunction with flex grow/shrink;
+almost always this will mean using the `noScrollWrapper` prop.
+
+Also, because the width props are applied to the table and not the wrapper,
+if you need to limit or change the _wrapper's_ size you will need to provide a custom wrapper:
+
+```jsx
+<Box overflow="auto" maxWidth="70%">
+  <Table noScrollWrapper width="100%">
+    ...
+  </Table>
+</Box>
+```
+
 ### Try it out
 
 export const code = `
