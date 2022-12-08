@@ -1,9 +1,8 @@
+import { noop } from 'lodash'
 import React from 'react'
-
-// import { AccessibleField } from '../'
-import { Field } from '../'
 import { Form } from 'react-final-form'
-// import { Story } from '../helpers/storybook'
+
+import { Field } from '../'
 import docsMeta from './SubmitButton.story.mdx'
 
 delete docsMeta.includeStories
@@ -17,7 +16,7 @@ export default {
 } as const
 
 const FormWrapper = ({ children }) => (
-  <Form onSubmit={() => {}}>{() => <form onSubmit={() => {}}>{children}</form>}</Form>
+  <Form onSubmit={noop}>{() => <form onSubmit={noop}>{children}</form>}</Form>
 )
 
 export const BasicUsage = () => (

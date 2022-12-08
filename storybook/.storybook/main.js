@@ -1,5 +1,10 @@
 module.exports = {
-  stories: ['../../docs/**/*.story.mdx', '../../modules/**/*.story.@(js|jsx|ts|tsx)'],
+  stories: [
+    '../../docs/**/*.story.mdx',
+    '../../modules/**/*.story.@(js|jsx|ts|tsx)',
+    '../../modules/cactus-form/**/Form.story.mdx',
+    '../../modules/cactus-form/**/FieldSpy-FormSpy.story.mdx',
+  ],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-docs',

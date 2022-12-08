@@ -1,0 +1,61 @@
+import { Meta } from '@storybook/addon-docs'
+
+<Meta title="Cactus Form/Getting Started" />
+
+# Getting Started
+
+Collecting data using forms is one of the most basic functions of a website. <a to='/components/'>@repay/cactus-web</a> provides several styled form inputs, as well as a few custom inputs that emulate built-in HTML inputs. 
+This guide will show you the basics of combining these input components with a common forms library, [Final Form](https://final-form.org/).
+Note that because Final Form is framework-agnostic, there's [another library](https://final-form.org/react) for the React-specific parts.
+
+Before starting with Cactus Form, you should have a React application, and know how to add a page or component.
+
+### Installation
+
+Installation is simple enough, just add the latest version of "final-form", "react-final-form", and "@repay/cactus-form" to the `dependencies` list in your package.json (or however you add dependencies in your particular project).
+
+Cactus Form also has an optional setup step using [patch-package](https://www.npmjs.com/package/patch-package), described in more depth in the library documentation.
+
+## Using React Final Form
+
+The basic Final Form library is very flexible, and we highly recommend going through the docs to understand what it's capable of. However, the majority of use cases can be covered by the components in React Final Form and Cactus Form.
+
+To make a form you start with the [Form](/docs/cactus-form-components-form--page) component,
+which creates both a form and a React context that allows you to access it from any descendants.
+Once the form is created, there are a variety of hooks and components that can be used to implement the functionality.
+We won't be getting into all the arguments and subtleties since those are well-covered in the documentation,
+just covering enough to show how it works with Cactus components.
+
+Creating a form is simple:
+
+```jsx
+import { Field, Form, FormSpy, SubmitButton } from '@repay/cactus-form'
+import { Button } from '@repay/cactus-web'
+import React from 'react'
+
+const ExampleForm = (props) => (
+  <Form {...props}>
+        <FormSpy subscription={{ error: true }}>
+          {({error}) => (
+            <Alert status="error">{error}</Alert>
+          )}
+        </FormSpy>
+        <Field id="text-input" name="mytext" label="Enter some text" />
+        <Field type="checkbox" name="mycb" label="Check me (or don't)" />
+        <SubmitButton />
+  </Form>
+)
+```
+
+The Cactus Form version of `Field` automatically maps `type` to Cactus Web components:
+the example above will render a `TextInputField` and a `CheckBoxField`,
+but this behavior is customizable in a number of ways, covered more in the Field docs.
+
+
+### Further Reading
+
+- [Final Form Documentation](https://final-form.org/docs/final-form/getting-started)
+- [React Final Form Documentation](https://final-form.org/docs/react-final-form/getting-started)
+- <a to='/components/'>@repay/cactus-web Documentation</a>
+- <a to='/forms/'>@repay/cactus-form Documentation</a>
+- [Example app w/ form (UI Config page)](https://github.com/repaygithub/cactus/tree/master/examples/mock-ebpp)

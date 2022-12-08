@@ -1,28 +1,32 @@
 
 import { Meta, ArgsTable, Canvas, Story } from '@storybook/addon-docs'
-import { Field } from '../'
+import { Field, Form, SubmitButton } from '../'
 import cactusTheme from '@repay/cactus-theme'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
-import { Form } from 'react-final-form'
 
 <Meta title="Cactus Form/Components/SubmitButton" />
 
 
 # Submit Button
 
-The Submit Button is at it's core, a Button component rendered by a formSpy that disables it when there are validation errors, the form hasn't been touched, or if the form is submitting.
+`SubmitButton` is essentially a `FormSpy` that renders a `Button` with `type="submit"`. By default, it's subscribed
+to `hasValidationErrors`, `submitting`, and `pristine`, and it will set the `disabled` and `loading` props for you based
+on those state values. You can override the default subscription if necessary, and `SubmitButton` supports an extra prop
+called `processState`, which functions similarly to `processMeta` on the `Field` component, so you have full control over
+the subscription and how it affects the output. Most of the time, though, the default subscription and `processState` behavior
+should be all that you need.
 
 Note that this component isn't required. The form can still be submitted using a custom submit button.
 
-
-### Try it out
+## Try it out
 
 export const code = `
-  <Form onSubmit={() => {}}>{() => <form onSubmit={() => {}}>
+  <Form onSubmit={() => {}}>
     <Field id="field" />
-  </form>} </Form>
+    <SubmitButton />
+  </Form>
 `;
-export const scope = { Field, Form };
+export const scope = { Field, Form, SubmitButton };
 
 
 <LiveProvider code={code} scope={{scope}}>
@@ -33,7 +37,38 @@ export const scope = { Field, Form };
 
 
 
-### Example with changing SubmitButton text
+## Basic examples
+
+```
+<Form>
+  <SubmitButton />
+</Form>
+```
+
+Or, if you need to change the label:
+
+```
+<Form>
+  <SubmitButton>Submit Me!</SubmitButton>
+</Form>
+```
+
+If you need more control for your use-case, though, you can still set the behavior based on your specific needs using
+the `subscription` and the `processState` function.
+
+## processState
+
+`processState` accepts two arguments: the `props` object that will ultimately be passed to the `Button`, and the
+[form state](https://final-form.org/docs/final-form/types/FormState) values that you're subscribed to. You can then use those
+state values to drive the props that get passed to the `Button`. You can either return a new props object from `processState`,
+or if you don't return anything, it will just use the updated props object that was passed to the function.
+
+
+### Example using processState
+
+The first two lines in the below customProcessState function are taken directly from the default processState. 
+This needs to be included if we want to keep the default behavior we're overriding.
+The third line shows how you can make use of the state to have custom text.
 
 ```
 const customProcessState = (props, state) => {
@@ -46,5 +81,14 @@ const customProcessState = (props, state) => {
   processState={customProcessState}
 />
 ```
-The first two lines in customProcessState are part of the defult processState. 
-If you want to keep them and add custom logic, you have to write them again (like below)
+
+### Example using processState and subscription
+
+```
+const processState = (props, state) => {
+  props.disabled = !state.dirtySinceLastSubmit
+}
+<Form>
+  <SubmitButton subscription={{ dirtySinceLastSubmit: true }} processState={processState} />
+</Form>
+```
