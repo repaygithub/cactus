@@ -5,7 +5,7 @@ class I18nController extends BaseI18nController {
     return section === 'global' ? id : `${section}__${id}`
   }
 
-  protected async _load(args: BundleInfo): Promise<LoadResult> {
+  protected async loadImpl(args: BundleInfo): Promise<LoadResult> {
     const [lang] = args.lang.split('-')
     const { default: ftl } = await import(`./locales/${lang}/${args.section}.js`)
     return { resources: [ftl] }

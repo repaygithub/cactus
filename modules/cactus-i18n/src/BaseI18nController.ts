@@ -109,8 +109,8 @@ export default abstract class BaseI18nController {
     } else if (!options.lang) {
       throw new Error('You must provide a `lang` or `defaultLang`')
     }
-    if (this._load === undefined) {
-      throw new Error('You must override the `_load` method')
+    if (this.loadImpl === undefined) {
+      throw new Error('You must override the `loadImpl` method')
     }
 
     this._supportedLangs = options.supportedLangs
@@ -120,7 +120,7 @@ export default abstract class BaseI18nController {
     this._bundleOpts = { useIsolating, functions }
   }
 
-  protected abstract _load(b: BundleInfo, l: LoadOpts): AsyncLoadResult
+  protected abstract loadImpl(b: BundleInfo, l: LoadOpts): AsyncLoadResult
 
   protected _log(levelOrArg: string, ...args: any[]): void {
     if (this._debugMode) {
@@ -204,7 +204,7 @@ export default abstract class BaseI18nController {
     if (bundleInfo.loadState === 'new' || bundleInfo.loadState === 'error') {
       const prevState = bundleInfo.loadState
       bundleInfo.loadState = 'loading'
-      const loader = loadOpts.loader || this._load
+      const loader = loadOpts.loader || this.loadImpl
       const onLoad = loadOpts.onLoad || this.onLoad
       loader.call(this, bundleInfo, loadOpts).then(
         (result) => {
@@ -233,7 +233,7 @@ export default abstract class BaseI18nController {
       if (bundleInfo.loadState === 'new' || bundleInfo.loadState === 'error') {
         const prevState = bundleInfo.loadState
         bundleInfo.loadState = 'loading'
-        const loader = loadOpts.loader || this._load
+        const loader = loadOpts.loader || this.loadImpl
         loader.call(this, bundleInfo, loadOpts).then(
           (result) => {
             if (bundleInfo.update('loaded', loadOpts, result)) {

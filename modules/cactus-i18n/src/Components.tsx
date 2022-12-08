@@ -68,7 +68,8 @@ I18nProvider.propTypes = {
 
 interface I18nSectionProps {
   children?: React.ReactNode
-  section: string
+  section?: string
+  name?: string
   lang?: string
   [key: string]: any
 }
@@ -77,7 +78,14 @@ function hasLoadedAll(controller: BaseI18nController, section: string, lang?: st
   return controller.hasLoaded(section, lang)
 }
 
-const I18nSection: React.FC<I18nSectionProps> = ({ section, lang, children, ...extraProps }) => {
+const I18nSection: React.FC<I18nSectionProps> = ({
+  section,
+  name,
+  lang,
+  children,
+  ...extraProps
+}) => {
+  section = section || (name as string)
   const context = useContext(I18nContext)
   const ctxRef = React.useRef<I18nContextType | null>(null)
   if (context === null) {
@@ -103,7 +111,12 @@ const I18nSection: React.FC<I18nSectionProps> = ({ section, lang, children, ...e
 }
 
 I18nSection.propTypes = {
-  section: PropTypes.string.isRequired,
+  section: (props: I18nSectionProps, _: string, componentName: string) => {
+    if (!props.section && !props.name && !props.children) {
+      return new Error(`One of props 'section' or 'name' was not specified in '${componentName}.'`)
+    }
+    return null
+  },
   lang: PropTypes.string,
 }
 

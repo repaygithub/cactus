@@ -52,8 +52,8 @@ export const useI18nSection = (...sections: Array<string | SectionOptions>): boo
       }
     }
   })
-  return !sections.some((section) => {
+  return sections.every((section) => {
     section = typeof section === 'string' ? section : section.section
-    return !controller?.hasLoaded(section, lang)
+    return controller?.hasLoaded(section, lang)
   })
 }
