@@ -43,7 +43,7 @@ interface AccordionHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 
 interface AccordionBodyProps extends MarginProps, React.HTMLAttributes<HTMLDivElement> {}
 
-interface AccordionContext {
+interface AccordionContextType {
   isOpen: boolean
   variant?: string
   bodyId?: string
@@ -86,7 +86,7 @@ interface AccordionProviderContext {
   unregisterAccordion?: (id: string) => void
 }
 
-const AccordionContext = createContext<AccordionContext>({
+const AccordionContext = createContext<AccordionContextType>({
   isOpen: false,
   variant: undefined,
   bodyId: undefined,
@@ -115,15 +115,24 @@ const AccordionHeaderBase = (props: AccordionHeaderProps): ReactElement => {
 
   // Used to prevent default behavior/propagation
   const handleHeaderKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>): void => {
-    const key = event.which || event.keyCode
-    if ([KeyCodes.UP, KeyCodes.DOWN, KeyCodes.HOME, KeyCodes.END, KeyCodes.RETURN].includes(key)) {
+    const key = event.key
+    if (
+      [
+        KeyCodes.UP,
+        KeyCodes.DOWN,
+        KeyCodes.HOME,
+        KeyCodes.END,
+        KeyCodes.RETURN,
+        KeyCodes.SPACE,
+      ].includes(key)
+    ) {
       event.preventDefault()
       event.stopPropagation()
     }
   }
 
   const handleHeaderKeyUp = (event: React.KeyboardEvent<HTMLButtonElement>): void => {
-    const key = event.which || event.keyCode
+    const key = event.key
     switch (key) {
       case KeyCodes.SPACE:
       case KeyCodes.RETURN: {

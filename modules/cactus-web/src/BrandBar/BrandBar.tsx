@@ -1,4 +1,5 @@
 import { DescriptiveProfile, NavigationChevronDown } from '@repay/cactus-icons'
+import { mediaGTE } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
@@ -122,7 +123,7 @@ export const BrandBar: BrandBarType = ({ logo, children, className, ...props }) 
 
   const layoutClass = useLayout('brandbar', { grid: 'header' })
   return (
-    <StyledBrandBar {...props} className={classes(className, layoutClass)} $isTiny={isTiny}>
+    <StyledBrandBar {...props} className={classes(className, layoutClass)}>
       <Flex justifyContent={justify} flexWrap="nowrap">
         {logo && (
           <LogoWrapper>
@@ -465,20 +466,16 @@ const DropdownPopup = styled(BasePopup)`
   ${(p) => p.$isTiny && 'width: 100%;'}
 `
 
-const StyledBrandBar = styled.div<{ $isTiny: boolean }>`
+const StyledBrandBar = styled.div`
   display: flex;
-  ${(p) =>
-    p.$isTiny
-      ? `
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-  `
-      : `
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  ${mediaGTE('small')} {
     flex-direction: row;
     justify-content: space-between;
     align-items: stretch;
-  `}
+  }
   width: 100%;
   ${(p): string => insetBorder(p.theme, 'lightContrast', 'bottom')};
 `

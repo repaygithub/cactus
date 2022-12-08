@@ -1,3 +1,4 @@
+import { space } from '@repay/cactus-theme'
 import { noop, pick } from 'lodash'
 import React from 'react'
 import styled from 'styled-components'
@@ -111,8 +112,8 @@ export const Fieldset = styled(CheckableGroup)`
     border-bottom: ${(p) => border(p.theme, p.disabled ? 'mediumGray' : 'currentcolor')};
   }
   .field-input-group {
-    margin: 0 ${(p) => p.theme.space[4]}px;
-    padding-top: ${(p) => p.theme.space[3]}px;
+    margin: 0 ${space(4)};
+    padding-top: ${space(3)};
   }
 `
 
@@ -120,6 +121,6 @@ export const FlexGroup = styled(CheckableGroup)`
   .field-input-group {
     display: flex;
     flex-wrap: wrap;
-    ${(p) => (!isIE ? `gap: ${p.theme.space[3]}px;` : `> * { margin: ${p.theme.space[2]}px; }`)}
+    ${(p) => (!isIE ? `gap: ${space(p, 3)};` : `> * { margin: ${space(p, 2)}; }`)}
   }
 `
