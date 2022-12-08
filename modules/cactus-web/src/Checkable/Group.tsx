@@ -117,13 +117,10 @@ export const Fieldset = styled(CheckableGroup)`
   }
 `
 
-const getSpacing = (props: ThemedStyledProps<CheckableGroupProps, CactusTheme>) =>
-  !isIE ? `gap: ${space(props, 3)};` : `> * { margin: ${space(props, 2)}; }`
-
 export const FlexGroup = styled(CheckableGroup)`
   .field-input-group {
     display: flex;
     flex-wrap: wrap;
-    ${getSpacing}
+    ${(p) => (!isIE ? `gap: ${space(p, 3)};` : `> * { margin: ${space(p, 2)}; }`)}
   }
 `
