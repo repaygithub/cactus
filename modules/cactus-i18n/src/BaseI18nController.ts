@@ -43,9 +43,6 @@ export interface LoadOpts extends Record<string, any> {
   onLoad?: LoadEventHandler
   // This is for hard-coded defaults, mostly intended for use by 3rd party libraries.
   defaults?: FluentResource
-}
-
-interface LoadOptions extends LoadOpts {
   lang: string
   section: string
 }
@@ -198,9 +195,9 @@ export default abstract class BaseI18nController {
     return bundle ? bundle.hasMessage(this.getKey(id, section, lang)) : false
   }
 
-  public load({ lang: requestedLang, section, ...loadOpts }: LoadOptions): BundleInfo {
-    const lang = this.negotiateLang(requestedLang, true)[0]
-    const bundleInfo = this.getBundleInfo(section, lang, true) as BundleInfo
+  public load(loadOpts: LoadOpts): BundleInfo {
+    const lang = this.negotiateLang(loadOpts.lang, true)[0]
+    const bundleInfo = this.getBundleInfo(loadOpts.section, lang, true) as BundleInfo
     if (bundleInfo.loadState === 'new' || bundleInfo.loadState === 'error') {
       const prevState = bundleInfo.loadState
       bundleInfo.loadState = 'loading'
@@ -213,7 +210,11 @@ export default abstract class BaseI18nController {
           }
         },
         (error) => {
-          this._log('error', 'FTL Resource failed to load', { section, lang, error })
+          this._log('error', 'FTL Resource failed to load', {
+            section: loadOpts.section,
+            lang,
+            error,
+          })
           bundleInfo.update('error', loadOpts)
           onLoad.call(this, bundleInfo, prevState, error)
         }
@@ -222,13 +223,9 @@ export default abstract class BaseI18nController {
     return bundleInfo
   }
 
-  public loadAsync({
-    lang: requestedLang,
-    section,
-    ...loadOpts
-  }: LoadOptions): Promise<{ bundleInfo: BundleInfo; prevState: LoadState }> {
-    const lang = this.negotiateLang(requestedLang, true)[0]
-    const bundleInfo = this.getBundleInfo(section, lang, true) as BundleInfo
+  public loadAsync(loadOpts: LoadOpts): Promise<{ bundleInfo: BundleInfo; prevState: LoadState }> {
+    const lang = this.negotiateLang(loadOpts.requestedLang, true)[0]
+    const bundleInfo = this.getBundleInfo(loadOpts.section, lang, true) as BundleInfo
     return new Promise((resolve, reject) => {
       if (bundleInfo.loadState === 'new' || bundleInfo.loadState === 'error') {
         const prevState = bundleInfo.loadState
@@ -241,7 +238,11 @@ export default abstract class BaseI18nController {
             }
           },
           (error) => {
-            this._log('error', 'FTL Resource failed to load', { section, lang, error })
+            this._log('error', 'FTL Resource failed to load', {
+              section: loadOpts.section,
+              lang,
+              error,
+            })
             bundleInfo.update('error', loadOpts)
             reject({ bundleInfo, prevState, error })
           }
@@ -280,7 +281,7 @@ export default abstract class BaseI18nController {
     loadOpts: LoadOpts,
     lang?: string
   ): BundleInfo {
-    const refBundle = this.load({ section, lang: lang || referrer.lang, ...loadOpts })
+    const refBundle = this.load({ ...loadOpts, section, lang: lang || referrer.lang })
     if (referrer === refBundle) {
       throw new Error(`Self-referencing section: ${section}/${refBundle.lang}`)
     } else if (referrer.lang !== refBundle.lang) {
