@@ -1,7 +1,7 @@
-import { CactusTheme, space } from '@repay/cactus-theme'
+import { space } from '@repay/cactus-theme'
 import { noop, pick } from 'lodash'
 import React from 'react'
-import styled, { ThemedStyledProps } from 'styled-components'
+import styled from 'styled-components'
 
 import AccessibleField, { ExtFieldProps } from '../AccessibleField/AccessibleField'
 import Box from '../Box/Box'
