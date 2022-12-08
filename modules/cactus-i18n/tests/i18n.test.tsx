@@ -21,7 +21,7 @@ import I18nProvider, {
 const NOT_FOUND = { text: null, attrs: {}, found: false }
 
 class I18nController extends BaseI18nController {
-  protected async _load(b: BundleInfo, opts: LoadOpts): AsyncLoadResult {
+  protected async loadImpl(b: BundleInfo, opts: LoadOpts): AsyncLoadResult {
     if (opts.defaults) {
       return { resources: [opts.defaults] }
     } else if (typeof opts.content === 'string') {
@@ -123,13 +123,13 @@ describe('i18n functionality', () => {
       )
     })
 
-    test('_load() should throw when not overridden', () => {
+    test('loadImpl() should throw when not overridden', () => {
       //@ts-ignore
       class BadI18nController extends BaseI18nController {}
       expect(
         (): BaseI18nController =>
           new BadI18nController({ defaultLang: 'en', supportedLangs: ['en'] })
-      ).toThrowError('You must override the `_load` method')
+      ).toThrowError('You must override the `loadImpl` method')
     })
 
     test('can access translations outside React context', async () => {
@@ -291,7 +291,7 @@ key-for-no-people = blah blah blue stew`)
       const then = jest.fn()
       const resources = [new FluentResource('quicksand = The Story So Far')]
       // @ts-ignore
-      controller._load = jest.fn(() => Promise.resolve({ resources }))
+      controller.loadImpl = jest.fn(() => Promise.resolve({ resources }))
       controller.loadAsync({ section: 'promise', lang: 'en' }).then(then)
       await waitFor(() => expect(then).toHaveBeenCalledTimes(1))
       expect(then).toHaveBeenCalledWith({
@@ -305,7 +305,7 @@ key-for-no-people = blah blah blue stew`)
       const then = jest.fn()
       const errHandler = jest.fn()
       // @ts-ignore
-      controller._load = jest.fn(() => Promise.reject('downfall of us all'))
+      controller.loadImpl = jest.fn(() => Promise.reject('downfall of us all'))
       controller.loadAsync({ section: 'promise', lang: 'en' }).then(then).catch(errHandler)
       await waitFor(() => expect(errHandler).toHaveBeenCalledTimes(1))
       expect(then).not.toHaveBeenCalled()
@@ -383,7 +383,7 @@ key-for-no-people = blah blah blue stew`)
       test('keeps track of failed resources', async () => {
         const controller = new I18nController({ defaultLang: 'en', supportedLangs: ['en'] })
         //@ts-ignore
-        controller._load = jest.fn(() => Promise.reject('oh noes!'))
+        controller.loadImpl = jest.fn(() => Promise.reject('oh noes!'))
         expect(controller.getLoadState('global', 'en')).toBe('new')
         await controller.loadAll({ section: 'global', lang: 'en' })
         expect(controller.getLoadState('global', 'en')).toBe('error')
@@ -399,7 +399,7 @@ key-for-no-people = blah blah blue stew`)
           super({ lang, supportedLangs: [lang], useIsolating: false })
         }
 
-        protected async _load(bi: BundleInfo, opts: LoadOpts): AsyncLoadResult {
+        protected async loadImpl(bi: BundleInfo, opts: LoadOpts): AsyncLoadResult {
           const resources = []
           if (bi.section === 'two') {
             resources.push(this.loadRef(bi, 'one', opts))
@@ -428,7 +428,7 @@ override = I'm invisible
       test('section with ref loads referred section', async () => {
         const controller = new Controller()
         const loader = jest.fn(function (this: Controller, bi: BundleInfo, o: LoadOpts) {
-          return this._load(bi, o)
+          return this.loadImpl(bi, o)
         })
         controller.load({ section: 'two', lang, loader, success: true })
         expect(loader).toHaveBeenCalledTimes(2)
@@ -467,7 +467,7 @@ override = I'm invisible
       test('section with loaded ref does not reload', async () => {
         const controller = new Controller()
         const loader = jest.fn(function (this: Controller, bi: BundleInfo, o: LoadOpts) {
-          return this._load(bi, o)
+          return this.loadImpl(bi, o)
         })
         controller.load({ section: 'one', lang, loader, success: true })
         expect(loader).toHaveBeenCalledTimes(1)
@@ -502,7 +502,7 @@ override = I'm invisible
       expect(controller.getLoadState('kleenex', 'en')).toBe('new')
       render(
         <I18nProvider controller={controller}>
-          <I18nSection section="kleenex" content="runny-nose = This text should render">
+          <I18nSection name="kleenex" content="runny-nose = This text should render">
             <I18nText get="runny-nose" />
           </I18nSection>
         </I18nProvider>
@@ -521,7 +521,9 @@ override = I'm invisible
         })
         const resources = [new FluentResource('runny-nose = This text should render')]
         // @ts-ignore
-        const mockLoad = (controller._load = jest.fn<Loader>(() => Promise.resolve({ resources })))
+        const mockLoad = (controller.loadImpl = jest.fn<Loader>(() =>
+          Promise.resolve({ resources })
+        ))
         render(
           <I18nProvider controller={controller} section="">
             <I18nSection section="kleenex" dynamic>
@@ -560,7 +562,7 @@ override = I'm invisible
       })
       const resources = [new FluentResource('runny-nose = This text should render')]
       //@ts-ignore
-      const mockLoad = (controller._load = jest.fn<Loader>(({ section }) =>
+      const mockLoad = (controller.loadImpl = jest.fn<Loader>(({ section }) =>
         Promise.resolve(section === 'needed' ? { resources } : undefined)
       ))
 
@@ -907,7 +909,7 @@ key-for-the-group= We are the { $groupName }!
       const resource1 = new FluentResource('turnover = This text should render')
       const resource2 = new FluentResource('dizzy = This text should ALSO render')
       // @ts-ignore
-      const mockLoad = (controller._load = jest.fn<Loader>(({ section }) =>
+      const mockLoad = (controller.loadImpl = jest.fn<Loader>(({ section }) =>
         Promise.resolve({ resources: section === 'section1' ? [resource1] : [resource2] })
       ))
       const TestComponent = () => {
@@ -945,7 +947,7 @@ key-for-the-group= We are the { $groupName }!
       })
       const resources = [new FluentResource('telltale = Rose')]
       // @ts-ignore
-      const mockLoad = (controller._load = jest.fn<Loader>(({ section }) =>
+      const mockLoad = (controller.loadImpl = jest.fn<Loader>(({ section }) =>
         Promise.resolve(section === 'my-section' ? { resources } : undefined)
       ))
       const TestComponent = () => {
