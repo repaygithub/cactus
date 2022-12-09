@@ -1,7 +1,7 @@
 import { Page } from 'puppeteer'
 import React, { useState } from 'react'
 
-import { ColorPicker } from '../'
+import { ColorPicker, Flex } from '../'
 import { Action, actions, HIDE_CONTROL, Story } from '../helpers/storybook'
 
 export default {
@@ -22,10 +22,10 @@ export default {
 } as const
 
 export const BasicUsage: Story<typeof ColorPicker> = (args) => (
-  <div>
+  <Flex flexDirection="column">
     <ColorPicker id="disabled-picker" name="disabled" disabled />
     <ColorPicker mt={3} {...args} />
-  </div>
+  </Flex>
 )
 BasicUsage.parameters = {
   beforeScreenshot: async (page: Page) => {
