@@ -1,50 +1,40 @@
-import { NavigationClose } from '@repay/cactus-icons'
+import { IconProps, NavigationClose } from '@repay/cactus-icons'
 import { border, CactusColor, colorStyle, mediaGTE, radius, space } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import {
-  compose,
-  FontSizeProps,
-  height,
-  LayoutProps,
   margin,
-  maxHeight,
-  maxWidth,
-  minHeight,
-  minWidth,
   padding,
   position,
   PositionProps,
   SpaceProps,
   textAlign,
   TextAlignProps,
-  width,
 } from 'styled-system'
 
 import Dimmer from '../Dimmer/Dimmer'
 import FocusLock from '../FocusLock/FocusLock'
-import { omitProps } from '../helpers/omit'
 import { usePortal } from '../helpers/portal'
 import { trapScroll } from '../helpers/scroll'
 import {
+  allHeight,
+  allWidth,
   flexContainerOption,
   flexItem,
   FlexItemProps,
   FlexOptionProps,
   gapWorkaround,
   pickStyles,
-  Styled,
+  SizingProps,
   styledProp,
-  styledUnpoly,
-  styledWithClass,
+  withStyles,
 } from '../helpers/styled'
 import IconButton from '../IconButton/IconButton'
 
 export const modalType = ['action', 'danger', 'warning', 'success'] as const
 export type ModalType = typeof modalType[number]
 
-type SizeProps = 'height' | 'minHeight' | 'maxHeight' | 'width' | 'minWidth' | 'maxWidth'
-type StyleProps = SpaceProps & FlexOptionProps & FlexItemProps & Pick<LayoutProps, SizeProps>
+type StyleProps = SpaceProps & FlexOptionProps & FlexItemProps & SizingProps
 type DivProps = React.HTMLAttributes<HTMLDivElement> & React.RefAttributes<HTMLDivElement>
 
 interface ModalPopupProps extends StyleProps, TextAlignProps {
@@ -58,9 +48,8 @@ export interface ModalProps extends DivProps, ModalPopupProps {
   closeButtonProps?: CloseButtonProps
 }
 
-interface CloseButtonProps {
+interface CloseButtonProps extends Pick<IconProps, 'iconSize'> {
   label?: string
-  iconSize?: FontSizeProps['fontSize']
   top?: PositionProps['top']
   right?: PositionProps['right']
   left?: PositionProps['left']
@@ -139,34 +128,36 @@ const ModalBase = React.forwardRef<HTMLDivElement, ModalProps>((props, ref) => {
     </Dimmer>
   )
 })
-ModalBase.displayName = 'Modal'
+
+const getKeys = (...styleFns: typeof margin[]) =>
+  styleFns.reduce((keys, fn) => {
+    fn.propNames?.forEach(keys.add, keys)
+    return keys
+  }, new Set<string>())
+
+// Even vertical margins/padding are percentages of parent's width, per CSS spec.
+const vwProps = getKeys(allWidth, margin, padding)
+const vhProps = getKeys(allHeight)
 
 // Because there's an intermediate container percentages don't work well, so we
 // convert to widths relative to the overlay (same dimensions as the viewport).
-const convertPercentToFixed = (suffix: string, ...styleFns: typeof width[]) => {
-  const composed = compose(...styleFns)
-  const convert = (value: any) => {
-    if (value) {
-      if (typeof value === 'object') {
-        for (const key of Object.keys(value)) {
-          value[key] = convert(value[key])
+const convertPercentToFixed = ({ style }: { style?: React.CSSProperties }) => {
+  if (style) {
+    const newStyle: any = {}
+    for (const key in style) {
+      const value = style[key as keyof React.CSSProperties]
+      newStyle[key] = value
+      if (typeof value === 'string') {
+        if (vwProps.has(key)) {
+          newStyle[key] = value.replace(/%/g, 'vw')
+        } else if (vhProps.has(key)) {
+          newStyle[key] = value.replace(/%/g, 'vh')
         }
-      } else if (typeof value === 'string') {
-        value = value.replace(/%/g, suffix)
       }
     }
-    return value
+    return { style: newStyle }
   }
-  // Note that because these are wrapped in a custom parser, they can't be `compose`d further.
-  const fn = (props: any) => convert(composed(props))
-  Object.assign(fn, composed)
-  return fn as typeof composed
 }
-
-// Even vertical margins/padding are percentages of parent's width, per CSS spec.
-const widths = convertPercentToFixed('vw', width, minWidth, maxWidth, margin, padding)
-const heights = convertPercentToFixed('vh', height, minHeight, maxHeight)
-const modalStyles = compose(flexItem, flexContainerOption, textAlign)
 
 const variantColors: { [K in ModalType]: CactusColor } = {
   action: 'callToAction',
@@ -175,9 +166,11 @@ const variantColors: { [K in ModalType]: CactusColor } = {
   danger: 'error',
 }
 
-const ModalPopUp = styledWithClass('div', 'cactus-modal').withConfig(
-  omitProps<ModalPopupProps>(widths, heights, modalStyles, 'variant')
-)`
+const ModalPopUp = withStyles('div', {
+  className: 'cactus-modal',
+  styles: [allWidth, margin, padding, allHeight, flexItem, flexContainerOption, textAlign],
+  transitiveProps: ['variant'],
+}).attrs(convertPercentToFixed)<ModalPopupProps>`
   ${colorStyle('standard')}
   position: relative;
   box-sizing: border-box;
@@ -206,20 +199,13 @@ const ModalPopUp = styledWithClass('div', 'cactus-modal').withConfig(
   }
 
   ${gapWorkaround}
-  // Because of how styled-components groups styles, we have to increase
-  // the specificity in order to override the styles in the media queries.
-  && {
-    ${widths}
-    ${heights}
-    ${modalStyles}
-  }
 `
 
-const buttonPosition = pickStyles(position, 'top', 'right', 'left')
-
-const CloseButton = styledWithClass(IconButton, 'modal-close-btn').withConfig(
-  omitProps<Record<string, unknown>>(buttonPosition)
-)`
+const CloseButton = withStyles(IconButton, {
+  className: 'modal-close-btn',
+  styles: [pickStyles(position, 'top', 'right', 'left')],
+})<CloseButtonProps>`
+  position: absolute;
   right: ${space(5)};
   top: ${space(5)};
 
@@ -227,12 +213,7 @@ const CloseButton = styledWithClass(IconButton, 'modal-close-btn').withConfig(
     right: ${space(7)};
     top: ${space(7)};
   }
-
-  && {
-    position: absolute;
-    ${buttonPosition}
-  }
-` as Styled<CloseButtonProps & React.HTMLAttributes<HTMLButtonElement>>
+`
 
 CloseButton.displayName = 'Modal.CloseButton'
 CloseButton.propTypes = { label: PropTypes.string.isRequired }
@@ -241,7 +222,7 @@ CloseButton.propTypes = { label: PropTypes.string.isRequired }
 // because it's defined in the `IconButton` component and local styles override those.
 CloseButton.defaultProps = { label: 'Close Modal', iconSize: ['small', 'small', 'medium'] }
 
-export const Modal = styledUnpoly(ModalBase)`
+export const Modal = withStyles('div', { as: ModalBase, displayName: 'Modal' })`
   display: block;
   overflow: auto;
   z-index: 101;

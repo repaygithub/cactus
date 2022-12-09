@@ -12,30 +12,6 @@ import { isIE } from './constants'
 // This file exists, in part, because styled-components types are a PAIN.
 export type Styled<P> = StyledComponent<React.FC<P>, CactusTheme>
 
-// This works around the `babel-plugin-styled-components` `displayName` setting,
-// so we can specify the CSS class of the resulting component.
-export const styledWithClass = <C extends React.ElementType>(
-  component: C,
-  className: string
-): ThemedStyledFunction<C, CactusTheme> => {
-  const tag: any = styled(component)
-  return tag.withConfig({ componentId: className })
-}
-
-// This gives us a styled component without the polymorphic behavior: the `as`
-// attr overrides any `as` prop passed in. Unfortunately I can't think of a way
-// to make Typescript consider it an invalid prop as well.
-export const styledUnpoly = <C extends React.ElementType, F extends React.ElementType = C>(
-  component: C,
-  fixed: F = component as any
-): ThemedStyledFunction<F, CactusTheme> => {
-  let tag: any = styled(component).attrs({ as: fixed } as any)
-  if ('displayName' in fixed) {
-    tag = tag.withConfig({ displayName: (fixed as any).displayName })
-  }
-  return tag
-}
-
 type Attrs = { [k: string]: any } | ((props: any) => any)
 
 // `ElementType` is more correct, but using `ComponentType` internally works better.

@@ -1,19 +1,18 @@
 import { RouteComponentProps } from '@reach/router'
 import icons from '@repay/cactus-icons'
-import NavigationChevronLeft from '@repay/cactus-icons/i/navigation-chevron-left'
+import { NavigationChevronLeft } from '@repay/cactus-icons'
 import cactusTheme from '@repay/cactus-theme'
 import { Flex, Grid, IconButton, SelectField, Text, ToggleField } from '@repay/cactus-web'
-import { IconButtonSizes, IconButtonVariants } from '@repay/cactus-web/src/IconButton/IconButton'
 import React, { useCallback, useState } from 'react'
 
 import Link from '../components/Link'
 
-const iconButtonVariants: IconButtonVariants[] = ['standard', 'action', 'danger']
-const iconButtonSizes: IconButtonSizes[] = ['tiny', 'small', 'medium', 'large']
+const iconButtonVariants = ['standard', 'action', 'danger'] as const
+const iconButtonSizes = ['tiny', 'small', 'medium', 'large'] as const
 
 interface PropTypes {
-  variant: IconButtonVariants
-  iconSize: IconButtonSizes
+  variant: typeof iconButtonVariants[number]
+  iconSize: typeof iconButtonSizes[number]
   disabled: boolean
   inverse: boolean
 }

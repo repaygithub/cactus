@@ -68,7 +68,7 @@ export interface SelectProps
       React.HTMLAttributes<HTMLButtonElement>,
       'onChange' | 'onBlur' | 'onFocus' | 'placeholder'
     > {
-  options?: (OptionType | string | number | undefined | null)[]
+  options?: ReadonlyArray<OptionType | string | number | undefined | null>
   id: string
   name: string
   value?: SelectValueType
