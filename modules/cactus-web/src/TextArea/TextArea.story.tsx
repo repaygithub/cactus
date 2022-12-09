@@ -10,6 +10,7 @@ export default {
     margin: SPACE,
     height: STRING,
     width: STRING,
+    resize: STRING,
     ...actions('onChange', 'onFocus', 'onBlur'),
   },
 } as const

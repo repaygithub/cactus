@@ -25,6 +25,41 @@ describe('component: TextArea', () => {
     expect(styles.resize).toBe('horizontal')
   })
 
+  test('should support flex item props', () => {
+    const { getByTestId } = renderWithTheme(
+      <TextArea data-testid="textArea" flexGrow={4} flexShrink={3} flexBasis="auto" />
+    )
+    const textArea = getByTestId('textArea')
+    const styles = window.getComputedStyle(textArea as HTMLElement)
+
+    expect(styles.flexGrow).toBe('4')
+    expect(styles.flexShrink).toBe('3')
+    expect(styles.flexBasis).toBe('auto')
+  })
+  test('should support all width props', () => {
+    const { getByTestId } = renderWithTheme(
+      <TextArea data-testid="textArea" minWidth="101px" maxWidth="300px" width="150px" />
+    )
+    const textArea = getByTestId('textArea')
+    const styles = window.getComputedStyle(textArea as HTMLElement)
+
+    expect(styles.width).toBe('150px')
+    expect(styles.minWidth).toBe('101px')
+    expect(styles.maxWidth).toBe('300px')
+  })
+
+  test('should support all height props', () => {
+    const { getByTestId } = renderWithTheme(
+      <TextArea data-testid="textArea" minHeight="100px" maxHeight="150px" height="110px" />
+    )
+    const textArea = getByTestId('textArea')
+    const styles = window.getComputedStyle(textArea as HTMLElement)
+
+    expect(styles.height).toBe('110px')
+    expect(styles.minHeight).toBe('100px')
+    expect(styles.minHeight).toBe('100px')
+  })
+
   test('Should support ref prop', () => {
     const ref = React.createRef<HTMLTextAreaElement>()
     const { getByTestId } = renderWithTheme(

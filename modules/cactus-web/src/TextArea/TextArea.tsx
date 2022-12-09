@@ -37,7 +37,6 @@ const TextArea = styled.textarea<TextAreaProps>`
   }
   ${textStyle('body')}
   padding: 8px 16px;
-  display: block;
   position: relative;
   resize: none;
   ${commonInputStyles}
@@ -51,7 +50,6 @@ TextArea.propTypes = {
   status: StatusPropType,
   width: styledProp,
   height: styledProp,
-  resize: PropTypes.oneOf(['none', 'both', 'horizontal', 'vertical', 'initial', 'inherit']),
 }
 
 export default TextArea
