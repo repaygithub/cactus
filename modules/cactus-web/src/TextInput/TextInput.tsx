@@ -9,10 +9,10 @@ import defaultTheme, {
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { compose, margin, MarginProps, width, WidthProps } from 'styled-system'
+import { compose, margin, MarginProps } from 'styled-system'
 
 import { getStatusStyles, StatusProps, StatusPropType } from '../helpers/status'
-import { flexItem, FlexItemProps } from '../helpers/styled'
+import { allWidth, AllWidthProps, flexItem, FlexItemProps } from '../helpers/styled'
 
 type TextStyleKey = keyof TextStyleCollection
 export const textStyles = Object.keys(defaultTheme.textStyles) as TextStyleKey[]
@@ -22,8 +22,8 @@ export interface TextInputProps
   extends InputElementProps,
     StatusProps,
     MarginProps,
-    WidthProps,
-    FlexItemProps {
+    FlexItemProps,
+    AllWidthProps {
   textStyle?: TextStyleKey
 }
 
@@ -60,7 +60,7 @@ const TextInput = styled.input<TextInputProps>`
   padding: 3px 15px;
   ${(p) => textStyle(p, p.textStyle || 'body')};
   &&& {
-    ${compose(margin, width, flexItem)}
+    ${compose(margin, allWidth, flexItem)}
   }
   ${commonInputStyles}
 `

@@ -21,7 +21,24 @@ describe('component: TextInput', () => {
 
     expect(styles.marginTop).toBe('16px')
   })
+  test('should support all width props', () => {
+    const { getByPlaceholderText } = renderWithTheme(
+      <TextInput
+        marginTop={4}
+        placeholder="Do I wanna know?"
+        minWidth="101px"
+        maxWidth="300px"
+        width="150px"
+      />
+    )
 
+    const textInput = getByPlaceholderText('Do I wanna know?')
+    const styles = window.getComputedStyle(textInput)
+
+    expect(styles.width).toBe('150px')
+    expect(styles.minWidth).toBe('101px')
+    expect(styles.maxWidth).toBe('300px')
+  })
   test('should supoport flex item props', () => {
     const { getByPlaceholderText } = renderWithTheme(
       <TextInput
