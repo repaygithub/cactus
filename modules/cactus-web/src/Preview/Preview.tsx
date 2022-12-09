@@ -7,7 +7,7 @@ import { height, HeightProps, margin, MarginProps, width, WidthProps } from 'sty
 import Dimmer from '../Dimmer/Dimmer'
 import Flex from '../Flex/Flex'
 import { keyDownAsClick, preventAction } from '../helpers/a11y'
-import { flexItem, FlexItemProps } from '../helpers/flexItem'
+import { flexItem, FlexItemProps, withStyles } from '../helpers/styled'
 import { boxShadow, radius } from '../helpers/theme'
 import IconButton from '../IconButton/IconButton'
 
@@ -158,7 +158,11 @@ const ImageBackground = styled.div`
   background-color: ${(p) => p.theme.colors.white};
 `
 
-const PreviewBox = styled.div<{ justify: 'space-between' | 'center' }>`
+const PreviewBox = withStyles('div', {
+  displayName: 'Preview',
+  styles: [width, height, margin, flexItem],
+  transitiveProps: ['justify'],
+})<{ justify: 'space-between' | 'center' }>`
   box-sizing: border-box;
   padding-left: ${(p) => p.theme.space[7]}px;
   padding-right: ${(p) => p.theme.space[7]}px;
@@ -168,13 +172,9 @@ const PreviewBox = styled.div<{ justify: 'space-between' | 'center' }>`
   min-width: 50%;
   width: 50%;
   height: 440px;
-  ${width}
-  ${height}
   display: flex;
   justify-content: ${(p) => p.justify};
   align-items: center;
-  ${margin}
-  ${flexItem}
 
   img {
     display: inline;
