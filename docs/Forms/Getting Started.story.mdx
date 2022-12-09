@@ -12,9 +12,11 @@ Before starting with Cactus Form, you should have a React application, and know 
 
 ### Installation
 
-Installation is simple enough, just add the latest version of "final-form", "react-final-form", and "@repay/cactus-form" to the `dependencies` list in your package.json (or however you add dependencies in your particular project).
+Installation is simple enough, just add the latest version of "@repay/cactus-form" to the `dependencies` list in your package.json (or however you add dependencies in your particular project).
 
-Cactus Form also has an optional setup step using [patch-package](https://www.npmjs.com/package/patch-package), described in more depth in the library documentation.
+Cactus Form also has an optional setup step using [patch-package](https://www.npmjs.com/package/patch-package), described in more depth [below](#patching-react-final-form).
+
+Note that Cactus Form also exports final-form and react-final-form features that have not been edited to keep everything in one place. It should cover the vast majority of use cases but "final-form", "react-final-form" can still be imported separately for the original version of `Field`, `Form`, etc 
 
 ## Using React Final Form
 
@@ -52,10 +54,31 @@ the example above will render a `TextInputField` and a `CheckBoxField`,
 but this behavior is customizable in a number of ways, covered more in the Field docs.
 
 
-### Further Reading
+## Patching React Final Form
 
-- [Final Form Documentation](https://final-form.org/docs/final-form/getting-started)
-- [React Final Form Documentation](https://final-form.org/docs/react-final-form/getting-started)
-- <a to='/components/'>@repay/cactus-web Documentation</a>
-- <a to='/forms/'>@repay/cactus-form Documentation</a>
-- [Example app w/ form (UI Config page)](https://github.com/repaygithub/cactus/tree/master/examples/mock-ebpp)
+Cactus Form should work fine out of the box, but there are a couple of issues
+with certain Cactus components and common design patterns:
+
+- React Final Form doesn't work with CheckBoxGroup/CheckBoxCard.Group & array values (i.e. multiple checkboxes with the same name); you have to wrap each checkbox individually, and pass `type="checkbox"` on each one.
+- With both checkbox groups and radio groups, React Final Form emits a warning that you need to pass `type="checkbox"` (or "radio"), but if you actually do so it will give the wrong checked/value props to the group component.
+- We often put fields into Accordions that can be re-ordered, e.g. when there's a repeatable subset of fields on the form. However, Accordion only renders its child fields when it's open, and the mutators in `final-form-arrays` are not compatible with `react-final-form` unless the source and destination fields being reordered are both rendered on the page.
+
+To work around these issues, we provide a patch that can be applied using [patch-package](https://www.npmjs.com/package/patch-package).
+Because this is a library we can't just apply the patch automatically, so it takes a couple of extra steps:
+
+1. Make sure you have `patch-package` in `devDependencies` or `dependencies`.
+2. Add the following to your `package.json`:
+
+```
+"scripts": {
+  "postinstall": "patch-package --patch-dir=node_modules/@repay/cactus-form/dist"
+}
+```
+
+Or, if you already use `patch-package` in your project, you may need to run it twice:
+
+```
+"scripts": {
+  "postinstall": "patch-package && patch-package --patch-dir=node_modules/@repay/cactus-form/dist"
+}
+```

@@ -3,7 +3,7 @@ module.exports = {
     '../../docs/**/*.story.mdx',
     '../../modules/**/*.story.@(js|jsx|ts|tsx)',
     '../../modules/cactus-form/**/Form.story.mdx',
-    '../../modules/cactus-form/**/FieldSpy-FormSpy.story.mdx',
+    '../../modules/cactus-form/**/OtherTools.story.mdx',
   ],
   addons: [
     '@storybook/addon-links',

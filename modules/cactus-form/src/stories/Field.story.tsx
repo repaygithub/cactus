@@ -1,5 +1,6 @@
-import React from 'react'
 import { noop } from 'lodash'
+import React from 'react'
+
 import { DependentField, Field, Form } from '../'
 import docsMeta from './Field.story.mdx'
 
@@ -7,10 +8,6 @@ delete docsMeta.includeStories
 export default {
   title: 'Cactus Form/Components/Test',
   ...docsMeta,
-  parameters: {
-    ...docsMeta.parameters,
-    cactus: { overrides: { maxWidth: '500px' } },
-  },
 } as const
 
 const selectValues = [
@@ -41,7 +38,7 @@ export const DependentFieldUsage = () => (
       dependsOn="Independent Field"
       name="Dependent Field"
       label="Dependent Field"
-      onDependencyChange={(state, { onChange }) => {
+      onDependencyChange={(state, { onChange }: any) => {
         onChange(state.value)
       }}
     />

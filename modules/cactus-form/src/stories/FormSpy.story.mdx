@@ -1,16 +1,16 @@
 import { Meta } from '@storybook/addon-docs'
 
-<Meta title="Cactus Form/Components/FormSpy & FieldSpy" />
+<Meta title="Cactus Form/Components/FormSpy" />
 
 
 # FormSpy
 A re-implementation of [FormSpy](https://final-form.org/docs/react-final-form/api/FormSpy), but with a fix for a bug that sometimes caused incorrect initial values on the first render. Allows you to spy on form state values and re-render a section of your form with updated values when the values you spy on change. Our FormSpy supports all of the same props that Final Form’s implementation does, apart from the `onChange` prop, which is not supported in this implementation.
-
-```
+See form states [here](https://final-form.org/docs/final-form/types/FormState)
+```tsx
 const MyForm = (props) => (
   <Form {...props}>
     <Field name="power" type="number" />
-    <FormSpy subscription={{ dirty: true }}>
+    <FormSpy subscription={{ errors: true }}>
       {({ dirty }) => (
         <span>Dirty value: {dirty}</span>
       )}
@@ -20,7 +20,7 @@ const MyForm = (props) => (
 ```
 OR
 
-```
+```tsx
 const MyForm = (props) => (
   <Form {...props}>
     <Field name="power" type="number" />
@@ -33,30 +33,11 @@ const MyForm = (props) => (
 ```
 OR
 
-```
+```tsx
 const RenderOnDirtyChange = ({ dirty }) => <span>Dirty value: {dirty}</span>
 const MyForm = (props) => (
   <Form {...props}>
     <FormSpy subscription={{ dirty: true }} component={RenderOnDirtyChange} />
-  </Form>
-)
-```
-
-# FieldSpy
-
-Basically the same as FormSpy, except augmented for use on a single field. 
-It doesn't support the `onChange` prop that FormSpy has, and you indicate which field to watch with the `fieldName` prop:
-
-```
-const spyOn = { value: true }
-const MyForm = (props) => (
-  <Form {...props}>
-    <Field name="power" type="number" />
-    <FieldSpy fieldName="power" subscription={spyOn}>
-      {({ value }) => (
-        <span>You have selected a power level of {value}.</span>
-      )}
-    </FieldSpy>
   </Form>
 )
 ```

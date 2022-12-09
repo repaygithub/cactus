@@ -9,13 +9,9 @@ delete docsMeta.includeStories
 export default {
   title: 'Cactus Form/Components/Submit Button',
   ...docsMeta,
-  parameters: {
-    ...docsMeta.parameters,
-    cactus: { overrides: { maxWidth: '500px' } },
-  },
 } as const
 
-const FormWrapper = ({ children }) => (
+const FormWrapper: React.FC<any> = ({ children }) => (
   <Form onSubmit={noop}>{() => <form onSubmit={noop}>{children}</form>}</Form>
 )
 

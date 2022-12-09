@@ -1,0 +1,23 @@
+import { Meta } from '@storybook/addon-docs'
+
+<Meta title="Cactus Form/Components/FieldSpy" />
+
+
+# FieldSpy
+
+Basically the same as FormSpy, except augmented for use on a single field. 
+It doesn't support the `onChange` prop that FormSpy has, and you indicate which field to watch with the `fieldName` prop:
+
+```tsx
+const spyOn = { value: true }
+const MyForm = (props) => (
+  <Form {...props}>
+    <Field name="power" type="number" />
+    <FieldSpy fieldName="power" subscription={spyOn}>
+      {({ value }) => (
+        <span>You have selected a power level of {value}.</span>
+      )}
+    </FieldSpy>
+  </Form>
+)
+```

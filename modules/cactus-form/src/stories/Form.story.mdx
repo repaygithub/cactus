@@ -10,7 +10,7 @@ by default. It will also include a basic render function and form reset function
 props are provided. Because the subscription is empty by default, we recommend that you use spies (`FormSpy`, `FieldSpy`)
 to hook into form state changes.
 
-```
+```tsx
 const submitFunction = () => { ... }
 
 <Form onSubmit={submitFunction}>
@@ -21,4 +21,4 @@ const submitFunction = () => { ... }
 </Form>
 ```
 
-The only required props are children or a render function, and  `onSubmit` which you can read about [here](https://final-form.org/docs/react-final-form/types/FormProps#onsubmit). 
+The only required props are children or a render function, and `onSubmit` which you can read about [here](https://final-form.org/docs/react-final-form/types/FormProps#onsubmit). 
