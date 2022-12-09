@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Flex, StatusMessage } from '../'
-import { HIDE_CONTROL, Story } from '../helpers/storybook'
+import { HIDE_CONTROL, SPACE, Story } from '../helpers/storybook'
 
 export default {
   title: 'StatusMessage',
@@ -36,6 +36,7 @@ export const BasicUsage: Story<
 }
 BasicUsage.argTypes = {
   status: HIDE_CONTROL,
+  marginX: SPACE,
   error: { name: 'error message' },
   warning: { name: 'warning message' },
   info: { name: 'info message' },

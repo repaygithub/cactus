@@ -8,11 +8,10 @@ import {
 import { colorStyle, ColorVariant, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { omitMargins } from '../helpers/omit'
 import { Status as BaseStatus } from '../helpers/status'
+import { withStyles } from '../helpers/styled'
 
 type Status = BaseStatus | 'info'
 
@@ -42,17 +41,21 @@ const iconMap: IconMap = {
 const Noop = (): null => null
 
 const StatusMessageBase: React.FC<StatusMessageProps> = (props) => {
-  const { status, className, children, ...rest } = omitMargins(props)
+  const { status, children, ...rest } = props
   const StatusIcon: React.ElementType<any> = iconMap[status as Status] || Noop
   return (
-    <div {...rest} role="alert" className={className}>
+    <div {...rest} role="alert">
       <StatusIcon aria-hidden="true" mr={2} verticalAlign="-2px" />
       <span>{children}</span>
     </div>
   )
 }
 
-const StatusMessage = styled(StatusMessageBase)`
+const StatusMessage = withStyles('div', {
+  as: StatusMessageBase,
+  displayName: 'StatusMessage',
+  styles: [margin],
+})`
   padding: 2px 4px;
   position: relative;
   box-sizing: border-box;
@@ -60,7 +63,6 @@ const StatusMessage = styled(StatusMessageBase)`
   display: inline-block;
   ${textStyle('small')};
   ${(p) => colorStyle(p, statusMap[p.status])}
-  ${margin}
 `
 
 StatusMessage.propTypes = {
