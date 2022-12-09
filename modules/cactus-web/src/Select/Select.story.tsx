@@ -32,6 +32,7 @@ export default {
     noOptionsText: STRING,
     placeholder: STRING,
     status: { options: ['success', 'warning', 'error'] },
+    width: STRING,
     ...actions('onChange', 'onBlur', 'onFocus'),
   },
   args: {
@@ -41,6 +42,7 @@ export default {
     multiple: false,
     comboBox: false,
     canCreateOption: true,
+    width: '100%',
   },
   parameters: { cactus: { overrides: { maxWidth: '500px' } } },
 } as const
@@ -50,7 +52,7 @@ type BasicStory = Story<typeof Select, { showOptions: boolean }>
 
 export const BasicUsage: BasicStory = ({ showOptions, options, ...args }) => (
   <Flex width="100%">
-    <Select {...args} options={showOptions ? options : []} width="100%" />
+    <Select {...args} options={showOptions ? options : []} />
   </Flex>
 )
 BasicUsage.argTypes = { options: { control: 'array' }, margin: SPACE }
@@ -69,6 +71,7 @@ CollisionsInLargeContainer.args = {
   options: ['name', 'other', 'three'],
   showOptions: true,
   margin: '2',
+  width: '',
 }
 CollisionsInLargeContainer.storyName = 'Collisions in an over-sized container'
 CollisionsInLargeContainer.parameters = {
@@ -94,7 +97,6 @@ export const LongListOfOptions: Story<typeof Select, ChangeArg> = (args) => {
         options={arizonaCities}
         onChange={args.onChange.wrap(setValue, true)}
         value={value}
-        width="100%"
       />
     </Flex>
   )
@@ -138,7 +140,7 @@ export const WithComboBox: Story<typeof Select, OptionAl> = ({
   const [value, setValue] = React.useState<SelectValueType>(null)
   return (
     <Flex width="100%">
-      <Select {...args} onChange={onChange.wrap(setValue, true)} value={value} width="100%">
+      <Select {...args} onChange={onChange.wrap(setValue, true)} value={value}>
         {showOptions &&
           arizonaCities.map((city, ix) => (
             <Select.Option key={ix} value={city} altText={city.toLowerCase()}>
@@ -162,7 +164,6 @@ export const WithMultiSelectComboBox: Story<typeof Select, ChangeArg> = (args) =
         options={arizonaCities}
         onChange={args.onChange.wrap(setValue, true)}
         value={value}
-        width="100%"
       />
     </Flex>
   )
@@ -182,7 +183,6 @@ export const WithDisabledOptions: Story<typeof Select, ChangeArg> = (args) => {
         options={disabledOptions}
         onChange={args.onChange.wrap(setValue, true)}
         value={value}
-        width="100%"
       />
     </Flex>
   )

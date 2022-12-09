@@ -2,7 +2,7 @@ import { Page } from 'puppeteer'
 import React, { useState } from 'react'
 
 import { ColorPicker, Flex } from '../'
-import { Action, actions, HIDE_CONTROL, Story } from '../helpers/storybook'
+import { Action, actions, HIDE_CONTROL, Story, STRING } from '../helpers/storybook'
 
 export default {
   title: 'ColorPicker',
@@ -61,5 +61,6 @@ export const Controlled: Story<
     />
   )
 }
-
+Controlled.argTypes = { width: STRING }
+Controlled.args = { width: '100%' }
 Controlled.parameters = { storyshots: false }
