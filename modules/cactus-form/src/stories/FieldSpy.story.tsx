@@ -1,7 +1,7 @@
 import { noop } from 'lodash'
 import React from 'react'
 
-import { Field, FieldSpy, Form } from '../'
+import { Field, FieldSpy as _FieldSpy, Form } from '../'
 import docsMeta from './FieldSpy.story.mdx'
 
 delete docsMeta.includeStories
@@ -10,7 +10,7 @@ export default {
   ...docsMeta,
 } as const
 
-export const BasicUsage = () => (
+export const FieldSpy = () => (
   <Form onSubmit={noop}>
     <span>
       The FieldSpy will not re-render when the Irrelevant Field value is changed. It will re-render
@@ -18,11 +18,11 @@ export const BasicUsage = () => (
     </span>
     <Field name="irrelevant field" label="Irrelevant Field" />
     <Field name="relevant field" label="Relevant Field" />
-    <FieldSpy fieldName="relevant field" subscription={{ value: true }}>
+    <_FieldSpy fieldName="relevant field" subscription={{ value: true }}>
       {({ value }) => {
         console.log('FieldSpy has rerendered')
         return <span>The relevant field's value is: {value}</span>
       }}
-    </FieldSpy>
+    </_FieldSpy>
   </Form>
 )

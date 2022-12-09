@@ -1,8 +1,7 @@
 import { noop } from 'lodash'
 import React from 'react'
-import { Form } from 'react-final-form'
 
-import { Field } from '../'
+import { Field, Form, SubmitButton as _SubmitButton } from '../'
 import docsMeta from './SubmitButton.story.mdx'
 
 delete docsMeta.includeStories
@@ -11,12 +10,9 @@ export default {
   ...docsMeta,
 } as const
 
-const FormWrapper: React.FC<any> = ({ children }) => (
-  <Form onSubmit={noop}>{() => <form onSubmit={noop}>{children}</form>}</Form>
-)
-
-export const BasicUsage = () => (
-  <FormWrapper>
+export const SubmitButton = () => (
+  <Form onSubmit={noop}>
     <Field name="Field Name" label="Basic Field" />
-  </FormWrapper>
+    <_SubmitButton mt={4} />
+  </Form>
 )

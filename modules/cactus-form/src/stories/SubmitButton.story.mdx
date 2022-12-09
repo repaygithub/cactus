@@ -4,7 +4,7 @@ import { Field, Form, SubmitButton } from '../'
 import cactusTheme from '@repay/cactus-theme'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
-<Meta title="Cactus Form/Components/SubmitButton" />
+<Meta title="Cactus Form/Components/Submit Button" />
 
 
 # Submit Button
@@ -39,7 +39,7 @@ export const scope = { Field, Form, SubmitButton };
 
 ## Basic examples
 
-```
+```tsx
 <Form>
   <SubmitButton />
 </Form>
@@ -47,7 +47,7 @@ export const scope = { Field, Form, SubmitButton };
 
 Or, if you need to change the label:
 
-```
+```tsx
 <Form>
   <SubmitButton>Submit Me!</SubmitButton>
 </Form>
@@ -70,7 +70,7 @@ The first two lines in the below customProcessState function are taken directly 
 This needs to be included if we want to keep the default behavior we're overriding.
 The third line shows how you can make use of the state to have custom text.
 
-```
+```tsx
 const customProcessState = (props, state) => {
     props.disabled = props.disabled || state.hasValidationErrors || state.pristine
     props.loading = props.submitting || state.submitting
@@ -84,7 +84,7 @@ const customProcessState = (props, state) => {
 
 ### Example using processState and subscription
 
-```
+```tsx
 const processState = (props, state) => {
   props.disabled = !state.dirtySinceLastSubmit
 }
