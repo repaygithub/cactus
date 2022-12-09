@@ -4,7 +4,7 @@ order: 3
 ---
 
 # Cactus Form API Documentation
-WHY THO
+
 For the most part you can just use [React Final Form](https://final-form.org/docs/react-final-form/getting-started)
 as it's documented, substituting our `Field` component for theirs.
 This library re-exports everything from `final-form` and `react-final-form` except for the components that we override.
