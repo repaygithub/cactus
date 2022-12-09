@@ -27,6 +27,42 @@ describe('component: Select', () => {
 
     expect(getByText('Who?')).not.toBeNull()
   })
+  test('supports all width props', () => {
+    const { container } = renderWithTheme(
+      <Select
+        id="test-id"
+        name="test-options"
+        data-testid="select"
+        width="150px"
+        maxWidth="300px"
+        minWidth="101px"
+      />
+    )
+    const selectComponent = container.querySelector('[id="test-id"]')?.parentElement?.parentElement
+    const styles = window.getComputedStyle(selectComponent as Element)
+
+    expect(styles.minWidth).toBe('101px')
+    expect(styles.maxWidth).toBe('300px')
+    expect(styles.width).toBe('150px')
+  })
+  test('supports flex item props', () => {
+    const { container } = renderWithTheme(
+      <Select
+        id="test-id"
+        name="test-options"
+        data-testid="select"
+        flexGrow={4}
+        flexShrink={3}
+        flexBasis="auto"
+      />
+    )
+    const selectComponent = container.querySelector('[id="test-id"]')?.parentElement?.parentElement
+    const styles = window.getComputedStyle(selectComponent as Element)
+
+    expect(styles.flexGrow).toBe('4')
+    expect(styles.flexShrink).toBe('3')
+    expect(styles.flexBasis).toBe('auto')
+  })
 
   test('can receive options as children, with altText', () => {
     const { queryByText } = renderWithTheme(

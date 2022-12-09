@@ -2,7 +2,7 @@ import { DescriptiveLocation } from '@repay/cactus-icons'
 import { Page } from 'puppeteer'
 import React from 'react'
 
-import { Select } from '../'
+import { Flex, Select } from '../'
 import { Action, actions, HIDE_CONTROL, SPACE, Story, STRING } from '../helpers/storybook'
 import arizonaCities from '../storySupport/arizonaCities'
 import { SelectValueType } from './Select'
@@ -49,7 +49,9 @@ type ChangeArg = { onChange: Action<React.ChangeEvent<{ value: SelectValueType |
 type BasicStory = Story<typeof Select, { showOptions: boolean }>
 
 export const BasicUsage: BasicStory = ({ showOptions, options, ...args }) => (
-  <Select {...args} options={showOptions ? options : []} />
+  <Flex width="100%">
+    <Select {...args} options={showOptions ? options : []} width="100%" />
+  </Flex>
 )
 BasicUsage.argTypes = { options: { control: 'array' }, margin: SPACE }
 BasicUsage.args = { options: ['name', 'other', 'three'], showOptions: true, margin: '2' }
@@ -86,12 +88,15 @@ CollisionsInLargeContainer.parameters = {
 export const LongListOfOptions: Story<typeof Select, ChangeArg> = (args) => {
   const [value, setValue] = React.useState<SelectValueType>(arizonaCities[6])
   return (
-    <Select
-      {...args}
-      options={arizonaCities}
-      onChange={args.onChange.wrap(setValue, true)}
-      value={value}
-    />
+    <Flex width="100%">
+      <Select
+        {...args}
+        options={arizonaCities}
+        onChange={args.onChange.wrap(setValue, true)}
+        value={value}
+        width="100%"
+      />
+    </Flex>
   )
 }
 LongListOfOptions.storyName = 'Long list of options'
@@ -132,14 +137,16 @@ export const WithComboBox: Story<typeof Select, OptionAl> = ({
 }) => {
   const [value, setValue] = React.useState<SelectValueType>(null)
   return (
-    <Select {...args} onChange={onChange.wrap(setValue, true)} value={value}>
-      {showOptions &&
-        arizonaCities.map((city, ix) => (
-          <Select.Option key={ix} value={city} altText={city.toLowerCase()}>
-            <DescriptiveLocation iconSize="medium" /> {city}
-          </Select.Option>
-        ))}
-    </Select>
+    <Flex width="100%">
+      <Select {...args} onChange={onChange.wrap(setValue, true)} value={value} width="100%">
+        {showOptions &&
+          arizonaCities.map((city, ix) => (
+            <Select.Option key={ix} value={city} altText={city.toLowerCase()}>
+              <DescriptiveLocation iconSize="medium" /> {city}
+            </Select.Option>
+          ))}
+      </Select>
+    </Flex>
   )
 }
 WithComboBox.args = { showOptions: true, comboBox: true }
@@ -149,12 +156,15 @@ WithComboBox.parameters = { storyshots: false }
 export const WithMultiSelectComboBox: Story<typeof Select, ChangeArg> = (args) => {
   const [value, setValue] = React.useState<SelectValueType>([])
   return (
-    <Select
-      {...args}
-      options={arizonaCities}
-      onChange={args.onChange.wrap(setValue, true)}
-      value={value}
-    />
+    <Flex width="100%">
+      <Select
+        {...args}
+        options={arizonaCities}
+        onChange={args.onChange.wrap(setValue, true)}
+        value={value}
+        width="100%"
+      />
+    </Flex>
   )
 }
 WithMultiSelectComboBox.args = { comboBox: true, multiple: true }
@@ -166,12 +176,15 @@ WithMultiSelectComboBox.parameters = {
 export const WithDisabledOptions: Story<typeof Select, ChangeArg> = (args) => {
   const [value, setValue] = React.useState<SelectValueType>([])
   return (
-    <Select
-      {...args}
-      options={disabledOptions}
-      onChange={args.onChange.wrap(setValue, true)}
-      value={value}
-    />
+    <Flex width="100%">
+      <Select
+        {...args}
+        options={disabledOptions}
+        onChange={args.onChange.wrap(setValue, true)}
+        value={value}
+        width="100%"
+      />
+    </Flex>
   )
 }
 WithDisabledOptions.storyName = 'With Disabled Options'
