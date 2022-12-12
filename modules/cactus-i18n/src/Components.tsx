@@ -74,10 +74,6 @@ interface I18nSectionProps {
   [key: string]: any
 }
 
-function hasLoadedAll(controller: BaseI18nController, section: string, lang?: string): boolean {
-  return controller.hasLoaded(section, lang)
-}
-
 const I18nSection: React.FC<I18nSectionProps> = ({
   section,
   name,
@@ -94,7 +90,7 @@ const I18nSection: React.FC<I18nSectionProps> = ({
     const { controller, lang: ctxLang } = context
     lang = controller.negotiateLang(lang || ctxLang, true)[0]
     // Don't change the context until everything is loaded.
-    if (hasLoadedAll(controller, section, lang)) {
+    if (controller.hasLoaded(section, lang)) {
       if (section === context.section && lang === ctxLang) {
         ctxRef.current = context
       } else {
