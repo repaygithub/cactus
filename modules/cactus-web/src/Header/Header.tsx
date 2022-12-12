@@ -75,10 +75,10 @@ const MainColumn = styled.div`
   ${columnStyles}
   ${(p) => `
     ${p.theme.mediaQueries.small} {
-      padding-top: 0px;
+      padding-top: 0;
       min-width: 40%;
       > div:not(:first-child) {
-        margin-left: 0px;
+        margin-left: 0;
       }
       align-items: flex-start;
     }
@@ -100,14 +100,14 @@ const ItemsColumn = styled.div`
   ${(p) => `
     ${p.theme.mediaQueries.small} {
       align-items: flex-end;
-      flex: 1 1 0px;
+      flex: 1 1 0;
       hyphens: auto;
       overflow-wrap: break-word;
-      padding-top: 0px;
+      padding-top: 0;
       max-width: 100%;
       word-wrap: break-word;
       > div {
-        margin-top: 0px;
+        margin-top: 0;
         margin-left: 8px;
         word-wrap: break-word;
         max-width: 100%;
@@ -120,7 +120,7 @@ const ItemsColumn = styled.div`
       align-items: center;
       flex: 0 1 auto;
       > div:not(:first-child) {
-        margin-top: 0px;
+        margin-top: 0;
       }
     }
   `}
@@ -129,7 +129,7 @@ const ItemsColumn = styled.div`
 const StyledDescription = styled.div`
   margin-top: ${(p) => `${p.theme.space[3]}px`};
   ${(p) => p.theme.mediaQueries.small} {
-    margin-top: 0px;
+    margin-top: 0;
   }
 `
 

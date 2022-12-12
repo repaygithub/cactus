@@ -18,7 +18,8 @@
         "plugin/no-unsupported-browser-features": [true, {
           "browsers": ["IE 11"],
           "ignorePartialSupport": true,
-          "severity": "warning"
+          "severity": "warning",
+          "ignore": ["css-appearance"]
         }],
         "color-no-invalid-hex": true,
         "property-no-unknown": [true, {
@@ -33,8 +34,7 @@
         "declaration-colon-newline-after": null,
         "property-case": null,
         "keyframes-name-pattern": null,
-
-
+        "color-function-notation": null,
         "scss/double-slash-comment-empty-line-before": null,
         "selector-list-comma-newline-after": null,
         "block-closing-brace-space-before": null,

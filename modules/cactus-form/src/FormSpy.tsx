@@ -1,8 +1,9 @@
-import { FormState, formSubscriptionItems } from 'final-form'
+import { FormApi, FormState, formSubscriptionItems } from 'final-form'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { useForm, UseFormStateParams } from 'react-final-form'
 
+import { makeConfigurableComponent } from './config'
 import { RenderFunc, RenderProps, UnknownProps } from './types'
 
 const DEFAULT_SUBSCRIPTION: Record<string, boolean> = {}
@@ -10,14 +11,21 @@ formSubscriptionItems.forEach((sub) => {
   DEFAULT_SUBSCRIPTION[sub] = true
 })
 
-interface FormSpyProps extends Omit<UseFormStateParams, 'onChange'>, RenderProps, UnknownProps {}
-type State = FormState<Record<string, any>, Partial<Record<string, any>>>
+type StateProcessor = (props: UnknownProps, state: State) => UnknownProps | void
+export interface FormSpyProps
+  extends Omit<UseFormStateParams, 'onChange'>,
+    RenderProps,
+    UnknownProps {
+  processState?: StateProcessor
+}
+type State = FormState<Record<string, any>, Partial<Record<string, any>>> & { form?: FormApi }
 
 const FormSpy: RenderFunc<FormSpyProps> = ({
   render,
   component,
   children,
   subscription,
+  processState = Object.assign,
   ...rest
 }: FormSpyProps) => {
   const form = useForm('FormSpy')
@@ -31,7 +39,8 @@ const FormSpy: RenderFunc<FormSpyProps> = ({
     return form.subscribe(setState, sub)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const props = Object.assign(rest, state, { form })
+  state.form = form
+  const props = processState(rest, state) || rest
   if (typeof children === 'function') {
     return children(props)
   }
@@ -54,4 +63,6 @@ const requireOneProp = (props: FormSpyProps, _: string, componentName: string) =
   subscription: PropTypes.objectOf(PropTypes.bool),
 }
 
-export default FormSpy
+export default makeConfigurableComponent(FormSpy, {
+  subscription: DEFAULT_SUBSCRIPTION,
+})

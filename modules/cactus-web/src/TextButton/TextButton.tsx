@@ -73,8 +73,8 @@ export const focusStyle = css`
     position: absolute;
     height: 100%;
     width: 100%;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     border: ${(p) => border(p.theme, 'callToAction')};
     border-radius: ${radius(20)};
   }

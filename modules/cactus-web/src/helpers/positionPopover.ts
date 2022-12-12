@@ -90,7 +90,6 @@ const getScrollParent = (popup: HTMLElement): Element | null => {
 
 export const positionDropDown: PositionCallback = (dd, button) => {
   if (!button) return
-  const ddRect = dd.getBoundingClientRect()
   const { left, right, top, bottom } = button.getBoundingClientRect()
   const view = getViewport() as Element
   const scrollParent = getScrollParent(dd) || view
@@ -98,41 +97,30 @@ export const positionDropDown: PositionCallback = (dd, button) => {
   const maxRight = Math.min(scrollBox.right, view.clientWidth)
   const maxBottom = Math.min(scrollBox.bottom, view.clientHeight)
 
-  const minWidth = Math.min(maxRight, Math.round(right - left))
-  const maxWidth = Math.min(maxRight, minWidth + Math.min(minWidth, 400))
-  const ddWidth = Math.round(ddRect.width)
-  const ddHeight = Math.round(ddRect.height) + MARGIN
+  const visibleWidth = Math.min(scrollParent.clientWidth, view.clientWidth)
+  const minWidth = Math.min(visibleWidth, button.offsetWidth)
+  const maxWidth = Math.min(visibleWidth, minWidth * 2, minWidth + 400)
+  const ddWidth = dd.offsetWidth
+  const ddHeight = dd.offsetHeight + MARGIN
   const expectedWidth = Math.max(minWidth, Math.min(maxWidth, ddWidth))
-  const minPx = `${minWidth}px`
-  const maxPx = `${maxWidth}px`
-  // Changing the width may change the positioning, so we call it again after the styles update.
-  const needsRound2 =
-    expectedWidth !== ddWidth || dd.style.minWidth !== minPx || dd.style.maxWidth !== maxPx
+  const adjustedLeft = Math.max(right, maxRight) - expectedWidth
+  const availableBelow = maxBottom - bottom
 
   // Assumes fixed positioning.
-  const expectedRight = left + expectedWidth
-  if (expectedRight > maxRight) {
-    dd.style.left = ''
-    dd.style.right = `${Math.min(view.clientWidth - right, 0)}px`
+  dd.style.left = `${Math.min(left, adjustedLeft)}px`
+  if (availableBelow < ddHeight && availableBelow < top) {
+    // Not enough space below, more space above: drop-down goes above the button.
+    const maxHeight = top - MARGIN
+    dd.style.top = `${top - Math.min(ddHeight, maxHeight)}px`
+    dd.style.maxHeight = `${maxHeight}px`
   } else {
-    dd.style.right = ''
-    dd.style.left = `${left}px`
-  }
-
-  const expectedBottom = bottom + ddHeight
-  const availableBelow = maxBottom - bottom
-  dd.style.maxHeight = `${Math.max(availableBelow, top) - MARGIN}px`
-  if (expectedBottom > maxBottom && availableBelow < top) {
-    dd.style.top = ''
-    dd.style.bottom = `${view.clientHeight + MARGIN - top}px`
-  } else {
-    dd.style.bottom = ''
     dd.style.top = `${bottom + MARGIN}px`
+    dd.style.maxHeight = `${availableBelow - MARGIN}px`
   }
-
-  dd.style.minWidth = minPx
-  dd.style.maxWidth = maxPx
-  if (needsRound2) {
+  dd.style.minWidth = `${minWidth}px`
+  dd.style.maxWidth = `${maxWidth}px`
+  // Changing the width may change the positioning, so we call it again after the styles update.
+  if (expectedWidth !== ddWidth) {
     window.requestAnimationFrame(() => positionDropDown(dd, button))
   }
 }

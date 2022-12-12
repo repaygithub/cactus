@@ -37,12 +37,14 @@ class MockPromise {
 
   public then(callback: (params: any) => any): MockPromise {
     this._then = callback
-    return (this._chain = new MockPromise())
+    this._chain = new MockPromise()
+    return this._chain
   }
 
   public catch(callback: (params: any) => any): MockPromise {
     this._catch = callback
-    return (this._chain = new MockPromise())
+    this._chain = new MockPromise()
+    return this._chain
   }
 
   public static resolve(value: unknown): MockPromise {

@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { Form as FinalForm, FormSpy as FinalFormSpy } from 'react-final-form'
 
-import { DependentField, Field, FieldSpy, Form, FormSpy } from '../src/index'
+import { DependentField, Field, FieldSpy, Form, FormSpy, SubmitButton } from '../src/index'
 
 const noop = () => undefined
 const form = ({ children }: any) => React.createElement('form', {}, children)
@@ -619,18 +619,18 @@ describe('final-form functionality', () => {
 
       userEvent.type(getByLabelText('Test Field'), 'S')
 
-      expect(renderFn).toHaveBeenCalledTimes(3)
-      hasFormApi(renderFn.mock.calls[2][0])
-      expect(renderFn.mock.calls[2][0].dirty).toBe(true)
-      expect(renderFn.mock.calls[2][0].errors).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].invalid).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].pristine).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].submitFailed).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].submitSucceeded).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].submitting).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].valid).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].validating).toBeUndefined()
-      expect(renderFn.mock.calls[2][0].values).toEqual({ test: 'S' })
+      expect(renderFn).toHaveBeenCalledTimes(4)
+      hasFormApi(renderFn.mock.calls[3][0])
+      expect(renderFn.mock.calls[3][0].dirty).toBe(true)
+      expect(renderFn.mock.calls[3][0].errors).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].invalid).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].pristine).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].submitFailed).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].submitSucceeded).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].submitting).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].valid).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].validating).toBeUndefined()
+      expect(renderFn.mock.calls[3][0].values).toEqual({ test: 'S' })
     })
 
     test('will unsubscribe on unmount', () => {
@@ -657,6 +657,86 @@ describe('final-form functionality', () => {
       expect(renderFn).toHaveBeenCalledTimes(2)
       userEvent.click(getByText('toggle'))
       expect(renderFn).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  describe('<SubmitButton />', () => {
+    test('is disabled based on form state by default', () => {
+      const { getByText, getByLabelText } = render(
+        <App>
+          <Field name="type" label="Type" />
+          <SubmitButton />
+        </App>
+      )
+
+      const btn = getByText('Submit').parentElement
+      expect(btn).toBeDisabled()
+      userEvent.type(getByLabelText('Type'), 'test')
+      expect(btn).not.toBeDisabled()
+    })
+
+    test('uses custom mapping for state values', () => {
+      const rf = jest.fn()
+      rf.mockReturnValue(null)
+      const processState = (props: any) => {
+        props.disabled = false
+        props.randomProp = 'supported'
+        return props
+      }
+      render(
+        <App>
+          <SubmitButton processState={processState} render={rf}>
+            Sub
+          </SubmitButton>
+        </App>
+      )
+
+      expect(rf).toHaveBeenCalledWith(
+        expect.objectContaining({
+          disabled: false,
+          randomProp: 'supported',
+        })
+      )
+    })
+
+    test('uses modified original props object if processState returns undefined', () => {
+      const rf = jest.fn()
+      rf.mockReturnValue(null)
+      const processState = (props: any) => {
+        props.disabled = false
+        props.randomProp = 'supported'
+      }
+      render(
+        <App>
+          <SubmitButton processState={processState} render={rf}>
+            Sub
+          </SubmitButton>
+        </App>
+      )
+
+      expect(rf).toHaveBeenCalledWith(
+        expect.objectContaining({
+          disabled: false,
+          randomProp: 'supported',
+        })
+      )
+    })
+
+    test('can override default subscription', () => {
+      const processState = jest.fn()
+      render(
+        <App>
+          <SubmitButton subscription={{ hasSubmitErrors: true }} processState={processState}>
+            Submit Errors Only
+          </SubmitButton>
+        </App>
+      )
+      expect(processState).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'submit' }),
+        expect.objectContaining({
+          hasSubmitErrors: false,
+        })
+      )
     })
   })
 })

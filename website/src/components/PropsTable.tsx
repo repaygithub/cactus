@@ -91,7 +91,7 @@ export const BaseTable = styled.table.attrs(renderTableHeader)`
       overflow-x: auto;
     }
 
-    td:before {
+    td::before {
       position: absolute;
       top: 2px;
       left: 2px;
@@ -111,19 +111,19 @@ export const BaseTable = styled.table.attrs(renderTableHeader)`
 
 const CactusTable = styled(BaseTable)`
   @media only screen and (max-width: 750px) {
-    td:nth-of-type(1):before {
+    td:nth-of-type(1)::before {
       content: ' Name';
     }
-      td:nth-of-type(2):before {
+    td:nth-of-type(2)::before {
       content: ' Required';
     }
-    td:nth-of-type(3):before {
+    td:nth-of-type(3)::before {
       content: 'Default Value';
     }
-    td:nth-of-type(4):before {
+    td:nth-of-type(4)::before {
       content: 'Type';
     }
-    td:nth-of-type(5):before {
+    td:nth-of-type(5)::before {
       content: 'Description';
     }
 
@@ -135,17 +135,17 @@ const CactusTable = styled(BaseTable)`
 
 const StylingTable = styled(BaseTable)`
   @media only screen and (max-width: 750px) {
-    td:nth-of-type(1):before {
+    td:nth-of-type(1)::before {
       content: ' Name';
     }
-      td:nth-of-type(2):before {
+    td:nth-of-type(2)::before {
       content: ' Required';
     }
 
-    td:nth-of-type(3):before {
+    td:nth-of-type(3)::before {
       content: 'Type';
     }
-    td:nth-of-type(4):before {
+    td:nth-of-type(4)::before {
       content: 'Description';
     }
     td:nth-of-type(4) {

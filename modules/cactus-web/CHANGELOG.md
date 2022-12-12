@@ -1,3 +1,30 @@
+# v9.12.0 (Fri Dec 02 2022)
+
+#### 🚀 Enhancement
+
+- CACTUS-1008: add absolute mode to Dimmer [#820](https://github.com/repaygithub/cactus/pull/820) ([@wilysword](https://github.com/wilysword))
+- CACTUS-1060 :: Remove `vh` styles from Dimmer [#814](https://github.com/repaygithub/cactus/pull/814) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### 🐛 Bug Fix
+
+- fix(cactus-web): datagrid dropdown issues [#838](https://github.com/repaygithub/cactus/pull/838) ([@maxrcollins](https://github.com/maxrcollins))
+- CACTUS-1088: correct drop-down positioning [#829](https://github.com/repaygithub/cactus/pull/829) ([@wilysword](https://github.com/wilysword))
+- CACTUS-1008: fix missing import [#824](https://github.com/repaygithub/cactus/pull/824) ([@wilysword](https://github.com/wilysword))
+- cactus-1075:: modal-bugfix-1 [#816](https://github.com/repaygithub/cactus/pull/816) ([@maxrcollins](https://github.com/maxrcollins))
+
+#### 🏠 Internal
+
+- Cactus-1072  fix linter errors [#821](https://github.com/repaygithub/cactus/pull/821) ([@maxrcollins](https://github.com/maxrcollins))
+- CACTUS-970 :: ScreenSizeProvider using deprecated function [#817](https://github.com/repaygithub/cactus/pull/817) ([@daniloPenaR](https://github.com/daniloPenaR))
+
+#### Authors: 3
+
+- [@maxrcollins](https://github.com/maxrcollins)
+- [@wilysword](https://github.com/wilysword)
+- Danilo Peña ([@daniloPenaR](https://github.com/daniloPenaR))
+
+---
+
 # v9.11.1 (Fri Oct 28 2022)
 
 #### 🐛 Bug Fix

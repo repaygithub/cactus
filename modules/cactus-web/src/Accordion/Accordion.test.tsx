@@ -437,7 +437,7 @@ describe('component: Accordion', () => {
 
       const a1 = getAccordionButton('Accordion 1')
       fireEvent.focus(a1)
-      fireEvent.keyUp(a1, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyUp(a1, { key: KeyCodes.DOWN })
       expect(document.activeElement).toBe(getAccordionButton('Accordion 2'))
     })
 
@@ -446,7 +446,7 @@ describe('component: Accordion', () => {
 
       const a2 = getAccordionButton('Accordion 2')
       fireEvent.focus(a2)
-      fireEvent.keyUp(a2, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      fireEvent.keyUp(a2, { key: KeyCodes.UP })
       expect(document.activeElement).toBe(getAccordionButton('Accordion 1'))
     })
 
@@ -456,9 +456,9 @@ describe('component: Accordion', () => {
       const a1 = getAccordionButton('Accordion 1')
       const a2 = getAccordionButton('Accordion 2')
       fireEvent.focus(a1)
-      fireEvent.keyUp(a1, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      fireEvent.keyUp(a1, { key: KeyCodes.UP })
       expect(document.activeElement).toBe(a2)
-      fireEvent.keyUp(a2, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyUp(a2, { key: KeyCodes.DOWN })
       expect(document.activeElement).toBe(a1)
     })
 
@@ -467,9 +467,9 @@ describe('component: Accordion', () => {
 
       const a = getAccordionButton('Accordion 1')
       fireEvent.focus(a)
-      fireEvent.keyUp(a, { keyCode: KeyCodes.SPACE, charCode: KeyCodes.SPACE })
+      fireEvent.keyUp(a, { key: KeyCodes.SPACE })
       expect(a.getAttribute('aria-expanded')).toBe('true')
-      fireEvent.keyUp(a, { keyCode: KeyCodes.SPACE, charCode: KeyCodes.SPACE })
+      fireEvent.keyUp(a, { key: KeyCodes.SPACE })
       expect(a.getAttribute('aria-expanded')).toBe('false')
     })
 
@@ -478,9 +478,9 @@ describe('component: Accordion', () => {
 
       const a = getAccordionButton('Accordion 1')
       fireEvent.focus(a)
-      fireEvent.keyUp(a, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      fireEvent.keyUp(a, { key: KeyCodes.RETURN })
       expect(a.getAttribute('aria-expanded')).toBe('true')
-      fireEvent.keyUp(a, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      fireEvent.keyUp(a, { key: KeyCodes.RETURN })
       expect(a.getAttribute('aria-expanded')).toBe('false')
     })
 
@@ -490,7 +490,7 @@ describe('component: Accordion', () => {
       const a1 = getAccordionButton('Accordion 1')
       const a2 = getAccordionButton('Accordion 2')
       fireEvent.focus(a2)
-      fireEvent.keyUp(a2, { keyCode: KeyCodes.HOME, charCode: KeyCodes.HOME })
+      fireEvent.keyUp(a2, { key: KeyCodes.HOME })
       expect(document.activeElement).toBe(a1)
     })
 
@@ -500,7 +500,7 @@ describe('component: Accordion', () => {
       const a1 = getAccordionButton('Accordion 1')
       const a2 = getAccordionButton('Accordion 2')
       fireEvent.focus(a1)
-      fireEvent.keyUp(a1, { keyCode: KeyCodes.END, charCode: KeyCodes.END })
+      fireEvent.keyUp(a1, { key: KeyCodes.END })
       expect(document.activeElement).toBe(a2)
     })
   })
@@ -511,7 +511,7 @@ describe('component: Accordion', () => {
 
       const a1 = getAccordionButton('Accordion 1')
       fireEvent.focus(a1)
-      fireEvent.keyUp(a1, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyUp(a1, { key: KeyCodes.DOWN })
       expect(document.activeElement).toBe(getAccordionButton('Accordion 2'))
     })
 
@@ -520,7 +520,7 @@ describe('component: Accordion', () => {
 
       const a2 = getAccordionButton('Accordion 2')
       fireEvent.focus(a2)
-      fireEvent.keyUp(a2, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      fireEvent.keyUp(a2, { key: KeyCodes.UP })
       expect(document.activeElement).toBe(getAccordionButton('Accordion 1'))
     })
 
@@ -530,9 +530,9 @@ describe('component: Accordion', () => {
       const a1 = getAccordionButton('Accordion 1')
       const a2 = getAccordionButton('Accordion 2')
       fireEvent.focus(a1)
-      fireEvent.keyUp(a1, { keyCode: KeyCodes.UP, charCode: KeyCodes.UP })
+      fireEvent.keyUp(a1, { key: KeyCodes.UP })
       expect(document.activeElement).toBe(a2)
-      fireEvent.keyUp(a2, { keyCode: KeyCodes.DOWN, charCode: KeyCodes.DOWN })
+      fireEvent.keyUp(a2, { key: KeyCodes.DOWN })
       expect(document.activeElement).toBe(a1)
     })
 
@@ -541,9 +541,9 @@ describe('component: Accordion', () => {
 
       const a = getAccordionButton('Accordion 1')
       fireEvent.focus(a)
-      fireEvent.keyUp(a, { keyCode: KeyCodes.SPACE, charCode: KeyCodes.SPACE })
+      fireEvent.keyUp(a, { key: KeyCodes.SPACE })
       expect(a.getAttribute('aria-expanded')).toBe('true')
-      fireEvent.keyUp(a, { keyCode: KeyCodes.SPACE, charCode: KeyCodes.SPACE })
+      fireEvent.keyUp(a, { key: KeyCodes.SPACE })
       expect(a.getAttribute('aria-expanded')).toBe('false')
     })
 
@@ -552,9 +552,9 @@ describe('component: Accordion', () => {
 
       const a = getAccordionButton('Accordion 1')
       fireEvent.focus(a)
-      fireEvent.keyUp(a, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      fireEvent.keyUp(a, { key: KeyCodes.RETURN })
       expect(a.getAttribute('aria-expanded')).toBe('true')
-      fireEvent.keyUp(a, { keyCode: KeyCodes.RETURN, charCode: KeyCodes.RETURN })
+      fireEvent.keyUp(a, { key: KeyCodes.RETURN })
       expect(a.getAttribute('aria-expanded')).toBe('false')
     })
 
@@ -564,7 +564,7 @@ describe('component: Accordion', () => {
       const a1 = getAccordionButton('Accordion 1')
       const a2 = getAccordionButton('Accordion 2')
       fireEvent.focus(a2)
-      fireEvent.keyUp(a2, { keyCode: KeyCodes.HOME, charCode: KeyCodes.HOME })
+      fireEvent.keyUp(a2, { key: KeyCodes.HOME })
       expect(document.activeElement).toBe(a1)
     })
 
@@ -574,7 +574,7 @@ describe('component: Accordion', () => {
       const a1 = getAccordionButton('Accordion 1')
       const a2 = getAccordionButton('Accordion 2')
       fireEvent.focus(a1)
-      fireEvent.keyUp(a1, { keyCode: KeyCodes.END, charCode: KeyCodes.END })
+      fireEvent.keyUp(a1, { key: KeyCodes.END })
       expect(document.activeElement).toBe(a2)
     })
   })
