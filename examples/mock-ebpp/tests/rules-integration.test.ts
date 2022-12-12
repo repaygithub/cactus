@@ -24,7 +24,6 @@ fixture('Rules Integration Tests')
 test('fill out and submit the form sequentially', async (t: TestController): Promise<void> => {
   const { selectDropdownOption } = makeActions(t)
 
-
   await t.click(queryByText('Add Rule')).click(queryByText('Add Condition'))
   await selectDropdownOption('Name', 'A variable')
   await selectDropdownOption('Operator', 'Greater than')
@@ -49,7 +48,6 @@ test('fill out and submit the form sequentially', async (t: TestController): Pro
 test('fill out and submit the form with deleting and reordering', async (t: TestController): Promise<void> => {
   await t.maximizeWindow()
   const { selectDropdownOption } = makeActions(t)
-
 
   await t.click(queryByText('Add Rule')).click(queryByText('Add Condition'))
   await selectDropdownOption('Name', 'A variable')
