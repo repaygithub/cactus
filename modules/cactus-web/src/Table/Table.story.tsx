@@ -7,11 +7,10 @@ export default {
   title: 'Table',
   component: Table,
   argTypes: {
-    fullWidth: { control: 'boolean', defaultValue: true },
-    cardBreakpoint: { options: ['tiny', 'small', 'medium', 'large', 'extraLarge'] },
-    variant: { options: ['table', 'card', 'mini'] },
+    width: STRING,
+    minWidth: STRING,
+    maxWidth: STRING,
     dividers: { control: 'boolean' },
-    as: HIDE_CONTROL,
   },
 } as const
 
@@ -31,13 +30,13 @@ type TableStory = Story<
 
 export const Layout: TableStory = ({
   captionText,
-  hasHeader,
+  hasHeader = true,
   headerText,
   cellText,
   columnCount,
   rowCount,
   alignment,
-  hasBody,
+  hasBody = true,
   ...args
 }) => {
   const makeRow = (
@@ -79,6 +78,7 @@ Layout.argTypes = {
   margin: SPACE,
   sticky: { name: 'Sticky column position', options: ['right', 'none'] },
   rowFocus: { options: [true, false, 'mouse-only'] },
+  variant: { control: 'object', options: null },
 }
 Layout.args = {
   captionText: '',
@@ -91,6 +91,7 @@ Layout.args = {
   sticky: 'none',
   rowFocus: true,
   rowHover: true,
+  variant: { tiny: 'card', small: 'mini', medium: 'table' },
 }
 
 export const StylesOnly: TableStory = ({
@@ -124,16 +125,20 @@ export const StylesOnly: TableStory = ({
   }
 
   return (
-    <Table {...args} as="table">
+    <Table {...args}>
       {captionText && <caption>{captionText}</caption>}
       {header}
       <Body>{rows}</Body>
     </Table>
   )
 }
-StylesOnly.argTypes = { ...Layout.argTypes }
+StylesOnly.argTypes = {
+  ...Layout.argTypes,
+  variant: { options: ['table', 'card', 'mini'] },
+}
+
 delete StylesOnly.argTypes.alignment
-StylesOnly.args = { ...Layout.args }
+StylesOnly.args = { ...Layout.args, noScrollWrapper: true }
 
 export const WithLongValues: Story<
   typeof Table,
@@ -177,8 +182,6 @@ export const WithLongValues: Story<
 }
 WithLongValues.argTypes = {
   variant: HIDE_CONTROL,
-  fullWidth: HIDE_CONTROL,
-  cardBreakpoint: HIDE_CONTROL,
   dividers: HIDE_CONTROL,
 }
 const text =

@@ -1,4 +1,4 @@
-import { CactusTheme, mediaGTE } from '@repay/cactus-theme'
+import { CactusTheme, screenSizes } from '@repay/cactus-theme'
 import { Property } from 'csstype'
 import { omit, pick } from 'lodash'
 import PropTypes from 'prop-types'
@@ -6,7 +6,7 @@ import React from 'react'
 import styled, { StyledComponent, StyledConfig, ThemedStyledFunction } from 'styled-components'
 import * as SS from 'styled-system'
 
-import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
+import { useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { isIE } from './constants'
 
 // This file exists, in part, because styled-components types are a PAIN.
@@ -37,7 +37,6 @@ export const styledUnpoly = <C extends React.ElementType, F extends React.Elemen
 }
 
 type Attrs = { [k: string]: any } | ((props: any) => any)
-type Breakpoint = keyof CactusTheme['mediaQueries']
 
 // `ElementType` is more correct, but using `ComponentType` internally works better.
 interface StyleOpts<T = React.ComponentType> extends StyledConfig {
@@ -73,30 +72,56 @@ interface WithStyles {
   ): FixedStyleTag<C, F>
 }
 
+type AnyObject = { [p: string]: unknown }
+type StyleConfig = { [p: string]: SS.ConfigFunction }
+
+const mergeStyle = (style: AnyObject, props: any, processor: SS.ConfigFunction, value: unknown) => {
+  if (value !== null && value !== undefined) {
+    const scaleKey = processor.scale
+    const scale = (scaleKey && props.theme?.[scaleKey]) || processor.defaults
+    const processedStyle = processor(value, scale, props)
+    if (processedStyle) {
+      Object.assign(style, processedStyle)
+      return true
+    }
+  }
+}
+
+export const useResponsiveStyles = (config: StyleConfig, props: any): AnyObject => {
+  const currentSize = useScreenSize().valueOf()
+  const style: AnyObject = {}
+  for (const key in props) {
+    const processor = config[key]
+    if (!processor) continue
+    const rawValue = props[key]
+
+    if (typeof rawValue === 'object') {
+      if (Array.isArray(rawValue)) {
+        const maxSize = rawValue.length - 1
+        for (let i = Math.min(currentSize, maxSize); i >= 0; i--) {
+          if (mergeStyle(style, props, processor, rawValue[i])) break
+        }
+      } else if (rawValue) {
+        for (let i = currentSize; i >= 0; i--) {
+          const value = (rawValue as AnyObject)[screenSizes[i]]
+          if (mergeStyle(style, props, processor, value)) break
+        }
+      }
+    } else {
+      mergeStyle(style, props, processor, rawValue)
+    }
+  }
+  return style
+}
+
 const getInlineStyleHook = (styleParser: SS.styleFn) => {
+  const config = (styleParser.config || {}) as StyleConfig
   // As long as you don't mess with `styled-components` internals, this follows the rules of hooks.
   const useInlineStyles = (props: any) => {
-    const currentSize = useScreenSize().valueOf()
-    const parsedStyles = styleParser(props)
-    // Future versions of `styled-components` automatically combine these, but for now...
-    const style = props.style ? { ...props.style, ...parsedStyles } : parsedStyles
-    // Skip `tiny` because `styled-system` doesn't include a media query for it.
-    for (let i = 1; i < SIZES.length; i++) {
-      const key = mediaGTE(props, SIZES[i].size as Breakpoint)
-      if (key in parsedStyles) {
-        if (i <= currentSize) {
-          const stylesForSize = parsedStyles[key]
-          // styled-system doesn't properly omit null/undefined values.
-          for (const k in stylesForSize) {
-            style[k] = stylesForSize[k] ?? style[k]
-          }
-        }
-        delete style[key]
-      }
-    }
+    const parsedStyles = useResponsiveStyles(config, props)
     // Shortcut to check for property existence.
-    for (const _ in style) {
-      return { style }
+    for (const _ in parsedStyles) {
+      return { style: props.style ? { ...props.style, ...parsedStyles } : parsedStyles }
     }
   }
   return useInlineStyles
@@ -142,8 +167,25 @@ export const withStyles: WithStyles = (component: React.ComponentType, options: 
   return tag
 }
 
-const cssVal = PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
-export const styledProp = PropTypes.oneOfType([cssVal, PropTypes.arrayOf(cssVal)])
+// `ResponsiveValue` includes `null` but not `undefined` which conflicts with
+// the types in the PropTypes library, so we override the return type to match.
+export const responsivePropType = <T>(
+  ptype: PropTypes.Requireable<T>
+): PropTypes.Requireable<SS.ResponsiveValue<T>> =>
+  PropTypes.oneOfType([
+    ptype,
+    PropTypes.arrayOf(ptype),
+    PropTypes.shape(
+      screenSizes.reduce((types: any, key) => {
+        types[key] = ptype
+        return types
+      }, {})
+    ),
+  ]) as any
+
+export const styledProp = responsivePropType<string | number>(
+  PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+)
 
 export const classes = (...args: (string | undefined)[]): string => args.filter(Boolean).join(' ')
 

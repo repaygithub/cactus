@@ -1,3 +1,4 @@
+import { border, fontSize } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
@@ -5,7 +6,6 @@ import { margin, MarginProps } from 'styled-system'
 
 import { keyDownAsClick } from '../helpers/a11y'
 import { getOmittableProps } from '../helpers/omit'
-import { border, fontSize } from '../helpers/theme'
 
 type NavDirection = 'prev' | 'next'
 
@@ -36,7 +36,7 @@ const PrevNextLinkBase: React.FC<PrevNextLinkProps> = ({ disabled, onClick, ...r
 const PrevNextLink = styled(PrevNextLinkBase)`
   cursor: pointer;
   padding: 0 10px;
-  ${(p): string => fontSize(p.theme, 'small')};
+  ${fontSize('small')};
   line-height: 20px;
   text-decoration: none;
 
@@ -50,7 +50,7 @@ const PrevNextLink = styled(PrevNextLinkBase)`
   }
 
   :last-child {
-    border-left: ${(p): string => border(p.theme, 'lightContrast')};
+    border-left: ${border('lightContrast')};
   }
 
   &[aria-disabled='true'] {

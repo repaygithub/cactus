@@ -1,4 +1,5 @@
 import { NavigationChevronRight } from '@repay/cactus-icons'
+import { textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { Children, useRef } from 'react'
 import styled from 'styled-components'
@@ -7,7 +8,7 @@ import FocusLock from '../FocusLock/FocusLock'
 import { keyDownAsClick } from '../helpers/a11y'
 import { AsProps, GenericComponent } from '../helpers/asProps'
 import positionPortal from '../helpers/positionPortal'
-import { borderSize, popupBoxShadow, popupShape, textStyle } from '../helpers/theme'
+import { borderSize, popupBoxShadow, popupShape } from '../helpers/theme'
 import usePopup from '../helpers/usePopup'
 import { SIZES, useScreenSize } from '../ScreenSizeProvider/ScreenSizeProvider'
 
@@ -327,7 +328,7 @@ const BreadcrumbPopupList = styled.ul<{ $maxWidth?: number }>`
 `
 
 const StyledNav = styled.nav`
-  ${(p) => textStyle(p.theme, 'small')}
+  ${textStyle('small')}
 
   .main-breadcrumb-list {
     display: flex;

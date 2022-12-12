@@ -1,9 +1,9 @@
+import { mediaGTE, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React, { useContext } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { cloneAll } from '../helpers/react'
-import { textStyle } from '../helpers/theme'
 import { ScreenSizeContext } from '../ScreenSizeProvider/ScreenSizeProvider'
 import { DataGridContext, getMediaQuery } from './helpers'
 import { JustifyContent, TransientProps } from './types'
@@ -52,7 +52,7 @@ const StyledBottomSection = styled.div<TransientProps & { $justifyContent: Justi
   flex-direction: column;
   align-items: center;
   margin-top: ${(p) => (p.$variant === 'mini' ? `${p.theme.space[3]}px` : `${p.theme.space[7]}px`)};
-  ${(p) => textStyle(p.theme, p.$variant === 'mini' ? 'small' : 'body')}
+  ${(p) => textStyle(p, p.$variant === 'mini' ? 'small' : 'body')}
 
   // Non-card view styles
   ${getMediaQuery} {
@@ -63,7 +63,7 @@ const StyledBottomSection = styled.div<TransientProps & { $justifyContent: Justi
   // Card view styles when screen is larger than tiny
   ${(p) =>
     p.$isCardView &&
-    `${p.theme.mediaQueries.small} {
+    `${mediaGTE(p, 'small')} {
       flex-direction: row;
       justify-content: ${p.$justifyContent};
       margin-top: 16px;

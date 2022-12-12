@@ -1,13 +1,5 @@
-import {
-  BorderSize,
-  CactusColor,
-  CactusTheme,
-  ColorStyle,
-  Shape,
-  TextStyle,
-  TextStyleCollection,
-} from '@repay/cactus-theme'
-import { css, FlattenSimpleInterpolation } from 'styled-components'
+import { BorderSize, CactusColor, CactusTheme, ColorStyle, Shape } from '@repay/cactus-theme'
+import { css } from 'styled-components'
 
 export type Props = { theme: CactusTheme }
 
@@ -135,42 +127,6 @@ export const boxShadow = (theme: CactusTheme, shadowType: number | string): stri
     return ''
   }
 }
-
-type FontSize = 'h1' | 'h2' | 'h3' | 'h4' | 'body' | 'p' | 'small' | 'tiny'
-
-export const fontSize = (theme: CactusTheme, size: FontSize): string => {
-  if (theme.mediaQueries) {
-    return `
-      font-size: ${theme.mobileFontSizes[size]}px;
-      ${theme.mediaQueries.medium} {
-        font-size: ${theme.fontSizes[size]}px;
-      }
-    `
-  }
-
-  return `font-size: ${theme.fontSizes[size]}px;`
-}
-
-export const textStyle = (
-  theme: CactusTheme,
-  size: keyof TextStyleCollection
-): FlattenSimpleInterpolation | TextStyle => {
-  if (theme.mediaQueries) {
-    return css`
-      ${theme.mobileTextStyles[size]}
-      ${theme.mediaQueries.medium} {
-        ${theme.textStyles[size]}
-      }
-    `
-  }
-
-  return theme.textStyles[size]
-}
-
-type MediaQuery = keyof Required<CactusTheme>['mediaQueries']
-
-export const media = (theme: CactusTheme, query: MediaQuery): string | undefined =>
-  theme.mediaQueries && theme.mediaQueries[query]
 
 /* Detects if the user is using a mobile/touch device which falls under either the SMALL or TINY breakpoint
 category AND that the site they are on is optimized for a device of that size */

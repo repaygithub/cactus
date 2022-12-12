@@ -1,4 +1,4 @@
-import cactusTheme from '@repay/cactus-theme'
+import cactusTheme, { mediaGTE } from '@repay/cactus-theme'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -11,25 +11,25 @@ const BreakpointBox = styled(Box)`
   width: 50px;
   height: 50px;
   border-radius: 15%;
-  ${(p): string => p.theme.mediaQueries.small} {
+  ${mediaGTE('small')} {
     max-width: 708px;
     width: 75px;
     height: 75px;
     border-radius: 25%;
   }
-  ${(p): string => p.theme.mediaQueries.medium} {
+  ${mediaGTE('medium')} {
     max-width: 964px;
     width: 100px;
     height: 100px;
     border-radius: 35%;
   }
-  ${(p): string => p.theme.mediaQueries.large} {
+  ${mediaGTE('large')} {
     max-width: 1140px;
     width: 150px;
     height: 150px;
     border-radius: 45%;
   }
-  ${(p): string => p.theme.mediaQueries.extraLarge} {
+  ${mediaGTE('extraLarge')} {
     max-width: 1380px;
     width: 200px;
     height: 200px;

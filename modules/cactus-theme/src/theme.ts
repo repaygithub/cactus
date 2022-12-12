@@ -1,5 +1,13 @@
 import { hexToRgb, isDark, rgbToHsl } from './converters'
 
+export const screenSizes = ['tiny', 'small', 'medium', 'large', 'extraLarge'] as const
+export type ScreenSize = typeof screenSizes[number]
+export type Breakpoint = Exclude<ScreenSize, 'tiny'>
+
+type ArrayObject<Key extends string, Value> = ReadonlyArray<Value> & { readonly [K in Key]: Value }
+export type MediaQueries = ArrayObject<ScreenSize, MediaQueryList>
+export type Breakpoints = ArrayObject<Breakpoint, string>
+
 export type ColorStyle = {
   color: string
   backgroundColor: string
@@ -60,12 +68,7 @@ export type Shape = 'square' | 'intermediate' | 'round'
 
 export type Font = 'Helvetica Neue' | 'Helvetica' | 'Arial'
 
-export interface BreakpointsObject {
-  small: string
-  medium: string
-  large: string
-  extraLarge: string
-}
+export type BreakpointsObject = { [K in Breakpoint]: string }
 
 interface GeneratedColors {
   /** Core colors */
@@ -107,13 +110,8 @@ interface ThemeColors extends GeneratedColors {
 }
 
 export interface CactusTheme {
-  breakpoints: string[]
-  mediaQueries: {
-    small: string
-    medium: string
-    large: string
-    extraLarge: string
-  }
+  breakpoints: Breakpoints
+  mediaQueries: MediaQueries
   colors: ThemeColors
   space: number[]
   fontSizes: FontSizeObject
@@ -421,6 +419,37 @@ const makeTextStyles = (fontSizes: FontSizeObject): TextStyleCollection => ({
   },
 })
 
+const processBreakpoints = (bp: BreakpointsObject): [Breakpoints, MediaQueries] => {
+  // For tests & some other non-standard JS environments.
+  const noop = (): void => undefined
+  const makeQuery =
+    typeof matchMedia !== 'undefined'
+      ? matchMedia
+      : (q: string): MediaQueryList => ({
+          matches: true,
+          media: q,
+          addListener: noop,
+          removeListener: noop,
+          addEventListener: noop,
+          removeEventListener: noop,
+          onchange: noop,
+          dispatchEvent: () => true,
+        })
+  const breakpoints: any = []
+  const mediaQueries: any = []
+  for (let i = 0; i < screenSizes.length; i++) {
+    if (i === 0) {
+      mediaQueries.push((mediaQueries.tiny = makeQuery('screen')))
+    } else {
+      const key = screenSizes[i] as Breakpoint
+      breakpoints.push((breakpoints[key] = bp[key]))
+      const query = makeQuery(`screen and (min-width: ${bp[key]})`)
+      mediaQueries.push((mediaQueries[key] = query))
+    }
+  }
+  return [breakpoints, mediaQueries]
+}
+
 export function generateTheme(options: GeneratorOptions = repayOptions): CactusTheme {
   const colors: GeneratedColors = isHue(options) ? fromHue(options) : fromTwoColor(options)
 
@@ -459,19 +488,14 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     return x === font ? -1 : y === font ? 1 : 0
   })
 
-  const breakpoints = options.breakpoints || {
-    small: '768px',
-    medium: '1024px',
-    large: '1200px',
-    extraLarge: '1440px',
-  }
-
-  const mediaQueries = {
-    small: `@media screen and (min-width: ${breakpoints.small})`,
-    medium: `@media screen and (min-width: ${breakpoints.medium})`,
-    large: `@media screen and (min-width: ${breakpoints.large})`,
-    extraLarge: `@media screen and (min-width: ${breakpoints.extraLarge})`,
-  }
+  const [breakpoints, mediaQueries] = processBreakpoints(
+    options.breakpoints || {
+      small: '768px',
+      medium: '1024px',
+      large: '1200px',
+      extraLarge: '1440px',
+    }
+  )
 
   return {
     colors: {
@@ -589,7 +613,7 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
     boxShadows,
     textStyles: makeTextStyles(fontSizes),
     mobileTextStyles: makeTextStyles(mobileFontSizes),
-    breakpoints: Object.values(breakpoints),
+    breakpoints,
     mediaQueries,
   }
 }

@@ -1,4 +1,5 @@
 import { DescriptiveProfile, NavigationChevronDown } from '@repay/cactus-icons'
+import { textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
@@ -18,7 +19,6 @@ import {
   popupBoxShadow,
   popupShape,
   radius,
-  textStyle,
 } from '../helpers/theme'
 import usePopup, { TogglePopup } from '../helpers/usePopup'
 import { useLayout } from '../Layout/Layout'
@@ -419,7 +419,7 @@ const DropdownButton = styled.button<{ $isTiny: boolean }>`
   align-items: center;
   flex-wrap: nowrap;
   background-color: transparent;
-  ${(p) => textStyle(p.theme, 'body')};
+  ${textStyle('body')};
   padding: ${(p) => p.theme.space[4]}px;
   border: 0;
   border-left: ${(p) => border(p.theme, 'lightContrast')};
@@ -493,7 +493,7 @@ const LogoWrapper = styled.div`
 `
 
 const MenuButton = styled.button<ProfileStyleProp>`
-  ${(p) => textStyle(p.theme, 'body')};
+  ${textStyle('body')};
   height: 100%;
   font-weight: 600;
   background-color: transparent;
@@ -553,7 +553,7 @@ const MenuList = styled.ul`
     text-decoration: none;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    ${(p) => textStyle(p.theme, 'small')};
+    ${textStyle('small')};
     ${(p) => p.theme.colorStyles.standard};
     outline: none;
     padding: 4px 16px;
@@ -593,7 +593,7 @@ const PopupHeader = styled.div`
   word-wrap: break-word;
   overflow-wrap: break-word;
   padding: 18px 16px;
-  ${(p) => textStyle(p.theme, 'body')};
+  ${textStyle('body')};
   font-weight: 600;
   color: ${(p) => p.theme.colors.callToAction};
   ${(p) => insetBorder(p.theme, 'callToAction', 'bottom')};
