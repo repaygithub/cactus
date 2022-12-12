@@ -1,0 +1,19 @@
+name: "Install dependencies"
+description: "Run yarn install --immutable on every job and get cached lockfile"
+runs:
+  using: composite
+  steps:
+    - uses: actions/cache@v3
+      id: cache-deps
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+    - name: Install Packages
+      shell: bash
+      if: steps.cache-deps.outputs.cache-hit != 'true'
+      run: yarn install --immutable
+
+    - name: Lint Packages
+      shell: bash
+      run: yarn lint

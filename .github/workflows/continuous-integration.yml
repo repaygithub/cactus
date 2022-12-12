@@ -13,42 +13,28 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Get Yarn Cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
       - name: NodeJS Version
+        shell: bash
         run: node --version
 
-      - name: Install Packages
-        run: yarn install --immutable
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
 
-      - name: Lint Packages
-        run: yarn lint
+      - name: Build Modules
+        uses: ./.github/actions/cactus-build
 
-      - name: Build cactus-fwk
-        run: yarn fwk build
+  unit-tests:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
+      - uses: actions/checkout@v2
 
-      - name: Build cactus-theme
-        run: yarn theme build
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
 
-      - name: Build cactus-i18n
-        run: yarn i18n build
-
-      - name: Build cactus-icons
-        run: yarn icons build
-
-      - name: Build cactus-web
-        run: yarn web build
-
-      - name: Build cactus-form
-        run: yarn form build
+      - name: Download built modules
+        uses: ./.github/actions/download-dist-artifacts
 
       - name: Test Modules
         run: |
@@ -59,11 +45,37 @@ jobs:
           yarn icons test:ci
           yarn web test:ci
 
+  integration-tests:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Download built modules
+        uses: ./.github/actions/download-dist-artifacts
+
       - name: Integration Tests
         uses: ./actions/integration-tests
         env:
           BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+  
+  visual-tests:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Download built modules
+        uses: ./.github/actions/download-dist-artifacts
 
       - name: Visual Tests
         uses: ./actions/storyshots
@@ -77,6 +89,19 @@ jobs:
         uses: ./actions/create-pull-request
         with:
           branch: ${{ steps.extract_branch.outputs.branch }}-patch
+
+  docs-test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Download built modules
+        uses: ./.github/actions/download-dist-artifacts
 
       - name: Test Docs Website
         run: yarn docs test:ci
