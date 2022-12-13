@@ -113,4 +113,15 @@ describe('With theme changes ', () => {
 
     expect(styles.borderWidth).toBe('2px')
   })
+
+  test('should support style props', () => {
+    const { container } = renderWithTheme(<MenuButton label="Demo" marginY={2} marginLeft="7px" />)
+    const menuButton = container.querySelector(String(MenuButton))
+    expect(menuButton).toHaveStyle({
+      marginTop: '4px',
+      marginBottom: '4px',
+      marginLeft: '7px',
+      marginRight: '',
+    })
+  })
 })
