@@ -7,10 +7,10 @@ import {
 import { CactusTheme, ColorStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css, ThemeProps } from 'styled-components'
+import { css, ThemeProps } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { omitProps } from '../helpers/omit'
+import { withStyles } from '../helpers/styled'
 
 export type AvatarType = 'alert' | 'feedback'
 export type AvatarStatus = 'error' | 'warning' | 'info' | 'success'
@@ -69,9 +69,12 @@ const AvatarBase = (props: AvatarProps): React.ReactElement => {
   )
 }
 
-export const Avatar = styled(AvatarBase).withConfig(
-  omitProps<AvatarStyleProps>(margin, 'type', 'disabled')
-)`
+export const Avatar = withStyles('div', {
+  as: AvatarBase,
+  displayName: 'Avatar',
+  styles: [margin],
+  transitiveProps: ['type', 'disabled'],
+})<AvatarStyleProps>`
   box-sizing: border-box;
   width: 40px;
   height: 40px;
@@ -84,7 +87,6 @@ export const Avatar = styled(AvatarBase).withConfig(
     padding-bottom: 4px;
   }
 
-  ${margin}
   ${avaColor}
 `
 
