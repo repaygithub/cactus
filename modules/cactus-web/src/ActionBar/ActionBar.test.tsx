@@ -133,4 +133,22 @@ describe('Component: ActionBar', () => {
     userEvent.click(checkbox)
     expect(panel).toHaveAttribute('aria-hidden', 'true')
   })
+
+  test('should support style props', () => {
+    const { container } = renderWithTheme(
+      <ActionBar>
+        <ActionBar.Panel
+          id="one"
+          icon={<ActionsGear />}
+          aria-label="test"
+          width="777px"
+          padding={5}
+        >
+          <p>I am a helpful message of some sort.</p>
+        </ActionBar.Panel>
+      </ActionBar>
+    )
+    const popup = container.querySelector('#one-popup')
+    expect(popup).toHaveStyle({ width: '777px', padding: '24px' })
+  })
 })
