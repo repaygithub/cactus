@@ -6,7 +6,6 @@ import docsMeta from './FormSpy.story.mdx'
 
 delete docsMeta.includeStories
 export default {
-  title: 'Cactus Form/Components/FormSpy',
   ...docsMeta,
 } as const
 

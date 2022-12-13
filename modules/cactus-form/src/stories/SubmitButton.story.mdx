@@ -3,8 +3,9 @@ import { Meta, ArgsTable, Canvas, Story } from '@storybook/addon-docs'
 import { Field, Form, SubmitButton } from '../'
 import cactusTheme from '@repay/cactus-theme'
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import { livePreviewStyle } from './helpers'
 
-<Meta title="Cactus Form/Components/Submit Button" />
+<Meta title="Cactus Form/Components/SubmitButton" />
 
 
 # Submit Button
@@ -22,15 +23,16 @@ Note that this component isn't required. The form can still be submitted using a
 
 export const code = `
   <Form onSubmit={() => {}}>
-    <Field id="field" />
-    <SubmitButton />
+    <Field name="first-name" label="First Name" required />
+    <Field name="last-name" label="Last Name" />
+    <SubmitButton mt={4} />
   </Form>
 `;
+
 export const scope = { Field, Form, SubmitButton };
 
-
-<LiveProvider code={code} scope={{scope}}>
-  <LiveEditor style={{}} />
+<LiveProvider code={code} scope={scope}>
+  <LiveEditor style={livePreviewStyle} />
   <LiveError />
   <LivePreview />
 </LiveProvider>

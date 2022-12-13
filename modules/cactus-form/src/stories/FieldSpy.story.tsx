@@ -6,7 +6,6 @@ import docsMeta from './FieldSpy.story.mdx'
 
 delete docsMeta.includeStories
 export default {
-  title: 'Cactus Form/Components/FieldSpy',
   ...docsMeta,
 } as const
 

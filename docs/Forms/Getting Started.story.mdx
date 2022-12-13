@@ -4,8 +4,8 @@ import { Meta } from '@storybook/addon-docs'
 
 # Getting Started
 
-Collecting data using forms is one of the most basic functions of a website. <a to='/components/'>@repay/cactus-web</a> provides several styled form inputs, as well as a few custom inputs that emulate built-in HTML inputs. 
-This guide will show you the basics of combining these input components with a common forms library, [Final Form](https://final-form.org/).
+Collecting data using forms is one of the most basic functions of a website. [@repay/cactus-web](/story/cactus-web-intro--page) provides several styled form inputs, as well as a few custom inputs that emulate built-in HTML inputs. 
+This guide will show you how to use this library, but will also have links out to [Final Form](https://final-form.org/) when appropriate for aspects that are unaltered.
 Note that because Final Form is framework-agnostic, there's [another library](https://final-form.org/react) for the React-specific parts.
 
 Before starting with Cactus Form, you should have a React application, and know how to add a page or component.
@@ -37,14 +37,14 @@ import React from 'react'
 
 const ExampleForm = (props) => (
   <Form {...props}>
-        <FormSpy subscription={{ error: true }}>
-          {({error}) => (
-            <Alert status="error">{error}</Alert>
-          )}
-        </FormSpy>
-        <Field id="text-input" name="mytext" label="Enter some text" />
-        <Field type="checkbox" name="mycb" label="Check me (or don't)" />
-        <SubmitButton />
+    <FormSpy subscription={{ error: true }}>
+      {({error}) => (
+        <Alert status="error">{error}</Alert>
+      )}
+    </FormSpy>
+    <Field id="text-input" name="mytext" label="Enter some text" />
+    <Field type="checkbox" name="mycb" label="Check me (or don't)" />
+    <SubmitButton />
   </Form>
 )
 ```

@@ -6,7 +6,6 @@ import docsMeta from './Field.story.mdx'
 
 delete docsMeta.includeStories
 export default {
-  title: 'Cactus Form/Components/Field',
   ...docsMeta,
 } as const
 

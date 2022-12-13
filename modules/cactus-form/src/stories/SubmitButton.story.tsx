@@ -6,7 +6,6 @@ import docsMeta from './SubmitButton.story.mdx'
 
 delete docsMeta.includeStories
 export default {
-  title: 'Cactus Form/Components/Submit Button',
   ...docsMeta,
 } as const
 
