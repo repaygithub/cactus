@@ -1,8 +1,11 @@
-import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-export const Divider = styled.hr<MarginProps>`
-  ${margin}
+import { withStyles } from '../helpers/styled'
+
+export const Divider = withStyles('hr', {
+  displayName: 'Divider',
+  styles: [margin],
+})<MarginProps>`
   border: none;
   height: ${(p) => (p.theme.border === 'thin' ? '1px' : '2px')};
   color: ${(p) => p.theme.colors.lightContrast};
