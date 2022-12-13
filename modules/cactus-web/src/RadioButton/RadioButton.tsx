@@ -4,7 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { omitMargins } from '../helpers/omit'
+import { withStyles } from '../helpers/styled'
 
 export interface RadioButtonProps extends React.InputHTMLAttributes<HTMLInputElement>, MarginProps {
   id?: string
@@ -17,10 +17,9 @@ interface StyledRadioButtonProps extends React.HTMLProps<HTMLSpanElement> {
 }
 
 const RadioButtonBase = React.forwardRef<HTMLInputElement, RadioButtonProps>((props, ref) => {
-  const componentProps = omitMargins(props) as Omit<RadioButtonProps, keyof MarginProps>
-  const { id, className, ...radioButtonProps } = componentProps
+  const { id, className, style, ...radioButtonProps } = props
   return (
-    <label className={className} htmlFor={id}>
+    <label className={className} style={style} htmlFor={id}>
       <HiddenRadioButton ref={ref} id={id} {...radioButtonProps} />
       <StyledRadioButton aria-hidden={true} />
     </label>
@@ -57,7 +56,11 @@ const StyledRadioButton = styled.span<StyledRadioButtonProps>`
   }
 `
 
-export const RadioButton = styled(RadioButtonBase)`
+export const RadioButton = withStyles('input', {
+  as: RadioButtonBase,
+  displayName: 'RadioButton',
+  styles: [margin],
+})`
   position: relative;
   display: inline-block;
   vertical-align: -1px;
@@ -84,8 +87,6 @@ export const RadioButton = styled(RadioButtonBase)`
       background-color: ${color('lightGray')};
     }
   }
-
-  ${margin}
 `
 
 RadioButton.propTypes = {
