@@ -16,10 +16,45 @@ describe('component: TextInput', () => {
       <TextInput marginTop={4} placeholder="Do I wanna know?" />
     )
 
-    const textInput = getByPlaceholderText('Do I wanna know?').parentElement
-    const styles = window.getComputedStyle(textInput as HTMLElement)
+    const textInput = getByPlaceholderText('Do I wanna know?')
+    const styles = window.getComputedStyle(textInput)
 
     expect(styles.marginTop).toBe('16px')
+  })
+  test('should support all width props', () => {
+    const { getByPlaceholderText } = renderWithTheme(
+      <TextInput
+        marginTop={4}
+        placeholder="Do I wanna know?"
+        minWidth="101px"
+        maxWidth="300px"
+        width="150px"
+      />
+    )
+
+    const textInput = getByPlaceholderText('Do I wanna know?')
+    const styles = window.getComputedStyle(textInput)
+
+    expect(styles.width).toBe('150px')
+    expect(styles.minWidth).toBe('101px')
+    expect(styles.maxWidth).toBe('300px')
+  })
+  test('should supoport flex item props', () => {
+    const { getByPlaceholderText } = renderWithTheme(
+      <TextInput
+        placeholder="Are there some aces up your sleeve?"
+        flexBasis="10%"
+        flexGrow={3}
+        flexShrink={1}
+      />
+    )
+
+    const inputEl = getByPlaceholderText('Are there some aces up your sleeve?')
+    const styles = window.getComputedStyle(inputEl)
+
+    expect(styles.flexBasis).toBe('10%')
+    expect(styles.flexGrow).toBe('3')
+    expect(styles.flexShrink).toBe('1')
   })
 
   test('should support ref prop', () => {

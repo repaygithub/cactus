@@ -7,6 +7,45 @@ import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import ColorPicker from './ColorPicker'
 
 describe('component: ColorPicker', () => {
+  test('should support all width props', () => {
+    const { getByTestId } = renderWithTheme(
+      <ColorPicker
+        id="color-picker"
+        name="cool-color"
+        data-testid="color-pck"
+        minWidth="101px"
+        maxWidth="300px"
+        width="150px"
+      />
+    )
+
+    const colorPicker = getByTestId('color-pck')
+    const styles = window.getComputedStyle(colorPicker)
+
+    expect(styles.width).toBe('150px')
+    expect(styles.minWidth).toBe('101px')
+    expect(styles.maxWidth).toBe('300px')
+  })
+  test('should support flex item props', () => {
+    const { getByTestId } = renderWithTheme(
+      <ColorPicker
+        id="color-picker"
+        name="cool-color"
+        data-testid="color-pck"
+        flexGrow={4}
+        flexShrink={3}
+        flexBasis="auto"
+      />
+    )
+
+    const colorPicker = getByTestId('color-pck')
+    const styles = window.getComputedStyle(colorPicker)
+
+    expect(styles.flexGrow).toBe('4')
+    expect(styles.flexShrink).toBe('3')
+    expect(styles.flexBasis).toBe('auto')
+  })
+
   describe('can be controlled', () => {
     test('with hsl', () => {
       const { getByLabelText } = renderWithTheme(

@@ -3,7 +3,7 @@ import { BorderSize, CactusTheme, ColorStyle, fontSize, textStyle } from '@repay
 import PropTypes from 'prop-types'
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import styled, { css, ThemeContext, withTheme } from 'styled-components'
-import { margin, MarginProps, width as styledSystemWidth, WidthProps } from 'styled-system'
+import { compose, margin, MarginProps } from 'styled-system'
 
 import CheckBox from '../CheckBox/CheckBox'
 import Flex from '../Flex/Flex'
@@ -20,6 +20,7 @@ import { positionDropDown, usePositioning } from '../helpers/positionPopover'
 import { isPurelyEqual, useMergedRefs } from '../helpers/react'
 import { useScrollTrap } from '../helpers/scroll'
 import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
+import { allWidth, AllWidthProps, flexItem, FlexItemProps } from '../helpers/styled'
 import { boxShadow, isResponsiveTouchDevice, radius } from '../helpers/theme'
 import Tag from '../Tag/Tag'
 import TextButton from '../TextButton/TextButton'
@@ -61,7 +62,8 @@ type Target = CactusEventTarget<SelectValueType>
 
 export interface SelectProps
   extends MarginProps,
-    WidthProps,
+    AllWidthProps,
+    FlexItemProps,
     Omit<
       React.HTMLAttributes<HTMLButtonElement>,
       'onChange' | 'onBlur' | 'onFocus' | 'placeholder'
@@ -1622,15 +1624,17 @@ const SelectWithTheme = withTheme(SelectBase)
 
 const Select = styled(SelectWithTheme)`
   max-width: 100%;
+  display: inline-block;
   & button:disabled {
     background-color: ${(p) => p.disabled && p.theme.colors.lightGray};
     border-color: ${(p) => p.disabled && p.theme.colors.lightGray};
   }
-  ${margin}
-  ${styledSystemWidth}
   ${SelectTrigger} {
     background-color: ${(p) => p.theme.colors.white};
     ${getStatusStyles}
+  }
+  &&& {
+    ${compose(margin, allWidth, flexItem)}
   }
 `
 

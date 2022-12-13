@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import AccessibleField, { FieldProps } from '../AccessibleField/AccessibleField'
 import { extractFieldStyleProps } from '../helpers/omit'
-import { TextInput, TextInputProps } from '../TextInput/TextInput'
+import TextInput, { TextInputProps } from '../TextInput/TextInput'
 
 interface TextInputFieldProps extends FieldProps, Omit<TextInputProps, 'name' | 'status'> {}
 

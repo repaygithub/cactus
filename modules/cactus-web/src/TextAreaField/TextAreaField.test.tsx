@@ -91,13 +91,13 @@ describe('component: TextAreaField', () => {
     )
 
     const blank = { marginTop: '', marginRight: '', marginBottom: '', marginLeft: '' }
-    expect(getByTestId('first').parentElement?.parentElement).toHaveStyle(blank)
-    expect(getByTestId('default').parentElement?.parentElement).toHaveStyle({
+    expect(getByTestId('first').parentElement).toHaveStyle(blank)
+    expect(getByTestId('default').parentElement).toHaveStyle({
       ...blank,
       marginTop: '16px',
       marginBottom: '4px',
     })
-    expect(getByTestId('override').parentElement?.parentElement).toHaveStyle({
+    expect(getByTestId('override').parentElement).toHaveStyle({
       ...blank,
       marginTop: '2px',
     })
