@@ -35,8 +35,13 @@ import { Field, Form, FormSpy, SubmitButton } from '@repay/cactus-form'
 import { Button } from '@repay/cactus-web'
 import React from 'react'
 
-const ExampleForm = (props) => (
-  <Form {...props}>
+const onSubmit = async (formValues) => {
+  await sleep(300)
+  window.alert(JSON.stringify(values, 0, 2))
+}
+
+const ExampleForm = ({ ...otherProps }) => (
+  <Form onSubmit={onSubmit}>
     <FormSpy subscription={{ error: true }}>
       {({error}) => (
         <Alert status="error">{error}</Alert>
