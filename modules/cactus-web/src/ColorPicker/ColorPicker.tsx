@@ -5,7 +5,7 @@ import React from 'react'
 import { ColorChangeHandler, CustomPicker, HSLColor, HSVColor } from 'react-color'
 import { EditableInput, Hue, Saturation } from 'react-color/lib/components/common'
 import styled from 'styled-components'
-import { compose, margin, MarginProps } from 'styled-system'
+import { margin, MarginProps } from 'styled-system'
 import tinycolor from 'tinycolor2'
 
 import Button from '../Button/Button'
@@ -16,7 +16,7 @@ import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
 import { SemiControlled } from '../helpers/react'
 import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
-import { allWidth, AllWidthProps, flexItem, FlexItemProps } from '../helpers/styled'
+import { allWidth, AllWidthProps, flexItem, FlexItemProps, withStyles } from '../helpers/styled'
 import { popupBoxShadow, popupShape } from '../helpers/theme'
 import usePopup, { TogglePopup } from '../helpers/usePopup'
 import IconButton from '../IconButton/IconButton'
@@ -165,7 +165,11 @@ const PickerDialog = styled(({ handleClose, color, setColor, phrases, ...props }
   }
 `
 
-const InputWrapper = styled.div<{ status?: Status | null }>`
+const InputWrapper = withStyles('div', {
+  displayName: 'ColorPicker',
+  styles: [margin, allWidth, flexItem],
+  transitiveProps: ['status'],
+})<{ status?: Status | null }>`
   box-sizing: border-box;
   display: inline-flex;
   justify-content: space-between;
@@ -178,7 +182,6 @@ const InputWrapper = styled.div<{ status?: Status | null }>`
   outline: none;
   padding: 0 16px 0 12px;
   min-width: 160px;
-  ${margin}
 
   &:focus-within {
     border-color: ${themeColor('callToAction')};
@@ -201,10 +204,6 @@ const InputWrapper = styled.div<{ status?: Status | null }>`
     cursor: not-allowed;
     ${colorStyle('disable')}
     border-color: ${themeColor('lightGray')};
-  }
-
-  &&& {
-    ${compose(allWidth, flexItem)}
   }
 `
 
