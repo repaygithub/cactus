@@ -8,7 +8,7 @@ import { border, color, colorStyle, radius, textStyle } from '@repay/cactus-them
 import PropTypes from 'prop-types'
 import React, { Component, ReactElement } from 'react'
 import styled from 'styled-components'
-import { margin, MarginProps, width, WidthProps } from 'styled-system'
+import { margin, MarginProps } from 'styled-system'
 
 import Calendar, { CalendarLabels, MonthChange } from '../Calendar/Calendar'
 import { CalendarDate, CalendarValue, InitialFocus } from '../Calendar/Grid'
@@ -38,6 +38,7 @@ import { getDataProps } from '../helpers/omit'
 import { usePositioning } from '../helpers/positionPopover'
 import positionPortal from '../helpers/positionPortal'
 import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
+import { allWidth, AllWidthProps, flexItem, FlexItemProps, withStyles } from '../helpers/styled'
 import IconButton from '../IconButton/IconButton'
 
 interface DateInputPhrasesType extends Partial<CalendarLabels> {
@@ -213,8 +214,6 @@ const InputWrapper = styled.div`
   user-select: none;
   min-width: 106px;
   ${textStyle('body')};
-  ${margin}
-  ${width}
 
   &:focus-within {
     border-color: ${color('callToAction')};
@@ -330,7 +329,8 @@ type Target = CactusEventTarget<CalendarDate | number>
 
 export interface DateInputProps
   extends MarginProps,
-    WidthProps,
+    AllWidthProps,
+    FlexItemProps,
     Omit<
       React.InputHTMLAttributes<HTMLInputElement>,
       'disabled' | 'width' | 'value' | 'defaultValue' | 'onChange' | 'onBlur' | 'onFocus'
@@ -876,6 +876,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       id,
       name,
       className,
+      style,
       'aria-describedby': ariaDescribedBy,
       'aria-labelledby': ariaLabelledBy,
       type,
@@ -892,70 +893,69 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const timeId = id + '-time'
     const selectedValue = value.isValidDate() ? value.toDate() : null
     return (
-      <div onFocus={this.handleFocus} onBlur={this.handleBlur}>
-        <Flex alignItems="flex-start" justifyContent="center" flexDirection="column">
-          <InputWrapper
-            className={className}
-            status={this.props.status}
-            role="group"
-            ref={this._inputWrapper}
-            aria-describedby={ariaDescribedBy}
-            aria-labelledby={ariaLabelledBy}
-            onKeyDownCapture={this.handleKeydownCapture}
-            onClick={this.handleClick}
-            {...getDataProps(this.props)}
+      <InputWrapper
+        className={className}
+        style={style}
+        status={this.props.status}
+        role="group"
+        ref={this._inputWrapper}
+        aria-describedby={ariaDescribedBy}
+        aria-labelledby={ariaLabelledBy}
+        onKeyDownCapture={this.handleKeydownCapture}
+        onClick={this.handleClick}
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        {...getDataProps(this.props)}
+      >
+        {hasDate ? (
+          <IconButton
+            disabled={disabled}
+            ref={this._button}
+            onClick={this.handleButtonClick}
+            onTouchStart={this.handleButtonClick}
+            onKeyDown={keyDownAsClick}
+            onKeyUp={preventAction}
+            label={phrases.pickerLabel}
           >
-            {hasDate ? (
-              <IconButton
+            <DescriptiveCalendar />
+          </IconButton>
+        ) : (
+          !id.endsWith('-time') &&
+          !name.endsWith('-time') && <DescriptiveClock aria-hidden="true" />
+        )}
+        {formatArray.map((token, index): ReactElement => {
+          const key = `${token}-${index}`
+          if (isToken(token)) {
+            const inputId = isFirstInput ? id : undefined
+            isFirstInput = false
+            return (
+              <input
                 disabled={disabled}
-                ref={this._button}
-                onClick={this.handleButtonClick}
-                onTouchStart={this.handleButtonClick}
-                onKeyDown={keyDownAsClick}
-                onKeyUp={preventAction}
-                label={phrases.pickerLabel}
-              >
-                <DescriptiveCalendar />
-              </IconButton>
-            ) : (
-              !id.endsWith('-time') &&
-              !name.endsWith('-time') && <DescriptiveClock aria-hidden="true" />
-            )}
-            {formatArray.map((token, index): ReactElement => {
-              const key = `${token}-${index}`
-              if (isToken(token)) {
-                const inputId = isFirstInput ? id : undefined
-                isFirstInput = false
-                return (
-                  <input
-                    disabled={disabled}
-                    key={key}
-                    type={token === 'aa' ? 'text' : NUMBER_INPUT_TYPE}
-                    id={inputId}
-                    data-token={token}
-                    aria-label={getInputLabel(token, phrases)}
-                    placeholder={getInputPlaceholder(token)}
-                    value={value[token]}
-                    autoComplete="off"
-                    onChange={noop}
-                  />
-                )
-              }
-              return <LiteralPunctuation key={key}>{token}</LiteralPunctuation>
-            })}
-            <span aria-hidden="true" />
-            <ToggleButtons aria-hidden="true">
-              <NavigationChevronUp
-                data-name="ArrowUp"
-                onMouseDownCapture={!disabled ? this.handleUpArrowClick : undefined}
+                key={key}
+                type={token === 'aa' ? 'text' : NUMBER_INPUT_TYPE}
+                id={inputId}
+                data-token={token}
+                aria-label={getInputLabel(token, phrases)}
+                placeholder={getInputPlaceholder(token)}
+                value={value[token]}
+                autoComplete="off"
+                onChange={noop}
               />
-              <NavigationChevronDown
-                data-name="ArrowDown"
-                onMouseDownCapture={!disabled ? this.handleDownArrowClick : undefined}
-              />
-            </ToggleButtons>
-          </InputWrapper>
-        </Flex>
+            )
+          }
+          return <LiteralPunctuation key={key}>{token}</LiteralPunctuation>
+        })}
+        <span aria-hidden="true" />
+        <ToggleButtons aria-hidden="true">
+          <NavigationChevronUp
+            data-name="ArrowUp"
+            onMouseDownCapture={!disabled ? this.handleUpArrowClick : undefined}
+          />
+          <NavigationChevronDown
+            data-name="ArrowDown"
+            onMouseDownCapture={!disabled ? this.handleDownArrowClick : undefined}
+          />
+        </ToggleButtons>
         {hasDate && (
           <CalendarPopup
             anchorRef={this._inputWrapper}
@@ -995,12 +995,16 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             </PopupCalendar>
           </CalendarPopup>
         )}
-      </div>
+      </InputWrapper>
     )
   }
 }
 
-export const DateInput = styled(DateInputBase)`
+export const DateInput = withStyles('input', {
+  as: DateInputBase,
+  displayName: 'DateInput',
+  styles: [margin, allWidth, flexItem],
+})`
   ${(p) => p.disabled && colorStyle(p, 'disable')}
   ${(p) =>
     p.disabled &&
@@ -1015,8 +1019,6 @@ export const DateInput = styled(DateInputBase)`
       cursor: not-allowed;
     }
   `}
-  ${margin};
-  ${width};
 `
 
 export default DateInput

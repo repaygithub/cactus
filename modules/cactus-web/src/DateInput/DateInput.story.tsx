@@ -2,7 +2,15 @@ import { Page } from 'puppeteer'
 import React, { useState } from 'react'
 
 import { Button, DateInput, Flex, StatusMessage } from '../'
-import { Action, actions, HIDE_CONTROL, HIDE_STYLED, Story, STRING } from '../helpers/storybook'
+import {
+  Action,
+  actions,
+  HIDE_CONTROL,
+  HIDE_STYLED,
+  SPACE,
+  Story,
+  STRING,
+} from '../helpers/storybook'
 
 export default {
   title: 'DateInput',
@@ -39,32 +47,37 @@ type DateStory = Story<
 export const BasicUsage: DateStory = (args) => {
   const [invalidDate, setInvalidDate] = useState<boolean>(false)
   return (
-    <Flex flexDirection="column" alignItems="flex-start">
-      <DateInput
-        {...args}
-        name={args.name || args.type}
-        onInvalidDate={args.onInvalidDate.wrap(setInvalidDate)}
-        data-testid="testing"
-      />
+    <>
+      <div>
+        <DateInput
+          {...args}
+          name={args.name || args.type}
+          onInvalidDate={args.onInvalidDate.wrap(setInvalidDate)}
+          data-testid="testing"
+        />
+      </div>
       {invalidDate && (
         <StatusMessage status="error" style={{ marginTop: '4px' }}>
           The date you've selected is invalid. Please pick another date.
         </StatusMessage>
       )}
-    </Flex>
+    </>
   )
 }
+BasicUsage.argTypes = { width: STRING, margin: SPACE }
 
 export const ControlledWithDate: DateStory = (args) => {
   const [value, setValue] = React.useState<Date | string | null>(new Date('10/1/2020'))
   return (
     <>
-      <DateInput
-        {...args}
-        name={args.name || args.type}
-        value={value}
-        onChange={args.onChange.wrap(setValue, true)}
-      />
+      <div>
+        <DateInput
+          {...args}
+          name={args.name || args.type}
+          value={value}
+          onChange={args.onChange.wrap(setValue, true)}
+        />
+      </div>
       <Button mt={4} onClick={() => setValue(null)}>
         Clear
       </Button>
