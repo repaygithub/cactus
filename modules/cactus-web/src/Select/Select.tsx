@@ -3,7 +3,7 @@ import { BorderSize, CactusTheme, ColorStyle, fontSize, textStyle } from '@repay
 import PropTypes from 'prop-types'
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import styled, { css, ThemeContext, withTheme } from 'styled-components'
-import { compose, margin, MarginProps } from 'styled-system'
+import { margin, MarginProps } from 'styled-system'
 
 import CheckBox from '../CheckBox/CheckBox'
 import Flex from '../Flex/Flex'
@@ -15,12 +15,18 @@ import {
   isFocusOut,
 } from '../helpers/events'
 import KeyCodes from '../helpers/keyCodes'
-import { omitMargins } from '../helpers/omit'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
 import { isPurelyEqual, useMergedRefs } from '../helpers/react'
 import { useScrollTrap } from '../helpers/scroll'
 import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
-import { allWidth, AllWidthProps, flexItem, FlexItemProps } from '../helpers/styled'
+import {
+  allWidth,
+  AllWidthProps,
+  flexItem,
+  FlexItemProps,
+  Styled,
+  withStyles,
+} from '../helpers/styled'
 import { boxShadow, isResponsiveTouchDevice, radius } from '../helpers/theme'
 import Tag from '../Tag/Tag'
 import TextButton from '../TextButton/TextButton'
@@ -1130,8 +1136,6 @@ const getValidValue = (
 }
 
 class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
-  public static Option = SelectOption
-
   public state: SelectState = {
     isOpen: false,
     value: NO_SELECTION,
@@ -1519,6 +1523,7 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
       id,
       disabled,
       className,
+      style,
       placeholder,
       width,
       status,
@@ -1534,7 +1539,7 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
       noOptionsText = 'No options available',
       onDropdownToggle,
       ...rest
-    } = omitMargins(this.props) as Omit<SelectProps, keyof MarginProps>
+    } = this.props
     const { isOpen, searchValue, activeDescendant } = this.state
     const options = this.getExtOptions()
     const noOptsDisable =
@@ -1543,7 +1548,7 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
     // Added `tabIndex=-1` on the wrapper element to compensate for
     // the fact that Safari cannot focus buttons on click.
     return (
-      <div className={className}>
+      <div className={className} style={style}>
         <div
           ref={this.triggerRef}
           tabIndex={-1}
@@ -1622,7 +1627,15 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
 
 const SelectWithTheme = withTheme(SelectBase)
 
-const Select = styled(SelectWithTheme)`
+type SelectType = Styled<SelectProps> & {
+  Option: typeof SelectOption
+}
+
+const Select: SelectType = withStyles('select', {
+  as: SelectWithTheme,
+  displayName: 'Select',
+  styles: [margin, allWidth, flexItem],
+})`
   max-width: 100%;
   display: inline-block;
   & button:disabled {
@@ -1633,10 +1646,8 @@ const Select = styled(SelectWithTheme)`
     background-color: ${(p) => p.theme.colors.white};
     ${getStatusStyles}
   }
-  &&& {
-    ${compose(margin, allWidth, flexItem)}
-  }
-`
+` as any
+Select.Option = SelectOption
 
 export { Select }
 
@@ -1687,4 +1698,4 @@ Select.defaultProps = {
   noOptionsText: 'No options available',
 }
 
-export default Select as typeof Select & { Option: typeof SelectOption }
+export default Select
