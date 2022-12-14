@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
 import { keyDownAsClick } from '../helpers/a11y'
-import { getOmittableProps } from '../helpers/omit'
+import { withStyles } from '../helpers/styled'
 
 type NavDirection = 'prev' | 'next'
 
@@ -88,12 +88,11 @@ const PrevNextBase: React.FC<PrevNextProps> = ({
   </div>
 )
 
-const styleProps = getOmittableProps(margin)
-export const PrevNext = styled(PrevNextBase).withConfig({
-  shouldForwardProp: (p) => !styleProps.has(p),
-})<MarginProps>(margin)
-
-PrevNext.displayName = 'PrevNext'
+export const PrevNext = withStyles('div', {
+  as: PrevNextBase,
+  displayName: 'PrevNext',
+  styles: [margin],
+})``
 
 const linkAsPropType = PropTypes.elementType as PropTypes.Validator<React.ElementType>
 
