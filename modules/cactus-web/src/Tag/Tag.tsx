@@ -2,10 +2,9 @@ import { NavigationClose } from '@repay/cactus-icons'
 import { color, colorStyle, lineHeight, radius, space, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { getOmittableProps } from '../helpers/omit'
+import { withStyles } from '../helpers/styled'
 import { IconButton } from '../IconButton/IconButton'
 
 const closeTypes = ['no-button', 'button'] as const
@@ -37,9 +36,10 @@ const TagBase = React.forwardRef<HTMLSpanElement, TagProps>(
   }
 )
 
-const styleProps = getOmittableProps(margin)
-export const Tag = styled(TagBase).withConfig({
-  shouldForwardProp: (p) => !styleProps.has(p),
+export const Tag = withStyles('span', {
+  as: TagBase,
+  displayName: 'Tag',
+  styles: [margin],
 })<MarginProps>`
   ${colorStyle('standard')};
   box-sizing: border-box;
@@ -54,8 +54,6 @@ export const Tag = styled(TagBase).withConfig({
   ${IconButton} {
     padding: 4px;
   }
-
-  ${margin}
 `
 
 Tag.propTypes = {
