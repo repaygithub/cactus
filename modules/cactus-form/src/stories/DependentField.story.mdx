@@ -1,4 +1,8 @@
-import { Meta } from '@storybook/addon-docs'
+import { Meta, ArgsTable, Canvas, Story } from '@storybook/addon-docs'
+import { Field, Form, DependentField } from '../'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import { livePreviewStyle } from './helpers'
 
 <Meta title="Cactus Form/Components/DependentField" />
 
@@ -38,17 +42,33 @@ The second argument is the merged props of the `DependentField`; chances are the
 one you'll need is `onChange`, which you can use to update the DependentField's
 value as the dependencies change.
 
-```jsx
-const MyForm = (props) => (
-  <Form {...props}>
-    <Field name="power" type="number" />
-    <DependentField name="reaction" dependsOn="power" onDependencyChange={
-      (state, { onChange }) => {
-        onChange(state.value > 9000 ? 'unbelievable' : 'still good')
-      }
-    } />
-  </Form>
-)
-```
-
 `DependentField` also has the `configureDefaults` and `withDefaults` functions that `Field` has.
+
+## Try it out
+
+export const code = `
+  <Form onSubmit={() => {}}>
+    <Field 
+      name="Independent Field" 
+      label="Basic Field" 
+      type="select" 
+      options={[{ label: 'Label 1', value: 'value-1'}, { label: 'Label 2', value: 'value-2'}]} 
+    />
+    <DependentField
+      dependsOn="Independent Field"
+      name="Dependent Field"
+      label="Dependent Field"
+      onDependencyChange={(state, { onChange }) => {
+        onChange(state.value)
+      }}
+    />
+  </Form>
+`;
+
+export const scope = { Field, Form, DependentField };
+
+<LiveProvider code={code} scope={scope}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>

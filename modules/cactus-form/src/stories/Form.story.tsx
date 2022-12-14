@@ -14,7 +14,7 @@ interface formValues {
   willFail?: boolean
 }
 
-const onSubmit = async (values: formValues) => {
+const onSubmit = (values: formValues) => {
   try {
     if (values.willFail) throw 'Form submission failed'
     if (values.username !== 'Repay1') throw { username: 'Invalid username' }
