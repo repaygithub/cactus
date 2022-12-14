@@ -8,11 +8,11 @@ import defaultTheme, {
 } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled, { css } from 'styled-components'
-import { compose, margin, MarginProps } from 'styled-system'
+import { css } from 'styled-components'
+import { margin, MarginProps } from 'styled-system'
 
 import { getStatusStyles, StatusProps, StatusPropType } from '../helpers/status'
-import { allWidth, AllWidthProps, flexItem, FlexItemProps } from '../helpers/styled'
+import { allWidth, AllWidthProps, flexItem, FlexItemProps, withStyles } from '../helpers/styled'
 
 type TextStyleKey = keyof TextStyleCollection
 export const textStyles = Object.keys(defaultTheme.textStyles) as TextStyleKey[]
@@ -55,13 +55,14 @@ export const commonInputStyles = css<StatusProps>`
   ${getStatusStyles}
 `
 
-const TextInput = styled.input<TextInputProps>`
+const TextInput = withStyles('input', {
+  displayName: 'TextInput',
+  styles: [margin, allWidth, flexItem],
+  transitiveProps: ['textStyle', 'status'],
+})<TextInputProps>`
   border-radius: ${radius(20)};
   padding: 3px 15px;
   ${(p) => textStyle(p, p.textStyle || 'body')};
-  &&& {
-    ${compose(margin, allWidth, flexItem)}
-  }
   ${commonInputStyles}
 `
 
