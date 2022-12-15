@@ -2,9 +2,9 @@ import { Page } from 'puppeteer'
 import React from 'react'
 
 import { Tab, TabController, TabList, TabPanel } from '../'
-import { FlexItemProps } from '../helpers/flexItem'
 import { split } from '../helpers/omit'
 import { Story } from '../helpers/storybook'
+import { FlexItemProps } from '../helpers/styled'
 
 const LABELS = [
   'Ready!',

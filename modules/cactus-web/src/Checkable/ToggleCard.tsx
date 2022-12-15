@@ -5,10 +5,9 @@ import { margin } from 'styled-system'
 
 import { PolyFCWithRef } from '../helpers/asProps'
 import { isIE } from '../helpers/constants'
-import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import generateId from '../helpers/generateId'
 import { useBox } from '../helpers/react'
-import { withStyles } from '../helpers/styled'
+import { flexItem, FlexItemProps, withStyles } from '../helpers/styled'
 import { FlexGroup, GroupProps, makeGroup } from './Group'
 import { CheckableProps, WrapperLabel } from './Wrapper'
 
