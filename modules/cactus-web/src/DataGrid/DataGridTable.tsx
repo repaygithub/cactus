@@ -1,39 +1,38 @@
 import { IconProps, NavigationChevronDown, NavigationChevronUp } from '@repay/cactus-icons'
-import { ScreenSize, screenSizes } from '@repay/cactus-theme'
+import { border, radius } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
-import { border, radius } from '../helpers/theme'
-import Table, { FocusOption, StickyColAlignment } from '../Table/Table'
-import { DataGridContext } from './helpers'
-import { CellInfo, Column, DataGridContextType, Datum } from './types'
+import Box from '../Box/Box'
+import Table, { BaseTableProps, useTableVariant } from '../Table/Table'
+import { columnPropTypes } from './DataGridColumn'
+import { useDataGridContext } from './DataGridContext'
+import { CellInfo, Column, ColumnProps, DataGridContext, Datum } from './types'
 
-export interface DataGridTableProps {
-  children: React.ReactNode
-  data: Datum[]
-  dividers?: boolean
-  sticky?: StickyColAlignment
-  rowFocus?: FocusOption
-  rowHover?: boolean
+export interface DataGridTableProps extends BaseTableProps {
+  columns?: Omit<ColumnProps, 'children'>[]
 }
 
-const renderHeader = ({ columns, sortOptions, onSort, isCardView }: DataGridContextType) => (
+const renderHeader = (
+  columns: Column[],
+  { sortInfo, updateSortInfo, tableVariant }: DataGridContext
+) => (
   <Table.Header>
     {columns.map((column) => {
       const { key, id, title = '' } = column
       const props = { ...column.cellProps, ...column.headerProps, key, children: title }
       if (column.sortable && id) {
-        const sortOpt = sortOptions.find((opt) => opt.id === id)
-        let sortDesc = false
+        // Invert the initial sort to simplify the onClick logic.
+        let sortDesc = column.defaultSort !== 'desc'
         let Icon: React.ComponentType<IconProps> | undefined = undefined
-        if (sortOpt) {
-          sortDesc = !sortOpt.sortAscending
+        if (sortInfo?.id === id) {
+          sortDesc = !sortInfo.sortAscending
           Icon = sortDesc ? NavigationChevronDown : NavigationChevronUp
           props['aria-sort'] = sortDesc ? 'descending' : 'ascending'
         }
-        if (!isCardView) {
-          const onSortClick = () => onSort([{ id, sortAscending: sortDesc }])
+        if (tableVariant !== 'card') {
+          const onSortClick = () => updateSortInfo({ id, sortAscending: sortDesc }, true)
           props.children = (
             <HeaderButton type="button" onClick={onSortClick}>
               <div>{title}</div>
@@ -68,26 +67,39 @@ const renderBody = (columns: Column[], data: Datum[]) => (
   </Table.Body>
 )
 
-const getResponsiveVariant = (breakpoint: ScreenSize) => {
-  if (breakpoint === 'extraLarge') return 'card'
-  const tableSize: ScreenSize = screenSizes[screenSizes.indexOf(breakpoint) + 1]
-  return { tiny: 'card', [breakpoint]: 'card', [tableSize]: 'table' } as const
+const useColumnState = (context: DataGridContext, columnProp?: ColumnProps[]) => {
+  const { updateColumns, columns } = context
+  React.useEffect(() => {
+    if (columnProp) {
+      updateColumns(columnProp)
+    }
+  }, [columnProp, updateColumns])
+  return columns
+}
+
+const useVariantState = (context: DataGridContext, props: DataGridTableProps) => {
+  const { updateTableVariant } = context
+  const variant = useTableVariant(props)
+  React.useEffect(() => updateTableVariant(variant), [variant, updateTableVariant])
+  return variant
 }
 
 const DataGridTable: React.FC<DataGridTableProps> = (props) => {
-  const { children, data, ...rest } = props
-
-  const context = useContext(DataGridContext)
-  const { cardBreakpoint, fullWidth, variant } = context
-  const variantProp = variant || getResponsiveVariant(cardBreakpoint)
+  const context = useDataGridContext('DataGrid.Table')
+  const { children, columns: columnProp, ...rest } = props
+  const columns = useColumnState(context, columnProp)
+  // Replace the (possibly) responsive prop with the singular value.
+  rest.variant = context.tableVariant = useVariantState(context, rest)
 
   return (
     <>
       {children}
-      <Table width={fullWidth ? '100%' : undefined} variant={variantProp} {...rest}>
-        {renderHeader(context)}
-        {renderBody(context.columns, data)}
-      </Table>
+      <Box overflowX="auto" width="100%" flexShrink="0">
+        <Table {...rest} width="100%" noScrollWrapper>
+          {renderHeader(columns, context)}
+          {renderBody(columns, context.data)}
+        </Table>
+      </Box>
     </>
   )
 }
@@ -117,19 +129,17 @@ const HeaderButton = styled.button`
       width: calc(100% + 16px);
       bottom: -4px;
       right: -8px;
-      border: ${(p) => border(p.theme, 'lightContrast')};
+      border: ${border('lightContrast')};
       border-radius: ${radius(20)};
     }
   }
 `
 
+DataGridTable.defaultProps = { ...Table.defaultProps }
+
 DataGridTable.propTypes = {
-  children: PropTypes.node.isRequired,
-  data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
-  dividers: PropTypes.bool,
-  // @ts-ignore
-  rowFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['mouse-only'])]),
-  rowHover: PropTypes.bool,
+  ...Table.propTypes,
+  columns: PropTypes.arrayOf(PropTypes.shape(columnPropTypes).isRequired),
 }
 
 DataGridTable.displayName = 'Table'

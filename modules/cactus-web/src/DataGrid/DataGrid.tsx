@@ -1,109 +1,96 @@
-import { ScreenSize, screenSizes } from '@repay/cactus-theme'
+import { mediaGTE } from '@repay/cactus-theme'
 import { identity } from 'lodash'
 import PropTypes from 'prop-types'
-import React, { ReactElement, useContext, useEffect, useState } from 'react'
+import React from 'react'
 import { margin, MarginProps } from 'styled-system'
 
-import { withStyles } from '../helpers/styled'
+import {
+  allWidth,
+  AllWidthProps,
+  flexContainer,
+  FlexProps,
+  gapWorkaround,
+  withStyles,
+} from '../helpers/styled'
 import { useControllableValue } from '../hooks'
-import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
-import BottomSection from './BottomSection'
+import { TableVariant } from '../Table/Table'
 import DataGridColumn, { useColumns } from './DataGridColumn'
+import { DataGridContextProvider } from './DataGridContext'
+import DataGridSort from './DataGridSort'
 import DataGridTable from './DataGridTable'
-import { DataGridContext, getMediaQuery, initialPageState } from './helpers'
 import PageSizeSelect from './PageSizeSelect'
 import { calcPageState, DataGridPagination, DataGridPrevNext, pageStateReducer } from './Pagination'
-import TopSection from './TopSection'
-import { PageStateAction, PaginationOptions, Pagisort, SortOption, TableProps } from './types'
+import { DataGridContext, Datum, PageState, PageStateAction, Pagisort, SortInfo } from './types'
 
-interface DataGridProps extends MarginProps, Partial<TableProps> {
-  paginationOptions?: PaginationOptions
-  sortOptions?: SortOption[]
-  initialSort?: SortOption[]
+type DivProps = React.HTMLAttributes<HTMLDivElement>
+interface BaseDataGridProps extends DivProps {
+  data: Datum[]
   onPagisort?: (newPagisort: Pagisort) => void
-  onPageChange?: (newPageOptions: PaginationOptions) => void
-  onSort?: (newSortOptions: SortOption[]) => void
-  children: React.ReactNode
+  pagisort?: Pagisort
 }
 
-const BaseDataGrid = (props: DataGridProps): ReactElement => {
-  const {
-    children,
-    onPagisort,
-    initialSort = [],
-    onSort: onSortProp,
-    onPageChange,
-    fullWidth = false,
-    cardBreakpoint = 'tiny',
-    variant,
-    ...rest
-  } = props
+interface DataGridProps extends BaseDataGridProps, MarginProps, AllWidthProps, FlexProps {}
 
-  const [sortOptions, setSort] = useControllableValue(rest, 'sortOptions', initialSort)
+const initialPageState: PageState = {}
+const getSortInfo = (pagisort: Pagisort | undefined, prevState: SortInfo | undefined) => {
+  return pagisort ? pagisort.sort : prevState
+}
+const getPageState = (pagisort: Pagisort | undefined, prevState: PageState) => {
+  if (pagisort) {
+    const { sort, ...pageState } = pagisort
+    return pageState
+  }
+  return prevState
+}
+
+const BaseDataGrid: React.FC<BaseDataGridProps> = (props) => {
+  const { children, onPagisort, pagisort, data, ...rest } = props
+
+  const [columnState, updateColumns] = useColumns()
+  // `variant` is basically a Table prop, but it affects some styling and
+  // Sort visualization so we need to keep track of it at the root level.
+  const [tableVariant, updateTableVariant] = React.useState<TableVariant>('table')
+
+  const [sortInfo, setSortInfo] = useControllableValue(pagisort, getSortInfo, undefined)
   const [pageState, setPageState] = useControllableValue(
-    rest,
-    'paginationOptions',
+    pagisort,
+    getPageState,
     pageStateReducer,
     initialPageState
   )
 
-  const onSort = (newSortOptions: SortOption[]) => {
-    newSortOptions = setSort(newSortOptions)
-    onSortProp?.(newSortOptions)
-    if (onPagisort) {
-      const pagisort = { ...setPageState(identity), sort: newSortOptions }
-      onPagisort(calcPageState(pagisort))
-    }
-  }
-
-  const updatePageState = (action: PageStateAction, raiseEvent = false) => {
-    const newPageOptions = setPageState(action)
-    if (raiseEvent && newPageOptions !== pageState) {
-      onPageChange?.(newPageOptions)
-      if (onPagisort) {
-        const pagisort: Pagisort = { ...newPageOptions, sort: setSort(identity) }
-        onPagisort(pagisort)
+  const context: DataGridContext = {
+    ...columnState,
+    data,
+    updateColumns,
+    tableVariant,
+    updateTableVariant,
+    sortInfo,
+    pageState,
+    updateSortInfo: (newSortInfo: SortInfo, raiseEvent: boolean) => {
+      setSortInfo(newSortInfo)
+      if (raiseEvent) {
+        // Handler should be attached to the context in DataGrid.Sort.
+        context.onSort?.(newSortInfo)
+        if (onPagisort) {
+          const currentPageState = setPageState(identity)
+          const newPagisort = { ...currentPageState, sort: newSortInfo }
+          onPagisort(calcPageState(newPagisort))
+        }
       }
-    }
-  }
-
-  const [columnState, columnDispatch] = useColumns()
-  const [topSectionRendered, setTopSectionRendered] = useState<boolean>(false)
-
-  const size = useContext(ScreenSizeContext)
-  const isCardView = variant === 'card' || (!variant && size <= SIZES[cardBreakpoint])
-
-  // Because the sort buttons are a part of the top section and those must always be present for card view,
-  // we can check if TopSection has been rendered and if it has not, we will render it for them.
-  useEffect(() => {
-    setTopSectionRendered(false)
-    React.Children.forEach(children, (child) => {
-      // @ts-ignore
-      if (child && child.type.displayName && child.type.displayName.includes('TopSection')) {
-        setTopSectionRendered(true)
+    },
+    updatePageState: (action: PageStateAction, raiseEvent: boolean) => {
+      const newPageState = setPageState(action)
+      if (raiseEvent && onPagisort && newPageState !== pageState) {
+        const currentSortInfo = setSortInfo(identity)
+        const newPagisort: Pagisort = { ...newPageState, sort: currentSortInfo }
+        onPagisort(newPagisort)
       }
-    })
-  }, [children])
-
+    },
+  }
   return (
     <div {...rest}>
-      <DataGridContext.Provider
-        value={{
-          ...columnState,
-          columnDispatch,
-          sortOptions: sortOptions,
-          onSort,
-          pageState,
-          updatePageState,
-          fullWidth,
-          cardBreakpoint,
-          isCardView,
-          variant,
-        }}
-      >
-        {!topSectionRendered && <TopSection />}
-        {children}
-      </DataGridContext.Provider>
+      <DataGridContextProvider value={context}>{children}</DataGridContextProvider>
     </div>
   )
 }
@@ -111,58 +98,41 @@ const BaseDataGrid = (props: DataGridProps): ReactElement => {
 export const DataGrid: DataGridType = withStyles('div', {
   displayName: 'DataGrid',
   as: BaseDataGrid,
-  styles: [margin],
+  styles: [margin, allWidth, flexContainer],
 })<DataGridProps>`
-  display: inline;
-  flex-direction: column;
-  width: ${(p): string => (p.fullWidth ? '100%' : 'auto')};
-  overflow-x: auto;
-  ${margin}
-
-  ${getMediaQuery} {
-    display: inline-flex;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  ${gapWorkaround}
+  ${mediaGTE('small')} {
+    flex-flow: row wrap;
+    justify-content: flex-end;
   }
 ` as any
 
+DataGrid.defaultProps = { gap: 4 }
+
 DataGrid.propTypes = {
-  // TODO When we make `currentPage` & `pageSize` optional, fix this.
-  // @ts-expect-error
-  paginationOptions: PropTypes.shape({
-    currentPage: PropTypes.number,
-    pageSize: PropTypes.number,
-    pageCount: PropTypes.number,
-    itemCount: PropTypes.number,
-    itemOffset: PropTypes.number,
-  }),
-  sortOptions: PropTypes.arrayOf(
-    PropTypes.shape({ id: PropTypes.string.isRequired, sortAscending: PropTypes.bool.isRequired })
-      .isRequired
-  ),
-  onPageChange: PropTypes.func,
-  onSort: PropTypes.func,
-  children: PropTypes.node.isRequired,
-  fullWidth: PropTypes.bool,
-  cardBreakpoint: PropTypes.oneOf<ScreenSize>(screenSizes),
+  data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  onPagisort: PropTypes.func,
 }
 
-type DataGridType = React.ComponentType<DataGridProps> & {
+interface DataGridType extends React.FC<DataGridProps> {
   Table: typeof DataGridTable
   DataColumn: typeof DataGridColumn
   Column: typeof DataGridColumn
-  TopSection: typeof TopSection
   PageSizeSelect: typeof PageSizeSelect
-  BottomSection: typeof BottomSection
   Pagination: typeof DataGridPagination
   PrevNext: typeof DataGridPrevNext
+  Sort: typeof DataGridSort
 }
 
 DataGrid.Table = DataGridTable
 DataGrid.DataColumn = DataGridColumn
 DataGrid.Column = DataGridColumn
-DataGrid.TopSection = TopSection
 DataGrid.PageSizeSelect = PageSizeSelect
-DataGrid.BottomSection = BottomSection
 DataGrid.Pagination = DataGridPagination
 DataGrid.PrevNext = DataGridPrevNext
+DataGrid.Sort = DataGridSort
 
 export default DataGrid
