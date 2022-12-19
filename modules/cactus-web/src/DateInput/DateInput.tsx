@@ -572,6 +572,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         this.handleUpdate(event, token, eventKey)
       } else if (eventKey === 'Delete' || eventKey === 'Backspace') {
         this.handleUpdate(event, token, 'Delete')
+      } else if (eventKey === 'Tab') {
+        this.handleUpdate(event, token, 'Tab')
       } else if (eventKey.length === 1) {
         this.handleUpdate(event, token, 'Key', eventKey)
       }
@@ -594,10 +596,35 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       }
     }
   }
-
+  // private handleKeydownCapture = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+  //   const target = event.target
+  //   if (isOwnInput(target, event.currentTarget)) {
+  //     const token = target.dataset.token as FormatTokenType
+  //     const eventKey = event.key
+  //     if (eventKey === 'ArrowUp' || eventKey === 'ArrowDown') {
+  //       this.handleUpdate(event, token, eventKey)
+  //     } else if (eventKey === 'Delete' || eventKey === 'Backspace') {
+  //       this.handleUpdate(event, token, 'Delete')
+  //     } else if (eventKey === 'Tab') {
+  //       this.handleUpdate(event, token, 'Tab')
+  //     } else if (eventKey.length === 1) {
+  //       this.handleUpdate(event, token, 'Key', eventKey)
+  //     }
+  //     if (!ALLOW_DEFAULT.includes(eventKey)) {
+  //       event.stopPropagation()
+  //       event.preventDefault()
+  //     }
+  //   } else {
+  //     this._lastInputKeyed = ''
+  //   }
+  // }
   private handleBlur = (event: React.FocusEvent<HTMLDivElement>): void => {
     // when blurring off the field
+    const target = event.target
+    const token = target.dataset?.token
     this._lastInputKeyed = ''
+    this.handleUpdate(event, token, 'Tab')
+
     if (isFocusOut(event)) {
       this._isFocused = false
       const { onBlur } = this.props
@@ -739,7 +766,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   private handleUpdate = (
     event: React.SyntheticEvent,
     token: FormatTokenType,
-    type: 'ArrowUp' | 'ArrowDown' | 'Delete' | 'Key',
+    type: 'ArrowUp' | 'ArrowDown' | 'Delete' | 'Tab' | 'Key',
     change?: string | undefined
   ): void => {
     event.persist()
@@ -755,6 +782,13 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
           update[token] = undefined
           break
         }
+        case 'Tab': {
+          const current = update[token]?.toString()
+          if (token === 'YYYY') {
+            update[token] = ('000' + current).slice(-4)
+          } else update[token] = ('00' + current).slice(-2)
+          break
+        }
         case 'Key': {
           if (change === undefined) {
             update[token] = change
@@ -764,37 +798,19 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             let current = update[token]
             const asNum = Number(change)
             if (current === '' || current === undefined || this._lastInputKeyed !== token) {
-              current = asNum
+              current = change
             } else {
-              current = Number(current)
-              const together = current * 10 + asNum
-              if (token === 'YYYY') {
-                // years
-                if (together < 10000) {
-                  current = together
-                } else {
-                  current = asNum
-                }
-              } else if (/M{1,2}/.test(token)) {
-                current = together < 13 ? together : asNum
-              } else if (/d{1,2}/.test(token)) {
-                current = together % 32 === together ? together : asNum
-              } else if (/h{1,2}/i.test(token)) {
+              const together = current + change
+              const togetherNum = Number(together)
+              if (/h{1,2}/i.test(token)) {
                 // hours
                 const military = token === 'HH' || token === 'H'
                 const max = military ? 23 : 12
-                current = together <= max ? together : asNum
+                current = togetherNum <= max ? togetherNum : asNum
               } else if (/m{1,2}/.test(token)) {
                 // minutes
-                const mod = (current % 10) * 10 + asNum
-                if (together <= 59) {
-                  current = together
-                } else if (mod <= 59) {
-                  current = mod
-                } else {
-                  current = asNum
-                }
-              }
+                current = togetherNum < 60 ? togetherNum : asNum
+              } else current = together
             }
             this._lastInputKeyed = token
             const asString = current.toString()

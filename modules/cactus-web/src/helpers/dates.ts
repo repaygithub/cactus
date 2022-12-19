@@ -352,60 +352,70 @@ export class PartialDate implements FormatTokenMap {
   private minutes?: number
   private period?: string
 
+  private _year?: string
+  private _month?: string
+  private _day?: string
+
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get M() {
-    return this.month === undefined ? '' : String(this.month + 1)
+    return this._month ? this._month.slice(-1) : ''
   }
 
-  public set M(value: string | number | undefined) {
+  public set M(value: string | undefined) {
     if (value === undefined) {
       this.month = value
+      this._month = value
     } else {
       this.month = Number(value) - 1
+      this._month = value
     }
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get MM() {
-    return this.month === undefined ? '' : this.pad(this.month + 1)
+    return this._month === undefined ? '' : this._month.slice(-2)
   }
 
-  public set MM(value: string | number | undefined) {
+  public set MM(value: string | undefined) {
     this.M = value
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get d() {
-    return this.toRender(this.day, 1)
+    return this._day ? this._day.slice(-1) : ''
   }
 
-  public set d(value: string | number | undefined) {
+  public set d(value: string | undefined) {
     if (value === undefined) {
-      this.day = undefined
+      this.day = value
+      this._day = value
     } else {
-      this.day = Number(value) % 32
+      this.day = Number(value)
+      this._day = value
     }
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get dd() {
-    return this.toRender(this.day, 2)
+    return this._day ? this._day.slice(-2) : ''
   }
 
-  public set dd(value: string | number | undefined) {
+  public set dd(value: string | undefined) {
     this.d = value
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get YYYY() {
-    return this.toRender(this.year, 4)
+    return this._year ? this._year.slice(-4) : ''
   }
 
-  public set YYYY(value: string | number | undefined) {
+  public set YYYY(value: string | undefined) {
     if (value === undefined) {
       this.year = value
+      this._year = value
     } else {
       this.year = Number(value)
+      this._year = value
     }
   }
 
@@ -469,7 +479,7 @@ export class PartialDate implements FormatTokenMap {
     return this.pad(this.minutes)
   }
 
-  public set mm(value: string | number | undefined) {
+  public set mm(value: string | undefined) {
     if (value === undefined) {
       this.minutes = value
     } else {
@@ -503,6 +513,7 @@ export class PartialDate implements FormatTokenMap {
 
   public setYear(value: number): void {
     this.year = value
+    this._year = String(value)
   }
 
   public getMonth(): number {
@@ -511,6 +522,7 @@ export class PartialDate implements FormatTokenMap {
 
   public setMonth(value: number): void {
     this.month = value % 12
+    this._month = String((value % 12) + 1)
   }
 
   public getDate(): number {
@@ -519,6 +531,7 @@ export class PartialDate implements FormatTokenMap {
 
   public setDate(value: number): void {
     this.day = value % 32
+    this._day = String(value % 32)
   }
 
   public getHours(): number {
@@ -702,6 +715,9 @@ export class PartialDate implements FormatTokenMap {
     pd.hours = this.hours
     pd.minutes = this.minutes
     pd.period = this.period
+    pd._month = this._month
+    pd._day = this._day
+    pd._year = this._year
     return pd
   }
 
