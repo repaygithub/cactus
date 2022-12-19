@@ -11,6 +11,7 @@ Array [
   "I18nText",
   "default",
   "useI18nResource",
+  "useI18nSection",
   "useI18nText",
   "BundleInfo",
 ]

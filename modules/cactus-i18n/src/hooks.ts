@@ -1,5 +1,5 @@
 import { FluentVariable } from '@fluent/bundle'
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useEffect } from 'react'
 
 import { I18nContextType, I18nMessage } from './types'
 
@@ -29,4 +29,31 @@ export const useI18nResource = (
   }
   const { controller, section, lang } = context
   return controller.get({ args, section: sectionOverride || section, id, lang })
+}
+
+interface SectionOptions {
+  section: string
+  [key: string]: any
+}
+
+export const useI18nSection = (...sections: Array<string | SectionOptions>): boolean => {
+  const context = useContext(I18nContext)
+  const controller = context?.controller
+  const lang = controller?.negotiateLang(context?.lang, true)[0]
+  useEffect(() => {
+    if (lang && context !== null) {
+      for (const section of sections) {
+        if (!section) continue
+        if (typeof section === 'string') {
+          controller.load({ lang, section })
+        } else {
+          controller.load({ lang, ...section })
+        }
+      }
+    }
+  })
+  return sections.every((section) => {
+    section = typeof section === 'string' ? section : section.section
+    return controller?.hasLoaded(section, lang)
+  })
 }

@@ -1,5 +1,5 @@
 import { Link, RouteComponentProps } from '@reach/router'
-import { I18nSection, I18nText } from '@repay/cactus-i18n'
+import { I18nSection, I18nText, useI18nSection } from '@repay/cactus-i18n'
 import { Box, SelectField, Text } from '@repay/cactus-web'
 import React, { useState } from 'react'
 
@@ -15,24 +15,20 @@ const languageOptions = [
 
 const Home: React.FC<RouteComponentProps> = (): React.ReactElement => {
   const [termsLang, setTermsLang] = useState<string | undefined>()
+  useI18nSection('coffee', 'snacks')
   return (
     <div className="App">
       <h2 className="App-header">
         <I18nText get="welcome-message" />
       </h2>
       <div>
-        <I18nSection name="coffee">
-          <Link to="coffee">
-            <I18nText get="link-message" />
-          </Link>
-        </I18nSection>
-      </div>
-      <div>
-        <I18nSection name="snacks">
-          <Link to="snacks">
-            <I18nText get="link-message" />
-          </Link>
-        </I18nSection>
+        <Link to="coffee">
+          <I18nText section="coffee" get="link-message" />
+        </Link>
+        <div />
+        <Link to="snacks">
+          <I18nText section="snacks" get="link-message" />
+        </Link>
       </div>
       <Box maxWidth="600px" mx="auto" my={4}>
         <Text as="h3">
@@ -47,7 +43,7 @@ const Home: React.FC<RouteComponentProps> = (): React.ReactElement => {
             options={languageOptions}
           />
         </Box>
-        <I18nSection name="terms" lang={termsLang}>
+        <I18nSection section="terms" lang={termsLang}>
           <Box as="p" py={3}>
             <I18nText get="terms-and-conditions" />
           </Box>

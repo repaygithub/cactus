@@ -9,7 +9,7 @@ import React, {
 } from 'react'
 
 import BaseI18nController from './BaseI18nController'
-import { I18nContext, useI18nResource, useI18nText } from './hooks'
+import { I18nContext, useI18nResource, useI18nSection, useI18nText } from './hooks'
 import { I18nContextType } from './types'
 
 interface I18nProviderProps {
@@ -52,7 +52,7 @@ const I18nProvider: React.FC<I18nProviderProps> = ({ section = 'global', ...prop
   }, [controller])
   useEffect(() => {
     if (section) {
-      controller._load({ section, lang })
+      controller.load({ section, lang })
     }
   }, [controller, section, lang])
   return <I18nContext.Provider value={i18nContext}>{props.children}</I18nContext.Provider>
@@ -66,46 +66,22 @@ I18nProvider.propTypes = {
   section: PropTypes.string,
 }
 
-interface DependencyLoadType {
-  section: string
-  [key: string]: any
-}
-
 interface I18nSectionProps {
   children?: React.ReactNode
-  name: string
+  section?: string
+  name?: string
   lang?: string
-  dependencies?: (string | DependencyLoadType)[]
   [key: string]: any
-}
-
-function hasLoadedAll(
-  controller: BaseI18nController,
-  section: string,
-  lang?: string,
-  dependencies?: (string | DependencyLoadType)[]
-): boolean {
-  if (!controller.hasLoaded(section, lang)) {
-    return false
-  }
-  if (!Array.isArray(dependencies) || dependencies.length === 0) {
-    return true
-  }
-  return dependencies.every((dep): boolean => {
-    if (typeof dep === 'string') {
-      return controller.hasLoaded(dep, lang)
-    }
-    return controller.hasLoaded(dep.section, lang)
-  })
 }
 
 const I18nSection: React.FC<I18nSectionProps> = ({
-  name: section,
+  section,
+  name,
   lang,
-  dependencies,
   children,
   ...extraProps
 }) => {
+  section = section || (name as string)
   const context = useContext(I18nContext)
   const ctxRef = React.useRef<I18nContextType | null>(null)
   if (context === null) {
@@ -114,7 +90,7 @@ const I18nSection: React.FC<I18nSectionProps> = ({
     const { controller, lang: ctxLang } = context
     lang = controller.negotiateLang(lang || ctxLang, true)[0]
     // Don't change the context until everything is loaded.
-    if (hasLoadedAll(controller, section, lang, dependencies)) {
+    if (controller.hasLoaded(section, lang)) {
       if (section === context.section && lang === ctxLang) {
         ctxRef.current = context
       } else {
@@ -122,23 +98,7 @@ const I18nSection: React.FC<I18nSectionProps> = ({
       }
     }
   }
-  useEffect((): void => {
-    if (lang && context !== null) {
-      const { controller } = context
-      controller._load({ lang, section }, extraProps)
-      if (Array.isArray(dependencies)) {
-        for (const dep of dependencies) {
-          if (!dep) continue
-          else if (typeof dep === 'string') {
-            controller._load({ lang, section: dep })
-          } else {
-            const { section: depSection, ...depExtra } = dep
-            controller._load({ lang, section: depSection }, depExtra)
-          }
-        }
-      }
-    }
-  })
+  useI18nSection({ section, lang, ...extraProps })
   // wait to render until section is loaded
   if (context !== null && ctxRef.current === null) {
     return null
@@ -147,7 +107,12 @@ const I18nSection: React.FC<I18nSectionProps> = ({
 }
 
 I18nSection.propTypes = {
-  name: PropTypes.string.isRequired,
+  section: (props: I18nSectionProps, _: string, componentName: string) => {
+    if (!props.section && !props.name && !props.children) {
+      return new Error(`One of props 'section' or 'name' was not specified in '${componentName}.'`)
+    }
+    return null
+  },
   lang: PropTypes.string,
 }
 

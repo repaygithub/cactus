@@ -43,6 +43,8 @@ export interface LoadOpts extends Record<string, any> {
   onLoad?: LoadEventHandler
   // This is for hard-coded defaults, mostly intended for use by 3rd party libraries.
   defaults?: FluentResource
+  lang: string
+  section: string
 }
 
 export interface LoadResult {
@@ -104,8 +106,8 @@ export default abstract class BaseI18nController {
     } else if (!options.lang) {
       throw new Error('You must provide a `lang` or `defaultLang`')
     }
-    if (this.load === undefined) {
-      throw new Error('You must override the `load` method')
+    if (this.loadImpl === undefined) {
+      throw new Error('You must override the `loadImpl` method')
     }
 
     this._supportedLangs = options.supportedLangs
@@ -115,7 +117,7 @@ export default abstract class BaseI18nController {
     this._bundleOpts = { useIsolating, functions }
   }
 
-  protected abstract load(b: BundleInfo, l: LoadOpts): AsyncLoadResult
+  protected abstract loadImpl(b: BundleInfo, l: LoadOpts): AsyncLoadResult
 
   protected _log(levelOrArg: string, ...args: any[]): void {
     if (this._debugMode) {
@@ -193,16 +195,13 @@ export default abstract class BaseI18nController {
     return bundle ? bundle.hasMessage(this.getKey(id, section, lang)) : false
   }
 
-  public _load(
-    { lang: requestedLang, section }: { lang: string; section: string },
-    loadOpts: LoadOpts = {}
-  ): BundleInfo {
-    const lang = this.negotiateLang(requestedLang, true)[0]
-    const bundleInfo = this.getBundleInfo(section, lang, true) as BundleInfo
+  public load(loadOpts: LoadOpts): BundleInfo {
+    const lang = this.negotiateLang(loadOpts.lang, true)[0]
+    const bundleInfo = this.getBundleInfo(loadOpts.section, lang, true) as BundleInfo
     if (bundleInfo.loadState === 'new' || bundleInfo.loadState === 'error') {
       const prevState = bundleInfo.loadState
       bundleInfo.loadState = 'loading'
-      const loader = loadOpts.loader || this.load
+      const loader = loadOpts.loader || this.loadImpl
       const onLoad = loadOpts.onLoad || this.onLoad
       loader.call(this, bundleInfo, loadOpts).then(
         (result) => {
@@ -211,13 +210,45 @@ export default abstract class BaseI18nController {
           }
         },
         (error) => {
-          this._log('error', 'FTL Resource failed to load', { section, lang, error })
+          this._log('error', 'FTL Resource failed to load', {
+            section: loadOpts.section,
+            lang,
+            error,
+          })
           bundleInfo.update('error', loadOpts)
           onLoad.call(this, bundleInfo, prevState, error)
         }
       )
     }
     return bundleInfo
+  }
+
+  public loadAsync(loadOpts: LoadOpts): Promise<{ bundleInfo: BundleInfo; prevState: LoadState }> {
+    const lang = this.negotiateLang(loadOpts.requestedLang, true)[0]
+    const bundleInfo = this.getBundleInfo(loadOpts.section, lang, true) as BundleInfo
+    return new Promise((resolve, reject) => {
+      if (bundleInfo.loadState === 'new' || bundleInfo.loadState === 'error') {
+        const prevState = bundleInfo.loadState
+        bundleInfo.loadState = 'loading'
+        const loader = loadOpts.loader || this.loadImpl
+        loader.call(this, bundleInfo, loadOpts).then(
+          (result) => {
+            if (bundleInfo.update('loaded', loadOpts, result)) {
+              resolve({ bundleInfo, prevState })
+            }
+          },
+          (error) => {
+            this._log('error', 'FTL Resource failed to load', {
+              section: loadOpts.section,
+              lang,
+              error,
+            })
+            bundleInfo.update('error', loadOpts)
+            reject({ bundleInfo, prevState, error })
+          }
+        )
+      }
+    })
   }
 
   public hasLoaded(section: string, lang?: string): boolean {
@@ -250,7 +281,7 @@ export default abstract class BaseI18nController {
     loadOpts: LoadOpts,
     lang?: string
   ): BundleInfo {
-    const refBundle = this._load({ section, lang: lang || referrer.lang }, loadOpts)
+    const refBundle = this.load({ ...loadOpts, section, lang: lang || referrer.lang })
     if (referrer === refBundle) {
       throw new Error(`Self-referencing section: ${section}/${refBundle.lang}`)
     } else if (referrer.lang !== refBundle.lang) {

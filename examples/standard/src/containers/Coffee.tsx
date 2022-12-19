@@ -4,7 +4,7 @@ import React from 'react'
 
 const Coffee: React.FC<RouteComponentProps> = (): React.ReactElement => {
   return (
-    <I18nSection name="coffee">
+    <I18nSection section="coffee">
       <h2>
         <I18nText get="welcome-message" />
       </h2>

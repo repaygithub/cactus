@@ -6,6 +6,6 @@ export {
   I18nResource,
   I18nText,
 } from './Components'
-export { useI18nText, useI18nResource, I18nContext } from './hooks'
+export { useI18nText, useI18nResource, useI18nSection, I18nContext } from './hooks'
 export { default as BaseI18nController } from './BaseI18nController'
 export * from './types'
