@@ -14,7 +14,7 @@ It creates a normal `Field`, then uses Final Form's `registerField` API to subsc
 to changes to the dependency fields.
 The extra props look like this:
 
-```
+```tsx
 interface DependentFieldProps extends FieldProps {
   dependsOn: string | string[] | Record<string, DependencyConfig>;
   onDependencyChange?: (state: FieldState, props: FieldProps) => void
