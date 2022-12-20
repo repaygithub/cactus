@@ -295,7 +295,6 @@ export const AccordionBody = withStyles('div', {
 })`
   margin-top: ${space(5)};
   margin-bottom: ${space(7)};
-  width: auto;
 `
 
 const ProviderContext = createContext<AccordionProviderContext>({
