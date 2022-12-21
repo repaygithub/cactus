@@ -1,0 +1,33 @@
+import { Meta } from '@storybook/addon-docs'
+
+<Meta title="Cactus Form/Intro" />
+
+# Cactus Form API Documentation
+
+The Cactus-Form library is, for the most part, a wrapper around [React Final Form](https://final-form.org/docs/react-final-form/getting-started)
+that integrates it with the various Cactus Modules. As such, the best way to use it is to familiarize yourself with both sets of documentation. Links have been added throughout this guide to the relevant sections of React Final Form.
+
+Wrapped Final Form components
+- `Field` has been updated to use Cactus. For example, the `type` prop now renders Cactus components.
+- `Form` adds some defaults and other Cactus functionality. 
+- `FormSpy` is analogous to Final Form's FormSpy but with a bugfix.
+
+We also add three new components:
+
+- `DependentField` is like a `Field`, but takes a set of field names and a callback to use when any of those fields changes.
+- `FieldSpy` is analagous to [FormSpy](https://final-form.org/docs/react-final-form/api/FormSpy), but for a single field.
+- `SubmitButton` is a FormSpy that renders a button that is disabled if the form is untouched, or there are form errors.
+
+## Important concepts:
+
+- `subscription` is used for optimization. By default, the Form and all Fields will re-render any time the form state is changed, 
+  but by subscribing the Form and Fields to different parts of the form state, you can optimize how the form re-renders as the user fills it out. 
+  The form state can then be accessed from the Form component or through one of the spies: `FormSpy` and `FieldSpy`. A list of possible subscriptions can be found [here](https://final-form.org/docs/final-form/types/FormState)
+- `as` is used to render a component as a different tag or component. For example, `<Button as="a" href="#" />` will render an `a` tag with all of the properties and styles added by the `Button` component.
+  - This can be used in the `Field` component to render custom fields, or Cactus components such as the `ColorPicker` or `RadioCard`. See [Field](/docs/cactus-form-components-field--field) for more detail.
+  
+## Further Reading
+
+- [Final Form Documentation](https://final-form.org/docs/final-form/getting-started)
+- [React Final Form Documentation](https://final-form.org/docs/react-final-form/getting-started)
+- [Example app w/ form (UI Config page)](https://github.com/repaygithub/cactus/tree/master/examples/mock-ebpp)

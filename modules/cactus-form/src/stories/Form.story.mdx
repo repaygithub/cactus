@@ -1,0 +1,38 @@
+import { Meta, ArgsTable, Canvas, Story } from '@storybook/addon-docs'
+import { Field, Form, SubmitButton } from '../'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import { livePreviewStyle } from './helpers'
+
+<Meta title="Cactus Form/Components/Form" />
+
+
+# Form
+
+A wrapper around [Form](https://final-form.org/docs/react-final-form/api/Form) that includes an empty subscription
+by default. It will also include a basic render function and form reset function if neither `component` or `render`
+props are provided. Because the subscription is empty by default, we recommend that you use spies (`FormSpy`, `FieldSpy`)
+to hook into form state changes.
+
+The only required props are children or a render function, and `onSubmit` which you can read about [here](https://final-form.org/docs/react-final-form/types/FormProps#onsubmit). 
+
+## Try it out
+
+export const code = `
+  <Form onSubmit={() => { console.log('Hello world!') }}>
+    <Field name="power" label="Power" type="number" mb={4} />
+    <button type="reset">
+      Reset
+    </button>
+    <SubmitButton />
+  </Form>
+`;
+
+export const scope = { Field, Form, SubmitButton };
+
+<LiveProvider code={code} scope={scope}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+

@@ -1,0 +1,351 @@
+import { Meta, ArgsTable, Canvas, Story } from '@storybook/addon-docs'
+import { Field, Form } from '../'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import { livePreviewStyle } from './helpers'
+
+<Meta title="Cactus Form/Components/Field" />
+
+
+# Field
+A wrapper around [React Final Form's 'Field'](https://final-form.org/docs/react-final-form/api/Field).
+Like the original, it "consumes" all the props related to field configuration and forwards all other props to its component/render function while subscribing it to the form state.
+
+<!-- In particular, note that these forwarded props can override the input props,
+like `onChange` or `onBlur`, which will interfere with how `final-form` works; -->
+<!-- if you pass overrides, make sure you know how to register the changes you want with the form API. -->
+To see a list of props supported by React Final Form, click [here](https://final-form.org/docs/react-final-form/types/FieldProps)
+
+## Try it out
+
+export const code = `
+  <Form onSubmit={() => {}}>
+    <Field name="first-name" label="First Name" required />
+    <Field name="agreement" label="Agreement Checkbox" type="checkbox" />
+  </Form>
+`;
+
+export const scope = { Field, Form };
+
+<LiveProvider code={code} scope={scope}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+
+## Cactus Props and additions
+
+- The 'type' prop has been updated with Cactus components. e.g. `type="multiSelect"` uses the `SelectField` component. [See below section](#field-types)
+    - For a custom field, pass the component via the `as` prop or via [children](https://final-form.org/docs/react-final-form/types/FormProps#children), [component](https://final-form.org/docs/react-final-form/types/FormProps#component), or [render](https://final-form.org/docs/react-final-form/types/FormProps#render).
+      `as` is an alias of `component`, to fit in better with all the [styled-components](https://styled-components.com/) we use in Cactus Web.
+- `value`, `checked`, `onChange`, and `onBlur` are all added and handled by the wrapper.
+
+It also has two additional props:
+
+- `getFieldComponent` is a function that accepts the props object and returns a valid component: either a string e.g. "input" or a functional or class component. It's only called if no render function or `component` prop is given, and is called _before_ the base Field, so it doesn't have access to any `final-form` data.
+- `processMeta` is a function that takes two arguments: the props (including the `input` props from [the base Field](https://final-form.org/docs/react-final-form/types/FieldRenderProps) merged with the forwarded props), and the `meta` object from the base Field. It should return a single object containing the final version of the props to be passed to the component/render func.
+  - Note that although it's not named as such `processMeta` does follow the rules of hooks, so you can use hooks in whatever function you pass here.
+  - One possibility is to use `React.useContext(I18nContext)` from `@repay/cactus-i18n` to implement translated labels/error messages for your fields.
+
+The biggest difference in the output is that all render methods receive the same props.
+React Final Form's `Field` passes `input` and `meta` to a render func or component,
+but if the `component` is a string it just merges the `input` directly into the props and drops `meta`.
+Since we allow customizing how the props are merged using `processMeta`,
+we just always merge the props into a single object and pass that to the component/render func
+regardless of whether the component is an HTML element (string) or custom component.
+
+
+## Field Types
+
+Cactus has two basic kinds of field components: regular HTML inputs that have simply been styled using `@repay/cactus-theme`, and custom components that mimic regular HTML inputs. These are the styled inputs and their default mapping in Cactus Form:
+
+- `CheckBox`/`CheckBoxField` (type="checkbox")
+- `CheckBoxCard`
+- `RadioButton`/`RadioButtonField` (type="radio")
+- `RadioCard`
+- `TextArea`/`TextAreaField`
+- `TextInput`/`TextInputField` (default/type="text")
+- `Toggle`/`ToggleField` (type="boolean")
+
+And these are the custom components:
+
+- `ColorPicker`
+- `DateInput`/`DateInputField` (type="date"/"time"/"datetime")
+- `FileInput`/`FileInputField` (type="file")
+- `RadioGroup`/`RadioCard.Group` 
+- `Select`/`SelectField` (type="select"/"multiSelect")
+
+`CheckBoxGroup`/`CheckBoxCard.Group` is a special case, since it's not a single field, but we'll cover it [here](#checkbox-groups).
+
+All of the above without a type, must be made with the as prop or are more complicated. See below for examples.
+
+### Field Examples
+
+Almost all of our components work out-of-the-box with the Cactus Form `Field` component.
+You can either rely on the default mapping, configure your own, or explicitly pass the field you want to use;
+just replace where you'd normally call the Cactus field component with Field,
+and props are forwarded to the underlying component, including children.
+
+```jsx
+import { Field } from '@repay/cactus-form'
+
+<Field as={RadioCard.Group} name="radios" label="Some radio buttons">
+  <RadioCard value="ham">Ham Radio</RadioCard>
+  <RadioCard value="transistor">Transistor Radio</RadioCard>
+</Field>
+<Field
+  type="select"
+  multiple
+  name="selection"
+  label="Select Something(s)"
+  options={['option1', 'variant2', 'type3']}
+/>
+```
+
+The basic React Final Form `Field` component does not directly support custom components:
+they have to be explicitly rendered, which is why we recommend Cactus Form.
+
+Comparison below
+```jsx
+import { Field as CactusField } from '@repay/cactus-form'
+import { Field } from 'react-final-form'
+
+// React Final Form Field
+<Field name="myfield" subscription={{ value: true, error: true }}>
+  {({ input, meta }) => (
+    <TextInputField {...input} error={meta.error} label="My Field" />
+  )}
+</Field>
+
+// Cactus Form Field
+<CactusField name="myfield" label="My Field" type="text" />
+```
+
+### Radio Buttons, Checkboxes & Toggles
+
+React Final Form has some special behavior around radio buttons and checkboxes
+that needs to be mentioned, due to the addition of the `checked` prop.
+While radio groups work out-of-the-box, a single radio button or checkbox needs a slight adjustment:
+
+```jsx
+<Field as={RadioButtonField} type="radio" {...rest} />
+<Field as={CheckBoxField} type="checkbox" {...rest} />
+<Field as={ToggleField} type="checkbox" {...rest} />
+```
+
+Even if you explicitly tell it which component to use, you _also_ must pass the `type` prop
+to tell final form that `checked` is needed, and how to calculate it.
+The corollary is that you should _never_ pass the `type` prop to a radio or checkbox _group_,
+because those work using the `value` prop like a generic input instead of `checked`.
+
+### Checkbox Groups
+
+Checkbox groups are the trickiest field types, because they can be used in two different ways:
+
+```jsx
+// Creates form values like -> { cbgroup: ["one", "three"] }
+<Field as={CheckBoxGroup} name="cbgroup" label="Array Of Strings">
+  <CheckBoxGroup.Item value="one" label="Uno" />
+  <CheckBoxGroup.Item value="two" label="Dos" />
+  <CheckBoxGroup.Item value="three" label="Tres" />
+</Field>
+
+// Creates form values like -> { uno: true, dos: false, tres: true }
+<CheckBoxCard.Group label="Several Unrelated Booleans">
+  <Field as={CheckBoxCard} type="checkbox" name="uno">One</Field>
+  <Field as={CheckBoxCard} type="checkbox" name="dos">Two</Field>
+  <Field as={CheckBoxCard} type="checkbox" name="tres">Three</Field>
+</CheckBoxCard.Group>
+```
+
+Note that you need as many Field components as there are unique names.
+
+The array group variant will only work if you do the optional patch-package step
+when installing `@repay/cactus-form`.
+However, even if you don't use the patch you can still support checkbox arrays with more verbose code:
+
+```jsx
+// CheckBoxGroup forwards `name` to all its children, so you don't have to repeat it.
+<CheckBoxGroup name="cbgroup" label="Array Of Strings">
+  <Field as={CheckBoxGroup.Item} type="checkbox" value="one" label="Uno" />
+  <Field as={CheckBoxGroup.Item} type="checkbox" value="two" label="Dos" />
+  <Field as={CheckBoxGroup.Item} type="checkbox" value="three" label="Tres" />
+</CheckBoxGroup>
+```
+
+
+### Customizing Fields
+
+If the default components don't quite do what you need, you can fall back to
+hooks that give you greater control over how to interact with Final Form.
+In particular, `useForm` gives you access to the basic Final Form API with significant customization options.
+
+```jsx
+import { useField, useForm } from 'react-final-form'
+
+const CustomField = (props) => {
+  const { input, meta } = useField(props.name, props)
+  if (meta.error) {
+    return <Alert status="error">All is lost, no hope of recovery.</Alert>
+  }
+  return <FieldLike {...props} {...input} touched={meta.touched} />
+}
+
+const SuperCustomField = (props) => {
+  const form = useForm()
+  const [state, setState] = React.useState()
+  React.useEffect(() => {
+    const listener = (state) => {
+      props.doSomeCustomLogic(state)
+      form.mutators.updateSomeOtherFormState(state.value)
+      setState(state)
+    }
+    return form.registerField(props.name, listener, props.subscription, props)
+  }, [props.name])
+  if (!state) return null
+  return <FieldLike {...state} />
+}
+```
+
+
+### Configuration
+
+Perhaps the most important difference to React Final Form's `Field` is the configuration of
+defaults for certain props, under the assumption that most fields in a project will work similarly.
+The configuration looks like this in Typescript:
+
+```
+// You can actually use any props accepted by `Field`, but these are the most useful to configure.
+interface FieldProps {
+  getFieldComponent?: (props: Record<string, any>) => React.ElementType;
+  // `FieldMetaState` is from React Final Form, ref `FieldRenderProps`.
+  processMeta?: (props: Record<string, any>, meta: FieldMetaState) => Record<string, any>;
+  // `FieldSubscription` is from Final Form, ref `registerField`.
+  subscription?: FieldSubscription;
+}
+
+// Sets new config options, and returns the old config.
+Field.configureDefaults = (defaults: FieldProps) => FieldProps
+
+// Creates a new component with the given defaults.
+Field.withDefaults = (defaults: FieldProps) => FunctionalComponent<FieldProps>
+
+// Returns the original config, as defined in the Cactus Form library.
+Field.initialDefaults = () => FieldProps
+```
+
+The `initialDefaults` is mostly provided so it can be extended without having to rewrite it entirely, and returns something like the following:
+
+```
+Field.initialDefaults = () => ({
+  subscription: {
+    value: true,
+    error: true,
+    touched: true,
+    submitError: true,
+    modifiedSinceLastSubmit: true,
+  },
+
+  // Note the commonalities between the subscription and what's used here.
+  processMeta: (props, meta) => {
+    const error = (meta.touched && meta.error) || (!meta.modifiedSinceLastSubmit && meta.submitError)
+    if (error && !props.error) {
+      props.error = error
+    }
+    return props
+  },
+
+  getFieldComponent: (props) => {
+    switch (props.type) {
+      // Omitted for brevity: maps to Cactus Web, e.g. "date" -> DateInputField
+      default:
+        return TextInputField
+    }
+  },
+})
+```
+
+Both `configureDefaults` and `withDefaults` work by setting the `defaultProps`
+property on the function they're attached to.
+The main difference is scope: `configureDefaults` applies to the `Field` component itself,
+and thus applies to the entire project (including uses of `DependentField`);
+`withDefaults` makes a new component that can be used on a single form or type of form,
+if it's somewhat different than how forms normally behave on the site.
+
+### Example use case of withDefaults to have errors be always visible.
+```
+const FieldWithAlwaysVisibleErrors = Field.withDefaults({
+  subscription: { value: true, error: true },
+  processMeta: (props, { error }) => ({ error, ...props }),
+})
+```
+
+### Example use case of withDefaults and processMeta
+
+
+The below example creates a new instance of the Field component that uses `withDefaults` and `processMeta` to add an asterisk to the Field label when `required` is passed.
+```
+const defaults = Field.initialDefaults()
+
+
+export default Field.withDefaults({
+  ...defaults,
+  processMeta: (props, meta) => {
+    if (props.required && props.label) {
+      props.label = (
+        <>
+          {props.label}
+          <span aria-hidden>*</span>
+        </>
+      )
+    }
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return defaults.processMeta!(props, meta)
+  },
+})
+
+```
+
+
+### Validation
+
+One other default behavior that differs from the base Field is that if a `required` prop is passed,
+but there is no `validate` function, one will automatically be set.
+It basically checks that the value is not falsy or an empty array, though literal `0` and `false` are both allowed.
+This validator is also available separately:
+
+```
+import { validateRequired } from '@repay/cactus-form'
+```
+
+You can also define custom required error messages with the `requiredMsg` prop. Both strings and React nodes are acceptable:
+
+```
+<Field required requiredMsg="Required Field" {...fieldProps} />
+```
+
+```
+<Field required requiredMsg={<div>Required Field</div>} {...fieldProps} />
+```
+
+To use `required` without the validator you'd need to pass an explicit `validate` function, like a noop (or use `configureDefaults`/`withDefaults` to set a default validator or default `requiredMsg`).
+
+### Refs & Extensions
+
+The `Field` component is explicitly defined as a functional component so it's relatively easy to extend.
+That does mean, however, that you can't pass a `ref` prop to forward to the field.
+There are several ways around this, but probably the easiest two are a render func and a wrapper:
+
+```
+const withRenderFunc = (
+  <Field {...propsWithoutRef}>
+    {(props) => (
+      <MyField {...props} ref={myRef} />
+    })
+  </Field>
+)
+// Note that you can just call `Field` as a normal function,
+// which is more efficient than creating another level of the component tree.
+const FieldWithRef = React.forwardRef((props, ref) => Field({ ...props, ref }))
+```

@@ -1,0 +1,70 @@
+import { Meta, ArgsTable, Canvas, Story } from '@storybook/addon-docs'
+import { Field, Form, FormSpy } from '../'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import { livePreviewStyle } from './helpers'
+
+<Meta title="Cactus Form/Components/FormSpy" />
+
+
+# FormSpy
+A re-implementation of [FormSpy](https://final-form.org/docs/react-final-form/api/FormSpy), but with a fix for a bug that sometimes caused incorrect initial values on the first render. Allows you to spy on form state values and re-render a section of your form with updated values when the values you spy on change. Our FormSpy supports all of the same props that Final Form’s implementation does, apart from the `onChange` prop, which is not supported in this implementation.
+See form states [here](https://final-form.org/docs/final-form/types/FormState)
+
+
+## Try it out
+export const code = `
+  <Form onSubmit={() => {}}>
+    <Field name="field 1" label="Field 1" />
+    <Field name="field 2" label="Field 2" />
+    <FormSpy subscription={{ dirty: true }}>
+      {({ dirty }) => <div>the form is {dirty ? 'dirty' : 'clean'}</div>}
+    </FormSpy>
+  </Form>
+`;
+
+export const scope = { Field, Form, FormSpy };
+
+<LiveProvider code={code} scope={scope}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
+
+
+## Other examples
+```tsx
+const MyForm = (props) => (
+  <Form {...props}>
+    <Field name="power" type="number" />
+    <FormSpy subscription={{ errors: true }}>
+      {({ dirty }) => (
+        <span>Dirty value: {dirty}</span>
+      )}
+    </FormSpy>
+  </Form>
+)
+```
+OR
+
+```tsx
+const MyForm = (props) => (
+  <Form {...props}>
+    <Field name="power" type="number" />
+    <FormSpy
+      subscription={{ dirty: true }}
+      render={({ dirty }) => <span>Dirty value: {dirty}</span>}
+    />
+  </Form>
+)
+```
+OR
+
+```tsx
+const RenderOnDirtyChange = ({ dirty }) => <span>Dirty value: {dirty}</span>
+const MyForm = (props) => (
+  <Form {...props}>
+    <FormSpy subscription={{ dirty: true }} component={RenderOnDirtyChange} />
+  </Form>
+)
+```

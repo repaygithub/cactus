@@ -1,0 +1,33 @@
+import { Meta, ArgsTable, Canvas, Story } from '@storybook/addon-docs'
+import { Field, Form, FieldSpy } from '../'
+import cactusTheme from '@repay/cactus-theme'
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import { livePreviewStyle } from './helpers'
+
+<Meta title="Cactus Form/Components/FieldSpy" />
+
+
+# FieldSpy
+
+Basically the same as FormSpy, except augmented for use on a single field. 
+It doesn't support the `onChange` prop that FormSpy has, and you indicate which field to watch with the `fieldName` prop:
+
+
+export const code = `
+  <Form onSubmit={() => {}}>
+    <Field name="power" label="Power" type="number" />
+    <FieldSpy fieldName="power" subscription={{ value: true}}>
+      {({ value }) => (
+        <span>You have entered the following power level: {value}</span>
+      )}
+    </FieldSpy>
+  </Form>
+`;
+
+export const scope = { Field, Form, FieldSpy };
+
+<LiveProvider code={code} scope={scope}>
+  <LiveEditor style={livePreviewStyle} />
+  <LiveError />
+  <LivePreview />
+</LiveProvider>
