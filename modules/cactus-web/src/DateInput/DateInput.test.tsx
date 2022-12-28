@@ -588,7 +588,7 @@ describe('component: DateInput', () => {
     test('renders expected time inputs', () => {
       const value = '15:22'
       const { getByLabelText } = renderWithTheme(
-        <DateInput name="date-input" id="date-input" type="time" value={value} format="HH:mm" />
+        <DateInput name="date-input" id="date-input" type="time" value={value} format="hh:mm" />
       )
       expect((): HTMLElement => getByLabelText('year')).toThrow()
       expect((): HTMLElement => getByLabelText('month')).toThrow()
