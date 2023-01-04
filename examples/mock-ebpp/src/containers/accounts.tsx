@@ -1,57 +1,34 @@
 import { navigate, RouteComponentProps } from '@reach/router'
-import { Alert, DataGrid, Flex, SplitButton, Text } from '@repay/cactus-web'
+import { Alert, Box, DataGrid, Flex, SplitButton, Text } from '@repay/cactus-web'
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { Account, fetchAccounts } from '../api'
-
-interface PaginationOptions {
-  currentPage: number
-  pageSize: number
-  pageCount?: number
-}
 
 interface SortOption {
   id: string
   sortAscending: boolean
 }
 
-interface State {
-  accounts: Account[]
-  alert: string
-  paginationOptions: PaginationOptions
-  sortOptions: SortOption[]
-}
+const pageSize = 5
 
-//eslint-disable-next-line @typescript-eslint/no-unused-vars
-const Accounts = (props: RouteComponentProps): React.ReactElement => {
-  const [state, setState] = useState<State>({
-    accounts: [],
-    alert: '',
-    paginationOptions: { currentPage: 1, pageSize: 5, pageCount: 2 },
-    sortOptions: [],
-  })
+const Accounts: React.FC<RouteComponentProps> = () => {
+  const [alertMsg, setAlert] = useState('')
+  const [accounts, setAccounts] = useState<Account[]>([])
+  const [currentPage, setPage] = useState(1)
 
   useEffect((): void => {
     const accounts = fetchAccounts()
-    setState((state) => ({ ...state, accounts: accounts }))
+    setAccounts(accounts)
   }, [])
 
-  const paginateData = (): { [key: string]: any }[] => {
-    const { paginationOptions, accounts } = state
-    const index1 = (paginationOptions.currentPage - 1) * paginationOptions.pageSize
-    const index2 = index1 + paginationOptions.pageSize
-    return accounts.slice(index1, index2)
-  }
+  const endIndex = currentPage * pageSize
+  const data = accounts.slice(endIndex - pageSize, endIndex)
 
-  const handlePageChange = (newPaginationOptions: PaginationOptions) => {
-    setState((state) => ({ ...state, paginationOptions: newPaginationOptions }))
-  }
-
-  const handleSort = (newSortOptions: SortOption[]) => {
-    const sortId = newSortOptions[0].id
-    const sortAscending = newSortOptions[0].sortAscending
-    const accountsCopy = JSON.parse(JSON.stringify(state.accounts))
+  const handleSort = (newSortOptions: SortOption) => {
+    const sortId = newSortOptions.id
+    const sortAscending = newSortOptions.sortAscending
+    const accountsCopy = [...accounts]
     if (sortId === 'firstName' || sortId === 'lastName') {
       if (sortAscending) {
         accountsCopy.sort((a: Account, b: Account) => {
@@ -86,7 +63,7 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
         })
       }
     }
-    setState((state) => ({ ...state, sortOptions: newSortOptions, accounts: accountsCopy }))
+    setAccounts(accountsCopy)
   }
 
   return (
@@ -96,14 +73,10 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
         <link rel="icon" type="image/png" sizes="16x16" href="src/assets/favicon.ico" />
       </Helmet>
 
-      {state.alert && (
+      {alertMsg && (
         <Flex justifyContent="center" mt={4} mb={4}>
-          <Alert
-            status="success"
-            onClose={(): void => setState({ ...state, alert: '' })}
-            width="60%"
-          >
-            {state.alert}
+          <Alert status="success" onClose={(): void => setAlert('')} width="60%">
+            {alertMsg}
           </Alert>
         </Flex>
       )}
@@ -115,26 +88,20 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
           </Text>
         </Flex>
 
-        <Flex
+        <Box
           borderColor="base"
           borderWidth="2px"
           borderStyle="solid"
           width="90%"
-          justifyContent="center"
-          paddingTop="40px"
-          paddingBottom="40px"
+          paddingY={7}
+          paddingX={4}
         >
-          <DataGrid
-            paginationOptions={state.paginationOptions}
-            onPageChange={handlePageChange}
-            sortOptions={state.sortOptions}
-            onSort={handleSort}
-            cardBreakpoint="small"
-          >
-            <DataGrid.Table data={paginateData()}>
-              <DataGrid.DataColumn id="firstName" title="First Name" sortable />
-              <DataGrid.DataColumn id="lastName" title="Last Name" sortable />
-              <DataGrid.DataColumn id="dob" title="Date of Birth" sortable />
+          <DataGrid data={data}>
+            <DataGrid.Sort onSort={handleSort} />
+            <DataGrid.Table variant={['card', 'card', 'table']}>
+              <DataGrid.DataColumn id="firstName" title="First Name" defaultSort="desc" />
+              <DataGrid.DataColumn id="lastName" title="Last Name" defaultSort="desc" />
+              <DataGrid.DataColumn id="dob" title="Date of Birth" defaultSort="desc" />
               <DataGrid.DataColumn id="cardLastFour" title="Last 4 of Card" />
               <DataGrid.DataColumn id="id" title="Account ID" />
               <DataGrid.Column>
@@ -145,13 +112,8 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
                     </SplitButton.Action>
                     <SplitButton.Action
                       onClick={() => {
-                        setState((state) => ({
-                          ...state,
-                          accounts: state.accounts.filter(
-                            (acct: Account): boolean => acct.id !== rowData.id
-                          ),
-                          alert: `Account ${rowData.id} deleted successfully`,
-                        }))
+                        setAccounts((old) => old.filter((acct) => acct.id !== rowData.id))
+                        setAlert(`Account ${rowData.id} deleted successfully`)
                       }}
                     >
                       {`Delete Account ${rowData.id}`}
@@ -160,11 +122,14 @@ const Accounts = (props: RouteComponentProps): React.ReactElement => {
                 )}
               </DataGrid.Column>
             </DataGrid.Table>
-            <DataGrid.BottomSection justifyContent="flex-end">
-              <DataGrid.Pagination />
-            </DataGrid.BottomSection>
+            <DataGrid.Pagination
+              currentPage={currentPage}
+              itemCount={accounts.length}
+              pageSize={pageSize}
+              onPageChange={setPage}
+            />
           </DataGrid>
-        </Flex>
+        </Box>
       </Flex>
     </div>
   )
