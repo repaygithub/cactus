@@ -588,12 +588,12 @@ describe('component: DateInput', () => {
     test('renders expected time inputs', () => {
       const value = '15:22'
       const { getByLabelText } = renderWithTheme(
-        <DateInput name="date-input" id="date-input" type="time" value={value} format="hh:mm" />
+        <DateInput name="date-input" id="date-input" type="time" value={value} format="HH:mm" />
       )
       expect((): HTMLElement => getByLabelText('year')).toThrow()
       expect((): HTMLElement => getByLabelText('month')).toThrow()
       expect((): HTMLElement => getByLabelText('day of month')).toThrow()
-      expect(getByLabelText('hours')).toHaveProperty('value', '03')
+      expect(getByLabelText('hours')).toHaveProperty('value', '15')
       expect(getByLabelText('minutes')).toHaveProperty('value', '22')
       expect(getByLabelText('time period')).toHaveProperty('value', 'PM')
     })
