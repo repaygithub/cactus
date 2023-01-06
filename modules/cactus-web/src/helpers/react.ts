@@ -1,4 +1,4 @@
-import { assign, isEqual, noop } from 'lodash'
+import { assign, noop } from 'lodash'
 import React, { SetStateAction } from 'react'
 
 export type CloneFunc = (
@@ -36,33 +36,6 @@ export function cloneAll(
     }
     return returnVal
   }, [] as React.ReactChild[])
-}
-
-const isElement = (obj: any): obj is React.ReactElement => !!obj?.props
-
-// A pure component is one whose output depends solely on props.
-export function isPurelyEqual(left: React.ReactNode, right: React.ReactNode): boolean {
-  const leftArray = React.Children.toArray(left) as React.ReactChild[]
-  const rightArray = React.Children.toArray(right) as React.ReactChild[]
-  if (leftArray.length === rightArray.length) {
-    for (let i = 0; i < leftArray.length; i++) {
-      if (!compareElements(leftArray[i], rightArray[i])) return false
-    }
-    return true
-  }
-  return false
-}
-
-function compareElements(left: React.ReactChild, right: React.ReactChild) {
-  if (left === right) {
-    return true
-  } else if (isElement(left) && isElement(right)) {
-    if (left.type !== right.type || left.key !== right.key) return false
-    const { children: lnodes, ...lprops } = left.props
-    const { children: rnodes, ...rprops } = right.props
-    return isEqual(lprops, rprops) && isPurelyEqual(lnodes, rnodes)
-  }
-  return false
 }
 
 type Ref<T> = React.RefCallback<T> | React.MutableRefObject<T> | null | undefined
