@@ -85,4 +85,15 @@ describe('component: Tooltip', () => {
     const popup = document.querySelector('div[role=tooltip]') as Element
     expect(popup).toHaveStyle({ top: '25px', left: '150px', borderRadius: '0px' })
   })
+
+  test('should support style props', () => {
+    const { container } = renderWithTheme(<Tooltip label="cow tipping" marginX={6} marginTop={3} />)
+    const label = container.querySelector(String(Tooltip))
+    expect(label).toHaveStyle({
+      marginLeft: '32px',
+      marginRight: '32px',
+      marginTop: '8px',
+      marginBottom: '',
+    })
+  })
 })

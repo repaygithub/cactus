@@ -13,11 +13,10 @@ import React, {
 } from 'react'
 import { Transition } from 'react-transition-group'
 import styled, { StyledComponentBase } from 'styled-components'
-import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
+import { margin, MarginProps } from 'styled-system'
 
-import { flexItem, FlexItemProps } from '../helpers/flexItem'
 import KeyCodes from '../helpers/keyCodes'
-import { omitProps } from '../helpers/omit'
+import { allWidth, AllWidthProps, flexItem, FlexItemProps, withStyles } from '../helpers/styled'
 import useId from '../helpers/useId'
 import IconButton from '../IconButton/IconButton'
 
@@ -25,8 +24,7 @@ export type AccordionVariants = 'simple' | 'outline'
 
 interface AccordionProps
   extends MarginProps,
-    MaxWidthProps,
-    WidthProps,
+    AllWidthProps,
     FlexItemProps,
     React.HTMLAttributes<HTMLDivElement> {
   /** Does not apply when Accordion descends from a controlled Provider.  If true, the
@@ -290,15 +288,13 @@ const AccordionBodyBase = (props: AccordionBodyProps): ReactElement | null => {
   )
 }
 
-export const AccordionBody = styled(AccordionBodyBase).withConfig(
-  omitProps<AccordionBodyProps>(margin, 'width')
-)`
+export const AccordionBody = withStyles('div', {
+  as: AccordionBodyBase,
+  displayName: 'Accordion.Body',
+  styles: [margin],
+})`
   margin-top: ${space(5)};
   margin-bottom: ${space(7)};
-  // The extra specificity is to override the defaults in variantStyles.
-  &&& {
-    ${margin}
-  }
 `
 
 const ProviderContext = createContext<AccordionProviderContext>({
@@ -649,17 +645,16 @@ const variantStyles = (props: AccordionProps & { theme: CactusTheme }): string =
   `
 }
 
-export const Accordion = styled(AccordionBase).withConfig(
-  omitProps<AccordionProps>(flexItem, margin, width, maxWidth, 'useBoxShadows')
-)`
+export const Accordion = withStyles('div', {
+  as: AccordionBase,
+  displayName: 'Accordion',
+  styles: [allWidth, flexItem, margin],
+  transitiveProps: ['useBoxShadows'],
+})`
   box-sizing: border-box;
   width: 100%;
 
   ${variantStyles}
-  ${margin}
-  ${width}
-  ${maxWidth}
-  ${flexItem}
 ` as any
 
 Accordion.defaultProps = {

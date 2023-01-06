@@ -39,4 +39,19 @@ describe('component: Tag', () => {
     const icon = container.querySelector('svg')
     expect(icon).not.toBeInTheDocument()
   })
+
+  test('should support style props', () => {
+    const { getByTestId } = renderWithTheme(
+      <Tag marginX={7} marginTop="3em" data-testid="style">
+        Test label
+      </Tag>
+    )
+    const tag = getByTestId('style')
+    expect(tag).toHaveStyle({
+      marginTop: '3em',
+      marginRight: '40px',
+      marginBottom: '',
+      marginLeft: '40px',
+    })
+  })
 })

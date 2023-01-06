@@ -613,7 +613,7 @@ describe('component: DateInput', () => {
         <DateInput name="thin" id="not-thicc" value="2020-01-01" data-testid="dateInput" />,
         { border: 'thick' }
       )
-      const dateInput = asFragment().firstElementChild?.firstElementChild?.firstElementChild
+      const dateInput = asFragment().firstElementChild
       const styles = window.getComputedStyle(dateInput as Element)
       expect(styles.borderWidth).toBe('2px')
     })
@@ -623,7 +623,7 @@ describe('component: DateInput', () => {
         <DateInput name="intermediate" id="not-round" value="2020-01-01" />,
         { shape: 'intermediate' }
       )
-      const dateInput = asFragment().firstElementChild?.firstElementChild?.firstElementChild
+      const dateInput = asFragment().firstElementChild
       const styles = window.getComputedStyle(dateInput as Element)
 
       expect(styles.borderRadius).toBe('8px')
@@ -635,7 +635,7 @@ describe('component: DateInput', () => {
         { shape: 'square' }
       )
 
-      const dateInput = asFragment().firstElementChild?.firstElementChild?.firstElementChild
+      const dateInput = asFragment().firstElementChild
       const styles = window.getComputedStyle(dateInput as Element)
 
       expect(styles.borderRadius).toBe('0px')
@@ -647,10 +647,29 @@ describe('component: DateInput', () => {
         { boxShadows: false }
       )
 
-      const dateInput = asFragment().firstElementChild?.firstElementChild?.firstElementChild
+      const dateInput = asFragment().firstElementChild
       const styles = window.getComputedStyle(dateInput as Element)
 
       expect(styles.boxShadow).toBe('')
+    })
+
+    test('should support style props', () => {
+      const { getByTestId } = renderWithTheme(
+        <DateInput
+          id="dumb"
+          name="dumb"
+          data-testid="style"
+          margin={5}
+          flex="1 1 15em"
+          minWidth="12em"
+        />
+      )
+      const input = getByTestId('style')
+      expect(input).toHaveStyle({
+        margin: '24px',
+        flex: '1 1 15em',
+        minWidth: '12em',
+      })
     })
   })
 })

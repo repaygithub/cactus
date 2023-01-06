@@ -1,4 +1,4 @@
-import { iconSizes } from '@repay/cactus-icons'
+import { IconProps, iconSizes } from '@repay/cactus-icons'
 import { border, CactusTheme, iconSize } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
 import { css, FlattenInterpolation, ThemeProps } from 'styled-components'
@@ -8,11 +8,9 @@ import { isIE } from '../helpers/constants'
 import { withStyles } from '../helpers/styled'
 
 export type IconButtonVariants = 'standard' | 'action' | 'danger' | 'warning' | 'success' | 'dark'
-export type IconButtonSizes = 'tiny' | 'small' | 'medium' | 'large'
 
-interface IconStyleProps extends MarginProps {
+interface IconStyleProps extends MarginProps, Pick<IconProps, 'iconSize'> {
   label?: string
-  iconSize?: IconButtonSizes
   variant?: IconButtonVariants
   disabled?: boolean
   display?: 'flex' | 'inline-flex'
@@ -145,7 +143,7 @@ const variantOrDisabled = (
 }
 
 const focusOutline = system({
-  iconSize: (value: IconButtonSizes) => {
+  iconSize: (value: keyof typeof focusOutlineSpacing) => {
     const offset = focusOutlineSpacing[value] || focusOutlineSpacing.medium
     const styles: Record<string, string> = {
       height: `calc(100% + ${offset}px)`,

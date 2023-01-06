@@ -1,7 +1,6 @@
 import { margin, MarginProps } from 'styled-system'
 
-import { flexItem, FlexItemProps } from '../helpers/flexItem'
-import { withStyles } from '../helpers/styled'
+import { flexItem, FlexItemProps, withStyles } from '../helpers/styled'
 
 type StyleProps = MarginProps & FlexItemProps & { $gap?: number }
 export const FieldWrapper = withStyles('div', {

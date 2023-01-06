@@ -44,7 +44,7 @@ const ToggleFieldWrapper = styled(FieldWrapper)<{ $disabled?: boolean }>`
     ${(p) => p.$disabled && `color: ${p.theme.colors.mediumGray}`};
   }
 
-  ${Toggle.toString()} {
+  ${Toggle} {
     vertical-align: middle;
   }
 `

@@ -9,7 +9,7 @@ import { border, color, colorStyle, radius, textStyle } from '@repay/cactus-them
 import PropTypes, { Validator } from 'prop-types'
 import React, { useRef } from 'react'
 import styled, { css } from 'styled-components'
-import { margin, MarginProps, maxWidth, MaxWidthProps, width, WidthProps } from 'styled-system'
+import { margin, MarginProps } from 'styled-system'
 
 import Avatar, { AvatarStatus } from '../Avatar/Avatar'
 import Flex from '../Flex/Flex'
@@ -20,9 +20,10 @@ import {
   CactusFocusEvent,
   isFocusOut,
 } from '../helpers/events'
-import { omitProps, split } from '../helpers/omit'
+import { split } from '../helpers/omit'
 import { useRenderTrigger } from '../helpers/react'
 import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
+import { allWidth, AllWidthProps, flexItem, FlexItemProps, withStyles } from '../helpers/styled'
 import useId from '../helpers/useId'
 import { IconButton } from '../IconButton/IconButton'
 import Spinner from '../Spinner/Spinner'
@@ -49,7 +50,7 @@ type InputProps = Pick<
   'disabled' | 'form' | 'required' | 'multiple' | 'capture'
 >
 
-interface CommonProps extends MarginProps, MaxWidthProps, WidthProps, InputProps, WrapperProps {
+interface CommonProps extends MarginProps, AllWidthProps, FlexItemProps, InputProps, WrapperProps {
   name: string
   status?: Status | null
   accept?: string[]
@@ -636,9 +637,11 @@ const FileInputBase = (props: InnerInputProps): React.ReactElement => {
   )
 }
 
-const InnerFileInput = styled(FileInputBase).withConfig(
-  omitProps<InnerInputProps>(margin, width, maxWidth, 'status')
-)`
+const InnerFileInput = withStyles('div', {
+  as: FileInputBase,
+  displayName: 'FileInput',
+  styles: [margin, allWidth, flexItem],
+})`
   box-sizing: border-box;
   border-radius: ${radius(8)};
   border: 2px dotted ${color('darkestContrast')};
@@ -693,10 +696,6 @@ const InnerFileInput = styled(FileInputBase).withConfig(
   input:focus ~ ${TextButton}, input:focus ~ * ${TextButton} {
     ${focusStyle}
   }
-
-  ${margin}
-  ${width}
-  ${maxWidth}
 `
 
 export default FileInput

@@ -38,7 +38,7 @@ describe('component: Select', () => {
         minWidth="101px"
       />
     )
-    const selectComponent = container.querySelector('[id="test-id"]')?.parentElement?.parentElement
+    const selectComponent = container.querySelector(String(Select))
     const styles = window.getComputedStyle(selectComponent as Element)
 
     expect(styles.minWidth).toBe('101px')
@@ -56,7 +56,7 @@ describe('component: Select', () => {
         flexBasis="auto"
       />
     )
-    const selectComponent = container.querySelector('[id="test-id"]')?.parentElement?.parentElement
+    const selectComponent = container.querySelector(String(Select))
     const styles = window.getComputedStyle(selectComponent as Element)
 
     expect(styles.flexGrow).toBe('4')

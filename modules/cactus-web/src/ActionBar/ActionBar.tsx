@@ -7,6 +7,7 @@ import { layout, LayoutProps, padding, PaddingProps } from 'styled-system'
 
 import { usePositioning } from '../helpers/positionPopover'
 import { useMergedRefs } from '../helpers/react'
+import { withStyles } from '../helpers/styled'
 import usePopup, { PopupType, PositionPopup, TogglePopup } from '../helpers/usePopup'
 import { Sidebar } from '../Layout/Sidebar'
 import { OrderHint, OrderHintKey, useAction, useActionBarItems } from './ActionProvider'
@@ -159,9 +160,7 @@ PanelPopup.displayName = 'ActionBar.PanelPopup'
 PanelPopup.defaultProps = { position: positionPanel }
 
 // The box shadow is #2, but shifted to be only on the right side.
-const StyledPopup = styled.div.withConfig({
-  shouldForwardProp: (p) => (p as string) === 'width' || !stylePropNames.includes(p),
-})<StyleProps>`
+const StyledPopup = withStyles('div', { styles: [layout, padding] })<StyleProps>`
   ${(p) => p.theme.colorStyles.standard};
   box-sizing: border-box;
   position: absolute;
@@ -177,10 +176,7 @@ const StyledPopup = styled.div.withConfig({
   height: auto;
   width: auto;
   overflow: auto;
-  ${layout}
-
   padding: 8px;
-  ${padding}
 `
 
 interface ActionBarType extends React.FC<React.HTMLAttributes<HTMLDivElement>> {

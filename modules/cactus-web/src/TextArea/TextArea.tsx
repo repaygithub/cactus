@@ -2,18 +2,16 @@ import { mediaGTE, radius, textStyle } from '@repay/cactus-theme'
 import { Property } from 'csstype'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
-import { compose, margin, MarginProps, ResponsiveValue, system } from 'styled-system'
+import { margin, MarginProps, ResponsiveValue, system } from 'styled-system'
 
 import { StatusProps, StatusPropType } from '../helpers/status'
 import {
-  allHeight,
-  AllHeightProps,
-  allWidth,
-  AllWidthProps,
   flexItem,
   FlexItemProps,
+  sizing,
+  SizingProps,
   styledProp,
+  withStyles,
 } from '../helpers/styled'
 import { commonInputStyles } from '../TextInput/TextInput'
 
@@ -23,13 +21,16 @@ export interface TextAreaProps
     StatusProps,
     FlexItemProps,
     MarginProps,
-    AllHeightProps,
-    AllWidthProps {
+    SizingProps {
   resize?: ResponsiveValue<Property.Resize>
 }
 const resizeSS = system({ resize: true })
 
-const TextArea = styled.textarea<TextAreaProps>`
+const TextArea = withStyles('textarea', {
+  displayName: 'TextArea',
+  styles: [margin, sizing, flexItem, resizeSS],
+  transitiveProps: ['status'],
+})<TextAreaProps>`
   border-radius: ${radius(8)};
   height: 100px;
   ${mediaGTE('small')} {
@@ -40,9 +41,6 @@ const TextArea = styled.textarea<TextAreaProps>`
   position: relative;
   resize: none;
   ${commonInputStyles}
-  &&& {
-    ${compose(margin, allHeight, allWidth, flexItem, resizeSS)}
-  }
 `
 
 TextArea.propTypes = {

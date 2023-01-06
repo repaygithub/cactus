@@ -29,4 +29,20 @@ describe('component: Header', () => {
     expect(title.tagName).toBe('H1')
     expect(desc).toBeInTheDocument()
   })
+
+  test('should render style props', () => {
+    const { getByTestId } = renderWithTheme(
+      <Header data-testid="style" marginX="7.77em" marginBottom={4}>
+        <Header.Title>I Am a Title</Header.Title>
+      </Header>
+    )
+
+    const header = getByTestId('style')
+    expect(header).toHaveStyle({
+      marginTop: '',
+      marginRight: '7.77em',
+      marginBottom: '16px',
+      marginLeft: '7.77em',
+    })
+  })
 })

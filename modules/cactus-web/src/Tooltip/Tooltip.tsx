@@ -7,6 +7,7 @@ import { margin, MarginProps, TextColorProps } from 'styled-system'
 
 import { getDataProps } from '../helpers/omit'
 import { PositionCallback, usePositioning } from '../helpers/positionPopover'
+import { withStyles } from '../helpers/styled'
 import usePopup from '../helpers/usePopup'
 import Modal from '../Modal/Modal'
 
@@ -18,6 +19,7 @@ export interface TooltipProps extends MarginProps, TextColorProps {
   maxWidth?: string
   disabled?: boolean
   className?: string
+  style?: React.CSSProperties
   id?: string
   forceVisible?: boolean
 }
@@ -131,6 +133,7 @@ const StyledInfo = styled(({ forceVisible, ...props }) => (
 const TooltipBase = (props: TooltipProps): React.ReactElement => {
   const {
     className,
+    style,
     color: colorProp,
     disabled,
     label,
@@ -215,6 +218,7 @@ const TooltipBase = (props: TooltipProps): React.ReactElement => {
         id={triggerProps.id}
         ref={triggerRef}
         className={className}
+        style={style}
         onClick={() => {
           setStayOpen(true)
         }}
@@ -253,9 +257,11 @@ export const TooltipPopup = styled.div<{ $visible: boolean }>`
   }
 `
 
-export const Tooltip = styled(TooltipBase)`
-  ${margin}
-`
+export const Tooltip = withStyles('span', {
+  as: TooltipBase,
+  displayName: 'Tooltip',
+  styles: [margin],
+})``
 
 Tooltip.propTypes = {
   label: PropTypes.node.isRequired,

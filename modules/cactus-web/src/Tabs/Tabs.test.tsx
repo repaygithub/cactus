@@ -11,7 +11,9 @@ describe('component: TabController', () => {
     const { getByText } = renderWithTheme(
       <TabController initialTabId="sorcerer-tab">
         <TabList>
-          <Tab name="knight">Alanna</Tab>
+          <Tab name="knight" flex="5 4 321px">
+            Alanna
+          </Tab>
           <Tab name="sorcerer">Thom</Tab>
         </TabList>
         <TabPanel tab="knight">The Good Twin</TabPanel>
@@ -25,6 +27,7 @@ describe('component: TabController', () => {
     expect(knightTab).toHaveAttribute('role', 'tab')
     expect(knightTab).toHaveAttribute('aria-selected', 'false')
     expect(knightTab).toHaveAttribute('aria-controls', 'knight-panel')
+    expect(knightTab).toHaveStyle({ flex: '5 4 321px' })
     expect(knightPanel).toHaveAttribute('role', 'tabpanel')
     expect(knightPanel).toHaveAttribute('hidden')
     expect(knightPanel).toHaveAttribute('aria-labelledby', 'knight-tab')

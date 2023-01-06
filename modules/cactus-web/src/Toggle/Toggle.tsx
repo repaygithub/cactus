@@ -5,23 +5,22 @@ import React from 'react'
 import styled from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { extractMargins } from '../helpers/omit'
+import { withStyles } from '../helpers/styled'
 
 export interface ToggleProps extends React.InputHTMLAttributes<HTMLInputElement>, MarginProps {
   checked?: boolean
   disabled?: boolean
 }
 
-export const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>(
-  ({ className, ...props }, ref) => {
-    const marginProps = extractMargins(props)
+const ToggleBase = React.forwardRef<HTMLInputElement, ToggleProps>(
+  ({ className, style, ...props }, ref) => {
     return (
-      <Wrapper {...marginProps} className={className} role="none">
+      <div className={className} style={style} role="none">
         <Checkbox {...props} role="switch" aria-checked={props.checked} ref={ref} />
         <Switch aria-hidden />
         <StyledX aria-hidden color="white" />
         <StyledCheck aria-hidden color="white" />
-      </Wrapper>
+      </div>
     )
   }
 )
@@ -70,7 +69,11 @@ const StyledCheck = styled(StatusCheck)`
   }
 `
 
-const Wrapper = styled.div`
+export const Toggle = withStyles('div', {
+  as: ToggleBase,
+  displayName: 'Toggle',
+  styles: [margin],
+})`
   display: inline-block;
   position: relative;
   width: 51px;
@@ -79,7 +82,6 @@ const Wrapper = styled.div`
   padding: 0;
   border: none;
   outline: none;
-  ${margin}
 `
 
 const Switch = styled.div`
@@ -125,9 +127,5 @@ Toggle.propTypes = {
   checked: PropTypes.bool,
   disabled: PropTypes.bool,
 }
-
-// Enable use of `Toggle` as a styled-components CSS class.
-Toggle.toString = Wrapper.toString
-Toggle.displayName = 'Toggle'
 
 export default Toggle

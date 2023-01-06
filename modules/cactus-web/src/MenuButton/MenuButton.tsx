@@ -14,8 +14,8 @@ import React from 'react'
 import styled, { createGlobalStyle, css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
-import { extractMargins } from '../helpers/omit'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
+import { withStyles } from '../helpers/styled'
 import { border, popupBoxShadow, popupShape, radius } from '../helpers/theme'
 
 const MenuButtonStyles = createGlobalStyle`
@@ -80,27 +80,28 @@ interface DropDownProps {
   children?: React.ReactNode
 }
 
-interface MenuButtonProps extends MarginProps {
+interface MenuButtonProps {
   label: React.ReactNode
   variant?: MenuButtonVariant
   /**
    * Must be a MenuButton.Item or MenuButton.Link
    */
-  children: React.ReactNode
+  children?: React.ReactNode
   disabled?: boolean
+  className?: string
+  style?: React.CSSProperties
 }
 
-type MenuButtonType = React.FC<MenuButtonProps> & {
+type MenuButtonType = React.FC<MenuButtonProps & MarginProps> & {
   Item: typeof ReachMenuItem
   Link: typeof ReachMenuLink
 }
 
-export const MenuButton: MenuButtonType = (props) => {
-  const { label, children, variant = 'filled', ...rest } = props
-  const marginProps = extractMargins(rest)
+const MenuButtonBase = (props: MenuButtonProps) => {
+  const { label, children, className, style, variant = 'filled', ...rest } = props
   const anchorRef = React.useRef<HTMLButtonElement>(null)
   return (
-    <Wrapper {...marginProps}>
+    <div className={className} style={style}>
       <ReachMenu>
         {({ isOpen }) => (
           <>
@@ -115,7 +116,7 @@ export const MenuButton: MenuButtonType = (props) => {
           </>
         )}
       </ReachMenu>
-    </Wrapper>
+    </div>
   )
 }
 
@@ -134,9 +135,6 @@ const DropDown: React.FC<DropDownProps> = ({ isOpen, variant, anchorRef, childre
     </StyledPopover>
   )
 }
-
-MenuButton.Item = ReachMenuItem
-MenuButton.Link = ReachMenuLink
 
 type VariantMap = { [K in MenuButtonVariant]: ReturnType<typeof css> }
 
@@ -222,21 +220,27 @@ const StyledButton = styled.button<MenuButtonProps>`
   }
 `
 
-const Wrapper = styled.div<MarginProps>`
+export const MenuButton: MenuButtonType = withStyles('div', {
+  as: MenuButtonBase,
+  displayName: 'MenuButton',
+  styles: [margin],
+})<MarginProps>`
   position: relative;
   display: inline-block;
   max-width: 100%;
-  ${margin}
-`
+` as any
 
 const StyledPopover = styled(ReachMenuPopover)`
   position: fixed;
   z-index: 1000;
 `
 
+MenuButton.Item = ReachMenuItem
+MenuButton.Link = ReachMenuLink
+
 MenuButton.propTypes = {
   label: PropTypes.node.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   disabled: PropTypes.bool,
   variant: PropTypes.oneOf(['filled', 'unfilled']),
 }

@@ -119,6 +119,26 @@ describe('component: FileInput', () => {
     expect(changeTarget).toEqual({ name: 'controlled', value: [] })
   })
 
+  test('should support style props', () => {
+    const { getByTestId } = renderWithTheme(
+      <FileInput
+        name="no"
+        data-testid="style"
+        margin={5}
+        width="50%"
+        maxWidth="333px"
+        flexGrow="1"
+      />
+    )
+    const input = getByTestId('style')
+    expect(input).toHaveStyle({
+      margin: '24px',
+      width: '50%',
+      maxWidth: '333px',
+      flexGrow: '1',
+    })
+  })
+
   /** TODO: Add integration tests to theme-components example using puppeteer. We can't put them here because
    * @types/puppeteer brings in @types/node and sets everything else on fire
    * */

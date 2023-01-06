@@ -37,4 +37,17 @@ describe('component: PrevNext', () => {
     expect(mockNavigate).toHaveBeenCalledTimes(2)
     expect(mockNavigate).toHaveBeenLastCalledWith('next')
   })
+
+  test('should support style props', () => {
+    const { getByTestId } = renderWithTheme(
+      <PrevNext marginY={1} marginLeft=".17vw" data-testid="style" />
+    )
+    const prevNext = getByTestId('style')
+    expect(prevNext).toHaveStyle({
+      marginTop: '2px',
+      marginRight: '',
+      marginBottom: '2px',
+      marginLeft: '.17vw',
+    })
+  })
 })

@@ -4,6 +4,7 @@ import React, { Children, ComponentType, FC, HTMLAttributes, ReactElement } from
 import styled, { css } from 'styled-components'
 import { margin, MarginProps } from 'styled-system'
 
+import { withStyles } from '../helpers/styled'
 import Text from '../Text/Text'
 
 export type BackgroundColorVariants = 'lightContrast' | 'white'
@@ -145,9 +146,11 @@ Header.propTypes = {
   bgColor: PropTypes.oneOf(['white', 'lightContrast']),
 }
 
-export const StyledHeader = styled.header<HeaderProps & { $hasDescription: boolean }>`
-  ${margin}
-
+export const StyledHeader = withStyles('header', {
+  displayName: 'Header',
+  styles: [margin],
+  transitiveProps: ['bgColor'],
+})<HeaderProps & { $hasDescription: boolean }>`
   align-items: center;
   background-color: ${(p) =>
     p.bgColor ? p.theme.colors[p.bgColor] : p.theme.colors['lightContrast']};
