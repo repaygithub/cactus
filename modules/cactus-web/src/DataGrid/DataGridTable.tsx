@@ -23,16 +23,21 @@ const renderHeader = (
       const { key, id, title = '' } = column
       const props = { ...column.cellProps, ...column.headerProps, key, children: title }
       if (column.sortable && id) {
-        // Invert the initial sort to simplify the onClick logic.
-        let sortDesc = column.defaultSort !== 'desc'
+        let nextSort = column.defaultSort
         let Icon: React.ComponentType<IconProps> | undefined = undefined
         if (sortInfo?.id === id) {
-          sortDesc = !sortInfo.sortAscending
-          Icon = sortDesc ? NavigationChevronDown : NavigationChevronUp
-          props['aria-sort'] = sortDesc ? 'descending' : 'ascending'
+          if (sortInfo.sortAscending) {
+            Icon = NavigationChevronUp
+            props['aria-sort'] = 'ascending'
+            nextSort = 'desc'
+          } else {
+            Icon = NavigationChevronDown
+            props['aria-sort'] = 'descending'
+            nextSort = 'asc'
+          }
         }
         if (tableVariant !== 'card') {
-          const onSortClick = () => updateSortInfo({ id, sortAscending: sortDesc }, true)
+          const onSortClick = () => updateSortInfo({ id, sortAscending: nextSort === 'asc' }, true)
           props.children = (
             <HeaderButton type="button" onClick={onSortClick}>
               <div>{title}</div>
