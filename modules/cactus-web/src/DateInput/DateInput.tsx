@@ -154,7 +154,7 @@ function arrowValueChange(
       if (asNum === NaN) {
         break
       }
-      console.log(value.get_Hours(), asNum)
+
       asNum += direction
       const outOfRange = asNum > 12 || asNum < 1
       if (direction < 0 && outOfRange) {

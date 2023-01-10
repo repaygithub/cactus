@@ -625,11 +625,11 @@ export class PartialDate implements FormatTokenMap {
     for (const token of parsed) {
       if (isToken(token)) {
         let val = this[token]
-        if (/[H]/.test(token) && val !== '' && val !== undefined) {
-          val = this.hours?.toString()
+        if (/[H]/.test(token)) {
+          val = this.hours?.toString() || ''
         }
-        if (/[Mmdh]/.test(token) && val !== '' && val !== undefined) {
-          const padLength = val?.length > 1 || token.length > 1 ? 2 : 1
+        if (/[MmdhH]/.test(token) && val !== '' && val !== undefined) {
+          const padLength = val.length > 1 || token.length > 1 ? 2 : 1
           val = ('0' + val).slice(-padLength)
         }
         result += val !== '' ? val : repeat('#', token.length)
