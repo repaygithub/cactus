@@ -333,6 +333,9 @@ export class PartialDate implements FormatTokenMap {
     if (date) {
       if (typeof date === 'string') {
         this.parse(date, this._format)
+        if (this._format !== this._localeFormat) {
+          this.parseTime(this._localeFormat)
+        }
       } else if (!isNaN(+date)) {
         this.parse(formatDate(date, format), format)
       }
@@ -434,9 +437,6 @@ export class PartialDate implements FormatTokenMap {
       this.hours = value
       this._hours = value
     } else {
-      if (this.period === undefined) {
-        this.period = 'AM'
-      }
       this._hours = value
       const asNum = Number(value)
       if (this.period === 'PM') {
@@ -475,7 +475,6 @@ export class PartialDate implements FormatTokenMap {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get HH() {
     return this._hours || ''
-    // return this.pad(this.hours)
   }
 
   public set HH(value: string | undefined) {
@@ -547,9 +546,13 @@ export class PartialDate implements FormatTokenMap {
     return this.hours || 0
   }
 
+  public get_Hours(): string {
+    return this._hours || ''
+  }
+
   public setHours(value: number): void {
     if (this._localeFormat.includes('aa')) {
-      this.hours = this.period === 'PM' ? (value % 12) + 12 : value
+      this.hours = this.period === 'PM' ? (value % 12) + 12 : value % 12
       this._hours = this.pad(value)
     } else {
       this.hours = value % 24
@@ -637,22 +640,32 @@ export class PartialDate implements FormatTokenMap {
     return result
   }
 
-  public formatInput(format?: string): string {
+  public parseTime(format) {
     const parsed = parseFormat(format || this._format)
-    let result = ''
     for (const token of parsed) {
-      if (isToken(token)) {
-        let val = this[token]
-        if (/[Mmdh]/.test(token) && val !== '' && val !== undefined) {
-          const padLength = val?.length > 1 || token.length > 1 ? 2 : 1
-          val = ('0' + val).slice(-padLength)
+      if (isToken(token) && /[Hh]/.test(token)) {
+        let val = Number(this[token])
+        if (/[h]/.test(token) && val !== NaN && val !== undefined) {
+          if (val > 12) {
+            this.period = 'PM'
+          } else {
+            this.period = 'AM'
+          }
+          val = val % 12 || 12
         }
-        result += val !== '' ? val : repeat('#', token.length)
-      } else {
-        result += token
+
+        if (/[H]/.test(token) && val !== NaN && val !== undefined) {
+          if (this.period && this.period === 'PM') {
+            val = val + 12
+          }
+        }
+
+        if (val) {
+          this[token] = val.toString()
+        }
       }
     }
-    return result
+    return this
   }
 
   public equals(date?: PartialDate, type: DateType = this._type): boolean {

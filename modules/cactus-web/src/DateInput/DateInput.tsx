@@ -150,14 +150,19 @@ function arrowValueChange(
     }
     case 'h':
     case 'hh': {
-      const newValue = value.getHours() + direction
-      const outOfRange = newValue > 12 || newValue < 1
+      let asNum = Number(value.get_Hours())
+      if (asNum === NaN) {
+        break
+      }
+      console.log(value.get_Hours(), asNum)
+      asNum += direction
+      const outOfRange = asNum > 12 || asNum < 1
       if (direction < 0 && outOfRange) {
         value.setHours(12)
       } else if (direction > 0 && outOfRange) {
         value.setHours(1)
       } else {
-        value.setHours(newValue)
+        value.setHours(asNum)
       }
       break
     }
@@ -175,7 +180,6 @@ function arrowValueChange(
       break
     }
     case 'mm': {
-      // value.setMinutes(((value.getMinutes() % 60) + direction + 60) % 60)
       const newValue = value.getMinutes() + direction
       const outOfRange = newValue > 59 || newValue < 0
       if (direction < 0 && outOfRange) {
