@@ -640,7 +640,7 @@ export class PartialDate implements FormatTokenMap {
     return result
   }
 
-  public parseTime(format) {
+  public parseTime(format?: string) {
     const parsed = parseFormat(format || this._format)
     for (const token of parsed) {
       if (isToken(token) && /[Hh]/.test(token)) {
