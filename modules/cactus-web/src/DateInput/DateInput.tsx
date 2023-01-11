@@ -151,43 +151,45 @@ function arrowValueChange(
     case 'h':
     case 'hh': {
       let asNum = Number(value.get_Hours())
-      if (asNum === NaN) {
-        break
+      asNum += direction
+
+      // Switches from AM to PM while using arrows
+      if (asNum === 12 && direction > 0) {
+        value.aa = value.aa === 'AM' ? 'PM' : 'AM'
+      } else if (asNum === 11 && direction < 0) {
+        value.aa = value.aa === 'AM' ? 'PM' : 'AM'
       }
 
-      asNum += direction
-      const outOfRange = asNum > 12 || asNum < 1
-      if (direction < 0 && outOfRange) {
-        value.setHours(12)
-      } else if (direction > 0 && outOfRange) {
-        value.setHours(1)
-      } else {
+      if (asNum <= 12 && asNum >= 1) {
         value.setHours(asNum)
+      } else if (direction < 0) {
+        value.setHours(12)
+      } else {
+        value.setHours(1)
       }
       break
     }
     case 'H':
     case 'HH': {
       const newValue = value.getHours() + direction
-      const outOfRange = newValue > 23 || newValue < 0
-      if (direction < 0 && outOfRange) {
-        value.setHours(23)
-      } else if (direction > 0 && outOfRange) {
-        value.setHours(0)
-      } else {
+      if (newValue <= 23 && newValue >= 0) {
         value.setHours(newValue)
+      } else if (direction < 0) {
+        value.setHours(23)
+      } else {
+        value.setHours(0)
       }
       break
     }
     case 'mm': {
       const newValue = value.getMinutes() + direction
       const outOfRange = newValue > 59 || newValue < 0
-      if (direction < 0 && outOfRange) {
-        value.setMinutes(59)
-      } else if (direction > 0 && outOfRange) {
-        value.setMinutes(0)
-      } else {
+      if (newValue <= 59 && newValue >= 0) {
         value.setMinutes(newValue)
+      } else if (direction < 0 && outOfRange) {
+        value.setMinutes(59)
+      } else {
+        value.setMinutes(0)
       }
       break
     }
@@ -763,11 +765,12 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
   private handleTimeChange = (event: React.ChangeEvent<Target>): void => {
     const time = event.target.value
+    const formatTime = getLocaleFormat('en-US', { type: 'time' })
     if (typeof time === 'string' && time !== '') {
       event.persist()
       this.setState(({ value }): Pick<DateInputState, 'value'> => {
         const update = value.clone()
-        update.parse(time, 'HH:mm aa')
+        update.parse(time, formatTime)
         this.raiseChange(event, update)
         return { value: update }
       })

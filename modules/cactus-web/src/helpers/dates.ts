@@ -378,7 +378,7 @@ export class PartialDate implements FormatTokenMap {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get MM() {
-    return this._month === undefined ? '' : this._month.slice(-2)
+    return this._month ? this._month.slice(-2) : ''
   }
 
   public set MM(value: string | undefined) {
@@ -387,7 +387,7 @@ export class PartialDate implements FormatTokenMap {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get d() {
-    return this._day || ''
+    return this._day ? Number(this._day).toString() : ''
   }
 
   public set d(value: string | undefined) {
@@ -426,10 +426,7 @@ export class PartialDate implements FormatTokenMap {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get h() {
-    if (this._hours === undefined) {
-      return ''
-    }
-    return this._hours
+    return this._hours ? Number(this._hours).toString() : ''
   }
 
   public set h(value: string | undefined) {
@@ -458,7 +455,7 @@ export class PartialDate implements FormatTokenMap {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get H() {
-    return this._hours || ''
+    return this._hours ? Number(this._hours).toString() : ''
   }
 
   public set H(value: string | undefined) {
@@ -645,17 +642,17 @@ export class PartialDate implements FormatTokenMap {
     for (const token of parsed) {
       if (isToken(token) && /[Hh]/.test(token)) {
         let val = Number(this[token])
-        if (/[h]/.test(token) && val !== NaN && val !== undefined) {
-          if (val > 12) {
-            this.period = 'PM'
-          } else {
-            this.period = 'AM'
-          }
-          val = val % 12 || 12
-        }
-
-        if (/[H]/.test(token) && val !== NaN && val !== undefined) {
-          if (this.period && this.period === 'PM') {
+        if (!Number.isNaN(val) && val !== undefined) {
+          if (/[h]/.test(token)) {
+            val = val % 12 || 12
+            if (!this.period) {
+              if (val > 12) {
+                this.period = 'PM'
+              } else {
+                this.period = 'AM'
+              }
+            }
+          } else if (/[H]/.test(token) && this.period && this.period === 'PM') {
             val = val + 12
           }
         }
