@@ -1,10 +1,18 @@
 import { CheckBoxGroup, StyleProvider } from '@repay/cactus-web'
-import { render } from '@testing-library/react'
+import { act, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { Form as FinalForm, FormSpy as FinalFormSpy } from 'react-final-form'
 
-import { DependentField, Field, FieldSpy, Form, FormSpy, SubmitButton } from '../src/index'
+import {
+  DependentField,
+  Field,
+  FieldArray,
+  FieldSpy,
+  Form,
+  FormSpy,
+  SubmitButton,
+} from '../src/index'
 
 const noop = () => undefined
 const form = ({ children }: any) => React.createElement('form', {}, children)
@@ -365,6 +373,107 @@ describe('final-form functionality', () => {
       expect(mock).toHaveBeenCalledWith({ yi: true, san: true })
       userEvent.click(getByLabelText('One'))
       expect(mock).toHaveBeenCalledWith({ yi: false, san: true })
+    })
+  })
+
+  describe('<FieldArray />', () => {
+    test('does not re-render on nested value change', () => {
+      const mock: any = jest.fn(() => <Field name="array[0].one" label="One" />)
+      const { getByLabelText } = render(
+        <App>
+          <FieldArray name="array" component={mock} initialValue={[{ one: 'uno' }]} />
+        </App>
+      )
+      expect(mock).toHaveBeenCalledTimes(1)
+      userEvent.type(getByLabelText('One'), '!')
+      expect(getByLabelText('One')).toHaveValue('uno!')
+      expect(mock).toHaveBeenCalledTimes(1)
+      const change = mock.mock.calls[0][0].change
+      act(() => change([{ one: 'ichi' }]))
+      expect(mock).toHaveBeenCalledTimes(2)
+      expect(getByLabelText('One')).toHaveValue('ichi')
+    })
+
+    test('props contains `rest`, subscription, & operators', () => {
+      const mock = jest.fn(() => null)
+      const value = [{ two: 'dos' }]
+      const { rerender } = render(
+        <App mutators={{ insert: () => 0, nonArrayMutator: () => 1 }}>
+          <FieldArray key={0} name="array" render={mock} initialValue={value} />
+        </App>
+      )
+      expect(mock).toHaveBeenCalledTimes(1)
+      expect(mock).toHaveBeenCalledWith({
+        name: 'array',
+        insert: expect.any(Function),
+        change: expect.any(Function),
+        value: value,
+        length: 1,
+      })
+      rerender(
+        <App mutators={{ insert: () => 0, nonArrayMutator: () => 1 }}>
+          <FieldArray
+            key={1}
+            name="array"
+            render={mock}
+            subscription={{ dirty: true }}
+            otherProp="hey"
+          />
+        </App>
+      )
+      expect(mock).toHaveBeenCalledTimes(2)
+      expect(mock).toHaveBeenCalledWith({
+        name: 'array',
+        insert: expect.any(Function),
+        change: expect.any(Function),
+        dirty: false,
+        otherProp: 'hey',
+      })
+    })
+
+    test('does not return error arrays', () => {
+      const mock = jest.fn(() => (
+        <Field
+          name="array[0].three"
+          label="Three"
+          processMeta={(p, m) => {
+            p.error = m.error
+          }}
+        />
+      ))
+      const validate = () => {
+        return [{ three: 'I am a field error ' }]
+      }
+      const { getByText } = render(
+        <App>
+          <FieldArray name="array" validate={validate} subscription={{ error: true }}>
+            {mock}
+          </FieldArray>
+        </App>
+      )
+      expect(getByText('I am a field error')).toBeInTheDocument()
+      expect(mock).toHaveBeenCalledWith({
+        name: 'array',
+        change: expect.any(Function),
+        error: undefined,
+      })
+    })
+
+    test('converts simple error to array', () => {
+      const mock = jest.fn(() => <Field name="array[0].three" label="Three" />)
+      const validate = () => 'I am an array error'
+      render(
+        <App>
+          <FieldArray name="array" validate={validate} subscription={{ error: true }}>
+            {mock}
+          </FieldArray>
+        </App>
+      )
+      expect(mock).toHaveBeenCalledWith({
+        name: 'array',
+        change: expect.any(Function),
+        error: 'I am an array error',
+      })
     })
   })
 

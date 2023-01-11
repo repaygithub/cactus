@@ -9,11 +9,12 @@ export const makeConfigurableComponent = <P>(
   component.withDefaults = (newDefaults: Partial<P>) => {
     const clone: ConfigurableComponent<P> = component.bind(null) as any
     Object.assign(clone, component)
-    return makeConfigurableComponent<P>(clone, newDefaults)
+    const combinedDefaults = { ...defaults, ...newDefaults }
+    return makeConfigurableComponent<P>(clone, combinedDefaults)
   }
   component.configureDefaults = (newDefaults: Partial<P>) => {
     const prevDefaults = { ...component.defaultProps }
-    component.defaultProps = newDefaults
+    component.defaultProps = { ...defaults, ...newDefaults }
     return prevDefaults
   }
   component.initialDefaults = () => defaults

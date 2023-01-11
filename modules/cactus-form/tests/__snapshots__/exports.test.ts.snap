@@ -6,6 +6,7 @@ Array [
   "DependentField",
   "FORM_ERROR",
   "Field",
+  "FieldArray",
   "FieldSpy",
   "Form",
   "FormSpy",
