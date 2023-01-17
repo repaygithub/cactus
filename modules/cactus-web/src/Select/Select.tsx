@@ -17,7 +17,7 @@ import {
 import KeyCodes from '../helpers/keyCodes'
 import { omitMargins } from '../helpers/omit'
 import { positionDropDown, usePositioning } from '../helpers/positionPopover'
-import { isPurelyEqual, useMergedRefs } from '../helpers/react'
+import { useMergedRefs } from '../helpers/react'
 import { useScrollTrap } from '../helpers/scroll'
 import { getStatusStyles, Status, StatusPropType } from '../helpers/status'
 import { boxShadow, fontSize, isResponsiveTouchDevice, radius, textStyle } from '../helpers/theme'
@@ -54,7 +54,7 @@ interface ExtendedOptionType extends WithValue {
   id: string
   ariaLabel?: string
   altText: string
-  ref?: React.RefCallback<HTMLElement>
+  component?: React.FC<OptProps>
 }
 
 type Target = CactusEventTarget<SelectValueType>
@@ -112,15 +112,9 @@ const ValueSwitch = (props: {
   const selectionRef = useRef<ExtendedOptionType[]>([])
   const selectionHasChanged = !isArrayEqual(selectionRef.current, selected, compareValues)
   const shouldRenderAll = selectionHasChanged && props.multiple && numSelected > 1
-  // We need to wait for the refs to run before we can render the altText.
-  const shouldRestart = selected.some((opt) => !!opt.ref)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useLayoutEffect((): void => {
-    if (shouldRestart) {
-      selectionRef.current = []
-      return setNum((x) => Math.min(-1, x - 1))
-    }
     selectionRef.current = selected
     if (spanRef.current !== null && moreRef.current !== null && shouldRenderAll) {
       // finds the maximum number of values it can display
@@ -147,8 +141,6 @@ const ValueSwitch = (props: {
   if (shouldRenderAll && numToRender > 0) {
     // Set an impossible value so the effect will definitely trigger a render.
     setNum(0)
-    return null
-  } else if (shouldRestart) {
     return null
   } else if (numSelected === 0) {
     return <Placeholder>{props.placeholder}</Placeholder>
@@ -353,7 +345,18 @@ const NoMatch = styled.li`
   word-wrap: break-word;
 `
 
-const InternalOption = styled.li`
+type OptProps = React.HTMLAttributes<HTMLLIElement> & { option: ExtendedOptionType }
+const OptExtractLabel: React.FC<OptProps> = ({ option, ...props }) => {
+  const ref = React.useRef<HTMLLIElement>(null)
+  React.useEffect(() => {
+    if (ref.current) {
+      option.altText = ref.current.textContent || ''
+    }
+  })
+  return <li {...props} ref={ref} />
+}
+
+const InternalOption = styled.li<OptProps>`
   cursor: pointer;
   display: list-item;
   border: none;
@@ -883,7 +886,8 @@ class List extends React.Component<ListProps, ListState> {
                 <InternalOption
                   key={optId}
                   id={optId}
-                  ref={opt.ref}
+                  option={opt}
+                  as={opt.component}
                   role="option"
                   data-value={toString(opt.value)}
                   className={activeDescendant === optId ? 'highlighted-option' : undefined}
@@ -967,6 +971,7 @@ class OptionState {
   public extOptions: ExtendedOptionType[] = []
   private optMap: OptMap = new Map()
   private idPrefix: string
+  public needsAltText = false
 
   public getExtOpt: (value: OptionValue) => ExtendedOptionType | undefined
   public hasExtOpt: (value: OptionValue) => boolean
@@ -1006,17 +1011,6 @@ class OptionState {
     }
     if (!this.optMap.has(optValue)) {
       const prevOpt = prevOpts?.get(optValue)
-      if (altText === undefined) {
-        const strLabel = toString(optLabel)
-        if (ariaLabel) {
-          altText = ariaLabel
-        } else if (strLabel !== undefined) {
-          altText = strLabel
-        } else if (prevOpt && isPurelyEqual(prevOpt.label, optLabel)) {
-          // Pull the previously used version of `textContent`.
-          altText = prevOpt.altText
-        }
-      }
       const extOpt: ExtendedOptionType = {
         value: optValue,
         label: optLabel,
@@ -1025,13 +1019,15 @@ class OptionState {
         id: id || prevOpt?.id || this.getOptionId(optValue),
         ariaLabel,
       }
-      if (altText === undefined && optLabel) {
-        // Label is an element, pass this to `InternalOption` to pull the label's text.
-        extOpt.ref = (elem: HTMLElement | null) => {
-          if (elem) {
-            extOpt.altText = elem.textContent || ''
-            delete extOpt.ref
-          }
+      if (altText === undefined) {
+        const strLabel = toString(optLabel)
+        if (ariaLabel) {
+          extOpt.altText = ariaLabel
+        } else if (strLabel !== undefined) {
+          extOpt.altText = strLabel
+        } else {
+          this.needsAltText = true
+          extOpt.component = OptExtractLabel
         }
       }
       this.extOptions.push(extOpt)
@@ -1169,6 +1165,13 @@ class SelectBase extends React.Component<SelectPropsWithTheme, SelectState> {
     }
     this.eventTarget.id = this.props.id
     this.eventTarget.name = this.props.name
+    // This is horrible, but I can't think of a better way to trigger
+    // a re-render without completely refactoring the component.
+    if (this.state.options.needsAltText) {
+      const options = this.state.options
+      options.needsAltText = false
+      this.setState({ options })
+    }
   }
 
   public static getDerivedStateFromProps(
