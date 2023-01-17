@@ -13645,9 +13645,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"downshift@npm:^6.0.15":
-  version: 6.1.12
-  resolution: "downshift@npm:6.1.12"
+"downshift@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "downshift@npm:7.1.2"
   dependencies:
     "@babel/runtime": ^7.14.8
     compute-scroll-into-view: ^1.0.17
@@ -13656,7 +13656,7 @@ __metadata:
     tslib: ^2.3.0
   peerDependencies:
     react: ">=16.12.0"
-  checksum: c623dc436f332fefddc332b42ca4a267b3f5b47aaf1372a61212678d7ecbe22698fdb63f61373bcbd3773fa526eb4f210cf7f044cd5642b689dbd37ba27e9aaf
+  checksum: 54a6bf7e5918fe0a4793c542f26d16e8662172b96cedf8227bc8ada0d2b0116668a636ddaae03861699c0be9683d449f4c0a1e666e63162b0304506b2a85fc0e
   languageName: node
   linkType: hard
 
