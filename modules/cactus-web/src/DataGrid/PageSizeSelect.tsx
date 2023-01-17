@@ -1,14 +1,15 @@
-import { border, ColorStyle, fontSize } from '@repay/cactus-theme'
+import { border, ColorStyle, textStyle } from '@repay/cactus-theme'
 import PropTypes from 'prop-types'
-import React, { ReactElement, useContext } from 'react'
+import React, { ReactElement } from 'react'
 import { margin, MarginProps } from 'styled-system'
 
 import { keyDownAsClick } from '../helpers/a11y'
 import { withStyles } from '../helpers/styled'
-import { DataGridContext } from './helpers'
+import { useDataGridContext } from './DataGridContext'
 
 export interface PageSizeSelectProps {
   pageSize?: number
+  onPageSizeChange?: (pageSize: number) => void
   initialPageSize?: number
   makePageSizeLabel?: (pageSize: number) => string
   pageSizeSelectLabel?: React.ReactNode
@@ -18,17 +19,18 @@ export interface PageSizeSelectProps {
 const defaultPageSizeLabel = (pageSize: number): string => `View ${pageSize} rows per page`
 
 const BasePageSizeSelect = (props: PageSizeSelectProps): ReactElement => {
-  const { pageState, updatePageState } = useContext(DataGridContext)
+  const { pageState, updatePageState } = useDataGridContext('DataGrid.PageSizeSelect')
   const {
     pageSizeSelectLabel,
     pageSizeOptions,
     makePageSizeLabel = defaultPageSizeLabel,
     initialPageSize = 1,
     pageSize: currentPageSize = pageState.pageSize || initialPageSize,
+    onPageSizeChange,
     ...rest
   } = props
   React.useEffect(() => {
-    updatePageState({ pageSize: currentPageSize })
+    updatePageState({ pageSize: currentPageSize }, false)
   }, [currentPageSize]) // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div {...rest}>
@@ -41,7 +43,10 @@ const BasePageSizeSelect = (props: PageSizeSelectProps): ReactElement => {
               <a
                 role="link"
                 aria-selected={isCurrentPageSize ? 'true' : 'false'}
-                onClick={() => updatePageState({ pageSize }, true)}
+                onClick={() => {
+                  updatePageState({ pageSize }, true)
+                  onPageSizeChange?.(pageSize)
+                }}
                 onKeyDown={keyDownAsClick}
                 tabIndex={isCurrentPageSize ? undefined : 0}
                 aria-label={makePageSizeLabel(pageSize)}
@@ -62,6 +67,7 @@ const PageSizeSelect = withStyles('div', {
   styles: [margin],
 })<MarginProps>`
   display: inline-box;
+  ${textStyle('small')}
 
   span {
     margin-right: 8px;
@@ -93,8 +99,6 @@ const PageSizeSelect = withStyles('div', {
     &,
     a {
       color: ${(p): string => p.theme.colors.darkestContrast};
-      ${fontSize('small')};
-      line-height: 18px;
       text-decoration: none;
     }
 
@@ -102,7 +106,6 @@ const PageSizeSelect = withStyles('div', {
       cursor: pointer;
       padding: 3px;
       vertical-align: middle;
-      line-height: 18px;
       display: block;
       border-radius: 8px;
 

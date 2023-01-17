@@ -1,27 +1,6 @@
-import { ScreenSize } from '@repay/cactus-theme'
+import { Key } from 'react'
 
 import { TableCellProps, TableVariant } from '../Table/Table'
-
-export type JustifyContent =
-  | 'unset'
-  | 'flex-start'
-  | 'flex-end'
-  | 'center'
-  | 'space-between'
-  | 'space-around'
-  | 'space-evenly'
-
-export interface TransientProps {
-  $isCardView: boolean
-  $cardBreakpoint: ScreenSize
-  $variant?: TableVariant
-}
-
-export interface TableProps {
-  fullWidth: boolean
-  cardBreakpoint: ScreenSize
-  variant: TableVariant | undefined
-}
 
 export interface CellInfo {
   id?: string
@@ -31,18 +10,33 @@ export interface CellInfo {
 }
 
 export type Datum = Record<string, any>
+
+type SortDirection = 'asc' | 'desc'
+
 type RenderFunc = (row: Datum, cellInfo: CellInfo) => React.ReactElement | null
 
-export interface Column {
-  key: string
+interface BaseColumn {
   order: number
   sortable: boolean
+  defaultSort: SortDirection
   id: string | undefined
   title: React.ReactChild | undefined
   headerProps: TableCellProps | undefined
+  render?: RenderFunc
+}
+
+export interface Column extends BaseColumn {
+  key: Key
   cellProps: TableCellProps
   Component?: React.ComponentType<CellInfo & { row: Datum }>
-  render?: RenderFunc
+}
+
+export interface ColumnProps
+  extends Partial<BaseColumn>,
+    Omit<TableCellProps, 'as' | 'children' | 'title'> {
+  key?: Key
+  children?: RenderFunc
+  as?: React.ComponentType<any>
 }
 
 interface AddAction {
@@ -55,7 +49,7 @@ interface RemoveAction {
   key: string
 }
 
-export type ColumnAction = AddAction | RemoveAction
+export type ColumnAction = AddAction | RemoveAction | ColumnProps[]
 export type ColumnDispatch = React.Dispatch<ColumnAction>
 
 export interface ColumnState {
@@ -63,7 +57,7 @@ export interface ColumnState {
   sortableColumns: Column[]
 }
 
-export interface SortOption {
+export interface SortInfo {
   id: string
   sortAscending: boolean
 }
@@ -78,33 +72,22 @@ export const pageStateKeys = [
 
 export type PageState = { [K in typeof pageStateKeys[number]]?: number }
 
-// Backwards compat; if we ever make a breaking change, use `PageState` everywhere.
-export interface PaginationOptions extends PageState {
-  currentPage: number
-  pageSize: number
-}
 export type PageStateAction = React.SetStateAction<PageState>
 
-export interface Pagisort extends PaginationOptions {
-  sort?: SortOption[]
+export interface Pagisort extends PageState {
+  sort?: SortInfo
 }
 
-export interface ColumnProps extends Omit<TableCellProps, 'as' | 'children' | 'title'> {
-  id?: string
-  order?: number
-  sortable?: boolean
-  title?: React.ReactChild
-  headerProps?: TableCellProps
-  render?: RenderFunc
-  children?: RenderFunc
-  as?: React.ComponentType<any>
-}
+export type SortEventHandler = (arg: SortInfo) => void
 
-export interface DataGridContextType extends ColumnState, TableProps {
-  columnDispatch: ColumnDispatch
-  sortOptions: SortOption[]
-  onSort: (newSortOptions: SortOption[]) => void
-  pageState: PaginationOptions
-  updatePageState: (action: PageStateAction, raiseEvent?: boolean) => void
-  isCardView: boolean
+export interface DataGridContext extends ColumnState {
+  data: Datum[]
+  onSort?: SortEventHandler
+  updateColumns: ColumnDispatch
+  sortInfo: SortInfo | undefined
+  updateSortInfo: (newSort: SortInfo, raiseEvent: boolean) => void
+  pageState: PageState
+  updatePageState: (action: PageStateAction, raiseEvent: boolean) => void
+  tableVariant: TableVariant
+  updateTableVariant: (variant: TableVariant) => void
 }

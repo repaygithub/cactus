@@ -5,10 +5,6 @@ menu: Components
 
 import PropsTable from 'website-src/components/PropsTable'
 import DataGrid from './DataGrid'
-import SplitButton from '../SplitButton/SplitButton'
-import ScreenSizeProvider from '../ScreenSizeProvider/ScreenSizeProvider'
-import { livePreviewStyle } from '../helpers/constants'
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
 
 # DataGrid
 
@@ -17,16 +13,12 @@ The `DataGrid` is a wrapper for `Table` that allows you to easily define table c
 ## Basic usage
 
 The `DataGrid` component has several sub-components to help define your grid structure:
-  - `DataGrid.TopSection` - A flex container to be rendered above the table. You can use this space to render other `DataGrid` components in whatever order you like.
-    In the card view, `TopSection` will always include the sort buttons as the first element.
-    You can use the `justifyContent` and `spacing` props to help with arranging elements and spacing them out from each other.
-  - `DataGrid.BottomSection` - A flex container to be rendered below the table. You can use this space to render other `DataGrid` components in whatever order you like.
-    You can use the `justifyContent` and `spacing` props to help with arranging elements and spacing them out from each other.
-  - `DataGrid.Table` - A wrapper for our `Table` component which maps the data you pass to the columns that have been configured.
+  - `DataGrid.Table` - A wrapper for our `Table` component which maps the data you pass to the columns that have been configured; accepts all the same props as a regular Cactus Table.
   - `DataGrid.Column` - Defines a column template that will be applied to the data passed to the table.
     Any extra props passed to `Column` will be passed on to `Table.Cell` internally.
+  - `DataGrid.Sort` - Accepts props related to sorting, and optionally renders menus that can control sort column/direction as an alternative to clicking the column headers.
   - `DataGrid.PageSizeSelect` - Renders a component that can be used to pick the number of rows per page.
-  - `DataGrid.Pagination` - A wrapper for our `Pagination` component. This piece allows users to change pages. **Note:** when using this component, `pageCount` is required in `paginationOptions`.
+  - `DataGrid.Pagination` - A wrapper for our `Pagination` component that accepts props related to pagination. You must pass enough information that a page count can be calculated.
   - `DataGrid.PrevNext` - A wrapper for our `PrevNext` component, which is a simpler form of pagination. This method of pagination does not require a `pageCount`.
 
 ### DataGrid.Column
@@ -36,6 +28,7 @@ The Column API is central to making a DataGrid. There are several options for co
 - `id`: the name of a property on the table data. Maps the value that will be rendered in each table cell; required if no render function or component is passed.
 - `title`: the contents of the header cell.
 - `sortable`: if true, the header cell will become a button that can be clicked to change the sort options; `id` and `title` are required on sortable columns.
+- `defaultSort`: either "asc" or "desc", defines the default sort direction when the column is initially selected for sorting; passing any value implies `sortable=true`.
 - `order`: the order in which the columns should appear; default is React render order, so 99% of the time this can be left blank.
 - `headerProps`: an object containing any extra props to be passed to the header cell
 - `render`/children: a function to render the cell contents. The first argument is the current data row being processed, and the second is a CellInfo object (definition shown below).
@@ -51,81 +44,151 @@ interface CellInfo {
 }
 ```
 
-## Best practices
+You can also pass objects with the Column structure as an array to `DataGrid.Table` using the `columns` prop.
 
-- The `sortOptions` & `paginationOptions` props can be used either controlled or uncontrolled. If using them uncontrolled, the `onPagisort` handler can be used to update the data source whenever a change is made to either pagination _or_ sorting.
-- `paginationOptions` can be passed as a single object to the `<DataGrid>` element, or as individual props to the relevant sub-components: `pageSize` to `PageSizeSelect`, `currentPage` & `pageCount` to `Pagination`, etc.; if not using `PageSizeSelect`, `pageSize` can also be passed to `Pagination` or `PrevNext`.
-- Use the `sortLabels` prop on `TopSection` to pass internationalized labels for the sorting dropdowns used in the card view.
-- Just like the `Table`, the `DataGrid` should be rendered as a descendant of `ScreenSizeProvider` to take advantage of the card carousel feature.
-- If you would like to use the `DataGrid.Pagination` component, you must include `pageCount` OR `itemCount` & `pageSize` in `paginationOptions`. If no page count is known, you should use `DataGrid.PrevNext` instead.
-- Similar to the `Table` component, the `DataGrid` exposes the `cardBreakpoint` prop, where you can define at what breakpoint you would like to switch to card
-  view. It defaults to `tiny` but you can select from any of our breakpoints: `tiny`, `small`, `medium`, `large` and `extraLarge`.
-- Alternatively, you can pass `variant` to directly control whether it renders as cards or a table.
-- Make sure the sub-components that are rendered with the table are positioned as expected in both table view and card view. You may need to make use of `ScreenSizeContext`
-  to accomplish the positioning you desire depending on the screen's size.
+### Sorting
 
-### Example
+While the setup for sorting is primarily done through the Column interface,
+the implementation is done through the `DataGrid.Sort` component.
+It has four important props:
+
+- `sort` - a SortInfo object that controls which column header is rendered with an indicator that the column is sorted.
+- `initialSort` - same format as `sort` but "uncontrolled", allowing the component to manage sort state internally.
+- `onSort` - handler called when sort is changed; it accepts one argument, a SortInfo object for the newly sorted column.
+- `showSortMenu` - controls how the sort menus are displayed.
 
 ```
-const YesNo = ({ value }) => <div>{value ? 'YES' : 'NO'}</div>
+interface SortInfo {
+  id: string
+  sortAscending: boolean
+}
+```
 
-const initialPageSize = 4
-const DataGridContainer = ({ data: INITIAL_DATA }) => {
-  const [data, setData] = React.useState(() => INITIAL_DATA.slice(0, initialPageSize))
-  const onPagisort = ({ itemOffset, pageSize: newPageSize, sort: newSortOptions }) => {
-    const sortId = newSortOptions[0].id
-    const sortAscending = newSortOptions[0].sortAscending
-    const dataCopy = [...INITIAL_DATA]
-    if (sortId === 'created') {
-      if (sortAscending) {
-        dataCopy.sort((a, b) => {
-          return new Date(a.created) - new Date(b.created)
-        })
-      } else {
-        dataCopy.sort((a, b) => {
-          return new Date(b.created) - new Date(a.created)
-        })
-      }
-    } else if (sortId === 'active') {
-      if (sortAscending) {
-        dataCopy.sort((a, b) => {
-          return a.active === b.active ? 0 : a.active ? 1 : -1
-        })
-      } else {
-        dataCopy.sort((a, b) => {
-          return a.active === b.active ? 0 : a.active ? -1 : 1
-        })
-      }
-    }
-    setData(dataCopy.slice(itemOffset, itemOffset + newPageSize))
+Normally the DataGrid.Sort component doesn't render anything and sorting is controlled
+by clicking on the table's column headers. However, if the table is rendered in card carousel mode
+(which is the default on tiny screens, or controlled via the Table's `variant` prop),
+there are no column headers and separate drop-down menus for sorting can be rendered.
+The `showSortMenu` prop controls this behavior, accepting values `true` to always render the menu,
+`false` to never render it, or `"card-only"` (default) to only render the menu in card carousel mode.
+The column names are taken from each column's `title` property, while the other labels can be changed using the `labels` prop:
+
+```
+interface SortLabels {
+  sortBy?: React.ReactNode
+  order?: React.ReactNode
+  ascending?: React.ReactNode
+  descending?: React.ReactNode
+}
+
+<DataGrid.Sort showSortMenu labels={{ sortBy: 'Sort Column', order: 'Sort Direction' }} />
+```
+
+### Pagination
+
+DataGrid has three pagination-related components: `Pagination`, `PrevNext`, and `PageSizeSelect`.
+The first two are fairly thin wrappers around the Cactus components of the same names,
+while `PageSizeSelect` is unique to the DataGrid.
+You can pass any of the pagination props to any of the three components, and they'll
+be combined behind the scenes into a single "pagination state" object.
+
+- `currentPage` - The current page number; has an "uncontrolled" version on `Pagination` & `PrevNext`, `initialPage`, which defaults to 1.
+- `pageCount` - The total number of pages.
+- `pageSize` - How many items per page; has an "uncontrolled" version on `PageSizeSelect`, `initialPageSize`.
+- `itemOffset` - zero-indexed offset of the first item on the current page; can pass itemOffset + pageSize instead of currentPage.
+- `itemCount` - The total number of items in the dataset; can pass itemCount + pageSize instead of pageCount.
+
+All of these are marked optional, but restrictions apply: for example `pageCount`
+is required on the base Pagination component, so when using DataGrid.Pagination
+you must either pass pageCount, or itemCount + pageSize from which the page count can be calculated.
+
+### Pagination & Sorting Event Handlers
+
+Both pagination and sorting can be either "controlled" (state is maintained outside the component and passed in via props)
+or "uncontrolled" (state is maintained inside the component), in the same way as React inputs.
+Either way there are a variety of related event handlers:
+
+- `onPageChange` on `DataGrid.Pagination` - like the base Pagination component, called with the new page number when the user selects a different page.
+- `onNavigate` on `DataGrid.PrevNext` - like the base PrevNext component, called with a string "prev" or "next" depending on which direction the user navigates.
+- `onPageSizeChange` on `DataGrid.PageSizeSelect` - similar to onPageChange, but called with the new page _size_ instead of a page number.
+- `onSort` on `DataGrid.Sort` - called with the new sort column/direction when sort is changed.
+- `onPagisort` on the base `DataGrid` - called whenever any sorting or pagination is changed; argument is an object with all known pagination/sort state.
+
+`onPagisort` is especially useful if your sorting/pagination is done on a server,
+allowing use of a single re-fetch trigger without needing to store any extra state;
+although if you _do_ need to control the state externally, DataGrid also has a
+`pagisort` prop that can be used to control both pagination & sorting in a single object.
+
+```
+interface Pagisort {
+  currentPage?: number
+  pageCount?: number
+  pageSize?: number
+  itemOffset?: number
+  itemCount?: number
+  sort?: {
+    id: string
+    sortAscending: boolean
   }
+}
+
+const ServerDataComponent = ({ serverQuery, filters }) => {
+  const [dataFromServer, setData] = useState([])
+  const [dataSize, setDataSize] = useState(0)
+  useEffect(() => {
+    const [data, totalDatasetSize] = serverQuery(filters)
+    setData(data)
+    setDataSize(totalDatasetSize)
+  }, [serverQuery])
+
   return (
-    <DataGrid onPagisort={onPagisort} cardBreakpoint="tiny">
-      <DataGrid.TopSection justifyContent="flex-end" spacing={4}>
-        <DataGrid.PageSizeSelect
-           initialPageSize={initialPageSize}
-           pageSizeOptions={[4, 6, 12]}
-        />
-      </DataGrid.TopSection>
-      <DataGrid.Table data={data}>
-        <DataGrid.Column id="name" title="Name" />
-        <DataGrid.Column id="created" title="Created" sortable />
-        <DataGrid.Column id="active" title="Active" sortable as={YesNo} />
-        <DataGrid.Column>
-          {(rowData) => (
-            <SplitButton onSelectMainAction={() => {}} mainActionLabel="Edit">
-              <SplitButton.Action onSelect={() => {}}>Clone</SplitButton.Action>
-              <SplitButton.Action onSelect={() => {}}>Delete</SplitButton.Action>
-            </SplitButton>
-          )}
-        </DataGrid.Column>
-      </DataGrid.Table>
-      <DataGrid.BottomSection justifyContent="flex-end">
-        <DataGrid.Pagination itemCount={INITIAL_DATA.length} />
-      </DataGrid.BottomSection>
+    <DataGrid
+      data={dataFromServer}
+      onPagisort={(pagisort) => {
+        const [newData, totalSize] = serverQuery({
+          ...filters,
+          limit: pagisort.pageSize,
+          offset: pagisort.itemOffset,
+          sortBy: pagisort.sort.id,
+          sortDirection: pagisort.sort.sortAscending ? 'asc' : 'desc',
+        })
+        setData(newData)
+        setDataSize(totalSize)
+      }}
+    >
+      <DataGrid.Sort initialSort={{ id: 'date', sortAscending: false }} />
+      <DataGrid.PageSizeSelect initialPageSize={10} pageSizeOptions={[10, 20, 30]} />
+      <DataGrid.Table columns={columnConfig} />
+      // `initialPage={1}` is assumed if no other page info is given.
+      <DataGrid.Pagination itemCount={dataSize} />
     </DataGrid>
   )
 }
+```
+
+### Layout
+
+The `DataGrid` root component renders all its children in a flex container,
+with default settings depending on the screen size:
+
+- On tiny screens, it defaults to a single column with center alignment.
+- On larger screens, it defaults to wrapping rows with center alignment and right justification.
+- On all screen sizes the table takes up full width, so it appears on a row by itself.
+
+You can modify the flex settings using [styled-system](https://styled-system.com/api/) props:
+DataGrid supports margin, width, and flex container props (alignItems, justifyContent, gap, etc.).
+Sub-components don't have to be direct children, so you can also add in other components for greater layout control.
+
+```
+<DataGrid width="90%" justifyContent="space-between">
+  <Flex justifyContent="space-around" flex="0 0 100%">
+    <DataGrid.Sort />
+    <SomeOtherHeaderComponent />
+    <DataGrid.PageSizeSelect />
+  </Flex>
+  <DataGrid.Table columns={columnConfig} />
+  <SomeComponentThatWillAppearInTheLowerLeft />
+  <DataGrid.Pagination />
+</DataGrid>
 ```
 
 ## Properties
@@ -133,20 +196,17 @@ const DataGridContainer = ({ data: INITIAL_DATA }) => {
 ### DataGrid
 <PropsTable of={DataGrid} fileName="DataGrid/DataGrid.tsx" />
 
-### DataGrid.TopSection
-<PropsTable of={DataGrid} staticProp="DataGrid.TopSection" />
-
 ### DataGrid.Table
 <PropsTable of={DataGrid.Table} />
 
-### DataGrid.BottomSection
-<PropsTable of={DataGrid} staticProp="DataGrid.BottomSection" />
+### DataGrid.Sort
+<PropsTable of={DataGrid.Sort} staticProp="DataGridSort" />
 
 ### DataGrid.Pagination
-<PropsTable of={DataGrid} staticProp="Pagination" />
+<PropsTable of={DataGrid.Pagination} staticProp="DataGrid.Pagination" />
 
 ### DataGrid.PrevNext
-<PropsTable of={DataGrid} staticProp="PrevNext" />
+<PropsTable of={DataGrid.PrevNext} staticProp="PrevNext" />
 
 ### DataGrid.Column
-<PropsTable of={DataGrid} staticProp="DataGrid.Column" />
+<PropsTable of={DataGrid.Column} staticProp="DataGrid.Column" />

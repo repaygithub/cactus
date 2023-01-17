@@ -42,12 +42,16 @@ interface TableContextProps {
 }
 
 type TableAttrs = Omit<React.TableHTMLAttributes<HTMLTableElement>, 'width'>
-interface TableProps extends AllWidthProps, MarginProps, TableAttrs {
+
+export interface BaseTableProps extends TableAttrs {
   variant?: ResponsiveValue<TableVariant>
   dividers?: boolean
   sticky?: StickyColAlignment
   rowFocus?: FocusOption
   rowHover?: boolean
+}
+
+interface TableProps extends BaseTableProps, AllWidthProps, MarginProps {
   noScrollWrapper?: boolean
 }
 

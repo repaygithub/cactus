@@ -4,8 +4,8 @@ import React from 'react'
 
 import Pagination, { PaginationProps } from '../Pagination/Pagination'
 import PrevNext, { PrevNextProps } from '../PrevNext/PrevNext'
-import { DataGridContext } from './helpers'
-import { PageState, PageStateAction, pageStateKeys, PaginationOptions } from './types'
+import { useDataGridContext } from './DataGridContext'
+import { PageState, PageStateAction, pageStateKeys, Pagisort } from './types'
 
 interface PageStateProps extends PageState {
   initialPage?: number
@@ -17,7 +17,7 @@ export interface ExtendedPaginationProps
 
 export interface ExtendedPrevNextProps extends PrevNextProps, PageStateProps {}
 
-export const calcPageState = <S extends PageState>(pageState: S): S => {
+export const calcPageState = (pageState: PageState): PageState => {
   // TS appeasement: comparison operators work perfectly fine with undefined.
   const p = pageState as Required<PageState>
   if (p.pageSize > 0) {
@@ -49,15 +49,15 @@ const interleave = (state: PageState, updates: PageState) => {
   return calcPageState(assignWith(combinedState, state, assignIfUndefined))
 }
 
-type PageStateReducer = React.Reducer<PaginationOptions, PageStateAction>
+type PageStateReducer = React.Reducer<PageState, PageStateAction>
 export const pageStateReducer: PageStateReducer = (state, action) => {
   const updates = typeof action === 'function' ? action(state) : action
-  const nextState = interleave(state, updates) as PaginationOptions
+  const nextState = interleave(state, updates)
   return isEqual(state, nextState) ? state : nextState
 }
 
-const usePageState = (props: PageStateProps) => {
-  const { pageState, updatePageState } = React.useContext(DataGridContext)
+const usePageState = (props: PageStateProps & Pagisort) => {
+  const { pageState, updatePageState } = useDataGridContext('DataGrid.PageState')
   const pagePropValues = []
   const controlledProps: PageState = {}
   for (const key of pageStateKeys) {
@@ -65,8 +65,10 @@ const usePageState = (props: PageStateProps) => {
     if (props[key] !== undefined) controlledProps[key] = props[key]
     delete props[key] // Remove from props so the rest can be safely forwarded.
   }
+  // In case they just spread the entire "pagisort" object.
+  delete props.sort
   React.useEffect(() => {
-    updatePageState(controlledProps)
+    updatePageState(controlledProps, false)
   }, pagePropValues) // eslint-disable-line react-hooks/exhaustive-deps
 
   const combinedState = interleave(pageState, controlledProps)

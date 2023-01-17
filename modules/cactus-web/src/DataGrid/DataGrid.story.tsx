@@ -2,17 +2,8 @@ import React, { ReactElement, useContext, useState } from 'react'
 
 import { DataGrid, ScreenSizeContext, SIZES, SplitButton } from '../'
 import { HIDE_CONTROL, SPACE, Story, STRING } from '../helpers/storybook'
-import { FocusOption, StickyColAlignment } from '../Table/Table'
-import { JustifyContent } from './types'
-
-interface Datum {
-  name: string
-  created: string
-  updated: string
-  items: number
-  author: string
-  active: boolean
-}
+import { FocusOption, StickyColAlignment, TableVariant } from '../Table/Table'
+import { Datum, Pagisort, SortInfo } from './types'
 
 const INITIAL_DATA = [
   {
@@ -104,7 +95,7 @@ const INITIAL_DATA = [
     active: true,
   },
 ]
-const justifyOptions: JustifyContent[] = [
+const justifyOptions = [
   'unset',
   'flex-start',
   'flex-end',
@@ -132,14 +123,11 @@ interface Args {
   nextText: string
   disableNext: boolean
   sortableCols: boolean
-  topSection: boolean
   sticky: StickyColAlignment
-  fullWidth: boolean
-  justifyTop: JustifyContent
-  spacingTop: string
+  width: string
+  justifyContent: string
+  gap: string
   pageSizeSelectLabel: string
-  justifyBottom: JustifyContent
-  spacingBottom: string
   paginationLabel: string
   currentPageLabel: string
   prevPageLabel: string
@@ -147,15 +135,18 @@ interface Args {
   lastPageLabel: string
   rowFocus: FocusOption
   rowHover: boolean
+  showSortMenu: boolean | 'card-only'
+  variant: TableVariant
 }
 
 const DataGridContainer: Story<typeof DataGrid, Args> = ({
   align,
   initialData,
   includePaginationAndSort = true,
-  cardBreakpoint,
   variant,
-  fullWidth,
+  width,
+  justifyContent,
+  gap,
   activeColumnWidth,
   actionColumnWidth,
   dividers,
@@ -166,12 +157,7 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
   nextText,
   disableNext,
   sortableCols,
-  topSection,
-  justifyTop,
-  spacingTop,
   pageSizeSelectLabel,
-  justifyBottom,
-  spacingBottom,
   paginationLabel,
   currentPageLabel,
   prevPageLabel,
@@ -181,16 +167,19 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
   sticky,
   rowFocus,
   rowHover,
+  showSortMenu,
 }) => {
   const size = useContext(ScreenSizeContext)
-  const isCardView = cardBreakpoint && size <= SIZES[cardBreakpoint]
+  const isCardView = variant === 'card' || (!variant && size === SIZES.tiny)
 
   const [data, setData] = useState<Datum[]>(initialData)
-  const [paginationOptions, setPaginationOptions] = useState<{
-    currentPage: number
-    pageSize: number
-    itemOffset?: number
-  }>({ currentPage: 1, pageSize: 4 })
+  const [pageSize, setPageSize] = useState<number>(4)
+  const [itemOffset, setItemOffset] = useState<number>(0)
+
+  const onPagisort = (options: Pagisort) => {
+    options.pageSize && setPageSize(options.pageSize)
+    setItemOffset(options.itemOffset || 0)
+  }
 
   const clone = (index: number) =>
     setData((currentData): Datum[] => {
@@ -205,9 +194,7 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
       return newData
     })
 
-  const onSort = (newSortOptions: { id: string; sortAscending: boolean }[]): void => {
-    const sortId = newSortOptions[0].id
-    const sortAscending = newSortOptions[0].sortAscending
+  const onSort = ({ id: sortId, sortAscending }: SortInfo): void => {
     const dataCopy = [...data]
     if (sortId === 'created') {
       if (sortAscending) {
@@ -234,7 +221,6 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
   }
 
   const itemCount = data.length
-  const { itemOffset = 0, pageSize } = paginationOptions
   const firstItem = itemOffset + 1
 
   const paginateData = (): Datum[] => {
@@ -254,27 +240,24 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
 
   return (
     <DataGrid
-      onSort={onSort}
-      onPageChange={setPaginationOptions}
-      fullWidth={fullWidth}
-      cardBreakpoint={cardBreakpoint}
-      variant={variant}
+      onPagisort={onPagisort}
+      width={width}
       margin={margin}
+      gap={gap}
+      justifyContent={justifyContent}
+      data={usableData}
     >
-      {topSection && (
-        <DataGrid.TopSection justifyContent={justifyTop} spacing={spacingTop}>
-          {showResultsCount && !isCardView && <span>{getResultsCountText()}</span>}
-          {includePaginationAndSort && providePageSizeSelect && (
-            <DataGrid.PageSizeSelect
-              pageSize={pageSize}
-              pageSizeOptions={[4, 6, 12]}
-              pageSizeSelectLabel={pageSizeSelectLabel}
-            />
-          )}
-        </DataGrid.TopSection>
+      <DataGrid.Sort onSort={onSort} showSortMenu={showSortMenu} />
+      {showResultsCount && !isCardView && <span>{getResultsCountText()}</span>}
+      {includePaginationAndSort && providePageSizeSelect && (
+        <DataGrid.PageSizeSelect
+          pageSize={pageSize}
+          pageSizeOptions={[4, 6, 12]}
+          pageSizeSelectLabel={pageSizeSelectLabel}
+        />
       )}
       <DataGrid.Table
-        data={usableData}
+        variant={variant}
         dividers={dividers}
         sticky={sticky}
         rowFocus={rowFocus}
@@ -307,34 +290,32 @@ const DataGridContainer: Story<typeof DataGrid, Args> = ({
           )}
         </DataGrid.Column>
       </DataGrid.Table>
-      <DataGrid.BottomSection justifyContent={justifyBottom} spacing={spacingBottom}>
-        {isCardView && showResultsCount && size.toString() !== 'tiny' ? (
-          <span>{getResultsCountText()}</span>
-        ) : null}
-        {includePaginationAndSort ? (
-          providePageCount ? (
-            <DataGrid.Pagination
-              itemCount={itemCount}
-              itemOffset={itemOffset}
-              label={paginationLabel}
-              currentPageLabel={currentPageLabel}
-              prevPageLabel={prevPageLabel}
-              nextPageLabel={nextPageLabel}
-              lastPageLabel={lastPageLabel}
-            />
-          ) : (
-            <DataGrid.PrevNext
-              itemOffset={itemOffset}
-              prevText={prevText}
-              nextText={nextText}
-              disableNext={usableData.length < pageSize || disableNext}
-            />
-          )
-        ) : null}
-        {isCardView && showResultsCount && size.toString() === 'tiny' ? (
-          <span>{getResultsCountText()}</span>
-        ) : null}
-      </DataGrid.BottomSection>
+      {isCardView && showResultsCount && size.toString() !== 'tiny' ? (
+        <span>{getResultsCountText()}</span>
+      ) : null}
+      {includePaginationAndSort ? (
+        providePageCount ? (
+          <DataGrid.Pagination
+            itemCount={itemCount}
+            itemOffset={itemOffset}
+            label={paginationLabel}
+            currentPageLabel={currentPageLabel}
+            prevPageLabel={prevPageLabel}
+            nextPageLabel={nextPageLabel}
+            lastPageLabel={lastPageLabel}
+          />
+        ) : (
+          <DataGrid.PrevNext
+            itemOffset={itemOffset}
+            prevText={prevText}
+            nextText={nextText}
+            disableNext={usableData.length < pageSize || disableNext}
+          />
+        )
+      ) : null}
+      {isCardView && showResultsCount && size.toString() === 'tiny' ? (
+        <span>{getResultsCountText()}</span>
+      ) : null}
     </DataGrid>
   )
 }
@@ -343,18 +324,14 @@ export default {
   title: 'DataGrid',
   component: DataGrid,
   argTypes: {
-    paginationOptions: HIDE_CONTROL,
-    sortOptions: HIDE_CONTROL,
-    onPageChange: HIDE_CONTROL,
-    onSort: HIDE_CONTROL,
-    cardBreakpoint: { options: ['tiny', 'small', 'medium', 'large'] },
+    onPagisort: HIDE_CONTROL,
     variant: { options: ['table', 'card', 'mini'] },
     activeColumnWidth: { name: 'active column width', ...STRING },
     actionColumnWidth: { name: 'action column width', ...STRING },
     initialData: HIDE_CONTROL,
+    data: HIDE_CONTROL,
   },
   args: {
-    cardBreakpoint: 'tiny',
     dividers: false,
   },
 } as const
@@ -370,19 +347,10 @@ BasicUsage.argTypes = {
   disableNext: { name: 'PrevNext: disableNext', control: 'boolean' },
   sortableCols: { name: 'include sortable columns' },
   sticky: { name: 'Sticky column', options: ['none', 'right'] },
-  fullWidth: { name: 'Full Width' },
-  topSection: { name: 'show top section' },
-  justifyTop: {
-    name: 'top section: justifyContent',
-    options: justifyOptions,
-  },
-  spacingTop: { name: 'top section: spacing', ...SPACE },
+  width: STRING,
+  justifyContent: { name: 'flex justify', options: justifyOptions },
+  gap: { name: 'flex gap', ...SPACE },
   pageSizeSelectLabel: { name: 'rows per page label', ...STRING },
-  justifyBottom: {
-    name: 'bottom section: justifyContent',
-    options: justifyOptions,
-  },
-  spacingBottom: { name: 'bottom section: spacing', ...SPACE },
   paginationLabel: { name: 'Pagination: label', ...STRING },
   currentPageLabel: { name: 'Pagination: currentPageLabel', ...STRING },
   prevPageLabel: { name: 'Pagination: prevPageLabel', ...STRING },
@@ -390,6 +358,10 @@ BasicUsage.argTypes = {
   lastPageLabel: { name: 'Pagination: lastPageLabel', ...STRING },
   margin: SPACE,
   rowFocus: { options: [true, false, 'mouse-only'] },
+  showSortMenu: {
+    options: [true, false, 'card-only'],
+    mapping: { true: true, false: false },
+  },
 }
 BasicUsage.args = {
   initialData: INITIAL_DATA,
@@ -399,13 +371,9 @@ BasicUsage.args = {
   prevText: 'Prev',
   nextText: 'Next',
   sortableCols: true,
-  topSection: true,
-  justifyTop: 'space-between',
-  spacingTop: '4',
-  justifyBottom: 'flex-end',
-  spacingBottom: '4',
+  justifyContent: 'space-between',
+  gap: '4',
   sticky: 'none',
-  fullWidth: true,
   rowFocus: true,
   rowHover: true,
 }

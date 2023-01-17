@@ -1,11 +1,11 @@
 import userEvent from '@testing-library/user-event'
 import React, { useContext, useState } from 'react'
-import { MarginProps } from 'styled-system'
 
 import renderWithTheme from '../../tests/helpers/renderWithTheme'
 import { ScreenSizeContext, SIZES } from '../ScreenSizeProvider/ScreenSizeProvider'
 import SplitButton from '../SplitButton/SplitButton'
 import DataGrid from './DataGrid'
+import { Datum, Pagisort, SortInfo } from './types'
 
 const TEST_DATA = [
   {
@@ -69,176 +69,109 @@ const BoolComponent = ({ value }: { value: boolean }): React.ReactElement => {
   return <div>{value ? 'YES' : 'NO'}</div>
 }
 
-interface Datum {
-  name: string
-  created: string
-  active: boolean
-}
-
-interface ContainerProps extends MarginProps {
+interface ContainerProps extends Partial<React.ComponentProps<typeof DataGrid>> {
   providePageSizeOptions?: boolean
   providePageCount?: boolean
   showResultsCount?: boolean
-  fullWidth?: boolean
   sticky?: 'none' | 'right'
 }
+
+const initialSort = { id: 'created', sortAscending: false }
 
 const DataGridContainer = (props: ContainerProps): React.ReactElement => {
   const {
     providePageSizeOptions = true,
     providePageCount = true,
     showResultsCount = true,
-    fullWidth,
     sticky,
     ...rest
   } = props
   const size = useContext(ScreenSizeContext)
   const isCardView = size <= SIZES['tiny']
-  const [data, setData] = useState<{ [key: string]: any }[]>(TEST_DATA)
-  const [sortOptions, setSortOptions] = useState<{ id: string; sortAscending: boolean }[]>([
-    { id: 'created', sortAscending: false },
-  ])
-  const [paginationOptions, setPaginationOptions] = useState<{
-    currentPage: number
-    pageSize: number
-    pageCount?: number
-    pageSizeOptions?: number[]
-  }>({ currentPage: 1, pageCount: 3, pageSize: 4, pageSizeOptions: [4, 6, 12] })
+  const [data, setData] = useState<Datum[]>(TEST_DATA)
+  const [itemOffset, setOffset] = useState<number>(0)
+  const [pageSize, setPageSize] = useState<number>(4)
 
-  const clone = (rowData: { [key: string]: any }): void => {
-    setData((currentData): { [key: string]: any }[] => [
-      ...currentData,
-      { ...rowData, name: `${rowData.name} Copy` },
-    ])
+  const onPagisort = (options: Pagisort) => {
+    setOffset(options.itemOffset || 0)
+    if (options.pageSize) setPageSize(options.pageSize)
   }
 
-  const deleteRow = (rowData: { [key: string]: any }): void => {
-    const deleteIndex = data.findIndex((datum): boolean => datum.name === rowData.name)
-    setData((currentData): { [key: string]: any }[] => {
+  const clone = (rowData: Datum): void => {
+    setData((currentData) => [...currentData, { ...rowData, name: `${rowData.name} Copy` }])
+  }
+
+  const deleteRow = (rowIndex: number): void => {
+    setData((currentData) => {
       const newData = [...currentData]
-      newData.splice(deleteIndex, 1)
+      newData.splice(rowIndex, 1)
       return newData
     })
   }
 
-  const onSort = (newSortOptions: { id: string; sortAscending: boolean }[]): void => {
-    const sortId = newSortOptions[0].id
-    const sortAscending = newSortOptions[0].sortAscending
-    const dataCopy = JSON.parse(JSON.stringify(data))
-    if (sortId === 'created') {
-      if (sortAscending) {
-        dataCopy.sort((a: Datum, b: Datum): number => {
-          return (new Date(a.created) as any) - (new Date(b.created) as any)
-        })
-      } else {
-        dataCopy.sort((a: Datum, b: Datum): number => {
-          return (new Date(b.created) as any) - (new Date(a.created) as any)
-        })
-      }
-    } else if (sortId === 'active') {
-      if (sortAscending) {
-        dataCopy.sort((a: Datum, b: Datum): number => {
-          return a.active === b.active ? 0 : a.active ? 1 : -1
-        })
-      } else {
-        dataCopy.sort((a: Datum, b: Datum): number => {
-          return a.active === b.active ? 0 : a.active ? -1 : 1
-        })
-      }
+  const onSort = (sort: SortInfo): void => {
+    const dataCopy = [...data]
+    if (sort.id === 'created') {
+      dataCopy.sort((a: Datum, b: Datum): number => {
+        return Date.parse(a.created) - Date.parse(b.created)
+      })
+    } else if (sort.id === 'active') {
+      dataCopy.sort((a: Datum, b: Datum): number => {
+        return a.active === b.active ? 0 : a.active ? 1 : -1
+      })
+    }
+    if (!sort.sortAscending) {
+      dataCopy.reverse()
     }
     setData(dataCopy)
-    setSortOptions(newSortOptions)
   }
 
-  const paginateData = (): { [key: string]: any }[] => {
-    const index1 = (paginationOptions.currentPage - 1) * paginationOptions.pageSize
-    const index2 = index1 + paginationOptions.pageSize
-    return data.slice(index1, index2)
-  }
-
-  const onPageChange = (newPaginationOptions: {
-    currentPage: number
-    pageSize: number
-    pageCount?: number
-  }): void => {
-    if (newPaginationOptions.pageSize !== paginationOptions.pageSize) {
-      newPaginationOptions.pageCount = Math.ceil(data.length / newPaginationOptions.pageSize)
-    }
-    setPaginationOptions(newPaginationOptions)
-  }
+  const paginatedData = data.slice(itemOffset, itemOffset + pageSize)
 
   const getResultsCountText = (): string => {
-    if (paginationOptions.pageCount) {
-      return `Showing ${(paginationOptions.currentPage - 1) * paginationOptions.pageSize + 1} to ${
-        paginationOptions.currentPage * paginationOptions.pageSize
-      } of ${data.length}`
+    if (providePageCount) {
+      return `Showing ${itemOffset + 1} to ${itemOffset + pageSize} of ${data.length}`
     } else {
-      return `Showing ${(paginationOptions.currentPage - 1) * paginationOptions.pageSize + 1} to ${
-        paginationOptions.currentPage * paginationOptions.pageSize
-      }`
+      return `Showing ${itemOffset + 1} to ${itemOffset + pageSize}`
     }
-  }
-
-  const getPaginationOptions = (): {
-    currentPage: number
-    pageSize: number
-    pageCount?: number
-    pageSizeOptions?: number[]
-  } => {
-    const paginationOptsCopy = JSON.parse(JSON.stringify(paginationOptions))
-    if (!providePageSizeOptions) {
-      paginationOptsCopy.pageSizeOptions = undefined
-    }
-
-    if (!providePageCount) {
-      paginationOptsCopy.pageCount = undefined
-    }
-
-    return paginationOptsCopy
   }
 
   return (
-    <DataGrid
-      sortOptions={sortOptions}
-      onSort={onSort}
-      paginationOptions={getPaginationOptions()}
-      onPageChange={onPageChange}
-      fullWidth={fullWidth}
-      {...rest}
-    >
-      <DataGrid.TopSection>
-        {showResultsCount && !isCardView && <span>{getResultsCountText()}</span>}
-        {providePageSizeOptions && <DataGrid.PageSizeSelect pageSizeOptions={[4, 6, 12]} />}
-      </DataGrid.TopSection>
-      <DataGrid.Table data={paginateData()} sticky={sticky}>
+    <DataGrid onPagisort={onPagisort} data={paginatedData} {...rest}>
+      {showResultsCount && !isCardView && <span>{getResultsCountText()}</span>}
+      <DataGrid.Sort onSort={onSort} initialSort={initialSort} />
+      {providePageSizeOptions && (
+        <DataGrid.PageSizeSelect pageSize={pageSize} pageSizeOptions={[4, 6, 12]} />
+      )}
+      <DataGrid.Table sticky={sticky}>
         <DataGrid.DataColumn id="name" title="Name" />
         <DataGrid.DataColumn id="created" title="Created" sortable={true} />
         <DataGrid.DataColumn id="active" title="Active" as={BoolComponent} sortable={true} />
         <DataGrid.Column data-testid="last-col">
-          {(rowData): React.ReactElement => (
+          {(rowData, { rowIndex }): React.ReactElement => (
             <SplitButton>
               <SplitButton.Action main>Edit</SplitButton.Action>
               <SplitButton.Action onClick={() => clone(rowData)}>Clone</SplitButton.Action>
-              <SplitButton.Action onClick={() => deleteRow(rowData)}>Delete</SplitButton.Action>
+              <SplitButton.Action onClick={() => deleteRow(rowIndex)}>Delete</SplitButton.Action>
             </SplitButton>
           )}
         </DataGrid.Column>
       </DataGrid.Table>
-      <DataGrid.BottomSection justifyContent="flex-end">
-        {isCardView && showResultsCount && size.toString() !== 'tiny' ? (
-          <span>{getResultsCountText()}</span>
-        ) : null}
-        {providePageCount ? (
-          <DataGrid.Pagination />
-        ) : (
-          <DataGrid.PrevNext
-            disableNext={paginateData().length < getPaginationOptions().pageSize}
-          />
-        )}
-        {isCardView && showResultsCount && size.toString() === 'tiny' ? (
-          <span>{getResultsCountText()}</span>
-        ) : null}
-      </DataGrid.BottomSection>
+      {isCardView && showResultsCount && size.toString() !== 'tiny' ? (
+        <span>{getResultsCountText()}</span>
+      ) : null}
+      {providePageCount ? (
+        <DataGrid.Pagination itemOffset={itemOffset} itemCount={data.length} pageSize={pageSize} />
+      ) : (
+        <DataGrid.PrevNext
+          itemOffset={itemOffset}
+          pageSize={pageSize}
+          disableNext={paginatedData.length < pageSize}
+        />
+      )}
+      {isCardView && showResultsCount && size.toString() === 'tiny' ? (
+        <span>{getResultsCountText()}</span>
+      ) : null}
     </DataGrid>
   )
 }
@@ -295,13 +228,27 @@ describe('component: DataGrid', () => {
     expect(getAllByText('Edit')[0]).toBeInTheDocument()
   })
 
-  test('Should support margin props', () => {
+  test('Should support style props', () => {
     const { getByTestId } = renderWithTheme(
-      <DataGridContainer data-testid="data-grid" marginTop={2} mb="100px" mx={7} />
+      <DataGridContainer
+        data-testid="data-grid"
+        marginTop={2}
+        mb="100px"
+        mx={7}
+        width="500px"
+        justifyContent="space-between"
+      />
     )
 
     const dataGrid = getByTestId('data-grid')
-    expect(dataGrid).toHaveStyle('margin-top: 4px')
+    expect(dataGrid).toHaveStyle({
+      marginTop: '4px',
+      marginBottom: '100px',
+      marginLeft: '40px',
+      marginRight: '40px',
+      width: '500px',
+      justifyContent: 'space-between',
+    })
     expect(dataGrid).toHaveStyle('margin-bottom: 100px')
     expect(dataGrid).toHaveStyle('margin-left: 40px')
     expect(dataGrid).toHaveStyle('margin-right: 40px')
@@ -320,24 +267,25 @@ describe('component: DataGrid', () => {
 
   test('should allow uncontrolled pagisort', () => {
     const onSort = jest.fn()
-    const onPageRoot = jest.fn()
-    const onPageLeaf = jest.fn()
+    const onPageChange = jest.fn()
     const onPagisort = jest.fn()
-    const data: Record<string, any>[] = Array(2).fill({ hi: 'there', hello: '!' })
+    const data: Datum[] = Array(2).fill({ hi: 'there', hello: '!' })
     const { getByLabelText, getByRole } = renderWithTheme(
-      <DataGrid onSort={onSort} onPageChange={onPageRoot} onPagisort={onPagisort}>
+      <DataGrid data={data} onPagisort={onPagisort}>
+        <DataGrid.Sort onSort={onSort} />
         <DataGrid.PageSizeSelect initialPageSize={2} pageSizeOptions={[2, 5]} />
-        <DataGrid.Table data={data}>
-          <DataGrid.Column id="hi" title="Hi" sortable />
+        <DataGrid.Table>
+          <DataGrid.Column id="hi" title="Hi" defaultSort="asc" />
           <DataGrid.Column id="hello" title="Hello" />
         </DataGrid.Table>
-        <DataGrid.Pagination itemCount={3} onPageChange={onPageLeaf} />
+        <DataGrid.Pagination itemCount={3} onPageChange={onPageChange} />
       </DataGrid>
     )
-    // Sort descending
+    // Sort ascending
     userEvent.click(getByRole('button', { name: 'Hi' }))
     expect(onSort).toHaveBeenCalledTimes(1)
-    expect(onSort).toHaveBeenLastCalledWith([{ id: 'hi', sortAscending: false }])
+    expect(onSort).toHaveBeenLastCalledWith({ id: 'hi', sortAscending: true })
+    expect(onPageChange).toHaveBeenCalledTimes(0)
     expect(onPagisort).toHaveBeenCalledTimes(1)
     expect(onPagisort).toHaveBeenLastCalledWith({
       currentPage: 1,
@@ -345,13 +293,13 @@ describe('component: DataGrid', () => {
       itemCount: 3,
       itemOffset: 0,
       pageCount: 2,
-      sort: [{ id: 'hi', sortAscending: false }],
+      sort: { id: 'hi', sortAscending: true },
     })
-    expect(onPageRoot).toHaveBeenCalledTimes(0)
-    expect(onPageLeaf).toHaveBeenCalledTimes(0)
     // Page change
     userEvent.click(getByLabelText('Go to page 2'))
     expect(onSort).toHaveBeenCalledTimes(1)
+    expect(onPageChange).toHaveBeenCalledTimes(1)
+    expect(onPageChange).toHaveBeenLastCalledWith(2)
     expect(onPagisort).toHaveBeenCalledTimes(2)
     expect(onPagisort).toHaveBeenLastCalledWith({
       currentPage: 2,
@@ -359,22 +307,13 @@ describe('component: DataGrid', () => {
       itemCount: 3,
       itemOffset: 2,
       pageCount: 2,
-      sort: [{ id: 'hi', sortAscending: false }],
+      sort: { id: 'hi', sortAscending: true },
     })
-    expect(onPageRoot).toHaveBeenCalledTimes(1)
-    expect(onPageRoot).toHaveBeenLastCalledWith({
-      currentPage: 2,
-      pageSize: 2,
-      itemCount: 3,
-      itemOffset: 2,
-      pageCount: 2,
-    })
-    expect(onPageLeaf).toHaveBeenCalledTimes(1)
-    expect(onPageLeaf).toHaveBeenLastCalledWith(2)
-    // Sort ascending
+    // Sort descending
     userEvent.click(getByRole('button', { name: 'Hi' }))
     expect(onSort).toHaveBeenCalledTimes(2)
-    expect(onSort).toHaveBeenLastCalledWith([{ id: 'hi', sortAscending: true }])
+    expect(onSort).toHaveBeenLastCalledWith({ id: 'hi', sortAscending: false })
+    expect(onPageChange).toHaveBeenCalledTimes(1)
     expect(onPagisort).toHaveBeenCalledTimes(3)
     expect(onPagisort).toHaveBeenLastCalledWith({
       currentPage: 2,
@@ -382,13 +321,12 @@ describe('component: DataGrid', () => {
       itemCount: 3,
       itemOffset: 2,
       pageCount: 2,
-      sort: [{ id: 'hi', sortAscending: true }],
+      sort: { id: 'hi', sortAscending: false },
     })
-    expect(onPageRoot).toHaveBeenCalledTimes(1)
-    expect(onPageLeaf).toHaveBeenCalledTimes(1)
     // Page size change
     userEvent.click(getByLabelText('View 5 rows per page'))
     expect(onSort).toHaveBeenCalledTimes(2)
+    expect(onPageChange).toHaveBeenCalledTimes(1)
     expect(onPagisort).toHaveBeenCalledTimes(4)
     // Note that itemOffset & currentPage changed, as they were no longer valid.
     expect(onPagisort).toHaveBeenLastCalledWith({
@@ -397,28 +335,25 @@ describe('component: DataGrid', () => {
       itemCount: 3,
       itemOffset: 0,
       pageCount: 1,
-      sort: [{ id: 'hi', sortAscending: true }],
+      sort: { id: 'hi', sortAscending: false },
     })
-    expect(onPageRoot).toHaveBeenCalledTimes(2)
-    expect(onPageRoot).toHaveBeenLastCalledWith({
-      currentPage: 1,
-      pageSize: 5,
-      itemCount: 3,
-      itemOffset: 0,
-      pageCount: 1,
-    })
-    expect(onPageLeaf).toHaveBeenCalledTimes(1)
   })
 
   test('should allow controlled pagisort at root', () => {
-    const data: Record<string, any>[] = Array(2).fill({ hi: 'there', hello: '!' })
+    const data: Datum[] = Array(2).fill({ hi: 'there', hello: '!' })
     const { container, getByLabelText, rerender } = renderWithTheme(
       <DataGrid
-        sortOptions={[{ id: 'hi', sortAscending: true }]}
-        paginationOptions={{ currentPage: 2, pageSize: 2, pageCount: 3 }}
+        data={data}
+        pagisort={{
+          currentPage: 2,
+          pageCount: 3,
+          pageSize: 2,
+          sort: { id: 'hi', sortAscending: true },
+        }}
       >
+        <DataGrid.Sort />
         <DataGrid.PageSizeSelect pageSizeOptions={[2, 5]} />
-        <DataGrid.Table data={data}>
+        <DataGrid.Table>
           <DataGrid.Column id="hi" title="Hi" sortable />
           <DataGrid.Column id="hello" title="Hello" />
         </DataGrid.Table>
@@ -431,14 +366,19 @@ describe('component: DataGrid', () => {
     expect(getByLabelText('View 2 rows per page')).toHaveAttribute('aria-selected', 'true')
     expect(getByLabelText('Current page, 2')).toHaveAttribute('aria-current', 'page')
 
-    // For now `currentPage` is required, should be removed later...
     rerender(
       <DataGrid
-        sortOptions={[{ id: 'hi', sortAscending: false }]}
-        paginationOptions={{ pageSize: 5, itemCount: 12, itemOffset: 10, currentPage: NaN }}
+        data={data}
+        pagisort={{
+          itemCount: 12,
+          itemOffset: 10,
+          pageSize: 5,
+          sort: { id: 'hi', sortAscending: false },
+        }}
       >
+        <DataGrid.Sort />
         <DataGrid.PageSizeSelect pageSizeOptions={[2, 5]} />
-        <DataGrid.Table data={data}>
+        <DataGrid.Table>
           <DataGrid.Column id="hi" title="Hi" sortable />
           <DataGrid.Column id="hello" title="Hello" />
         </DataGrid.Table>
@@ -451,31 +391,84 @@ describe('component: DataGrid', () => {
   })
 
   test('should allow controlled pagisort at leaf', () => {
-    const data: Record<string, any>[] = Array(2).fill({ hi: 'there', hello: '!' })
-    const { getByLabelText, rerender } = renderWithTheme(
-      <DataGrid>
+    const data: Datum[] = Array(2).fill({ hi: 'there', hello: '!' })
+    const { container, getByLabelText, rerender } = renderWithTheme(
+      <DataGrid data={data}>
+        <DataGrid.Sort sort={{ id: 'hi', sortAscending: true }} />
         <DataGrid.PageSizeSelect pageSize={2} pageSizeOptions={[2, 5]} />
-        <DataGrid.Table data={data}>
+        <DataGrid.Table>
           <DataGrid.Column id="hi" title="Hi" sortable />
           <DataGrid.Column id="hello" title="Hello" />
         </DataGrid.Table>
         <DataGrid.Pagination currentPage={2} pageCount={3} />
       </DataGrid>
     )
+    const sortHeader = container.querySelector('[aria-sort]')
+    expect(sortHeader).toHaveTextContent('Hi')
+    expect(sortHeader).toHaveAttribute('aria-sort', 'ascending')
     expect(getByLabelText('View 2 rows per page')).toHaveAttribute('aria-selected', 'true')
     expect(getByLabelText('Current page, 2')).toHaveAttribute('aria-current', 'page')
 
     rerender(
-      <DataGrid>
+      <DataGrid data={data}>
+        <DataGrid.Sort sort={{ id: 'hi', sortAscending: false }} />
         <DataGrid.PageSizeSelect pageSize={5} pageSizeOptions={[2, 5]} />
-        <DataGrid.Table data={data}>
+        <DataGrid.Table>
           <DataGrid.Column id="hi" title="Hi" sortable />
           <DataGrid.Column id="hello" title="Hello" />
         </DataGrid.Table>
         <DataGrid.Pagination itemCount={12} itemOffset={10} />
       </DataGrid>
     )
+    expect(sortHeader).toHaveAttribute('aria-sort', 'descending')
     expect(getByLabelText('View 5 rows per page')).toHaveAttribute('aria-selected', 'true')
     expect(getByLabelText('Current page, 3')).toHaveAttribute('aria-current', 'page')
+  })
+
+  // Common functionality tested above, these are tests that ONLY apply to this component.
+  describe('component: DataGrid.Sort', () => {
+    const columns = [{ id: 'col', title: 'Col', defaultSort: 'desc' as const }]
+
+    test('should support style props', () => {
+      const { getByTestId } = renderWithTheme(
+        <DataGrid data={TEST_DATA}>
+          <DataGrid.Sort
+            data-testid="sort"
+            showSortMenu
+            margin={3}
+            alignItems="flex-start"
+            alignSelf="flex-end"
+          />
+          <DataGrid.Table columns={columns} />
+        </DataGrid>
+      )
+      expect(getByTestId('sort')).toHaveStyle({
+        margin: '8px',
+        alignItems: 'flex-start',
+        alignSelf: 'flex-end',
+      })
+    })
+
+    test('should display menu only on card variant', () => {
+      const { getByRole, rerender } = renderWithTheme(
+        <DataGrid data={TEST_DATA}>
+          <DataGrid.Sort />
+          <DataGrid.Table variant="card" columns={columns} />
+        </DataGrid>
+      )
+      const sortColumn = getByRole('button', { name: 'Sort by' })
+      const sortDirection = getByRole('button', { name: 'Order' })
+      expect(sortColumn).toBeInTheDocument()
+      expect(sortDirection).toBeInTheDocument()
+
+      rerender(
+        <DataGrid data={TEST_DATA}>
+          <DataGrid.Sort />
+          <DataGrid.Table variant="table" columns={columns} />
+        </DataGrid>
+      )
+      expect(sortColumn).not.toBeInTheDocument()
+      expect(sortDirection).not.toBeInTheDocument()
+    })
   })
 })
