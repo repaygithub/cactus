@@ -16,7 +16,6 @@ export interface UIConfigData {
 }
 
 export type RulesData = {
-  key: string
-  conditions: { key: string; variable: string; operator: string; value: string }[]
-  actions: { key: string; action: string }[]
+  conditions: { variable: string; operator: string; value: string }[]
+  actions: { action: string }[]
 }[]

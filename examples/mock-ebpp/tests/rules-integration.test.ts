@@ -36,11 +36,8 @@ test('fill out and submit the form sequentially', async (t: TestController): Pro
   const apiData: RulesData = await getApiData()
   await t.expect(apiData).eql([
     {
-      key: 'rule-0',
-      conditions: [
-        { key: 'condition-0', variable: 'A variable', operator: 'Greater than', value: '-1' },
-      ],
-      actions: [{ key: 'action-0', action: 'Do the thing' }],
+      conditions: [{ variable: 'A variable', operator: 'Greater than', value: '-1' }],
+      actions: [{ action: 'Do the thing' }],
     },
   ])
 })
@@ -71,14 +68,8 @@ test('fill out and submit the form with deleting and reordering', async (t: Test
   const apiData: RulesData = await getApiData()
   await t.expect(apiData).eql([
     {
-      key: 'rule-0',
-      conditions: [
-        { key: 'condition-1', variable: 'Another variable', operator: 'Less than', value: '0' },
-      ],
-      actions: [
-        { key: 'action-1', action: 'Do another thing' },
-        { key: 'action-0', action: 'Do the thing' },
-      ],
+      conditions: [{ variable: 'Another variable', operator: 'Less than', value: '0' }],
+      actions: [{ action: 'Do another thing' }, { action: 'Do the thing' }],
     },
   ])
 })
