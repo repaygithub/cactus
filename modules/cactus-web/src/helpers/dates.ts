@@ -527,7 +527,12 @@ export class PartialDate implements FormatTokenMap {
 
   public setMonth(value: number): void {
     this.month = value % 12
-    this._month = String((value % 12) + 1)
+    const displayValue = (value % 12) + 1
+    if (this._localeFormat.includes('MM')) {
+      this._month = this.pad(displayValue)
+    } else {
+      this._month = String(displayValue)
+    }
   }
 
   public getDate(): number {
@@ -536,7 +541,11 @@ export class PartialDate implements FormatTokenMap {
 
   public setDate(value: number): void {
     this.day = value % 32
-    this._day = String(value % 32)
+    if (this._localeFormat.includes('dd')) {
+      this._day = this.pad(value % 32)
+    } else {
+      this._day = String(value % 32)
+    }
   }
 
   public getHours(): number {
