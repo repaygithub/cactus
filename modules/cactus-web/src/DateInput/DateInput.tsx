@@ -919,9 +919,9 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const hasTime = type === 'datetime' || type === 'time'
     const hasDate = type === 'date' || type === 'datetime'
     const phrases = this.getPhrases()
-
     const timeId = id + '-time'
     const selectedValue = value.isValidDate() ? value.toDate() : null
+
     return (
       <div onFocus={this.handleFocus} onBlur={this.handleBlur}>
         <Flex alignItems="flex-start" justifyContent="center" flexDirection="column">
