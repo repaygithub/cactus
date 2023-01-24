@@ -100,7 +100,24 @@ ControlledWithString.parameters = {
   cactus: { overrides: { alignItems: 'start' } },
 }
 
-export const TypeTime: DateStory = (args) => <DateInput {...args} name={args.name || args.type} />
+export const TypeTime: DateStory = (args) => {
+  const [invalidDate, setInvalidDate] = useState<boolean>(false)
+  return (
+    <Flex flexDirection="column" alignItems="flex-start">
+      <DateInput
+        {...args}
+        name={args.name || args.type}
+        onInvalidDate={args.onInvalidDate.wrap(setInvalidDate)}
+      />
+
+      {invalidDate && (
+        <StatusMessage status="error" style={{ marginTop: '4px' }}>
+          The date you've selected is invalid. Please pick another date.
+        </StatusMessage>
+      )}
+    </Flex>
+  )
+}
 TypeTime.args = { type: 'time' }
 TypeTime.storyName = 'type="time"'
 

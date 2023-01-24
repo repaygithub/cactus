@@ -21,6 +21,7 @@ import {
   FormatTokenType,
   getDefaultFormat,
   getLastDayOfMonth,
+  getLocaleFormat,
   isToken,
   parseFormat,
   PartialDate,
@@ -148,14 +149,48 @@ function arrowValueChange(
       break
     }
     case 'h':
-    case 'hh':
+    case 'hh': {
+      let asNum = Number(value.get_Hours())
+      asNum += direction
+
+      // Switches from AM to PM while using arrows
+      if (asNum === 12 && direction > 0) {
+        value.aa = value.aa === 'AM' ? 'PM' : 'AM'
+      } else if (asNum === 11 && direction < 0) {
+        value.aa = value.aa === 'AM' ? 'PM' : 'AM'
+      }
+
+      if (asNum <= 12 && asNum >= 1) {
+        value.setHours(asNum)
+      } else if (direction < 0) {
+        value.setHours(12)
+      } else {
+        value.setHours(1)
+      }
+      break
+    }
     case 'H':
     case 'HH': {
-      value.setHours(((value.getHours() % 24) + direction + 24) % 24)
+      const newValue = value.getHours() + direction
+      if (newValue <= 23 && newValue >= 0) {
+        value.setHours(newValue)
+      } else if (direction < 0) {
+        value.setHours(23)
+      } else {
+        value.setHours(0)
+      }
       break
     }
     case 'mm': {
-      value.setMinutes(((value.getMinutes() % 60) + direction + 60) % 60)
+      const newValue = value.getMinutes() + direction
+      const outOfRange = newValue > 59 || newValue < 0
+      if (newValue <= 59 && newValue >= 0) {
+        value.setMinutes(newValue)
+      } else if (direction < 0 && outOfRange) {
+        value.setMinutes(59)
+      } else {
+        value.setMinutes(0)
+      }
       break
     }
     case 'aa': {
@@ -544,7 +579,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const dateFilled = value.MM && value.dd && value.YYYY
     const timeFilled = value.hh && value.mm && value.aa
     if (
-      (type !== 'datetime' && dateFilled && !value.isValid() && !invalidDate) ||
+      (type === 'time' && timeFilled && !value.isValid() && !invalidDate) ||
+      (type === 'date' && dateFilled && !value.isValid() && !invalidDate) ||
       (type === 'datetime' && dateFilled && timeFilled && !value.isValid() && !invalidDate)
     ) {
       this.setState({ invalidDate: true })
@@ -572,6 +608,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
         this.handleUpdate(event, token, eventKey)
       } else if (eventKey === 'Delete' || eventKey === 'Backspace') {
         this.handleUpdate(event, token, 'Delete')
+      } else if (eventKey === 'Tab') {
+        this.handleUpdate(event, token, 'Tab')
       } else if (eventKey.length === 1) {
         this.handleUpdate(event, token, 'Key', eventKey)
       }
@@ -597,7 +635,11 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
   private handleBlur = (event: React.FocusEvent<HTMLDivElement>): void => {
     // when blurring off the field
+    const token = event.target.dataset?.token as FormatTokenType
+    token && this.handleFormat(event, token)
+
     this._lastInputKeyed = ''
+
     if (isFocusOut(event)) {
       this._isFocused = false
       const { onBlur } = this.props
@@ -723,23 +765,37 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
 
   private handleTimeChange = (event: React.ChangeEvent<Target>): void => {
     const time = event.target.value
+    const formatTime = getLocaleFormat('en-US', { type: 'time' })
     if (typeof time === 'string' && time !== '') {
       event.persist()
       this.setState(({ value }): Pick<DateInputState, 'value'> => {
         const update = value.clone()
-        update.parse(time, 'HH:mm')
+        update.parse(time, formatTime)
         this.raiseChange(event, update)
         return { value: update }
       })
     }
   }
 
+  private handleFormat = (event: React.SyntheticEvent, token: FormatTokenType): void => {
+    this.setState(({ value }) => {
+      const update = PartialDate.from(value)
+      const current = update[token]?.toString()
+      if (current === '') {
+        return { value: update }
+      }
+      if (token === 'YYYY') {
+        update[token] = ('000' + current).slice(-4)
+      } else update[token] = ('00' + current).slice(-2)
+      return { value: update }
+    })
+  }
   /** helpers */
 
   private handleUpdate = (
     event: React.SyntheticEvent,
     token: FormatTokenType,
-    type: 'ArrowUp' | 'ArrowDown' | 'Delete' | 'Key',
+    type: 'ArrowUp' | 'ArrowDown' | 'Delete' | 'Tab' | 'Key',
     change?: string | undefined
   ): void => {
     event.persist()
@@ -755,6 +811,15 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
           update[token] = undefined
           break
         }
+        case 'Tab': {
+          const current = update[token]?.toString()
+          if (current === '') {
+            break
+          } else if (token === 'YYYY') {
+            update[token] = ('000' + current).slice(-4)
+          } else update[token] = ('00' + current).slice(-2)
+          break
+        }
         case 'Key': {
           if (change === undefined) {
             update[token] = change
@@ -762,39 +827,12 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             update[token] = change
           } else if (/^[0-9]+$/.test(change)) {
             let current = update[token]
-            const asNum = Number(change)
             if (current === '' || current === undefined || this._lastInputKeyed !== token) {
-              current = asNum
+              current = change
+            } else if (token === 'YYYY') {
+              current = (current + change).slice(-4)
             } else {
-              current = Number(current)
-              const together = current * 10 + asNum
-              if (token === 'YYYY') {
-                // years
-                if (together < 10000) {
-                  current = together
-                } else {
-                  current = asNum
-                }
-              } else if (/M{1,2}/.test(token)) {
-                current = together < 13 ? together : asNum
-              } else if (/d{1,2}/.test(token)) {
-                current = together % 32 === together ? together : asNum
-              } else if (/h{1,2}/i.test(token)) {
-                // hours
-                const military = token === 'HH' || token === 'H'
-                const max = military ? 23 : 12
-                current = together <= max ? together : asNum
-              } else if (/m{1,2}/.test(token)) {
-                // minutes
-                const mod = (current % 10) * 10 + asNum
-                if (together <= 59) {
-                  current = together
-                } else if (mod <= 59) {
-                  current = mod
-                } else {
-                  current = asNum
-                }
-              }
+              current = (current + change).slice(-2)
             }
             this._lastInputKeyed = token
             const asString = current.toString()
@@ -840,15 +878,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     }, callback)
   }
 
-  private _isOutside(el?: null | EventTarget): boolean {
-    const _input = this._inputWrapper.current
-    const _portal = this._portal.current
-    return !(
-      el instanceof Node &&
-      (_input?.contains(el) || (this.state.isOpen && _portal?.contains(el)))
-    )
-  }
-
   private static PHRASES: DateInputPhrasesType = {
     inputKeyboardDirections: '',
     yearLabel: 'year',
@@ -884,13 +913,15 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       initialFocus,
     } = this.props
     const formatArray = parseFormat(value.getLocaleFormat())
+    const formatTime = getLocaleFormat('en-US', { type: 'time' })
+
     let isFirstInput = true
     const hasTime = type === 'datetime' || type === 'time'
     const hasDate = type === 'date' || type === 'datetime'
     const phrases = this.getPhrases()
-
     const timeId = id + '-time'
     const selectedValue = value.isValidDate() ? value.toDate() : null
+
     return (
       <div onFocus={this.handleFocus} onBlur={this.handleBlur}>
         <Flex alignItems="flex-start" justifyContent="center" flexDirection="column">
@@ -985,8 +1016,8 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
                     id={timeId}
                     name={timeId}
                     type="time"
-                    format="HH:mm"
-                    value={value.format('HH:mm')}
+                    format={formatTime}
+                    value={value.format(formatTime)}
                     onChange={this.handleTimeChange}
                     phrases={phrases}
                   />

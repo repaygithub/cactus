@@ -593,7 +593,7 @@ describe('component: DateInput', () => {
       expect((): HTMLElement => getByLabelText('year')).toThrow()
       expect((): HTMLElement => getByLabelText('month')).toThrow()
       expect((): HTMLElement => getByLabelText('day of month')).toThrow()
-      expect(getByLabelText('hours')).toHaveProperty('value', '03')
+      expect(getByLabelText('hours')).toHaveProperty('value', '3')
       expect(getByLabelText('minutes')).toHaveProperty('value', '22')
       expect(getByLabelText('time period')).toHaveProperty('value', 'PM')
     })

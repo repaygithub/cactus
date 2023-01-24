@@ -333,6 +333,9 @@ export class PartialDate implements FormatTokenMap {
     if (date) {
       if (typeof date === 'string') {
         this.parse(date, this._format)
+        if (this._format !== this._localeFormat) {
+          this.parseTime(this._localeFormat)
+        }
       } else if (!isNaN(+date)) {
         this.parse(formatDate(date, format), format)
       }
@@ -352,128 +355,141 @@ export class PartialDate implements FormatTokenMap {
   private minutes?: number
   private period?: string
 
+  private _year?: string
+  private _month?: string
+  private _day?: string
+  private _hours?: string
+  private _minutes?: string
+
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get M() {
-    return this.month === undefined ? '' : String(this.month + 1)
+    return this._month ? this._month.slice(-1) : ''
   }
 
-  public set M(value: string | number | undefined) {
+  public set M(value: string | undefined) {
     if (value === undefined) {
       this.month = value
+      this._month = value
     } else {
       this.month = Number(value) - 1
+      this._month = value
     }
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get MM() {
-    return this.month === undefined ? '' : this.pad(this.month + 1)
+    return this._month ? this._month.slice(-2) : ''
   }
 
-  public set MM(value: string | number | undefined) {
+  public set MM(value: string | undefined) {
     this.M = value
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get d() {
-    return this.toRender(this.day, 1)
+    return this._day ? Number(this._day).toString() : ''
   }
 
-  public set d(value: string | number | undefined) {
+  public set d(value: string | undefined) {
     if (value === undefined) {
-      this.day = undefined
+      this.day = value
+      this._day = value
     } else {
-      this.day = Number(value) % 32
+      this.day = Number(value)
+      this._day = value
     }
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get dd() {
-    return this.toRender(this.day, 2)
+    return this._day ? this._day.slice(-2) : ''
   }
 
-  public set dd(value: string | number | undefined) {
+  public set dd(value: string | undefined) {
     this.d = value
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get YYYY() {
-    return this.toRender(this.year, 4)
+    return this._year ? this._year.slice(-4) : ''
   }
 
-  public set YYYY(value: string | number | undefined) {
+  public set YYYY(value: string | undefined) {
     if (value === undefined) {
       this.year = value
+      this._year = value
     } else {
       this.year = Number(value)
+      this._year = value
     }
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get h() {
-    if (this.hours === undefined) {
-      return ''
-    }
-    const hours = this.hours % 12
-    return String(hours === 0 ? 12 : hours)
+    return this._hours ? Number(this._hours).toString() : ''
   }
 
-  public set h(value: string | number | undefined) {
+  public set h(value: string | undefined) {
     if (value === undefined) {
       this.hours = value
+      this._hours = value
     } else {
-      const adj = this.hours && this.hours >= 12 ? 12 : 0
-      this.setHours((Number(value) % 13) + adj)
+      this._hours = value
+      const asNum = Number(value)
+      if (this.period === 'PM') {
+        this.hours = asNum < 12 ? asNum + 12 : asNum
+      } else {
+        this.hours = asNum > 11 ? asNum - 12 : asNum
+      }
     }
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get hh() {
-    if (this.hours === undefined) {
-      return ''
-    }
-    const hours = this.hours % 12
-    return this.toRender(hours === 0 ? 12 : hours, 2)
+    return this._hours || ''
   }
 
-  public set hh(value: string | number | undefined) {
+  public set hh(value: string | undefined) {
     this.h = value
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get H() {
-    return this.toRender(this.hours, 1)
+    return this._hours ? Number(this._hours).toString() : ''
   }
 
-  public set H(value: string | number | undefined) {
+  public set H(value: string | undefined) {
     if (value === undefined) {
       this.hours = value
+      this._hours = value
     } else {
-      value = Number(value)
-      this.hours = value % 24
-      this.period = value < 12 ? 'AM' : 'PM'
+      this._hours = value
+      this.hours = Number(value)
+      this.period = this.hours > 11 ? 'PM' : 'AM'
     }
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get HH() {
-    return this.pad(this.hours)
+    return this._hours || ''
   }
 
-  public set HH(value: string | number | undefined) {
+  public set HH(value: string | undefined) {
     this.H = value
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   public get mm() {
-    return this.pad(this.minutes)
+    return this._minutes || ''
   }
 
-  public set mm(value: string | number | undefined) {
+  public set mm(value: string | undefined) {
     if (value === undefined) {
       this.minutes = value
+      this._minutes = value
     } else {
-      this.minutes = Number(value) % 60
+      this.minutes = Number(value)
+      this._minutes = value
     }
   }
 
@@ -483,17 +499,16 @@ export class PartialDate implements FormatTokenMap {
   }
 
   public set aa(value: string | undefined) {
-    if (typeof value === 'string' && /[pa]/i.test(value)) {
-      this.period = /p/i.test(value) ? 'PM' : 'AM'
-      if (this.hours === undefined) {
-        return
-      } else if (this.period === 'PM' && this.hours < 12) {
-        this.hours = this.hours + 12
-      } else if (this.period === 'AM' && this.hours >= 12) {
-        this.hours = this.hours - 12
+    if (typeof value === 'string' && /[pa]/i.test(value) && value !== this.period) {
+      const isPM = /p/i.test(value)
+      this.period = isPM ? 'PM' : 'AM'
+      if (this.hours !== undefined) {
+        if (isPM) {
+          this.hours = this.hours < 12 ? this.hours + 12 : this.hours
+        } else {
+          this.hours = this.hours > 11 ? this.hours - 12 : this.hours
+        }
       }
-    } else if (value === undefined) {
-      this.period = value
     }
   }
 
@@ -503,6 +518,7 @@ export class PartialDate implements FormatTokenMap {
 
   public setYear(value: number): void {
     this.year = value
+    this._year = String(value)
   }
 
   public getMonth(): number {
@@ -511,6 +527,12 @@ export class PartialDate implements FormatTokenMap {
 
   public setMonth(value: number): void {
     this.month = value % 12
+    const displayValue = (value % 12) + 1
+    if (this._localeFormat.includes('MM')) {
+      this._month = this.pad(displayValue)
+    } else {
+      this._month = String(displayValue)
+    }
   }
 
   public getDate(): number {
@@ -519,15 +541,29 @@ export class PartialDate implements FormatTokenMap {
 
   public setDate(value: number): void {
     this.day = value % 32
+    if (this._localeFormat.includes('dd')) {
+      this._day = this.pad(value % 32)
+    } else {
+      this._day = String(value % 32)
+    }
   }
 
   public getHours(): number {
     return this.hours || 0
   }
 
+  public get_Hours(): string {
+    return this._hours || ''
+  }
+
   public setHours(value: number): void {
-    this.hours = value % 24
-    this.period = value > 11 ? 'PM' : 'AM'
+    if (this._localeFormat.includes('aa')) {
+      this.hours = this.period === 'PM' ? (value % 12) + 12 : value % 12
+      this._hours = this.pad(value)
+    } else {
+      this.hours = value % 24
+      this._hours = this.pad(value)
+    }
   }
 
   public getMinutes(): number {
@@ -535,7 +571,8 @@ export class PartialDate implements FormatTokenMap {
   }
 
   public setMinutes(value: number): void {
-    this.minutes = value % 60
+    this._minutes = this.pad(value)
+    this.minutes = value
   }
 
   public getLocaleFormat(): string {
@@ -565,16 +602,6 @@ export class PartialDate implements FormatTokenMap {
     this._localeFormat = getLocaleFormat(this._locale, { type })
   }
 
-  private toRender(val: number | undefined, padTo: number): string {
-    if (val === undefined) {
-      return ''
-    }
-    if (padTo > 1) {
-      return ('000' + val).slice(-padTo)
-    }
-    return String(val)
-  }
-
   private pad(val?: number): string {
     return val === undefined ? '' : ('0' + val).slice(-2)
   }
@@ -595,7 +622,6 @@ export class PartialDate implements FormatTokenMap {
         cursor += token.length
       }
     }
-
     return this
   }
 
@@ -604,13 +630,48 @@ export class PartialDate implements FormatTokenMap {
     let result = ''
     for (const token of parsed) {
       if (isToken(token)) {
-        const val = this[token]
+        let val = this[token]
+        if (/[H]/.test(token)) {
+          val = this.hours?.toString() || ''
+        }
+        if (/[MmdhH]/.test(token) && val !== '' && val !== undefined) {
+          const padLength = val.length > 1 || token.length > 1 ? 2 : 1
+          val = ('0' + val).slice(-padLength)
+        }
         result += val !== '' ? val : repeat('#', token.length)
       } else {
         result += token
       }
     }
     return result
+  }
+
+  public parseTime(format?: string) {
+    const parsed = parseFormat(format || this._format)
+    for (const token of parsed) {
+      if (isToken(token) && /[Hh]/.test(token)) {
+        let val = Number(this[token])
+        if (!Number.isNaN(val) && val !== undefined) {
+          if (/[h]/.test(token)) {
+            val = val % 12 || 12
+            if (!this.period) {
+              if (val > 12) {
+                this.period = 'PM'
+              } else {
+                this.period = 'AM'
+              }
+            }
+          } else if (/[H]/.test(token) && this.period && this.period === 'PM') {
+            val = val + 12
+          }
+        }
+
+        if (val) {
+          this[token] = val.toString()
+        }
+      }
+    }
+    return this
   }
 
   public equals(date?: PartialDate, type: DateType = this._type): boolean {
@@ -658,13 +719,24 @@ export class PartialDate implements FormatTokenMap {
     )
   }
 
+  public isValidTime(): boolean {
+    const isValidHoursInterval = !!(this.hours !== undefined && this.hours >= 0 && this.hours < 24)
+    const isValidHours =
+      isValidHoursInterval &&
+      (this._localeFormat.includes('h')
+        ? Number(this._hours) > 0 && Number(this._hours) <= 12
+        : true)
+    const isValidMinutes = !!(this.minutes !== undefined && 0 <= this.minutes && this.minutes < 60)
+    const aaIsValid = !this._localeFormat.includes('aa') || this.period !== undefined
+    return (
+      this._type === 'date' ||
+      ([this.hours, this.minutes].every(isNumber) && isValidHours && isValidMinutes && aaIsValid)
+    )
+  }
+
   public isValid(): boolean {
     const isDateValid = this.isValidDate()
-    const isTimeValid =
-      this._type === 'date' ||
-      (this.hours !== undefined &&
-        this.minutes !== undefined &&
-        (!this._format.includes('aa') || this.period !== undefined))
+    const isTimeValid = this.isValidTime()
 
     return isDateValid && isTimeValid
   }
@@ -702,6 +774,11 @@ export class PartialDate implements FormatTokenMap {
     pd.hours = this.hours
     pd.minutes = this.minutes
     pd.period = this.period
+    pd._month = this._month
+    pd._day = this._day
+    pd._year = this._year
+    pd._hours = this._hours
+    pd._minutes = this._minutes
     return pd
   }
 
