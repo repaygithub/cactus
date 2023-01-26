@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "eamodio.gitlens",
+    "formulahendry.auto-rename-tag",
+    "formulahendry.auto-close-tag",
+    "streetsidesoftware.code-spell-checker",
+    "naumovs.color-highlight",
+    "wix.vscode-import-cost",
+    "styled-components.vscode-styled-components"
+  ]
+}
