@@ -266,6 +266,65 @@ const MyForm = (props) => (
 )
 ```
 
+## FieldArray
+
+A specialized Field for dealing with arrays of objects.
+It differs from the regular Field in a few important ways:
+
+- If subscribed to `value`, a render will only be triggered when the array itself changes, not when any nested field changes. This is controlled by the [isEqual](https://final-form.org/docs/final-form/types/FieldConfig#isequal) config function, so passing something like `isEqual={Object.is}` would result in re-renders on all nested value changes.
+- If subscribed to `value`, the value passed to the render func/component will always be an array, even if the real value in the form state is undefined.
+- The array mutators from [Final Form Arrays](https://final-form.org/docs/final-form-arrays/api) will be bound to the field (i.e. the field's name will be curried) and passed to the render func/component, if they are present on the Form.
+- A `validate` function that returns anything other than an array, will be converted to an array with the original error attached to the [Final Form array error](https://final-form.org/docs/final-form/api#array_error) property.
+  - Note that a bug/shortcoming of Final Form's error processing causes this to overwrite validation errors from individual fields. We recommend using _either_ a FieldArray validator, _or_ nested field validators, not both.
+
+Beyond that it takes a subscription (default includes `value` and `length`) and field config props, as accepted by the
+[registerField](https://final-form.org/docs/final-form/types/FormApi#registerfield) function.
+FieldArray also takes a `processState` function similar to Field's `processMeta`.
+The first argument is the `...rest` props after all config-related props have been removed.
+The second argument is the field state returned by the `registerField` subscriber.
+The third argument contains functions bound to the field name: `form.change`, and any array mutators present on the form.
+The default `processState` is just `Object.assign`, which consolidates all three arguments to a single object.
+
+```
+<Form mutators={arrayMutators}>
+  <FieldArray name="rules">
+    {({ name, map }) => map((value, index) => (
+      <div key={index}>
+        <h3>{value.ruleDescription}</h3>
+        <Field name={`${name}[${index}].predicate`} />
+        <Field name={`${name}[${index}].action`} />
+      </div>
+    ))}
+  </FieldArray>
+</Form>
+```
+
+### Value Comparison & Keys
+
+When Final Form changes a value, it makes shallow copies of all parent objects,
+from the value that changed all the way up to the root. This means that with any
+simple comparison, every time a nested value is changed in the array, the array
+itself is copied and the entire array would be re-rendered. With a complex form
+this could be a major performance impact, but the copying behavior means there's
+there's no easy way to keep track of which changes require a full re-render,
+and which only require re-rendering the single field that changed.
+
+The default solution used by `FieldArray` is to attach a key to each item in the array:
+by tracking and comparing keys, we can see if items have been added or moved in the array
+and differentiate from other changes. The default `isEqual` comparator uses two
+supplemental functions, `setKey` and `getKey` to manage keys.
+
+- `setKey` is called on every item on every value change, so it should be idempotent and fast;
+the included implementation looks for an `id` property and sets one if it doesn't exist.
+- `getKey` is called by the comparator: if two objects have equal keys, they are considered equal.
+The included implementation returns the `id` property if there is one, else the object itself is the key.
+- If your objects have a good natural key, you should override `setKey` and `getKey`,
+e.g. `setKey={null}` & `getKey={(x) => x.naturalKey}`.
+- Or you can pass a custom `isEqual` function, in which case `getKey` and `setKey` will be ignored.
+
+Because it has to actually attach the keys to the objects, that may be something
+that will have to be cleaned up in an `onSubmit` handler.
+
 ## Form
 
 A wrapper around [Form](https://final-form.org/docs/react-final-form/api/Form) that includes an empty subscription
