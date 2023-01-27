@@ -238,7 +238,38 @@ const MyForm = (props) =&gt; (
     &lt;FormSpy subscription={{ dirty: true }} component={RenderOnDirtyChange} /&gt;
   &lt;/Form&gt;
 )
-</code></pre><h2>Form</h2><p>A wrapper around <a href="https://final-form.org/docs/react-final-form/api/Form" class="Link-ciBjmh nRWrA">Form</a> that includes an empty subscription
+</code></pre><h2>FieldArray</h2><p>A specialized Field for dealing with arrays of objects.
+It differs from the regular Field in a few important ways:</p><ul><li>If subscribed to <code>value</code>, a render will only be triggered when the array itself changes, not when any nested field changes. This is controlled by the <a href="https://final-form.org/docs/final-form/types/FieldConfig#isequal" class="Link-ciBjmh nRWrA">isEqual</a> config function, so passing something like <code>isEqual={Object.is}</code> would result in re-renders on all nested value changes.</li><li>If subscribed to <code>value</code>, the value passed to the render func/component will always be an array, even if the real value in the form state is undefined.</li><li>The array mutators from <a href="https://final-form.org/docs/final-form-arrays/api" class="Link-ciBjmh nRWrA">Final Form Arrays</a> will be bound to the field (i.e. the field’s name will be curried) and passed to the render func/component, if they are present on the Form.</li><li>A <code>validate</code> function that returns anything other than an array, will be converted to an array with the original error attached to the <a href="https://final-form.org/docs/final-form/api#array_error" class="Link-ciBjmh nRWrA">Final Form array error</a> property.<ul><li>Note that a bug/shortcoming of Final Form’s error processing causes this to overwrite validation errors from individual fields. We recommend using <em>either</em> a FieldArray validator, <em>or</em> nested field validators, not both.</li></ul></li></ul><p>Beyond that it takes a subscription (default includes <code>value</code> and <code>length</code>) and field config props, as accepted by the
+<a href="https://final-form.org/docs/final-form/types/FormApi#registerfield" class="Link-ciBjmh nRWrA">registerField</a> function.
+FieldArray also takes a <code>processState</code> function similar to Field’s <code>processMeta</code>.
+The first argument is the <code>...rest</code> props after all config-related props have been removed.
+The second argument is the field state returned by the <code>registerField</code> subscriber.
+The third argument contains functions bound to the field name: <code>form.change</code>, and any array mutators present on the form.
+The default <code>processState</code> is just <code>Object.assign</code>, which consolidates all three arguments to a single object.</p><pre><code>&lt;Form mutators={arrayMutators}&gt;
+  &lt;FieldArray name=&quot;rules&quot;&gt;
+    {({ name, map }) =&gt; map((value, index) =&gt; (
+      &lt;div key={index}&gt;
+        &lt;h3&gt;{value.ruleDescription}&lt;/h3&gt;
+        &lt;Field name={`${name}[${index}].predicate`} /&gt;
+        &lt;Field name={`${name}[${index}].action`} /&gt;
+      &lt;/div&gt;
+    ))}
+  &lt;/FieldArray&gt;
+&lt;/Form&gt;
+</code></pre><h3>Value Comparison &amp; Keys</h3><p>When Final Form changes a value, it makes shallow copies of all parent objects,
+from the value that changed all the way up to the root. This means that with any
+simple comparison, every time a nested value is changed in the array, the array
+itself is copied and the entire array would be re-rendered. With a complex form
+this could be a major performance impact, but the copying behavior means there’s
+there’s no easy way to keep track of which changes require a full re-render,
+and which only require re-rendering the single field that changed.</p><p>The default solution used by <code>FieldArray</code> is to attach a key to each item in the array:
+by tracking and comparing keys, we can see if items have been added or moved in the array
+and differentiate from other changes. The default <code>isEqual</code> comparator uses two
+supplemental functions, <code>setKey</code> and <code>getKey</code> to manage keys.</p><ul><li><code>setKey</code> is called on every item on every value change, so it should be idempotent and fast;
+the included implementation looks for an <code>id</code> property and sets one if it doesn’t exist.</li><li><code>getKey</code> is called by the comparator: if two objects have equal keys, they are considered equal.
+The included implementation returns the <code>id</code> property if there is one, else the object itself is the key.</li><li>If your objects have a good natural key, you should override <code>setKey</code> and <code>getKey</code>,
+e.g. <code>setKey={null}</code> &amp; <code>getKey={(x) =&gt; x.naturalKey}</code>.</li><li>Or you can pass a custom <code>isEqual</code> function, in which case <code>getKey</code> and <code>setKey</code> will be ignored.</li></ul><p>Because it has to actually attach the keys to the objects, that may be something
+that will have to be cleaned up in an <code>onSubmit</code> handler.</p><h2>Form</h2><p>A wrapper around <a href="https://final-form.org/docs/react-final-form/api/Form" class="Link-ciBjmh nRWrA">Form</a> that includes an empty subscription
 by default. It will also include a basic render function and form reset function if neither <code>component</code> or <code>render</code>
 props are provided. Because the subscription is empty by default, we recommend that you use spies (<code>FormSpy</code>, <code>FieldSpy</code>)
 to hook into form state changes.</p><pre><code>&lt;Form&gt;
