@@ -1,5 +1,5 @@
 import { RouteComponentProps } from '@reach/router'
-import { Field, FieldArray, Form, FormSpy, SubmitButton, FieldSpy } from '@repay/cactus-form'
+import { Field, FieldArray, FieldSpy, Form, FormSpy, SubmitButton } from '@repay/cactus-form'
 import { ActionsAdd } from '@repay/cactus-icons'
 import { Accordion, Box, Button, Flex, Text, TextButton } from '@repay/cactus-web'
 import arrayMutators from 'final-form-arrays'
