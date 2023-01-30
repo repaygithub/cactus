@@ -207,11 +207,10 @@ except for a single field. It also doesn't support the `onChange` prop that Form
 You indicate which field to watch with the `fieldName` prop:
 
 ```
-const spyOn = { value: true }
 const MyForm = (props) => (
   <Form {...props}>
     <Field name="power" type="number" />
-    <FieldSpy fieldName="power" subscription={spyOn}>
+    <FieldSpy fieldName="power" subscription={{ value: true }}>
       {({ value }) => (
         <span>You have selected a power level of {value}.</span>
       )}
@@ -315,11 +314,11 @@ and differentiate from other changes. The default `isEqual` comparator uses two
 supplemental functions, `setKey` and `getKey` to manage keys.
 
 - `setKey` is called on every item on every value change, so it should be idempotent and fast;
-the included implementation looks for an `id` property and sets one if it doesn't exist.
+  the included implementation looks for an `id` property and sets one if it doesn't exist.
 - `getKey` is called by the comparator: if two objects have equal keys, they are considered equal.
-The included implementation returns the `id` property if there is one, else the object itself is the key.
+  The included implementation returns the `id` property if there is one, else the object itself is the key.
 - If your objects have a good natural key, you should override `setKey` and `getKey`,
-e.g. `setKey={null}` & `getKey={(x) => x.naturalKey}`.
+  e.g. `setKey={null}` & `getKey={(x) => x.naturalKey}`.
 - Or you can pass a custom `isEqual` function, in which case `getKey` and `setKey` will be ignored.
 
 Because it has to actually attach the keys to the objects, that may be something

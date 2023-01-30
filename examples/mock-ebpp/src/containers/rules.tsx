@@ -1,5 +1,5 @@
 import { RouteComponentProps } from '@reach/router'
-import { Field, FieldArray, Form, FormSpy, SubmitButton } from '@repay/cactus-form'
+import { Field, FieldArray, Form, FormSpy, SubmitButton, FieldSpy } from '@repay/cactus-form'
 import { ActionsAdd } from '@repay/cactus-icons'
 import { Accordion, Box, Button, Flex, Text, TextButton } from '@repay/cactus-web'
 import arrayMutators from 'final-form-arrays'
@@ -141,7 +141,7 @@ const Conditions = ({ value: conditions, name, push, remove, swap }: ArrayProps<
             key={condition.id}
             index={conditionIndex}
             lastIndex={conditions.length - 1}
-            header={`Condition #${conditionIndex + 1}`}
+            header={`Condition #${conditionIndex + 1} with fI`}
             onDelete={remove}
             onUpClick={handleConditionUpClick}
             onDownClick={handleConditionDownClick}
@@ -152,11 +152,23 @@ const Conditions = ({ value: conditions, name, push, remove, swap }: ArrayProps<
               name={`${name}[${conditionIndex}].variable`}
               options={['A variable', 'Another variable', 'Final variable']}
             />
+            <FieldSpy
+              fieldName={`${name}[${conditionIndex}].variable`}
+              subscription={{ value: true }}
+            >
+              {({ value }) => (value ? <span>You have selected {value}.</span> : null)}
+            </FieldSpy>
             <Field
               label="Operator"
               name={`${name}[${conditionIndex}].operator`}
               options={['Greater than', 'Less than', 'Equal to']}
             />
+            <FieldSpy
+              fieldName={`${name}[${conditionIndex}].operator`}
+              subscription={{ value: true }}
+            >
+              {({ value }) => (!value ? <span>You need to select a value.</span> : null)}
+            </FieldSpy>
             <Field
               label="Value"
               name={`${name}[${conditionIndex}].value`}
