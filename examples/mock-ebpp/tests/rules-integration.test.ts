@@ -28,7 +28,7 @@ test('fill out and submit the form sequentially', async (t: TestController): Pro
   await selectDropdownOption('Name', 'A variable')
   await selectDropdownOption('Operator', 'Greater than')
   await selectDropdownOption('Value', '-1')
-  await t.click(queryByText('Condition #1 with FieldSpy')).click(queryByText('Add Action'))
+  await t.click(queryByText('Condition #1')).click(queryByText('Add Action'))
   await selectDropdownOption('Name', 'Do the thing')
   await clickWorkaround(queryByText('Submit'))
 
@@ -55,7 +55,7 @@ test('fill out and submit the form with deleting and reordering', async (t: Test
   await selectDropdownOption('Operator', 'Less than')
   await selectDropdownOption('Value', '0')
   await t
-    .click(queryByText('Condition #1 with FieldSpy'))
+    .click(queryByText('Condition #1'))
     .click(queryByLabelText('Delete Condition #1'))
     .click(queryByText('Add Action'))
   await selectDropdownOption('Name', 'Do the thing')

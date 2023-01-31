@@ -141,7 +141,7 @@ const Conditions = ({ value: conditions, name, push, remove, swap }: ArrayProps<
             key={condition.id}
             index={conditionIndex}
             lastIndex={conditions.length - 1}
-            header={`Condition #${conditionIndex + 1} with FieldSpy`}
+            header={`Condition #${conditionIndex + 1}`}
             onDelete={remove}
             onUpClick={handleConditionUpClick}
             onDownClick={handleConditionDownClick}
@@ -156,7 +156,7 @@ const Conditions = ({ value: conditions, name, push, remove, swap }: ArrayProps<
               fieldName={`${name}[${conditionIndex}].variable`}
               subscription={{ value: true }}
             >
-              {({ value }) => (value ? <span>You have selected {value}.</span> : null)}
+              {({ value }: any) => (value ? <span>You have selected {value}.</span> : null)}
             </FieldSpy>
             <Field
               label="Operator"
@@ -167,7 +167,7 @@ const Conditions = ({ value: conditions, name, push, remove, swap }: ArrayProps<
               fieldName={`${name}[${conditionIndex}].operator`}
               subscription={{ value: true }}
             >
-              {({ value }) => (!value ? <span>You need to select a value.</span> : null)}
+              {({ value }: any) => (!value ? <span>You need to select a value.</span> : null)}
             </FieldSpy>
             <Field
               label="Value"
