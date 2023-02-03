@@ -1,3 +1,15 @@
+# v0.5.8 (Fri Feb 03 2023)
+
+#### 🔩 Dependency Updates
+
+- CACTUS-1091 :: Snyk/SonarQube Fixes [#846](https://github.com/repaygithub/cactus/pull/846) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 1
+
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+
+---
+
 # v0.5.7 (Fri Jul 15 2022)
 
 #### 🚀 Enhancement
