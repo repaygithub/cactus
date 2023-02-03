@@ -1,3 +1,25 @@
+# v9.13.0 (Fri Feb 03 2023)
+
+#### 🚀 Enhancement
+
+- Updte DateInput auto-tab behavior [#853](https://github.com/repaygithub/cactus/pull/853) ([@maxrcollins](https://github.com/maxrcollins))
+
+#### 🐛 Bug Fix
+
+- Fix Select label caching [#856](https://github.com/repaygithub/cactus/pull/856) ([@wilysword](https://github.com/wilysword))
+
+#### 🔩 Dependency Updates
+
+- CACTUS-1091 :: Snyk/SonarQube Fixes [#846](https://github.com/repaygithub/cactus/pull/846) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 3
+
+- [@maxrcollins](https://github.com/maxrcollins)
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v9.12.0 (Fri Dec 02 2022)
 
 #### 🚀 Enhancement
