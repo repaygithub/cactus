@@ -1,3 +1,17 @@
+# v1.3.0 (Fri Feb 03 2023)
+
+#### 🚀 Enhancement
+
+- Add FieldArray component [#857](https://github.com/repaygithub/cactus/pull/857) ([@wilysword](https://github.com/wilysword))
+- Add SubmitButton component [#837](https://github.com/repaygithub/cactus/pull/837) ([@Dhalton](https://github.com/Dhalton))
+
+#### Authors: 2
+
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Glen Phelps ([@wilysword](https://github.com/wilysword))
+
+---
+
 # v1.2.0 (Fri Dec 02 2022)
 
 #### 🚀 Enhancement
