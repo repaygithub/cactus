@@ -24,11 +24,15 @@ const FieldSpy: FC<FieldSpyProps> = ({
     delete props.children
   }
   const form = useForm()
-  const [state, setState] = React.useState<FieldState<unknown>>()
+  const [state, setState] = React.useState<FieldState<unknown>>(() => {
+    return form.getFieldState(fieldName) as FieldState<unknown>
+  })
+
   React.useEffect(() => {
     const config = isEqual && { isEqual }
     return form.registerField(fieldName, setState, subscription, config)
-  }, [fieldName, form, subscription, isEqual])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fieldName, form, isEqual])
   if (!state) return null
   Object.assign(props, state)
   if (render) {
