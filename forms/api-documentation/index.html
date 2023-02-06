@@ -198,11 +198,10 @@ value as the dependencies change.</p><pre><code>const MyForm = (props) =&gt; (
 )
 </code></pre><p><code>DependentField</code> also has the <code>configureDefaults</code> and <code>withDefaults</code> functions that <code>Field</code> has.</p><h2>FieldSpy</h2><p>Basically the same as <a href="https://final-form.org/docs/react-final-form/api/FormSpy" class="Link-ciBjmh nRWrA">FormSpy</a>,
 except for a single field. It also doesn’t support the <code>onChange</code> prop that FormSpy has.
-You indicate which field to watch with the <code>fieldName</code> prop:</p><pre><code>const spyOn = { value: true }
-const MyForm = (props) =&gt; (
+You indicate which field to watch with the <code>fieldName</code> prop:</p><pre><code>const MyForm = (props) =&gt; (
   &lt;Form {...props}&gt;
     &lt;Field name=&quot;power&quot; type=&quot;number&quot; /&gt;
-    &lt;FieldSpy fieldName=&quot;power&quot; subscription={spyOn}&gt;
+    &lt;FieldSpy fieldName=&quot;power&quot; subscription={{ value: true }}&gt;
       {({ value }) =&gt; (
         &lt;span&gt;You have selected a power level of {value}.&lt;/span&gt;
       )}
