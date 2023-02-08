@@ -429,6 +429,23 @@ const FileBox = styled.div<{ $status: FileStatus }>`
   }
 `
 
+const getLabel = (fileObj: FileObject, labels: FileInfoLabels): [string, AvatarStatus] => {
+  let label = fileObj.file.name
+  let avatarStatus: AvatarStatus = 'info'
+  if (fileObj.status === 'unloaded') {
+    label += `, ${labels.unloaded || DEFAULT_LABELS.unloaded}`
+  } else if (fileObj.status === 'loaded') {
+    label += `, ${labels.loaded || DEFAULT_LABELS.loaded}`
+    avatarStatus = 'success'
+  } else if (fileObj.status === 'error') {
+    label += `, ${labels.error || DEFAULT_LABELS.error}`
+    avatarStatus = 'error'
+  } else if (fileObj.status === 'loading') {
+    label += `, ${labels.loading || DEFAULT_LABELS.loading}`
+  }
+  return [label, avatarStatus]
+}
+
 const FileInfo: React.FC<FileInfoProps> = (props) => {
   const { disabled, labels = {}, index, deleteFile, fileObj } = props
 
@@ -450,19 +467,7 @@ const FileInfo: React.FC<FileInfoProps> = (props) => {
   const statusId = useId(undefined, 'file-status')
   const errorMsg = !disabled && (fileObj.errorMsg || fileObj.error?.message)
   const status = fileObj.status
-  let label = fileObj.file.name
-  let avatarStatus: AvatarStatus = 'info'
-  if (status === 'unloaded') {
-    label += `, ${labels.unloaded || DEFAULT_LABELS.unloaded}`
-  } else if (status === 'loaded') {
-    label += `, ${labels.loaded || DEFAULT_LABELS.loaded}`
-    avatarStatus = 'success'
-  } else if (status === 'error') {
-    label += `, ${labels.error || DEFAULT_LABELS.error}`
-    avatarStatus = 'error'
-  } else if (status === 'loading') {
-    label += `, ${labels.loading || DEFAULT_LABELS.loading}`
-  }
+  const [label, avatarStatus] = getLabel(fileObj, labels)
 
   const onDelete = React.useCallback(
     (event: React.MouseEvent) => deleteFile(index, event),
