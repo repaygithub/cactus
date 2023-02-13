@@ -5106,7 +5106,7 @@ __metadata:
     "@types/jest": ^27.4.1
     "@types/react": ^17.0.40
     babel-jest: ^27.5.1
-    final-form: ^4.20.6
+    final-form: ^4.20.4
     jest: ^27.5.1
     jest-sonar: ^0.2.12
     prop-types: ^15.8.1
@@ -15398,6 +15398,15 @@ __metadata:
   peerDependencies:
     final-form: ^4.18.2
   checksum: bed684815967fa3e5b2cc91eb69e5d88e1048a5dbe421e2eb61b90434c634a09fec877ce52c85add8d009c20c052b6f2a884277d7ca80e9a628944a012d20205
+  languageName: node
+  linkType: hard
+
+"final-form@npm:^4.20.4":
+  version: 4.20.9
+  resolution: "final-form@npm:4.20.9"
+  dependencies:
+    "@babel/runtime": ^7.10.0
+  checksum: 2235a41864e0b8aa24a358b8896a02764735d3660cd8ee30b9cea9e6d3a6239e74d1b6bc5dea0e663a5b90393045783c7714ceea13bceffe10811915c88a8d60
   languageName: node
   linkType: hard
 
