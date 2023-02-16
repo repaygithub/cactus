@@ -15402,11 +15402,11 @@ __metadata:
   linkType: hard
 
 "final-form@npm:^4.20.6":
-  version: 4.20.7
-  resolution: "final-form@npm:4.20.7"
+  version: 4.20.9
+  resolution: "final-form@npm:4.20.9"
   dependencies:
     "@babel/runtime": ^7.10.0
-  checksum: 0e2a9a9cf70814e1099da38e8a79ff6dc2862f07217dae041ba70c5a4bcc8284c74b0500f00b4935331f5fbe7dc119f63ca4776495ecc8c486c939daa23598ec
+  checksum: 2235a41864e0b8aa24a358b8896a02764735d3660cd8ee30b9cea9e6d3a6239e74d1b6bc5dea0e663a5b90393045783c7714ceea13bceffe10811915c88a8d60
   languageName: node
   linkType: hard
 
