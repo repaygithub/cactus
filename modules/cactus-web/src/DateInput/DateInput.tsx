@@ -412,6 +412,17 @@ export interface DateInputProps
   onInvalidDate?: (isDateInvalid: boolean) => void
 }
 
+interface InputContentProps extends Pick<DateInputProps, 'id' | 'name' | 'disabled'> {
+  value: PartialDate
+  hasDate: boolean
+  iconRef: React.RefObject<HTMLButtonElement>
+  phrases: DateInputPhrasesType
+  formatArray: string[]
+  handleButtonClick: (e: React.SyntheticEvent) => void
+  handleUpArrowClick: (e: React.MouseEvent<SVGSVGElement>) => void
+  handleDownArrowClick: (e: React.MouseEvent<SVGSVGElement>) => void
+}
+
 interface DateInputState {
   value: PartialDate
   valueProp: DateInputProps['value']
@@ -792,6 +803,34 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
   }
   /** helpers */
 
+  private handleKeyInput = (
+    token: FormatTokenType,
+    update: PartialDate,
+    change?: string | undefined
+  ): void => {
+    if (change === undefined) {
+      update[token] = change
+    } else if (token === 'aa') {
+      update[token] = change
+    } else if (/^[0-9]+$/.test(change)) {
+      let current = update[token]
+      if (current === '' || current === undefined || this._lastInputKeyed !== token) {
+        current = change
+      } else if (token === 'YYYY') {
+        current = (current + change).slice(-4)
+      } else {
+        current = (current + change).slice(-2)
+      }
+      this._lastInputKeyed = token
+      const asString = current.toString()
+      const maxLength = token === 'YYYY' ? 4 : 2
+      if (asString.length === maxLength) {
+        this._shouldFocusNext = true
+      }
+      update[token] = asString
+    }
+  }
+
   private handleUpdate = (
     event: React.SyntheticEvent,
     token: FormatTokenType,
@@ -821,27 +860,7 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
           break
         }
         case 'Key': {
-          if (change === undefined) {
-            update[token] = change
-          } else if (token === 'aa') {
-            update[token] = change
-          } else if (/^[0-9]+$/.test(change)) {
-            let current = update[token]
-            if (current === '' || current === undefined || this._lastInputKeyed !== token) {
-              current = change
-            } else if (token === 'YYYY') {
-              current = (current + change).slice(-4)
-            } else {
-              current = (current + change).slice(-2)
-            }
-            this._lastInputKeyed = token
-            const asString = current.toString()
-            const maxLength = token === 'YYYY' ? 4 : 2
-            if (asString.length === maxLength) {
-              this._shouldFocusNext = true
-            }
-            update[token] = asString
-          }
+          this.handleKeyInput(token, update, change)
           break
         }
       }
@@ -915,7 +934,6 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
     const formatArray = parseFormat(value.getLocaleFormat())
     const formatTime = getLocaleFormat('en-US', { type: 'time' })
 
-    let isFirstInput = true
     const hasTime = type === 'datetime' || type === 'time'
     const hasDate = type === 'date' || type === 'datetime'
     const phrases = this.getPhrases()
@@ -936,55 +954,19 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
             onClick={this.handleClick}
             {...getDataProps(this.props)}
           >
-            {hasDate ? (
-              <IconButton
-                disabled={disabled}
-                ref={this._button}
-                onClick={this.handleButtonClick}
-                onTouchStart={this.handleButtonClick}
-                onKeyDown={keyDownAsClick}
-                onKeyUp={preventAction}
-                label={phrases.pickerLabel}
-              >
-                <DescriptiveCalendar />
-              </IconButton>
-            ) : (
-              !id.endsWith('-time') &&
-              !name.endsWith('-time') && <DescriptiveClock aria-hidden="true" />
-            )}
-            {formatArray.map((token, index): ReactElement => {
-              const key = `${token}-${index}`
-              if (isToken(token)) {
-                const inputId = isFirstInput ? id : undefined
-                isFirstInput = false
-                return (
-                  <input
-                    disabled={disabled}
-                    key={key}
-                    type={token === 'aa' ? 'text' : NUMBER_INPUT_TYPE}
-                    id={inputId}
-                    data-token={token}
-                    aria-label={getInputLabel(token, phrases)}
-                    placeholder={getInputPlaceholder(token)}
-                    value={value[token]}
-                    autoComplete="off"
-                    onChange={noop}
-                  />
-                )
-              }
-              return <LiteralPunctuation key={key}>{token}</LiteralPunctuation>
-            })}
-            <span aria-hidden="true" />
-            <ToggleButtons aria-hidden="true">
-              <NavigationChevronUp
-                data-name="ArrowUp"
-                onMouseDownCapture={!disabled ? this.handleUpArrowClick : undefined}
-              />
-              <NavigationChevronDown
-                data-name="ArrowDown"
-                onMouseDownCapture={!disabled ? this.handleDownArrowClick : undefined}
-              />
-            </ToggleButtons>
+            <InputContent
+              id={id}
+              name={name}
+              disabled={disabled}
+              value={value}
+              hasDate={hasDate}
+              iconRef={this._button}
+              phrases={phrases}
+              formatArray={formatArray}
+              handleButtonClick={this.handleButtonClick}
+              handleUpArrowClick={this.handleUpArrowClick}
+              handleDownArrowClick={this.handleDownArrowClick}
+            />
           </InputWrapper>
         </Flex>
         {hasDate && (
@@ -1029,6 +1011,74 @@ class DateInputBase extends Component<DateInputProps, DateInputState> {
       </div>
     )
   }
+}
+
+const InputContent: React.FC<InputContentProps> = ({
+  id,
+  name,
+  disabled,
+  value,
+  hasDate,
+  iconRef,
+  phrases,
+  formatArray,
+  handleButtonClick,
+  handleUpArrowClick,
+  handleDownArrowClick,
+}) => {
+  let isFirstInput = true
+  return (
+    <>
+      {hasDate ? (
+        <IconButton
+          disabled={disabled}
+          ref={iconRef}
+          onClick={handleButtonClick}
+          onTouchStart={handleButtonClick}
+          onKeyDown={keyDownAsClick}
+          onKeyUp={preventAction}
+          label={phrases.pickerLabel}
+        >
+          <DescriptiveCalendar />
+        </IconButton>
+      ) : (
+        !id.endsWith('-time') && !name.endsWith('-time') && <DescriptiveClock aria-hidden="true" />
+      )}
+      {formatArray.map((token, index): ReactElement => {
+        const key = `${token}-${index}`
+        if (isToken(token)) {
+          const inputId = isFirstInput ? id : undefined
+          isFirstInput = false
+          return (
+            <input
+              disabled={disabled}
+              key={key}
+              type={token === 'aa' ? 'text' : NUMBER_INPUT_TYPE}
+              id={inputId}
+              data-token={token}
+              aria-label={getInputLabel(token, phrases)}
+              placeholder={getInputPlaceholder(token)}
+              value={value[token]}
+              autoComplete="off"
+              onChange={noop}
+            />
+          )
+        }
+        return <LiteralPunctuation key={key}>{token}</LiteralPunctuation>
+      })}
+      <span aria-hidden="true" />
+      <ToggleButtons aria-hidden="true">
+        <NavigationChevronUp
+          data-name="ArrowUp"
+          onMouseDownCapture={!disabled ? handleUpArrowClick : undefined}
+        />
+        <NavigationChevronDown
+          data-name="ArrowDown"
+          onMouseDownCapture={!disabled ? handleDownArrowClick : undefined}
+        />
+      </ToggleButtons>
+    </>
+  )
 }
 
 export const DateInput = styled(DateInputBase)`
