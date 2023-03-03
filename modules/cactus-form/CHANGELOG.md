@@ -1,3 +1,29 @@
+# v1.3.1 (Fri Mar 03 2023)
+
+#### 🐛 Bug Fix
+
+- CACTUS-1133 :: Snyk/SonarQube Fixes [#862](https://github.com/repaygithub/cactus/pull/862) ([@Dhalton](https://github.com/Dhalton))
+- cactua 1079 - field spy [#860](https://github.com/repaygithub/cactus/pull/860) (nelso@ip-192-168-1-183.us-west-2.compute.internal [@nickjiunchetti](https://github.com/nickjiunchetti))
+
+#### 🏠 Internal
+
+- chore(deps-dev): bump @actions/core from 1.2.6 to 1.9.1 in /actions/create-pull-request [#789](https://github.com/repaygithub/cactus/pull/789) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump ua-parser-js from 0.7.31 to 0.7.33 [#859](https://github.com/repaygithub/cactus/pull/859) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump http-cache-semantics from 4.1.0 to 4.1.1 [#861](https://github.com/repaygithub/cactus/pull/861) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump @sideway/formula from 3.0.0 to 3.0.1 [#863](https://github.com/repaygithub/cactus/pull/863) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- CACTUS-1161 :: Fix Snyk Scan [#864](https://github.com/repaygithub/cactus/pull/864) ([@Dhalton](https://github.com/Dhalton))
+- cactus 1145 - .vscode config [#858](https://github.com/repaygithub/cactus/pull/858) (nelso@ip-192-168-1-183.us-west-2.compute.internal [@nickjiunchetti](https://github.com/nickjiunchetti))
+
+#### Authors: 5
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Nicholas Jiunchetti Carvalho ([@nickjiunchetti](https://github.com/nickjiunchetti))
+- nickj (nelso@ip-192-168-1-183.us-west-2.compute.internal)
+- nickj (nelso@Nelsos-MacBook-Pro.local)
+
+---
+
 # v1.3.0 (Fri Feb 03 2023)
 
 #### 🚀 Enhancement
