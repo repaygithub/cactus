@@ -2,12 +2,15 @@ name: Master Pipeline
 on:
   push:
     branches:
-      - master
+      - '**'
 jobs:
   publish_docs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
 
     - name: Decrypt secrets
       env:
