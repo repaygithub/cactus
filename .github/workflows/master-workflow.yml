@@ -2,7 +2,7 @@ name: Master Pipeline
 on:
   push:
     branches:
-      - master
+      - '**'
 jobs:
   publish_docs:
     runs-on: ubuntu-latest
