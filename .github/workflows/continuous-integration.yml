@@ -12,6 +12,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
 
       - name: NodeJS Version
         shell: bash
@@ -29,6 +32,9 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
 
       - name: Install Dependencies
         uses: ./.github/actions/install-dependencies
@@ -51,6 +57,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
 
       - name: Install Dependencies
         uses: ./.github/actions/install-dependencies
@@ -70,6 +79,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
 
       - name: Install Dependencies
         uses: ./.github/actions/install-dependencies
@@ -96,6 +108,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
 
       - name: Install Dependencies
         uses: ./.github/actions/install-dependencies
