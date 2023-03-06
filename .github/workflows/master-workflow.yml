@@ -2,10 +2,10 @@ name: Master Pipeline
 on:
   push:
     branches:
-      - '**'
+      - master
 jobs:
   publish_docs:
-    runs-on: ubuntu-22.03
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
 
