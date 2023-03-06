@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04.1
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
@@ -24,7 +24,7 @@ jobs:
         uses: ./.github/actions/cactus-build
 
   unit-tests:
-    runs-on: ubuntu-22.04.1
+    runs-on: ubuntu-20.04
     needs: build
     
     steps:
@@ -46,7 +46,7 @@ jobs:
           yarn web test:ci
 
   integration-tests:
-    runs-on: ubuntu-22.04.1
+    runs-on: ubuntu-20.04
     needs: build
 
     steps:
@@ -65,7 +65,7 @@ jobs:
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
   
   visual-tests:
-    runs-on: ubuntu-22.04.1
+    runs-on: ubuntu-20.04
     needs: build
 
     steps:
@@ -91,7 +91,7 @@ jobs:
           branch: ${{ steps.extract_branch.outputs.branch }}-patch
 
   docs-test:
-    runs-on: ubuntu-22.04.1
+    runs-on: ubuntu-20.04
     needs: build
 
     steps:
@@ -106,7 +106,7 @@ jobs:
       - name: Test Docs Website
         run: yarn docs test:ci
   publish_docs:
-    runs-on: ubuntu-22.04.1
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
 
