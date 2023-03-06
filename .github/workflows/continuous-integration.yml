@@ -8,16 +8,19 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
       - name: NodeJS Version
         shell: bash
         run: node --version
-        with: 
-          node-version: '14'
+
 
       - name: Install Dependencies
         uses: ./.github/actions/install-dependencies
@@ -26,7 +29,7 @@ jobs:
         uses: ./.github/actions/cactus-build
 
   unit-tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs: build
     
     steps:
@@ -48,7 +51,7 @@ jobs:
           yarn web test:ci
 
   integration-tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs: build
 
     steps:
@@ -67,7 +70,7 @@ jobs:
           BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
   
   visual-tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs: build
 
     steps:
@@ -93,7 +96,7 @@ jobs:
           branch: ${{ steps.extract_branch.outputs.branch }}-patch
 
   docs-test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs: build
 
     steps:
@@ -107,54 +110,3 @@ jobs:
 
       - name: Test Docs Website
         run: yarn docs test:ci
-  publish_docs:
-    runs-on: ubuntu-20.04
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Decrypt secrets
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      run: |
-        openssl aes-256-cbc -in .github/workflows/secrets/cactus_auth.enc -out .github/workflows/secrets/cactus_auth -pass pass:$SSH_PRIVATE_KEY -d -md sha1
-
-    - name: Setup SSH agent
-      env:
-        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      run: |
-        mkdir -p ~/.ssh
-        ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-        chmod 0600 .github/workflows/secrets/cactus_auth
-        ssh-add .github/workflows/secrets/cactus_auth
-
-    - name: Git Authentication
-      env: 
-        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      run: git remote set-url origin git@github.com:repaygithub/cactus.git
-
-    - name: Install Packages
-      run: yarn install --immutable
-
-    - name: Build Packages
-      run: yarn build
-
-    - name: Build Documentation Site
-      run: yarn docs build
-      env:
-        NODE_OPTIONS: "--max_old_space_size=4096"
-
-    - name: Deploy with gh-pages
-      run: yarn gh-pages -d ./website/public -u "repayci <repayci@repay.com>"
-      env:
-        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        NODE_OPTIONS: "--max_old_space_size=4096"
-
-    - name: Cleanup
-      if: always()
-      env:
-        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      run: |
-        ssh-add -D
-        rm -Rf *
