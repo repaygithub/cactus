@@ -16,6 +16,7 @@ jobs:
       - name: NodeJS Version
         shell: bash
         run: node --version
+        with: node-version: '14'
 
       - name: Install Dependencies
         uses: ./.github/actions/install-dependencies
