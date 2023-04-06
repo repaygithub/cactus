@@ -455,8 +455,16 @@ export function generateTheme(options: GeneratorOptions = repayOptions): CactusT
   const { border = 'thin', shape = 'intermediate', font = 'Helvetica', boxShadows = true } = options
   const fontOptions: Font[] = ['Helvetica', 'Helvetica Neue', 'Arial']
 
-  fontOptions.sort((x: Font, y: Font): number => {
-    return x === font ? -1 : y === font ? 1 : 0
+  fontOptions.sort((fontOption1: Font, fontOption2: Font): number => {
+    if (fontOption1 === font) {
+      return -1
+    }
+
+    if (fontOption2 === font) {
+      return 1
+    }
+
+    return 0
   })
 
   const breakpoints = options.breakpoints || {

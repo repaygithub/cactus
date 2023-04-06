@@ -12,12 +12,12 @@ const stylePropNames = new Set<string>()
 styleFn.propNames?.forEach((propName) => stylePropNames.add(propName))
 
 // Naming it this way so the generated CSS class will start with "CactusIcon-".
-const CactusIcon = styled(NullIcon).withConfig({
+const AbstractIcon = styled(NullIcon).withConfig({
   shouldForwardProp: (p) => !stylePropNames.has(p),
 })<IconStyleProps>`
   vertical-align: middle;
   ${styleFn}
 `
-CactusIcon.displayName = 'AbstractIcon'
+AbstractIcon.displayName = 'AbstractIcon'
 
-export default CactusIcon
+export default AbstractIcon
