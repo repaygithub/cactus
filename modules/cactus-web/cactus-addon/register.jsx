@@ -113,240 +113,240 @@ class Panel extends React.Component {
     const { active } = this.props
     const { values } = this.state
 
+    if (!active) return null
+
     return (
-      active && (
-        <ScrollArea>
-          <Form>
-            <SectionTitle>Theme</SectionTitle>
-            <Form.Field>
-              <div>
-                <label id="selectionTypeLabel" style={{ display: 'block' }}>
-                  Selection Type
+      <ScrollArea>
+        <Form>
+          <SectionTitle>Theme</SectionTitle>
+          <Form.Field>
+            <div>
+              <label id="selectionTypeLabel" style={{ display: 'block' }}>
+                Selection Type
+              </label>
+              <div role="section" aria-labelledby="selectionTypeLabel">
+                <label style={{ display: 'block' }}>
+                  <input
+                    type="radio"
+                    name="type"
+                    value={THEME_TYPES.use_hue}
+                    checked={values.type === THEME_TYPES.use_hue}
+                    onChange={this.handleSimpleThemeChange}
+                  />
+                  Select Primary Hue
                 </label>
-                <div role="section" aria-labelledby="selectionTypeLabel">
-                  <label style={{ display: 'block' }}>
-                    <input
-                      type="radio"
-                      name="type"
-                      value={THEME_TYPES.use_hue}
-                      checked={values.type === THEME_TYPES.use_hue}
-                      onChange={this.handleSimpleThemeChange}
-                    />
-                    Select Primary Hue
-                  </label>
-                  <label style={{ display: 'block' }}>
-                    <input
-                      type="radio"
-                      name="type"
-                      value={THEME_TYPES.use_colors}
-                      checked={values.type === THEME_TYPES.use_colors}
-                      onChange={this.handleSimpleThemeChange}
-                    />
-                    Choose Colors
-                  </label>
-                </div>
+                <label style={{ display: 'block' }}>
+                  <input
+                    type="radio"
+                    name="type"
+                    value={THEME_TYPES.use_colors}
+                    checked={values.type === THEME_TYPES.use_colors}
+                    onChange={this.handleSimpleThemeChange}
+                  />
+                  Choose Colors
+                </label>
               </div>
-            </Form.Field>
+            </div>
+          </Form.Field>
+          <Form.Field>
+            <label htmlFor="saturationMultiplier">Saturation Multiplier</label>
+            <input
+              type="range"
+              id="saturationMultiplier"
+              name="saturationMultiplier"
+              min="0"
+              max="1"
+              step="0.01"
+              value={values.saturationMultiplier}
+              onChange={this.handleSimpleThemeChange}
+            />
+            <input
+              type="text"
+              id="saturationMultiplier-text"
+              name="saturationMultiplier"
+              value={values.saturationMultiplier}
+              onChange={({ currentTarget }) =>
+                this.handleThemeChange('saturationMultiplier', parseInt(currentTarget.value))
+              }
+              style={{ width: '32px', marginLeft: '8px' }}
+            />
+          </Form.Field>
+          {values.type === THEME_TYPES.use_hue ? (
             <Form.Field>
-              <label htmlFor="saturationMultiplier">Saturation Multiplier</label>
+              <label htmlFor="primaryHue">primary hue</label>
               <input
                 type="range"
-                id="saturationMultiplier"
-                name="saturationMultiplier"
+                id="primaryHue"
+                name="primaryHue"
                 min="0"
-                max="1"
-                step="0.01"
-                value={values.saturationMultiplier}
+                max="360"
+                value={values.primaryHue}
                 onChange={this.handleSimpleThemeChange}
               />
               <input
                 type="text"
-                id="saturationMultiplier-text"
-                name="saturationMultiplier"
-                value={values.saturationMultiplier}
+                id="primaryHue-text"
+                name="primaryHue"
+                value={values.primaryHue}
                 onChange={({ currentTarget }) =>
-                  this.handleThemeChange('saturationMultiplier', parseInt(currentTarget.value))
+                  this.handleThemeChange('primaryHue', parseInt(currentTarget.value))
                 }
                 style={{ width: '32px', marginLeft: '8px' }}
               />
             </Form.Field>
-            {values.type === THEME_TYPES.use_hue ? (
+          ) : (
+            <React.Fragment>
               <Form.Field>
-                <label htmlFor="primaryHue">primary hue</label>
+                <label htmlFor="primary-color">primary color</label>
                 <input
-                  type="range"
-                  id="primaryHue"
-                  name="primaryHue"
-                  min="0"
-                  max="360"
-                  value={values.primaryHue}
+                  type="color"
+                  id="primary-color"
+                  name="primary"
+                  value={values.primary}
                   onChange={this.handleSimpleThemeChange}
                 />
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="secondary-color">secondary color</label>
                 <input
-                  type="text"
-                  id="primaryHue-text"
-                  name="primaryHue"
-                  value={values.primaryHue}
-                  onChange={({ currentTarget }) =>
-                    this.handleThemeChange('primaryHue', parseInt(currentTarget.value))
-                  }
-                  style={{ width: '32px', marginLeft: '8px' }}
+                  type="color"
+                  id="secondary-color"
+                  name="secondary"
+                  value={values.secondary}
+                  onChange={this.handleSimpleThemeChange}
                 />
               </Form.Field>
-            ) : (
-              <React.Fragment>
-                <Form.Field>
-                  <label htmlFor="primary-color">primary color</label>
-                  <input
-                    type="color"
-                    id="primary-color"
-                    name="primary"
-                    value={values.primary}
-                    onChange={this.handleSimpleThemeChange}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label htmlFor="secondary-color">secondary color</label>
-                  <input
-                    type="color"
-                    id="secondary-color"
-                    name="secondary"
-                    value={values.secondary}
-                    onChange={this.handleSimpleThemeChange}
-                  />
-                </Form.Field>
-              </React.Fragment>
-            )}
-            <Form.Field>
-              <label htmlFor="border" style={{ display: 'block' }}>
-                Border Width
-              </label>
-              <select
-                id="border"
-                name="border"
-                onChange={({ currentTarget }) => {
-                  this.handleThemeChange('border', currentTarget.value)
-                }}
-                value={values.border}
-                style={{ marginLeft: '8px' }}
-              >
-                <option value="thin">Thin</option>
-                <option value="thick">Thick</option>
-              </select>
-            </Form.Field>
-            <Form.Field>
-              <label htmlFor="shape" style={{ display: 'block' }}>
-                Component Shape
-              </label>
-              <select
-                id="shape"
-                name="shape"
-                onChange={({ currentTarget }) => {
-                  this.handleThemeChange('shape', currentTarget.value)
-                }}
-                value={values.shape}
-                style={{ marginLeft: '8px' }}
-              >
-                <option value="square">Square</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="round">Round</option>
-              </select>
-            </Form.Field>
-            <Form.Field>
-              <label htmlFor="shape" style={{ display: 'block' }}>
-                Font
-              </label>
-              <select
-                id="font"
-                name="font"
-                onChange={({ currentTarget }) => {
-                  this.handleThemeChange('font', currentTarget.value)
-                }}
-                value={values.font}
-                style={{ marginLeft: '8px' }}
-              >
-                <option value="Helvetica Neue">Helvetica Neue</option>
-                <option value="Helvetica">Helvetica</option>
-                <option value="Arial">Arial</option>
-              </select>
-            </Form.Field>
-            <Form.Field>
-              <input
-                id="boxShadows"
-                name="boxShadows"
-                type="checkbox"
-                onChange={({ currentTarget }) => {
-                  this.handleThemeChange('boxShadows', currentTarget.checked)
-                }}
-                checked={values.boxShadows}
-              />
-              <label htmlFor="shape" style={{ display: 'block' }}>
-                Box Shadows
-              </label>
-            </Form.Field>
-            <Form.Field>
-              <input
-                id="grayscaleContrast"
-                name="grayscaleContrast"
-                type="checkbox"
-                onChange={({ currentTarget }) => {
-                  this.handleThemeChange('grayscaleContrast', currentTarget.checked)
-                }}
-                checked={values.grayscaleContrast}
-              />
-              <label htmlFor="shape" style={{ display: 'block' }}>
-                Grayscale Contrast
-              </label>
-            </Form.Field>
+            </React.Fragment>
+          )}
+          <Form.Field>
+            <label htmlFor="border" style={{ display: 'block' }}>
+              Border Width
+            </label>
+            <select
+              id="border"
+              name="border"
+              onChange={({ currentTarget }) => {
+                this.handleThemeChange('border', currentTarget.value)
+              }}
+              value={values.border}
+              style={{ marginLeft: '8px' }}
+            >
+              <option value="thin">Thin</option>
+              <option value="thick">Thick</option>
+            </select>
+          </Form.Field>
+          <Form.Field>
+            <label htmlFor="shape" style={{ display: 'block' }}>
+              Component Shape
+            </label>
+            <select
+              id="shape"
+              name="shape"
+              onChange={({ currentTarget }) => {
+                this.handleThemeChange('shape', currentTarget.value)
+              }}
+              value={values.shape}
+              style={{ marginLeft: '8px' }}
+            >
+              <option value="square">Square</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="round">Round</option>
+            </select>
+          </Form.Field>
+          <Form.Field>
+            <label htmlFor="shape" style={{ display: 'block' }}>
+              Font
+            </label>
+            <select
+              id="font"
+              name="font"
+              onChange={({ currentTarget }) => {
+                this.handleThemeChange('font', currentTarget.value)
+              }}
+              value={values.font}
+              style={{ marginLeft: '8px' }}
+            >
+              <option value="Helvetica Neue">Helvetica Neue</option>
+              <option value="Helvetica">Helvetica</option>
+              <option value="Arial">Arial</option>
+            </select>
+          </Form.Field>
+          <Form.Field>
+            <input
+              id="boxShadows"
+              name="boxShadows"
+              type="checkbox"
+              onChange={({ currentTarget }) => {
+                this.handleThemeChange('boxShadows', currentTarget.checked)
+              }}
+              checked={values.boxShadows}
+            />
+            <label htmlFor="shape" style={{ display: 'block' }}>
+              Box Shadows
+            </label>
+          </Form.Field>
+          <Form.Field>
+            <input
+              id="grayscaleContrast"
+              name="grayscaleContrast"
+              type="checkbox"
+              onChange={({ currentTarget }) => {
+                this.handleThemeChange('grayscaleContrast', currentTarget.checked)
+              }}
+              checked={values.grayscaleContrast}
+            />
+            <label htmlFor="shape" style={{ display: 'block' }}>
+              Grayscale Contrast
+            </label>
+          </Form.Field>
 
-            <SectionTitle>Background</SectionTitle>
-            <Form.Field>
-              <input
-                id="background-inverse"
-                type="checkbox"
-                name="backgroundInverse"
-                onChange={({ currentTarget }) =>
-                  this.handleBackgroundChange(currentTarget.name, currentTarget.checked)
-                }
-                checked={this.state.backgroundInverse}
-              />
-              <label htmlFor="background-inverse">Inverse</label>
-            </Form.Field>
+          <SectionTitle>Background</SectionTitle>
+          <Form.Field>
+            <input
+              id="background-inverse"
+              type="checkbox"
+              name="backgroundInverse"
+              onChange={({ currentTarget }) =>
+                this.handleBackgroundChange(currentTarget.name, currentTarget.checked)
+              }
+              checked={this.state.backgroundInverse}
+            />
+            <label htmlFor="background-inverse">Inverse</label>
+          </Form.Field>
 
-            <SectionTitle>Border-Box Everything</SectionTitle>
-            <Form.Field>
-              <input
-                id="border-box"
-                type="checkbox"
-                name="borderBox"
-                onChange={({ currentTarget }) =>
-                  this.handleBorderBoxChange(currentTarget.name, currentTarget.checked)
-                }
-                checked={this.state.borderBox}
-              />
-              <label htmlFor="border-box">
-                Force Storybook to render everything with box-sixing: border-box
-              </label>
-            </Form.Field>
+          <SectionTitle>Border-Box Everything</SectionTitle>
+          <Form.Field>
+            <input
+              id="border-box"
+              type="checkbox"
+              name="borderBox"
+              onChange={({ currentTarget }) =>
+                this.handleBorderBoxChange(currentTarget.name, currentTarget.checked)
+              }
+              checked={this.state.borderBox}
+            />
+            <label htmlFor="border-box">
+              Force Storybook to render everything with box-sixing: border-box
+            </label>
+          </Form.Field>
 
-            <SectionTitle>Flex Container</SectionTitle>
-            <Form.Field>
-              <input
-                id="flex-container"
-                type="checkbox"
-                name="flexContainer"
-                onChange={({ currentTarget }) =>
-                  this.handleContainerChange(currentTarget.name, currentTarget.checked)
-                }
-                checked={this.state.flexContainer}
-              />
-              <label htmlFor="flex-container">
-                Render story content inside a display: flex container
-              </label>
-            </Form.Field>
-          </Form>
-        </ScrollArea>
-      )
+          <SectionTitle>Flex Container</SectionTitle>
+          <Form.Field>
+            <input
+              id="flex-container"
+              type="checkbox"
+              name="flexContainer"
+              onChange={({ currentTarget }) =>
+                this.handleContainerChange(currentTarget.name, currentTarget.checked)
+              }
+              checked={this.state.flexContainer}
+            />
+            <label htmlFor="flex-container">
+              Render story content inside a display: flex container
+            </label>
+          </Form.Field>
+        </Form>
+      </ScrollArea>
     )
   }
 }
