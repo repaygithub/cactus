@@ -974,10 +974,10 @@
   >
     <img src="../../modules/cactus-icons/svgs/navigation/drag&drop-dots.svg"
       style="width:100px;"
-      alt="svg for NavigationDragDropDots" />
+      alt="svg for NavigationDragdropDots" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
       <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-drag&drop-dots</code>
-      <div>NavigationDragDropDots</div>
+      <div>NavigationDragdropDots</div>
     </figcaption>
   </figure>
   <figure
@@ -985,10 +985,10 @@
   >
     <img src="../../modules/cactus-icons/svgs/navigation/drag&drop.svg"
       style="width:100px;"
-      alt="svg for NavigationDragDrop" />
+      alt="svg for NavigationDragdrop" />
     <figcaption style="min-width: 150px;text-align:center;font-size:14px;">
       <code style="white-space:pre-wrap;font-size:10px;">/i/navigation-drag&drop</code>
-      <div>NavigationDragDrop</div>
+      <div>NavigationDragdrop</div>
     </figcaption>
   </figure>
   <figure
