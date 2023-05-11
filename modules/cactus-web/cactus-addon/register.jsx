@@ -113,7 +113,9 @@ class Panel extends React.Component {
     const { active } = this.props
     const { values } = this.state
 
-    return active ? (
+    if (!active) return null
+
+    return (
       <ScrollArea>
         <Form>
           <SectionTitle>Theme</SectionTitle>
@@ -345,7 +347,7 @@ class Panel extends React.Component {
           </Form.Field>
         </Form>
       </ScrollArea>
-    ) : null
+    )
   }
 }
 
