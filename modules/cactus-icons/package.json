@@ -65,7 +65,7 @@
     "styled-components": "^5.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.5",
+    "@babel/core": "^7.22.20",
     "@babel/plugin-proposal-private-property-in-object": "^7.16.0",
     "@repay/babel-preset": "^1.1.4",
     "@repay/cactus-theme": "^3.2.4",
