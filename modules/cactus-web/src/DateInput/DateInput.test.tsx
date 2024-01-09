@@ -484,6 +484,25 @@ describe('component: DateInput', () => {
       expect(getByLabelText('time period')).toHaveProperty('value', 'AM')
     })
 
+    test.each([
+      { value: new Date(2024, 0, 2, 14, 35, 0), expected: ['2024', '01', '02', '02', '35', 'PM'] },
+      { value: new Date(2024, 3, 5, 23, 59, 0), expected: ['2024', '04', '05', '11', '59', 'PM'] },
+      { value: new Date(2024, 1, 3, 2, 34, 0), expected: ['2024', '02', '03', '02', '34', 'AM'] },
+      { value: new Date(2024, 9, 12, 0, 0, 0), expected: ['2024', '10', '12', '12', '00', 'AM'] },
+      { value: new Date(2024, 10, 30, 24, 0, 0), expected: ['2024', '12', '01', '12', '00', 'AM'] },
+    ])('can be controlled with date $value', ({ value, expected }) => {
+      //const value = new Date(2024, 0, 2, 14, 35, 0)
+      const { getByLabelText } = renderWithTheme(
+        <DateInput name="date-input" id="date-input" type="datetime" value={value} />
+      )
+      expect(getByLabelText('year')).toHaveProperty('value', expected[0])
+      expect(getByLabelText('month')).toHaveProperty('value', expected[1])
+      expect(getByLabelText('day of month')).toHaveProperty('value', expected[2])
+      expect(getByLabelText('hours')).toHaveProperty('value', expected[3])
+      expect(getByLabelText('minutes')).toHaveProperty('value', expected[4])
+      expect(getByLabelText('time period')).toHaveProperty('value', expected[5])
+    })
+
     test('renders date picker button', () => {
       const { getByLabelText } = renderWithTheme(<DateInput name="date-input" id="date-input" />)
 
