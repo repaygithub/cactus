@@ -337,7 +337,7 @@ export class PartialDate implements FormatTokenMap {
           this.parseTime(this._localeFormat)
         }
       } else if (!isNaN(+date)) {
-        this.parse(formatDate(date, format), format)
+        this.setAllFromDate(date)
       }
     }
   }
@@ -557,12 +557,10 @@ export class PartialDate implements FormatTokenMap {
   }
 
   public setHours(value: number): void {
-    if (this._localeFormat.includes('aa')) {
-      this.hours = this.period === 'PM' ? (value % 12) + 12 : value % 12
-      this._hours = this.pad(value)
-    } else {
-      this.hours = value % 24
-      this._hours = this.pad(value)
+    const period = /hh?/.test(this._localeFormat) ? 12 : 24
+    ;[this.hours, this._hours] = this.getValueAndDisplay(value, period, period === 12)
+    if (this.period === 'PM' && period === 12) {
+      this.hours = this.hours + 12
     }
   }
 
@@ -604,6 +602,36 @@ export class PartialDate implements FormatTokenMap {
 
   private pad(val?: number): string {
     return val === undefined ? '' : ('0' + val).slice(-2)
+  }
+
+  private getValueAndDisplay(
+    value: number,
+    max: number,
+    wrapDisplayAtZero = false,
+    wrapValueAtZero = false
+  ): [number, string] {
+    let realValue = (value + max) % max
+    let displayValue = realValue
+    if (wrapDisplayAtZero && realValue === 0) {
+      displayValue = max
+    }
+    if (wrapValueAtZero && realValue === 0) {
+      realValue = max
+    }
+    return [realValue, this.pad(displayValue)]
+  }
+
+  public setAllFromDate(date: Date) {
+    if (this._type.includes('date')) {
+      this.setYear(date.getFullYear())
+      this.setMonth(date.getMonth())
+      this.setDate(date.getDate())
+    }
+    if (this._type.includes('time')) {
+      this.period = date.getHours() < 12 ? 'AM' : 'PM'
+      this.setHours(date.getHours())
+      this.setMinutes(date.getMinutes())
+    }
   }
 
   public parse(dateStr: string, format: string = this._format): PartialDate {
