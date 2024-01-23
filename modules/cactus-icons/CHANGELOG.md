@@ -1,3 +1,22 @@
+# v3.1.7 (Tue Jan 23 2024)
+
+#### 🔩 Dependency Updates
+
+- chore(deps): bump browserify-sign from 4.2.1 to 4.2.2 [#877](https://github.com/repaygithub/cactus/pull/877) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump @adobe/css-tools from 4.0.1 to 4.3.2 [#876](https://github.com/repaygithub/cactus/pull/876) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- update packages to fix snyk issues [#879](https://github.com/repaygithub/cactus/pull/879) ([@ranjeet31925](https://github.com/ranjeet31925))
+- chore(deps-dev): bump gatsby-plugin-sharp from 4.23.0 to 4.25.1 [#868](https://github.com/repaygithub/cactus/pull/868) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Cactus 1217 snyk sonar cube fixes [#867](https://github.com/repaygithub/cactus/pull/867) ([@nickjiunchetti](https://github.com/nickjiunchetti))
+- chore(deps-dev): bump @actions/core from 1.2.6 to 1.9.1 in /actions/create-pull-request [#789](https://github.com/repaygithub/cactus/pull/789) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 3
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- [@ranjeet31925](https://github.com/ranjeet31925)
+- Nicholas Jiunchetti Carvalho ([@nickjiunchetti](https://github.com/nickjiunchetti))
+
+---
+
 # v3.1.5 (Wed Jul 27 2022)
 
 #### 🐛 Bug Fix
