@@ -1,3 +1,39 @@
+# v9.13.2 (Tue Jan 23 2024)
+
+#### 🐛 Bug Fix
+
+- RC-5540 Fix DateInput time parsing with controlled value [#882](https://github.com/repaygithub/cactus/pull/882) ([@mbrock-repay](https://github.com/mbrock-repay))
+- cactua 1079 - field spy [#860](https://github.com/repaygithub/cactus/pull/860) (nelso@ip-192-168-1-183.us-west-2.compute.internal [@nickjiunchetti](https://github.com/nickjiunchetti))
+
+#### 🏠 Internal
+
+- cactus 1145 - .vscode config [#858](https://github.com/repaygithub/cactus/pull/858) (nelso@ip-192-168-1-183.us-west-2.compute.internal [@nickjiunchetti](https://github.com/nickjiunchetti))
+
+#### 🔩 Dependency Updates
+
+- chore(deps): bump browserify-sign from 4.2.1 to 4.2.2 [#877](https://github.com/repaygithub/cactus/pull/877) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump @babel/traverse from 7.19.0 to 7.23.6 [#880](https://github.com/repaygithub/cactus/pull/880) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump @adobe/css-tools from 4.0.1 to 4.3.2 [#876](https://github.com/repaygithub/cactus/pull/876) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump follow-redirects from 1.15.2 to 1.15.4 [#883](https://github.com/repaygithub/cactus/pull/883) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump msgpackr from 1.6.2 to 1.10.1 [#881](https://github.com/repaygithub/cactus/pull/881) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump gatsby-plugin-sharp from 4.23.0 to 4.25.1 [#868](https://github.com/repaygithub/cactus/pull/868) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Cactus 1217 snyk sonar cube fixes [#867](https://github.com/repaygithub/cactus/pull/867) ([@nickjiunchetti](https://github.com/nickjiunchetti))
+- CACTUS-1133 :: Snyk/SonarQube Fixes [#862](https://github.com/repaygithub/cactus/pull/862) ([@Dhalton](https://github.com/Dhalton))
+- chore(deps-dev): bump @actions/core from 1.2.6 to 1.9.1 in /actions/create-pull-request [#789](https://github.com/repaygithub/cactus/pull/789) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump ua-parser-js from 0.7.31 to 0.7.33 [#859](https://github.com/repaygithub/cactus/pull/859) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump http-cache-semantics from 4.1.0 to 4.1.1 [#861](https://github.com/repaygithub/cactus/pull/861) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 6
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Dhalton Huber ([@Dhalton](https://github.com/Dhalton))
+- Matthew Brock ([@mbrock-repay](https://github.com/mbrock-repay))
+- Nicholas Jiunchetti Carvalho ([@nickjiunchetti](https://github.com/nickjiunchetti))
+- nickj (nelso@ip-192-168-1-183.us-west-2.compute.internal)
+- nickj (nelso@Nelsos-MacBook-Pro.local)
+
+---
+
 # v9.13.1 (Fri Mar 03 2023)
 
 #### 🏠 Internal
