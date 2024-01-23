@@ -1,3 +1,18 @@
+# v3.2.5 (Tue Jan 23 2024)
+
+#### 🔩 Dependency Updates
+
+- chore(deps-dev): bump gatsby-plugin-sharp from 4.23.0 to 4.25.1 [#868](https://github.com/repaygithub/cactus/pull/868) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- Cactus 1217 snyk sonar cube fixes [#867](https://github.com/repaygithub/cactus/pull/867) ([@nickjiunchetti](https://github.com/nickjiunchetti))
+- chore(deps-dev): bump @actions/core from 1.2.6 to 1.9.1 in /actions/create-pull-request [#789](https://github.com/repaygithub/cactus/pull/789) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 2
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Nicholas Jiunchetti Carvalho ([@nickjiunchetti](https://github.com/nickjiunchetti))
+
+---
+
 # v3.2.4 (Fri Dec 02 2022)
 
 #### 🏠 Internal
