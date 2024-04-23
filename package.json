@@ -58,7 +58,7 @@
     "@typescript-eslint/parser": "^5.12.1",
     "conventional-commits-parser": "^3.2.3",
     "eslint": "^8.11.0",
-    "gh-pages": "^3.2.2",
+    "gh-pages": "^5.0.0",
     "jest": "^27.5.1",
     "lerna": "^4.0.0",
     "patch-package": "^6.4.7",
