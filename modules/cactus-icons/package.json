@@ -23,7 +23,7 @@
     "build:ts": "node ./scripts/svgr && yarn postbuild:ts",
     "postbuild:ts": "node ./scripts/post-build-ts",
     "build:types": "tsc -p tsconfig.json --emitDeclarationOnly",
-    "build:stories": "NODE_OPTIONS=\"--openssl-legacy-provider\" build-storybook -c .storybook -o ./.storybook/dist",
+    "build:stories": "build-storybook -c .storybook -o ./.storybook/dist",
     "debug": "node --inspect-brk ./node_modules/.bin/svgr svgs -d built --config-file svgr.config.js --ext tsx",
     "test": "yarn jest",
     "test:local": " yarn test:types && yarn test",
