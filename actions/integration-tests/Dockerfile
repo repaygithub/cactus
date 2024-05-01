@@ -1,5 +1,5 @@
 
-FROM node:16-bullseye-slim
+FROM node:18.20.2-bookworm-slim
 
 COPY entrypoint.sh /entrypoint.sh
 
