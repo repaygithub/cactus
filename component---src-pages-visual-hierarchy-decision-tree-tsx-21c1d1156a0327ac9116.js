@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkdocs_website=self.webpackChunkdocs_website||[]).push([[121],{3977:function(e,t,c){c.r(t),c.d(t,{default:function(){return s}});var n=c(63696),r=c(49814),i=c.p+"static/decision-tree-d6d263fbf910e041ddf09a2e50e60736.png",s=()=>n.createElement(n.Fragment,null,n.createElement(r.m,{title:"Hierarchy Decision Tree"}),n.createElement("h1",null,"Hierarchy Decision Tree"),n.createElement("img",{src:i}))}}]);
+//# sourceMappingURL=component---src-pages-visual-hierarchy-decision-tree-tsx-21c1d1156a0327ac9116.js.map
